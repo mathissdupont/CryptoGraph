@@ -1,3 +1,29 @@
+"""
+Variable-Level Dataflow Analysis for CryptoGraph
+
+This module enriches cryptographic findings with contextual signals including:
+- Call chain ancestry (callers up to MAX_CALL_CHAIN_DEPTH levels)
+- Argument signals: literal values, modes (CBC/GCM), padding, key sizes
+- Source/sink classification from config/source_sinks.json
+- **Variable-level dataflow**: hybrid approach combining:
+  * Graph-based tracking: follow DFG, DATA_FLOW, REACHES edges when present
+  * Local AST analysis: extract function-local assignments and parameter origins
+  * Combined evidence: report both sources in the CBOM flow.sources_reaching_sink field
+
+Challenge: Fraunhofer CPG's Python frontend does not guarantee full interprocedural
+dataflow for every source-to-sink pattern. For patterns like:
+  request["token"] → token → encrypt(token)
+the graph may lack complete DFG edges. Variable-level dataflow bridges this gap by
+analyzing local assignments (token = request["token"]) and reporting them alongside
+any graph-based dataflow evidence.
+
+Implementation:
+- _extract_argument_signals(): parse arguments and extract local origins
+- _assignment_origin(): walk function's AST for variable assignments/parameters
+- _dataflow_analysis(): combine graph edges + assignment origins
+- _reaching_dataflow_sources(): BFS over DFG edges (up to MAX_DATAFLOW_DEPTH=24)
+"""
+
 from __future__ import annotations
 
 import ast
@@ -11,6 +37,7 @@ from typing import Any
 from cryptograph.models import CryptoFinding, GraphEdge, GraphNode, NormalizedGraph
 from cryptograph.utils import load_json, project_path
 
+# Edge kinds used to track dataflow in the normalized graph
 DATA_FLOW_EDGE_KINDS = {"DFG", "DATA_FLOW", "REACHES"}
 MAX_CALL_CHAIN_DEPTH = 24
 MAX_DATAFLOW_DEPTH = 24
@@ -107,6 +134,18 @@ def _extract_argument_signals(
     function_info: FunctionInfo | None,
     source_rules: list[dict],
 ) -> list[dict[str, Any]]:
+    """
+    Extract signals from each call argument.
+    
+    For each argument position, extract:
+    - Literal status: is it a string/int literal or a variable?
+    - Classification: user_input, key_material, generated_random, etc. (from config)
+    - Local origin: if this is a variable, does it come from a function parameter or assignment?
+    - Semantic hints: mode (CBC/GCM), padding scheme, key size from textual hints
+    
+    This is the foundation of variable-level dataflow: we extract local assignment/parameter
+    origins here, then combine them with graph-based DFG edges in _dataflow_analysis.
+    """
     literal_values = node.properties.get("literal_arguments", [])
     result = []
     for index, argument in enumerate(arguments):
@@ -124,7 +163,7 @@ def _extract_argument_signals(
                 "mode": _mode_from_text(argument),
                 "padding": _padding_from_text(argument),
                 "key_size": _key_size_from_text(argument),
-                "assignment_origin": assignment_origin,
+                "assignment_origin": assignment_origin,  # <- LOCAL ORIGIN (parameter or assignment)
             }
         )
     return result
@@ -154,8 +193,27 @@ def _dataflow_analysis(
     outgoing_edges: dict[str, list[GraphEdge]],
     argument_signals: list[dict[str, Any]],
 ) -> dict[str, Any]:
+    """
+    Hybrid variable-level dataflow analysis: combines graph-based tracking + local AST analysis.
+    
+    Strategy:
+    1. LOCAL ORIGINS: For each argument that has an assignment_origin (from _extract_argument_signals),
+       record it as a source reaching the crypto sink.
+       E.g., if encrypt(token) and token=request["token"], record that request["token"] reaches the sink.
+    
+    2. GRAPH EDGES: If the normalized graph has DFG/DATA_FLOW/REACHES edges, perform BFS from
+       the sink to trace data origins through the graph. This captures interprocedural flows
+       that the local AST analysis cannot reach.
+    
+    3. COMBINED EVIDENCE: Report both local and graph-based sources in sources_reaching_sink.
+       If neither is available, mark unresolved_reason = "no_dataflow_edges_or_assignment_origin".
+    
+    The "available" flag indicates whether ANY evidence (local or graph) was found for this sink.
+    """
     dataflow_edges = [edge for edge in graph.edges if edge.kind in DATA_FLOW_EDGE_KINDS]
     reached_sources = []
+    
+    # STEP 1: Local assignment origins (from function parameter or local assignment)
     for signal in argument_signals:
         if signal["assignment_origin"] is not None:
             reached_sources.append(
@@ -168,6 +226,7 @@ def _dataflow_analysis(
                 }
             )
 
+    # STEP 2: Graph-based dataflow (DFG/DATA_FLOW/REACHES edges)
     if dataflow_edges:
         reaches = _reaching_dataflow_sources(node.id, nodes_by_id, incoming_edges, outgoing_edges)
         reached_sources.extend(reaches)
@@ -186,6 +245,19 @@ def _reaching_dataflow_sources(
     incoming_edges: dict[str, list[GraphEdge]],
     outgoing_edges: dict[str, list[GraphEdge]],
 ) -> list[dict[str, Any]]:
+    """
+    Breadth-first search over DFG/DATA_FLOW/REACHES edges to find all nodes that can reach the crypto sink.
+    
+    This is the GRAPH-BASED part of variable-level dataflow. When the normalized graph contains
+    DFG edges (from Fraunhofer CPG), we traverse them backward from the sink to find all possible
+    data origins.
+    
+    Limits:
+    - MAX_DATAFLOW_DEPTH=24: prevent exponential blowup on cyclic/complex graphs
+    - visited set: avoid revisiting nodes
+    
+    Returns a list of reached_nodes with their node_ref, kind, name, and edge path from sink.
+    """
     queue = deque([(sink_id, [])])
     visited = {sink_id}
     reached = []
@@ -262,6 +334,17 @@ def _parse_function_info(name: str, code: str, fallback_parameters: list[str]) -
 
 
 def _assignment_origin(argument: str, function_info: FunctionInfo | None) -> dict[str, Any] | None:
+    """
+    Extract local origin of a variable: is it a function parameter or function-local assignment?
+    
+    Examples:
+    - encrypt(key) where 'key' is a function parameter → {"kind": "function_parameter", "name": "key"}
+    - encrypt(token) where token = request["token"] → {"kind": "assignment", "name": "token", "expression": "request[\"token\"]", ...}
+    - encrypt("hardcoded") where "hardcoded" is a literal → None (no local origin needed, it's a literal)
+    
+    This is the LOCAL ORIGIN part of variable-level dataflow. It bridges the gap when the CPG graph
+    lacks interprocedural DFG edges by reporting what we know from local code inspection.
+    """
     if function_info is None:
         return None
     bare = _bare_name(argument)

@@ -191,6 +191,42 @@
     "provider": "cryptography",
     "family": "aead"
   },
+  "algorithms.ChaCha20": {
+    "algorithm": "ChaCha20",
+    "primitive": "symmetric_encryption",
+    "provider": "cryptography",
+    "family": "stream_cipher"
+  },
+  "Argon2": {
+    "algorithm": "Argon2",
+    "primitive": "key_derivation",
+    "provider": "cryptography",
+    "family": "kdf"
+  },
+  "ec.ECDSA": {
+    "algorithm": "ECDSA",
+    "primitive": "digital_signature",
+    "provider": "cryptography",
+    "family": "public_key_signature"
+  },
+  "x509.CertificateBuilder": {
+    "algorithm": "X.509",
+    "primitive": "certificate_management",
+    "provider": "cryptography",
+    "family": "pki"
+  },
+  "x509.Name": {
+    "algorithm": "X.509-Name",
+    "primitive": "certificate_attribute",
+    "provider": "cryptography",
+    "family": "pki"
+  },
+  "x509.NameAttribute": {
+    "algorithm": "X.509-NameAttribute",
+    "primitive": "certificate_attribute",
+    "provider": "cryptography",
+    "family": "pki"
+  },
   "secrets.token_bytes": {
     "algorithm": "CSPRNG",
     "primitive": "random_generation",

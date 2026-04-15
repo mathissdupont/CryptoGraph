@@ -1,3 +1,38 @@
+"""
+Lightweight AST-based CPG fallback (ast-lite)
+
+This module provides a fast fallback when Fraunhofer exporter is unavailable.
+Unlike Fraunhofer, ast-lite does not produce interprocedural dataflow edges (DFG).
+However, it does produce:
+- Node-level structure (functions, calls, arguments)
+- Local AST edges (CALLS, ARGUMENT, AST)
+- Propagation nodes for assignment and return (extracted via AST walk)
+
+For variable-level dataflow, ast-lite relies entirely on local assignment/parameter
+origin extraction in context_extractor._assignment_origin, since there are no
+interprocedural DFG edges to traverse.
+
+Node kinds produced:
+- function: function definition
+- call: function call node
+- callee: target function (resolved if possible)
+- argument: call argument (with position and literal tracking)
+- assignment: variable assignment (for local dataflow tracking)
+- return: return statement
+- literal: string/numeric literal
+
+Edge kinds:
+- CALLS: function call
+- ARGUMENT: argument position in a call
+- AST: syntax tree parent-child
+- RETURN: return value (from ast-lite propagation)
+
+Assignment/Return Propagation:
+We explicitly create assignment and return nodes during AST traversal so that
+context_extractor can extract local variable origins reliably. This bridges the gap
+when Fraunhofer CPG is unavailable.
+"""
+
 from __future__ import annotations
 
 import ast
@@ -8,6 +43,22 @@ from cryptograph.utils import as_posix_relative
 
 
 class _CallVisitor(ast.NodeVisitor):
+    """
+    AST visitor that extracts call nodes and builds a normalized graph.
+    
+    Produces:
+    - function nodes: definition with parameters and raw code
+    - call nodes: API/function invocations
+    - argument nodes: call arguments with literal tracking
+    - assignment nodes: variable assignments for local dataflow
+    - return nodes: return statements (for propagation tracking)
+    
+    Edges:
+    - CALLS: function → callee relationship
+    - ARGUMENT: position in argument list
+    - AST: parent-child syntax relationships
+    - RETURN: return value propagation (explicit for dataflow)
+    """
     def __init__(self, file_path: Path, root: Path) -> None:
         self.file_path = file_path
         self.root = root
