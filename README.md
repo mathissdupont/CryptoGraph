@@ -236,12 +236,18 @@ When `--backend fraunhofer-strict` is used:
 ### English Documentation
 
 - [docs/en/architecture.md](docs/en/architecture.md): System design, backends, normalized graph model, variable-level dataflow strategy
+- [docs/en/pipeline.md](docs/en/pipeline.md): End-to-end scan pipeline from source code to CBOM
+- [docs/en/schema.md](docs/en/schema.md): Current `cryptograph-custom-v2` schema and unknown/null rules
+- [docs/en/code-map.md](docs/en/code-map.md): Which Python module owns each responsibility
 - [docs/en/notes.md](docs/en/notes.md): Implementation details, CPG exporter behavior, debugging, performance considerations
 - [docs/en/scale-notes.md](docs/en/scale-notes.md): Scaling strategy for large repositories, next steps, deployment checklist
 
 ### Turkish Documentation
 
 - [docs/tr/architecture.md](docs/tr/architecture.md): Sistem tasarımı, backend'ler, normalize grafik modeli, değişken seviyesi veri akışı stratejisi
+- [docs/tr/pipeline.md](docs/tr/pipeline.md): Kaynak koddan CBOM'a giden uctan uca islem hatti
+- [docs/tr/schema.md](docs/tr/schema.md): Guncel `cryptograph-custom-v2` semasi ve unknown/null ayrimi
+- [docs/tr/code-map.md](docs/tr/code-map.md): Hangi Python modulunun hangi isi yaptigi
 - [docs/tr/notes.md](docs/tr/notes.md): Uygulama detayları, CPG ihraçcısı davranışı, hata ayıklama, performans
 - [docs/tr/scale-notes.md](docs/tr/scale-notes.md): Büyük depolar için ölçekleme stratejisi, sonraki adımlar, dağıtım kontrol listesi
 

@@ -3,14 +3,14 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from cryptograph.cbom_builder import build_cbom
+from cryptograph.cbom_builder_v2 import build_cbom
 from cryptograph.context_extractor import enrich_context
 from cryptograph.cpg_loader import CpgLoadError, load_graph
 from cryptograph.cpg_visualizer import write_dot, write_graph_json, write_html
-from cryptograph.crypto_matcher import find_crypto_calls
+from cryptograph.crypto_matcher_v2 import find_crypto_calls
 from cryptograph.manifest import write_manifest
 from cryptograph.report_builder import build_html_report
-from cryptograph.utils import new_run_dir, path_in_run_dir, project_path, write_json
+from cryptograph.utils import load_json, new_run_dir, path_in_run_dir, project_path, write_json
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -30,8 +30,7 @@ def main(argv: list[str] | None = None) -> int:
         ),
     )
     scan.add_argument("--mappings", type=Path, default=project_path("config", "api_mappings.json"))
-    scan.add_argument("--rules", type=Path, default=project_path("config", "rules.json"))
-    scan.add_argument("--source-sinks", type=Path, default=project_path("config", "source_sinks.json"))
+    scan.add_argument("--rules", type=Path, default=project_path("config", "rules_v2.json"))
     scan.add_argument("--report", type=Path, help="Optional HTML report path.")
     scan.add_argument("--run-dir", type=Path, help="Directory for all artifacts in this scan run.")
 
@@ -69,16 +68,56 @@ def main(argv: list[str] | None = None) -> int:
 
 
 def _scan(args: argparse.Namespace) -> int:
+    # Simple mode: absolute path + no run_dir = just output CBOM
+    if args.output.is_absolute() and args.run_dir is None:
+        graph = load_graph(args.input, args.backend)
+        findings = find_crypto_calls(graph, args.mappings, args.rules)
+        findings = enrich_context(findings, graph)
+        rules_config = load_json(args.rules)
+        
+        cbom = build_cbom(
+            findings=findings,
+            source=str(args.input),
+            backend=graph.backend,
+            graph=graph,
+            run_id=None,
+            rules_config=rules_config,
+        )
+        write_json(args.output, cbom)
+        print(f"Wrote {len(findings)} cryptographic findings to {args.output}")
+        return 0
+    
+    # Standard mode: with manifest and artifacts
     run_dir = _resolve_run_dir(args.run_dir)
     args.output = path_in_run_dir(args.output, run_dir)
     args.report = path_in_run_dir(args.report, run_dir)
+    
+    # Load graph and find cryptographic calls
     graph = load_graph(args.input, args.backend)
     findings = find_crypto_calls(graph, args.mappings, args.rules)
-    findings = enrich_context(findings, graph, args.source_sinks)
-    cbom = build_cbom(findings, source=str(args.input), backend=graph.backend, graph=graph, run_id=run_dir.name)
+    findings = enrich_context(findings, graph)
+    
+    # Load rules configuration for CBOM building
+    rules_config = load_json(args.rules)
+    
+    # Build refactored CBOM with improved risk scoring and rule filtering
+    cbom = build_cbom(
+        findings=findings,
+        source=str(args.input),
+        backend=graph.backend,
+        graph=graph,
+        run_id=run_dir.name,
+        rules_config=rules_config,
+    )
+    
+    # Write CBOM output
     write_json(args.output, cbom)
+    
+    # Optional: Build HTML report if requested
     if args.report:
         build_html_report(args.output, args.report)
+    
+    # Write run manifest
     manifest_path = write_manifest(
         run_dir=run_dir,
         command="scan",
@@ -87,7 +126,7 @@ def _scan(args: argparse.Namespace) -> int:
         graph=graph,
         findings=findings,
         artifacts={"cbom": args.output, "report": args.report},
-        config_paths=[args.mappings, args.rules, args.source_sinks],
+        config_paths=[args.mappings, args.rules],
     )
     print(f"Wrote {len(findings)} cryptographic findings to {args.output}")
     if args.report:

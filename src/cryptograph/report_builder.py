@@ -221,17 +221,18 @@ def _custom_asset_row(asset: dict[str, Any]) -> str:
     code = asset.get("context", asset.get("code_context", {}))
     risk_block = asset.get("risk", asset.get("inference", {}))
     evidence = asset.get("evidence", {})
+    evidence_summary = evidence.get("summary", evidence)
     risk = str(risk_block.get("level", risk_block.get("risk_level", "info")))
-    rules = evidence.get("rules", [])
+    rules = asset.get("rules", evidence.get("rules", []))
     rule_text = "; ".join(rule.get("id", "") for rule in rules) or "none"
-    args = ", ".join(evidence.get("arguments", [])) or "none"
+    args = ", ".join(evidence_summary.get("arguments", [])) or "none"
     location = f"{code.get('file')}:{code.get('line')}"
     if code.get("function"):
         location += f" in {code.get('function')}"
 
     return f"""<tr>
   <td><span class="pill {html.escape(risk)}">{html.escape(risk)}</span></td>
-  <td><code>{html.escape(str(evidence.get("api_call", "")))}</code><br>{html.escape(str(crypto.get("algorithm", "")))}</td>
+  <td><code>{html.escape(str(evidence_summary.get("api_call", "")))}</code><br>{html.escape(str(crypto.get("algorithm", "")))}</td>
   <td>{html.escape(str(crypto.get("primitive", "")))}<br><small>{html.escape(str(crypto.get("provider", "")))}</small></td>
   <td><code>{html.escape(location)}</code></td>
   <td>args: <code>{html.escape(args)}</code><br>mode: <code>{html.escape(str(crypto.get("mode")))}</code><br>confidence: <code>{html.escape(str(risk_block.get("confidence", "")))}</code><br>rules: <code>{html.escape(rule_text)}</code></td>

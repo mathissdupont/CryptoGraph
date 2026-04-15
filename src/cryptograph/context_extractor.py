@@ -70,7 +70,12 @@ def enrich_context(
         if not node:
             continue
 
-        arguments = [str(argument) for argument in node.properties.get("arguments", [])]
+        positional_arguments = [str(argument) for argument in node.properties.get("arguments", [])]
+        keyword_arguments = [
+            f"{key}={value}" for key, value in (node.properties.get("keywords", {}) or {}).items()
+        ]
+        arguments = [*positional_arguments, *keyword_arguments]
+        finding.arguments = arguments
         incoming = incoming_edges.get(node.id, [])
         outgoing = outgoing_edges.get(node.id, [])
         incoming_summaries = [_edge_summary(edge, nodes_by_id, incoming=True) for edge in incoming]
@@ -79,6 +84,7 @@ def enrich_context(
         argument_signals = _extract_argument_signals(
             arguments,
             node,
+            finding.api_name,
             functions.get(finding.function or ""),
             source_sinks.get("sources", []),
         )
@@ -131,6 +137,7 @@ def enrich_context(
 def _extract_argument_signals(
     arguments: list[str],
     node: GraphNode,
+    api_name: str,
     function_info: FunctionInfo | None,
     source_rules: list[dict],
 ) -> list[dict[str, Any]]:
@@ -149,13 +156,28 @@ def _extract_argument_signals(
     literal_values = node.properties.get("literal_arguments", [])
     result = []
     for index, argument in enumerate(arguments):
-        assignment_origin = _assignment_origin(argument, function_info)
+        role = _argument_role(argument, index, api_name)
+        role_values = _semantic_role_values(argument, index, api_name)
+        semantic_value = role_values.get(role) or _argument_value_expr(argument)
+        assignment_origin = _assignment_origin(semantic_value, function_info)
         literal_info = _literal_info(argument, literal_values, assignment_origin)
+        role_origins = {
+            role_name: _assignment_origin(role_value, function_info)
+            for role_name, role_value in role_values.items()
+        }
+        role_literals = {
+            role_name: _literal_info(role_value, literal_values, role_origins.get(role_name))
+            for role_name, role_value in role_values.items()
+        }
         result.append(
             {
                 "index": index,
                 "value": argument,
-                "role": _argument_role(argument, index),
+                "role": role,
+                "semantic_value": semantic_value,
+                "role_values": role_values,
+                "role_origins": role_origins,
+                "role_literals": role_literals,
                 "sources": _classify_argument(argument, index, source_rules),
                 "is_literal": literal_info["is_literal"],
                 "literal_origin": literal_info["origin"],
@@ -178,11 +200,16 @@ def _aggregate_signals(argument_signals: list[dict[str, Any]]) -> dict[str, Any]
         "padding": paddings[0] if paddings else None,
         "key_size": key_sizes[0] if key_sizes else None,
         "has_literal_argument": any(signal["is_literal"] for signal in argument_signals),
-        "mentions_key": any(signal["role"] == "key" for signal in argument_signals),
-        "mentions_salt": any(signal["role"] == "salt" for signal in argument_signals),
-        "mentions_iv": any(signal["role"] == "iv" for signal in argument_signals),
+        "mentions_key": any(_signal_has_role(signal, "key") for signal in argument_signals),
+        "mentions_salt": any(_signal_has_role(signal, "salt") for signal in argument_signals),
+        "mentions_iv": any(_signal_has_role(signal, "iv") for signal in argument_signals),
+        "mentions_nonce": any(_signal_has_role(signal, "nonce") for signal in argument_signals),
         "mentions_randomness": any(signal["role"] == "randomness" for signal in argument_signals),
     }
+
+
+def _signal_has_role(signal: dict[str, Any], role: str) -> bool:
+    return signal.get("role") == role or role in (signal.get("role_values") or {})
 
 
 def _dataflow_analysis(
@@ -222,6 +249,19 @@ def _dataflow_analysis(
                     "argument": signal["value"],
                     "via": "assignment_origin",
                     "source": signal["assignment_origin"],
+                    "reaches_sink": True,
+                }
+            )
+        for role, origin in (signal.get("role_origins") or {}).items():
+            if origin is None or origin == signal.get("assignment_origin"):
+                continue
+            reached_sources.append(
+                {
+                    "argument_index": signal["index"],
+                    "argument": (signal.get("role_values") or {}).get(role, signal["value"]),
+                    "role": role,
+                    "via": "semantic_role_origin",
+                    "source": origin,
                     "reaches_sink": True,
                 }
             )
@@ -364,7 +404,11 @@ def _assignment_origin(argument: str, function_info: FunctionInfo | None) -> dic
 
 def _literal_info(argument: str, literal_values: list[Any], assignment_origin: dict[str, Any] | None) -> dict[str, Any]:
     direct_literal = _is_literal_text(argument)
-    graph_literal = argument in {str(value) for value in literal_values}
+    # Fraunhofer's exported argument list can contain textual expressions under
+    # literal-like properties. Only trust graph-provided literals when the text
+    # is also a real Python literal, otherwise identifiers such as key or calls
+    # such as algorithms.AES(key) would be mislabeled as constants.
+    graph_literal = argument in {str(value) for value in literal_values if _is_literal_text(str(value))}
     assignment_literal = bool(assignment_origin and assignment_origin.get("is_literal"))
     value = argument if direct_literal else assignment_origin.get("expression") if assignment_literal and assignment_origin else None
     origin = None
@@ -454,6 +498,8 @@ def _classify_argument(argument: str, index: int, source_rules: list[dict]) -> l
     lowered = argument.lower()
     classifications = []
     for rule in source_rules:
+        if rule.get("classification") == "hardcoded_constant":
+            continue
         labels = [str(label).lower() for label in rule.get("labels", [])]
         if any(label in lowered for label in labels):
             classifications.append(
@@ -474,6 +520,8 @@ def _classify_scope(function: str | None, incoming_edges: list[dict], source_rul
     classifications = []
     seen = set()
     for rule in source_rules:
+        if rule.get("classification") == "hardcoded_constant":
+            continue
         labels = [str(label).lower() for label in rule.get("labels", [])]
         for label in labels:
             if label in text:
@@ -521,19 +569,152 @@ def _dedupe_classifications(items: list[dict]) -> list[dict]:
     return result
 
 
-def _argument_role(argument: str, index: int) -> str:
+def _argument_role(argument: str, index: int, api_name: str) -> str:
+    signature_role = _signature_role(argument, index, api_name)
+    if signature_role:
+        return signature_role
+
     lowered = argument.lower()
-    if any(token in lowered for token in ["key", "password", "secret"]):
-        return "key"
-    if any(token in lowered for token in ["iv", "nonce"]):
-        return "iv"
+    keyword = _keyword_name(argument)
+    if keyword in {"key_size", "public_exponent", "backend", "mode", "length", "iterations"}:
+        return f"arg_{index}"
     if "salt" in lowered:
         return "salt"
+    if "nonce" in lowered:
+        return "nonce"
+    if any(token in lowered for token in ["iv", "modes.cbc", "modes.gcm", "modes.ctr", "modes.cfb", "modes.ofb"]):
+        return "iv"
     if any(token in lowered for token in ["random", "urandom", "token_bytes", "randbytes"]):
         return "randomness"
     if any(token in lowered for token in ["data", "payload", "message", "token", "note"]):
         return "data"
+    if any(token in lowered for token in ["key", "secret"]):
+        return "key"
+    if "password" in lowered:
+        return "data"
     return f"arg_{index}"
+
+
+def _signature_role(argument: str, index: int, api_name: str) -> str | None:
+    keyword = _keyword_name(argument)
+    if keyword:
+        if keyword in {"key_size", "public_exponent", "backend", "mode", "length", "iterations"}:
+            return None
+        keyword_roles = {
+            "key": "key",
+            "secret": "key",
+            "password": "data",
+            "passphrase": "data",
+            "data": "data",
+            "msg": "data",
+            "message": "data",
+            "salt": "salt",
+            "iv": "iv",
+            "nonce": "nonce",
+        }
+        if keyword in keyword_roles:
+            return keyword_roles[keyword]
+
+    api = api_name.lower()
+    if api == "aes.new":
+        if index == 0:
+            return "key"
+        if index >= 2 and any(token in argument.lower() for token in ["iv", "nonce"]):
+            return "nonce" if "nonce" in argument.lower() else "iv"
+    if api in {"algorithms.aes", "fernet", "hmac", "hmac.new"} and index == 0:
+        return "key"
+    if api in {"algorithms.chacha20", "chacha20poly1305"}:
+        return {0: "key", 1: "nonce"}.get(index)
+    if api in {"modes.cbc", "modes.gcm", "modes.ctr", "modes.cfb", "modes.ofb"} and index == 0:
+        return "iv"
+    if api.startswith("hashlib.") and index == 0:
+        return "data"
+    if api in {"hashlib.pbkdf2_hmac", "pbkdf2_hmac", "bcrypt.kdf"}:
+        return {1: "data", 2: "salt"}.get(index)
+    if api in {"pbkdf2hmac", "hkdf", "scrypt", "argon2"}:
+        lowered = argument.lower()
+        if "salt" in lowered:
+            return "salt"
+        if "password" in lowered:
+            return "data"
+    if api == "cipher":
+        nested = _semantic_role_values(argument, index, api_name)
+        for preferred in ("key", "iv", "nonce"):
+            if preferred in nested:
+                return preferred
+    return None
+
+
+def _semantic_role_values(argument: str, index: int, api_name: str) -> dict[str, str]:
+    value = _argument_value_expr(argument)
+    result: dict[str, str] = {}
+    keyword = _keyword_name(argument)
+    if keyword:
+        role = {
+            "key": "key",
+            "secret": "key",
+            "password": "data",
+            "passphrase": "data",
+            "data": "data",
+            "msg": "data",
+            "message": "data",
+            "salt": "salt",
+            "iv": "iv",
+            "nonce": "nonce",
+        }.get(keyword)
+        if role:
+            result[role] = value
+
+    lowered_api = api_name.lower()
+    if lowered_api == "aes.new" and index == 0:
+        result.setdefault("key", value)
+    elif lowered_api in {"algorithms.aes", "fernet", "hmac", "hmac.new"} and index == 0:
+        result.setdefault("key", value)
+    elif lowered_api in {"algorithms.chacha20", "chacha20poly1305"}:
+        if index == 0:
+            result.setdefault("key", value)
+        elif index == 1:
+            result.setdefault("nonce", value)
+    elif lowered_api in {"modes.cbc", "modes.gcm", "modes.ctr", "modes.cfb", "modes.ofb"} and index == 0:
+        result.setdefault("iv", value)
+    elif lowered_api.startswith("hashlib.") and index == 0:
+        result.setdefault("data", value)
+    elif lowered_api in {"hashlib.pbkdf2_hmac", "pbkdf2_hmac", "bcrypt.kdf"}:
+        if index == 1:
+            result.setdefault("data", value)
+        elif index == 2:
+            result.setdefault("salt", value)
+
+    try:
+        parsed = ast.parse(value, mode="eval").body
+    except SyntaxError:
+        parsed = None
+    if isinstance(parsed, ast.Call):
+        call_name = _call_name(parsed.func).lower()
+        call_args = [_safe_unparse(arg) for arg in parsed.args]
+        if call_name.endswith("algorithms.aes") and call_args:
+            result.setdefault("key", call_args[0])
+        elif call_name.endswith("algorithms.chacha20"):
+            if call_args:
+                result.setdefault("key", call_args[0])
+            if len(call_args) > 1:
+                result.setdefault("nonce", call_args[1])
+        elif any(call_name.endswith(f"modes.{mode}") for mode in ["cbc", "gcm", "ctr", "cfb", "ofb"]):
+            if call_args:
+                result.setdefault("iv", call_args[0])
+
+    return result
+
+
+def _keyword_name(argument: str) -> str | None:
+    match = re.match(r"\s*([A-Za-z_][A-Za-z0-9_]*)\s*=", argument)
+    return match.group(1).lower() if match else None
+
+
+def _argument_value_expr(argument: str) -> str:
+    if _keyword_name(argument):
+        return argument.split("=", 1)[1].strip()
+    return argument
 
 
 def _mode_from_text(value: str) -> str | None:
@@ -553,7 +734,7 @@ def _key_size_from_text(value: str) -> int | None:
         parsed = int(value.replace("_", "").strip())
     except ValueError:
         return None
-    if parsed in {64, 112, 128, 192, 2048, 3072, 4096} or parsed >= 256:
+    if parsed in {64, 112, 128, 192, 2048, 3072, 4096} or 256 <= parsed <= 8192:
         return parsed
     return None
 

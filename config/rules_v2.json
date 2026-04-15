@@ -1,0 +1,219 @@
+{
+  "rules": [
+    {
+      "id": "AES_ECB_MODE",
+      "preconditions": {
+        "algorithm_in": ["AES"],
+        "operation_in": ["symmetric_encryption"]
+      },
+      "match": {
+        "mode_in": ["ECB"]
+      },
+      "risk": "high",
+      "priority": 95,
+      "actionable": true,
+      "message": "AES ECB mode leaks plaintext patterns and should not be used for sensitive data.",
+      "remediation": "Replace ECB with GCM, CTR, or CBC with authentication"
+    },
+    {
+      "id": "ECB_MODE_OBJECT",
+      "preconditions": {},
+      "match": {
+        "api_name": "modes.ECB"
+      },
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "ECB mode object detected; ECB should not be used for sensitive data.",
+      "remediation": "Use GCM, CTR, or CBC+HMAC instead"
+    },
+    {
+      "id": "LEGACY_BLOCK_CIPHER",
+      "preconditions": {
+        "algorithm_in": ["DES", "3DES"]
+      },
+      "match": {},
+      "risk": "high",
+      "priority": 85,
+      "actionable": true,
+      "message": "Legacy block cipher detected; migrate to AES or ChaCha20.",
+      "remediation": "Replace DES/3DES with AES-256 or ChaCha20"
+    },
+    {
+      "id": "DEPRECATED_HASH",
+      "preconditions": {
+        "algorithm_in": ["MD5", "SHA-1"]
+      },
+      "match": {},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Deprecated hash algorithm detected; use SHA-256, SHA-512, or SHA3-256.",
+      "remediation": "Replace with SHA-256, SHA-512, or SHA3"
+    },
+    {
+      "id": "RSA_SMALL_KEY",
+      "preconditions": {
+        "algorithm_in": ["RSA", "RSA-OAEP"]
+      },
+      "match": {
+        "key_size_less_than": 2048
+      },
+      "risk": "high",
+      "priority": 85,
+      "actionable": true,
+      "message": "RSA key size below 2048 bits detected; use at least 2048 bits, prefer 4096.",
+      "remediation": "Generate RSA key with minimum 2048 bits (4096 recommended)"
+    },
+    {
+      "id": "RSA_PKCS1V15_PADDING",
+      "preconditions": {},
+      "match": {
+        "api_name_in": ["rsa.padding.PKCS1v15"]
+      },
+      "risk": "high",
+      "priority": 80,
+      "actionable": true,
+      "message": "RSA PKCS#1 v1.5 padding is vulnerable to padding oracle attacks; use OAEP instead.",
+      "remediation": "Replace PKCS1v15 with OAEP padding"
+    },
+    {
+      "id": "PBKDF2_LOW_ITERATIONS",
+      "preconditions": {
+        "algorithm_in": ["PBKDF2"]
+      },
+      "match": {
+        "pbkdf2_iterations_less_than": 100000
+      },
+      "risk": "medium",
+      "priority": 70,
+      "actionable": true,
+      "message": "PBKDF2 iteration count appears low for modern password-derived key material; use ≥100000.",
+      "remediation": "Increase iterations to at least 100,000 (or use Argon2)"
+    },
+    {
+      "id": "WEAK_PRNG",
+      "preconditions": {},
+      "match": {
+        "api_name_in": ["random.randbytes", "random.random", "random.randint", "random.choice"]
+      },
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Non-cryptographic random source detected; use os.urandom() or secrets module for crypto.",
+      "remediation": "Replace with os.urandom() or secrets.token_bytes()"
+    },
+    {
+      "id": "CBC_MODE_PADDING_ORACLE",
+      "preconditions": {
+        "algorithm_in": ["AES", "3DES"]
+      },
+      "match": {
+        "mode_in": ["CBC"]
+      },
+      "risk": "medium",
+      "priority": 65,
+      "actionable": true,
+      "message": "CBC mode requires proper authentication and random IV handling; verify HMAC or AEAD is used.",
+      "remediation": "Use CBC with HMAC-SHA256 or prefer GCM/ChaCha20-Poly1305"
+    },
+    {
+      "id": "CHACHA20_IV_REUSE",
+      "preconditions": {
+        "algorithm_in": ["ChaCha20", "ChaCha20-Poly1305"]
+      },
+      "match": {},
+      "risk": "medium",
+      "priority": 70,
+      "actionable": true,
+      "message": "ChaCha20 detected; ensure nonce is unique per encryption with the same key.",
+      "remediation": "Use unique 96-bit nonce for each encryption operation"
+    },
+    {
+      "id": "GCM_MODE_BEST_PRACTICE",
+      "preconditions": {
+        "algorithm_in": ["AES-GCM", "ChaCha20-Poly1305"]
+      },
+      "match": {},
+      "risk": "low",
+      "priority": 30,
+      "actionable": false,
+      "message": "AEAD mode detected; verify proper nonce handling and tag verification.",
+      "note": "Best practice pattern detected; ensure implementation follows AEAD guidelines"
+    },
+    {
+      "id": "ARGON2_RECOMMENDED",
+      "preconditions": {
+        "algorithm_in": ["Argon2"]
+      },
+      "match": {},
+      "risk": "low",
+      "priority": 20,
+      "actionable": false,
+      "message": "Argon2 detected (modern password hashing); verify memory/time parameters are appropriate.",
+      "note": "Modern best practice algorithm"
+    },
+    {
+      "id": "SCRYPT_USAGE",
+      "preconditions": {
+        "algorithm_in": ["Scrypt"]
+      },
+      "match": {},
+      "risk": "low",
+      "priority": 25,
+      "actionable": false,
+      "message": "Scrypt detected; ensure cost parameters (N, r, p) are appropriate for the use case.",
+      "note": "Well-established KDF with proper parameters"
+    },
+    {
+      "id": "BCRYPT_USAGE",
+      "preconditions": {
+        "algorithm_in": ["bcrypt"]
+      },
+      "match": {},
+      "risk": "low",
+      "priority": 25,
+      "actionable": false,
+      "message": "bcrypt detected; verify cost factor is at least 12 for password hashing.",
+      "note": "Good password hashing algorithm with built-in cost factor"
+    },
+    {
+      "id": "FERNET_RECOMMENDED",
+      "preconditions": {
+        "algorithm_in": ["Fernet"]
+      },
+      "match": {},
+      "risk": "low",
+      "priority": 20,
+      "actionable": false,
+      "message": "Fernet (symmetric authenticated encryption) detected.",
+      "note": "High-level API with good defaults; suitable for most use cases"
+    },
+    {
+      "id": "HMAC_SHA256_USAGE",
+      "preconditions": {
+        "primitive": "message_authentication"
+      },
+      "match": {
+        "algorithm_in": ["HMAC"]
+      },
+      "risk": "low",
+      "priority": 25,
+      "actionable": false,
+      "message": "HMAC detected; verify hash algorithm is SHA-256 or stronger.",
+      "note": "Message authentication code with hash function"
+    },
+    {
+      "id": "CSPRNG_BEST_PRACTICE",
+      "preconditions": {
+        "algorithm_in": ["CSPRNG"]
+      },
+      "match": {},
+      "risk": "low",
+      "priority": 10,
+      "actionable": false,
+      "message": "Cryptographically secure RNG detected (os.urandom, secrets module).",
+      "note": "Best practice for cryptographic randomness"
+    }
+  ]
+}
