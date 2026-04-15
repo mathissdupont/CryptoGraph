@@ -35,11 +35,47 @@
     "provider": "cryptography",
     "family": "public_key"
   },
+  "rsa.RSAPrivateKey": {
+    "algorithm": "RSA",
+    "primitive": "asymmetric_encryption",
+    "provider": "cryptography",
+    "family": "public_key"
+  },
+  "rsa.RSAPublicKey": {
+    "algorithm": "RSA",
+    "primitive": "asymmetric_encryption",
+    "provider": "cryptography",
+    "family": "public_key"
+  },
   "ec.generate_private_key": {
     "algorithm": "ECC",
     "primitive": "asymmetric_key_generation",
     "provider": "cryptography",
     "family": "public_key"
+  },
+  "ec.SECP256R1": {
+    "algorithm": "ECC-SECP256R1",
+    "primitive": "asymmetric_key_generation",
+    "provider": "cryptography",
+    "family": "elliptic_curve"
+  },
+  "ec.SECP384R1": {
+    "algorithm": "ECC-SECP384R1",
+    "primitive": "asymmetric_key_generation",
+    "provider": "cryptography",
+    "family": "elliptic_curve"
+  },
+  "ec.SECP521R1": {
+    "algorithm": "ECC-SECP521R1",
+    "primitive": "asymmetric_key_generation",
+    "provider": "cryptography",
+    "family": "elliptic_curve"
+  },
+  "dsa.generate_private_key": {
+    "algorithm": "DSA",
+    "primitive": "asymmetric_key_generation",
+    "provider": "cryptography",
+    "family": "digital_signature"
   },
   "Cipher": {
     "algorithm": "Cipher",
@@ -59,95 +95,242 @@
     "provider": "cryptography",
     "family": "block_cipher"
   },
+  "algorithms.Camellia": {
+    "algorithm": "Camellia",
+    "primitive": "symmetric_encryption",
+    "provider": "cryptography",
+    "family": "block_cipher"
+  },
+  "algorithms.SEED": {
+    "algorithm": "SEED",
+    "primitive": "symmetric_encryption",
+    "provider": "cryptography",
+    "family": "block_cipher"
+  },
+  "algorithms.CAST5": {
+    "algorithm": "CAST5",
+    "primitive": "symmetric_encryption",
+    "provider": "cryptography",
+    "family": "block_cipher"
+  },
+  "algorithms.CAST6": {
+    "algorithm": "CAST6",
+    "primitive": "symmetric_encryption",
+    "provider": "cryptography",
+    "family": "block_cipher"
+  },
+  "algorithms.ChaCha20": {
+    "algorithm": "ChaCha20",
+    "primitive": "symmetric_encryption",
+    "provider": "cryptography",
+    "family": "stream_cipher"
+  },
+  "algorithms.ChaCha20Poly1305": {
+    "algorithm": "ChaCha20-Poly1305",
+    "primitive": "authenticated_encryption",
+    "provider": "cryptography",
+    "family": "aead"
+  },
   "modes.ECB": {
     "algorithm": "ECB",
     "primitive": "cipher_mode",
     "provider": "cryptography",
-    "family": "mode"
+    "family": "mode",
+    "risk_level": "high",
+    "risk_reason": "ECB mode is insecure; identical plaintext blocks produce identical ciphertext"
   },
   "modes.CBC": {
     "algorithm": "CBC",
     "primitive": "cipher_mode",
     "provider": "cryptography",
-    "family": "mode"
+    "family": "mode",
+    "risk_level": "medium",
+    "risk_reason": "CBC mode requires proper padding and random IV; vulnerable to padding oracle attacks"
+  },
+  "modes.CTR": {
+    "algorithm": "CTR",
+    "primitive": "cipher_mode",
+    "provider": "cryptography",
+    "family": "mode",
+    "risk_level": "low"
   },
   "modes.GCM": {
     "algorithm": "GCM",
     "primitive": "cipher_mode",
     "provider": "cryptography",
-    "family": "mode"
+    "family": "mode",
+    "risk_level": "low"
+  },
+  "modes.OFB": {
+    "algorithm": "OFB",
+    "primitive": "cipher_mode",
+    "provider": "cryptography",
+    "family": "mode",
+    "risk_level": "low"
+  },
+  "modes.CFB": {
+    "algorithm": "CFB",
+    "primitive": "cipher_mode",
+    "provider": "cryptography",
+    "family": "mode",
+    "risk_level": "low"
   },
   "hashlib.sha256": {
     "algorithm": "SHA-256",
     "primitive": "hash",
     "provider": "python-stdlib",
-    "family": "hash"
+    "family": "hash",
+    "risk_level": "low"
   },
   "hashlib.sha512": {
     "algorithm": "SHA-512",
     "primitive": "hash",
     "provider": "python-stdlib",
-    "family": "hash"
+    "family": "hash",
+    "risk_level": "low"
   },
   "hashlib.sha1": {
     "algorithm": "SHA-1",
     "primitive": "hash",
     "provider": "python-stdlib",
-    "family": "hash"
+    "family": "hash",
+    "risk_level": "high",
+    "risk_reason": "SHA-1 is cryptographically broken; use SHA-256 or SHA-512"
   },
   "hashlib.md5": {
     "algorithm": "MD5",
     "primitive": "hash",
     "provider": "python-stdlib",
-    "family": "hash"
+    "family": "hash",
+    "risk_level": "high",
+    "risk_reason": "MD5 is cryptographically broken; use SHA-256 or SHA-512"
+  },
+  "hashlib.blake2b": {
+    "algorithm": "BLAKE2b",
+    "primitive": "hash",
+    "provider": "python-stdlib",
+    "family": "hash",
+    "risk_level": "low"
+  },
+  "hashlib.blake2s": {
+    "algorithm": "BLAKE2s",
+    "primitive": "hash",
+    "provider": "python-stdlib",
+    "family": "hash",
+    "risk_level": "low"
+  },
+  "hashlib.sha3_256": {
+    "algorithm": "SHA3-256",
+    "primitive": "hash",
+    "provider": "python-stdlib",
+    "family": "hash",
+    "risk_level": "low"
+  },
+  "hashlib.sha3_512": {
+    "algorithm": "SHA3-512",
+    "primitive": "hash",
+    "provider": "python-stdlib",
+    "family": "hash",
+    "risk_level": "low"
   },
   "hashes.SHA256": {
     "algorithm": "SHA-256",
     "primitive": "hash",
     "provider": "cryptography",
-    "family": "hash"
+    "family": "hash",
+    "risk_level": "low"
+  },
+  "hashes.SHA512": {
+    "algorithm": "SHA-512",
+    "primitive": "hash",
+    "provider": "cryptography",
+    "family": "hash",
+    "risk_level": "low"
   },
   "hashes.SHA1": {
     "algorithm": "SHA-1",
     "primitive": "hash",
     "provider": "cryptography",
-    "family": "hash"
+    "family": "hash",
+    "risk_level": "high"
   },
   "hashes.MD5": {
     "algorithm": "MD5",
     "primitive": "hash",
     "provider": "cryptography",
-    "family": "hash"
+    "family": "hash",
+    "risk_level": "high"
+  },
+  "hashes.BLAKE2b": {
+    "algorithm": "BLAKE2b",
+    "primitive": "hash",
+    "provider": "cryptography",
+    "family": "hash",
+    "risk_level": "low"
+  },
+  "hashes.BLAKE2s": {
+    "algorithm": "BLAKE2s",
+    "primitive": "hash",
+    "provider": "cryptography",
+    "family": "hash",
+    "risk_level": "low"
+  },
+  "hashes.SHA3_256": {
+    "algorithm": "SHA3-256",
+    "primitive": "hash",
+    "provider": "cryptography",
+    "family": "hash",
+    "risk_level": "low"
   },
   "hashlib.pbkdf2_hmac": {
     "algorithm": "PBKDF2",
     "primitive": "key_derivation",
     "provider": "python-stdlib",
-    "family": "kdf"
+    "family": "kdf",
+    "risk_level": "low"
   },
   "pbkdf2_hmac": {
     "algorithm": "PBKDF2",
     "primitive": "key_derivation",
     "provider": "python-stdlib",
-    "family": "kdf"
+    "family": "kdf",
+    "risk_level": "low"
   },
   "PBKDF2HMAC": {
     "algorithm": "PBKDF2",
     "primitive": "key_derivation",
     "provider": "cryptography",
-    "family": "kdf"
+    "family": "kdf",
+    "risk_level": "low"
   },
   "HKDF": {
     "algorithm": "HKDF",
     "primitive": "key_derivation",
     "provider": "cryptography",
-    "family": "kdf"
+    "family": "kdf",
+    "risk_level": "low"
   },
   "Scrypt": {
-    "algorithm": "scrypt",
+    "algorithm": "Scrypt",
     "primitive": "key_derivation",
     "provider": "cryptography",
-    "family": "kdf"
+    "family": "kdf",
+    "risk_level": "low"
+  },
+  "Argon2": {
+    "algorithm": "Argon2",
+    "primitive": "key_derivation",
+    "provider": "cryptography",
+    "family": "kdf",
+    "risk_level": "low",
+    "recommended": true
+  },
+  "bcrypt": {
+    "algorithm": "bcrypt",
+    "primitive": "password_hashing",
+    "provider": "bcrypt",
+    "family": "password_hashing",
+    "risk_level": "low"
   },
   "bcrypt.kdf": {
     "algorithm": "bcrypt-kdf",
@@ -159,59 +342,89 @@
     "algorithm": "HMAC",
     "primitive": "message_authentication",
     "provider": "python-stdlib",
-    "family": "mac"
+    "family": "mac",
+    "risk_level": "low"
   },
   "HMAC": {
     "algorithm": "HMAC",
     "primitive": "message_authentication",
     "provider": "cryptography",
-    "family": "mac"
+    "family": "mac",
+    "risk_level": "low"
   },
   "Fernet": {
     "algorithm": "Fernet",
     "primitive": "authenticated_encryption",
     "provider": "cryptography",
-    "family": "aead"
+    "family": "aead",
+    "risk_level": "low"
   },
   "Fernet.generate_key": {
     "algorithm": "Fernet",
     "primitive": "symmetric_key_generation",
     "provider": "cryptography",
-    "family": "key_generation"
+    "family": "key_generation",
+    "risk_level": "low"
   },
   "AESGCM": {
     "algorithm": "AES-GCM",
     "primitive": "authenticated_encryption",
     "provider": "cryptography",
-    "family": "aead"
+    "family": "aead",
+    "risk_level": "low"
   },
   "ChaCha20Poly1305": {
     "algorithm": "ChaCha20-Poly1305",
     "primitive": "authenticated_encryption",
     "provider": "cryptography",
-    "family": "aead"
-  },
-  "algorithms.ChaCha20": {
-    "algorithm": "ChaCha20",
-    "primitive": "symmetric_encryption",
-    "provider": "cryptography",
-    "family": "stream_cipher"
-  },
-  "Argon2": {
-    "algorithm": "Argon2",
-    "primitive": "key_derivation",
-    "provider": "cryptography",
-    "family": "kdf"
+    "family": "aead",
+    "risk_level": "low"
   },
   "ec.ECDSA": {
     "algorithm": "ECDSA",
     "primitive": "digital_signature",
     "provider": "cryptography",
-    "family": "public_key_signature"
+    "family": "public_key_signature",
+    "risk_level": "low"
+  },
+  "dsa.DSASignatureAlgorithm": {
+    "algorithm": "DSA",
+    "primitive": "digital_signature",
+    "provider": "cryptography",
+    "family": "public_key_signature",
+    "risk_level": "medium"
+  },
+  "rsa.padding.PKCS1v15": {
+    "algorithm": "RSA-PKCS1v15",
+    "primitive": "asymmetric_encryption",
+    "provider": "cryptography",
+    "family": "padding",
+    "risk_level": "medium",
+    "risk_reason": "PKCS#1 v1.5 padding is vulnerable to padding oracle attacks"
+  },
+  "rsa.padding.OAEP": {
+    "algorithm": "RSA-OAEP",
+    "primitive": "asymmetric_encryption",
+    "provider": "cryptography",
+    "family": "padding",
+    "risk_level": "low"
+  },
+  "rsa.padding.PSS": {
+    "algorithm": "RSA-PSS",
+    "primitive": "digital_signature",
+    "provider": "cryptography",
+    "family": "padding",
+    "risk_level": "low"
   },
   "x509.CertificateBuilder": {
     "algorithm": "X.509",
     "primitive": "certificate_management",
+    "provider": "cryptography",
+    "family": "pki"
+  },
+  "x509.CertificateSigningRequestBuilder": {
+    "algorithm": "CSR",
+    "primitive": "certificate_request",
     "provider": "cryptography",
     "family": "pki"
   },
@@ -227,34 +440,159 @@
     "provider": "cryptography",
     "family": "pki"
   },
+  "x509.SubjectAlternativeName": {
+    "algorithm": "X.509-SAN",
+    "primitive": "certificate_extension",
+    "provider": "cryptography",
+    "family": "pki"
+  },
+  "x509.BasicConstraints": {
+    "algorithm": "X.509-BasicConstraints",
+    "primitive": "certificate_extension",
+    "provider": "cryptography",
+    "family": "pki"
+  },
+  "serialization.Encoding.PEM": {
+    "algorithm": "PEM",
+    "primitive": "key_serialization",
+    "provider": "cryptography",
+    "family": "serialization"
+  },
+  "serialization.Encoding.DER": {
+    "algorithm": "DER",
+    "primitive": "key_serialization",
+    "provider": "cryptography",
+    "family": "serialization"
+  },
+  "serialization.PrivateFormat.PKCS8": {
+    "algorithm": "PKCS8",
+    "primitive": "key_serialization",
+    "provider": "cryptography",
+    "family": "serialization"
+  },
+  "serialization.PrivateFormat.TraditionalOpenSSL": {
+    "algorithm": "OpenSSL-Traditional",
+    "primitive": "key_serialization",
+    "provider": "cryptography",
+    "family": "serialization"
+  },
   "secrets.token_bytes": {
     "algorithm": "CSPRNG",
     "primitive": "random_generation",
     "provider": "python-stdlib",
-    "family": "random"
+    "family": "random",
+    "risk_level": "low"
   },
   "secrets.token_hex": {
     "algorithm": "CSPRNG",
     "primitive": "random_generation",
     "provider": "python-stdlib",
-    "family": "random"
+    "family": "random",
+    "risk_level": "low"
+  },
+  "secrets.token_urlsafe": {
+    "algorithm": "CSPRNG",
+    "primitive": "random_generation",
+    "provider": "python-stdlib",
+    "family": "random",
+    "risk_level": "low"
+  },
+  "secrets.choice": {
+    "algorithm": "CSPRNG",
+    "primitive": "random_selection",
+    "provider": "python-stdlib",
+    "family": "random",
+    "risk_level": "low"
+  },
+  "secrets.randbytes": {
+    "algorithm": "CSPRNG",
+    "primitive": "random_generation",
+    "provider": "python-stdlib",
+    "family": "random",
+    "risk_level": "low"
   },
   "os.urandom": {
     "algorithm": "CSPRNG",
     "primitive": "random_generation",
     "provider": "python-stdlib",
-    "family": "random"
-  },
-  "random.randbytes": {
-    "algorithm": "PRNG",
-    "primitive": "random_generation",
-    "provider": "python-stdlib",
-    "family": "random"
+    "family": "random",
+    "risk_level": "low"
   },
   "random.random": {
     "algorithm": "PRNG",
     "primitive": "random_generation",
     "provider": "python-stdlib",
-    "family": "random"
+    "family": "random",
+    "risk_level": "high",
+    "risk_reason": "PRNG is not cryptographically secure; use os.urandom or secrets module"
+  },
+  "random.randint": {
+    "algorithm": "PRNG",
+    "primitive": "random_generation",
+    "provider": "python-stdlib",
+    "family": "random",
+    "risk_level": "high"
+  },
+  "random.randbytes": {
+    "algorithm": "PRNG",
+    "primitive": "random_generation",
+    "provider": "python-stdlib",
+    "family": "random",
+    "risk_level": "high"
+  },
+  "random.choice": {
+    "algorithm": "PRNG",
+    "primitive": "random_selection",
+    "provider": "python-stdlib",
+    "family": "random",
+    "risk_level": "high"
+  },
+  "cryptography.hazmat.backends": {
+    "algorithm": "Backend",
+    "primitive": "crypto_backend",
+    "provider": "cryptography",
+    "family": "backend"
+  },
+  "default_backend": {
+    "algorithm": "OpenSSL-Backend",
+    "primitive": "crypto_backend",
+    "provider": "cryptography",
+    "family": "backend"
+  },
+  "jwt.encode": {
+    "algorithm": "JWT",
+    "primitive": "token_generation",
+    "provider": "pyjwt",
+    "family": "token"
+  },
+  "jwt.decode": {
+    "algorithm": "JWT",
+    "primitive": "token_verification",
+    "provider": "pyjwt",
+    "family": "token"
+  },
+  "itsdangerous.URLSafeTimedSerializer": {
+    "algorithm": "URLSafeTimedSerializer",
+    "primitive": "token_generation",
+    "provider": "itsdangerous",
+    "family": "token"
+  },
+  "passlib.context.CryptContext": {
+    "algorithm": "CryptContext",
+    "primitive": "password_hashing",
+    "provider": "passlib",
+    "family": "password_hashing"
+  },
+  "werkzeug.security.generate_password_hash": {
+    "algorithm": "werkzeug-hash",
+    "primitive": "password_hashing",
+    "provider": "werkzeug",
+    "family": "password_hashing"
+  },
+  "werkzeug.security.check_password_hash": {
+    "algorithm": "werkzeug-check",
+    "primitive": "password_verification",
+    "provider": "werkzeug",
+    "family": "password_hashing"
   }
 }

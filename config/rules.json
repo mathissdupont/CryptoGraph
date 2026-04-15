@@ -23,7 +23,7 @@
         "algorithm_in": ["DES", "3DES"]
       },
       "risk": "high",
-      "message": "Legacy block cipher detected."
+      "message": "Legacy block cipher detected; migrate to AES or ChaCha20."
     },
     {
       "id": "DEPRECATED_HASH",
@@ -31,7 +31,7 @@
         "algorithm_in": ["MD5", "SHA-1"]
       },
       "risk": "high",
-      "message": "Deprecated hash algorithm detected."
+      "message": "Deprecated hash algorithm detected; use SHA-256, SHA-512, or SHA3-256."
     },
     {
       "id": "RSA_SMALL_KEY",
@@ -40,7 +40,15 @@
         "numeric_argument_less_than": 2048
       },
       "risk": "high",
-      "message": "RSA key size below 2048 bits detected."
+      "message": "RSA key size below 2048 bits detected; use at least 2048 bits, prefer 4096."
+    },
+    {
+      "id": "RSA_PKCS1V15_PADDING",
+      "match": {
+        "api_name_in": ["rsa.padding.PKCS1v15"]
+      },
+      "risk": "high",
+      "message": "RSA PKCS#1 v1.5 padding is vulnerable to padding oracle attacks; use OAEP instead."
     },
     {
       "id": "PBKDF2_LOW_ITERATIONS",
@@ -49,15 +57,15 @@
         "numeric_argument_less_than": 100000
       },
       "risk": "medium",
-      "message": "PBKDF2 iteration count appears low for modern password-derived key material."
+      "message": "PBKDF2 iteration count appears low for modern password-derived key material; use ≥100000."
     },
     {
       "id": "WEAK_PRNG",
       "match": {
-        "api_name_in": ["random.randbytes", "random.random"]
+        "api_name_in": ["random.randbytes", "random.random", "random.randint", "random.choice"]
       },
-      "risk": "medium",
-      "message": "Non-cryptographic random source detected near crypto-sensitive code."
+      "risk": "high",
+      "message": "Non-cryptographic random source detected; use os.urandom() or secrets module for crypto."
     },
     {
       "id": "HARDCODED_CRYPTO_LITERAL",
@@ -65,7 +73,7 @@
         "has_string_literal_argument": true
       },
       "risk": "high",
-      "message": "String literal used near a cryptographic call; review for hardcoded secrets."
+      "message": "String literal used near a cryptographic call; review for hardcoded secrets or keys."
     },
     {
       "id": "CBC_REQUIRES_AUTH_REVIEW",
@@ -73,7 +81,155 @@
         "argument_contains_any": ["MODE_CBC", "modes.CBC"]
       },
       "risk": "medium",
-      "message": "CBC mode requires authentication and careful IV handling; review surrounding code."
+      "message": "CBC mode requires proper authentication, random IV handling, and padding; review surrounding code."
+    },
+    {
+      "id": "CHACHA20_IV_REUSE",
+      "match": {
+        "algorithm_in": ["ChaCha20"]
+      },
+      "risk": "high",
+      "message": "ChaCha20 detected; critical that nonce/IV is never reused with the same key."
+    },
+    {
+      "id": "GCM_MODE_BEST_PRACTICE",
+      "match": {
+        "algorithm_in": ["AES-GCM", "ChaCha20-Poly1305"]
+      },
+      "risk": "low",
+      "note": "AEAD mode detected; verify proper nonce handling and tag verification."
+    },
+    {
+      "id": "CTR_MODE_BEST_PRACTICE",
+      "match": {
+        "algorithm_in": ["CTR"]
+      },
+      "risk": "low",
+      "note": "CTR mode detected; ensure IV is unique per key and never reused."
+    },
+    {
+      "id": "ARGON2_RECOMMENDED",
+      "match": {
+        "algorithm_in": ["Argon2"]
+      },
+      "risk": "low",
+      "note": "Argon2 detected (recommended password hashing algorithm); verify appropriate memory/time parameters."
+    },
+    {
+      "id": "SCRYPT_USAGE",
+      "match": {
+        "algorithm_in": ["Scrypt"]
+      },
+      "risk": "low",
+      "message": "Scrypt detected; ensure cost parameters (N, r, p) are appropriate for the use case."
+    },
+    {
+      "id": "BCRYPT_USAGE",
+      "match": {
+        "api_name_in": ["bcrypt", "bcrypt.kdf"]
+      },
+      "risk": "low",
+      "note": "bcrypt detected; verify cost factor is at least 12 for password hashing."
+    },
+    {
+      "id": "FERNET_RECOMMENDED",
+      "match": {
+        "algorithm_in": ["Fernet"]
+      },
+      "risk": "low",
+      "note": "Fernet (high-level symmetric encryption) detected; good for most use cases."
+    },
+    {
+      "id": "HMAC_USAGE",
+      "match": {
+        "api_name_in": ["HMAC"]
+      },
+      "risk": "low",
+      "message": "HMAC detected; ensure hash algorithm is SHA-256 or stronger, not MD5 or SHA-1."
+    },
+    {
+      "id": "JWT_VALIDATION_REQUIRED",
+      "match": {
+        "api_name_in": ["jwt.decode", "jwt.encode"]
+      },
+      "risk": "medium",
+      "message": "JWT detected; verify signature validation is enabled and algorithm is not 'none'."
+    },
+    {
+      "id": "ECC_CURVE_VALIDATION",
+      "match": {
+        "algorithm_in": ["ECC", "ECC-SECP256R1", "ECC-SECP384R1", "ECC-SECP521R1"]
+      },
+      "risk": "low",
+      "message": "ECC detected; verify strong curves are used (SECP256R1 or stronger)."
+    },
+    {
+      "id": "DSA_DEPRECATION_WARNING",
+      "match": {
+        "algorithm_in": ["DSA"]
+      },
+      "risk": "medium",
+      "message": "DSA detected; prefer ECDSA with strong curves (SECP256R1 or SECP384R1)."
+    },
+    {
+      "id": "X509_CERTIFICATE_VALIDATION",
+      "match": {
+        "api_name_in": ["x509.CertificateBuilder"]
+      },
+      "risk": "medium",
+      "message": "X.509 certificate creation detected; ensure proper validation chain and expiration."
+    },
+    {
+      "id": "KEY_MATERIAL_LOGGING",
+      "match": {
+        "context_contains_any": ["print", "log", "debug"],
+        "previous_api_in": ["generate_private_key", "generate_key", "Fernet.generate_key"]
+      },
+      "risk": "high",
+      "message": "Key material may be logged; ensure sensitive keys are not printed or logged."
+    },
+    {
+      "id": "HKDF_USAGE",
+      "match": {
+        "algorithm_in": ["HKDF"]
+      },
+      "risk": "low",
+      "note": "HKDF detected; verify salt and info parameters are appropriate for the context."
+    },
+    {
+      "id": "INSECURE_SERIALIZATION",
+      "match": {
+        "context_contains": "pickle"
+      },
+      "risk": "high",
+      "message": "Pickle detected with cryptographic objects; pickle is insecure; use JSON with PEM encoding."
+    },
+    {
+      "id": "KEY_HARDCODING_PATTERN",
+      "match": {
+        "has_assignment_from_literal": true,
+        "variable_name_contains_any": ["key", "SECRET", "password", "secret"]
+      },
+      "risk": "high",
+      "message": "Hardcoded key/secret detected; use environment variables or secure key management."
+    },
+    {
+      "id": "IV_NONCE_GENERATION",
+      "match": {
+        "variable_name_contains_any": ["iv", "nonce", "IV", "NONCE"],
+        "assigned_from_not_in": ["os.urandom", "secrets", "token_bytes", "generate_"]
+      },
+      "risk": "medium",
+      "message": "IV/nonce generated insecurely; must use cryptographically secure RNG (os.urandom, secrets)."
+    },
+    {
+      "id": "WEAK_RANDOM_IV",
+      "match": {
+        "context_contains": "random.randint",
+        "context_contains_after": "iv"
+      },
+      "risk": "high",
+      "message": "Weak random source used for IV; use os.urandom() or secrets module."
     }
   ],
   "default_risk": "info"

@@ -144,6 +144,93 @@ When `--backend fraunhofer-strict` is used:
 - Suitable for CI/CD pipelines and validation workflows
 - No silent degradation
 
+## Testing
+
+### Comprehensive Test Suite
+
+CryptoGraph includes 13 sample Python files demonstrating cryptographic usage patterns:
+
+**Core samples** (6):
+- `hash_example.py`: SHA, MD5 hashing
+- `insecure_aes.py`: AES-ECB (insecure) encryption
+- `pbkdf2_example.py`: PBKDF2 key derivation
+- `rsa_example.py`: RSA encryption and key generation
+- `fernet_example.py`: High-level authenticated encryption
+- `auth_flow.py`: Authentication flow with password hashing
+
+**Extended samples** (7, new):
+- `hmac_example.py`: HMAC-SHA256 message authentication
+- `chacha20_example.py`: ChaCha20 stream cipher
+- `scrypt_example.py`: Scrypt key derivation + PBKDF2 fallback
+- `ecdsa_example.py`: ECDSA digital signatures
+- `gcm_mode_example.py`: AES-GCM authenticated encryption
+- `certificate_example.py`: X.509 certificate generation
+- `argon2_example.py`: Argon2 modern password hashing
+
+### Run Tests with Fraunhofer Backend
+
+```bash
+# Build Docker image (includes Fraunhofer exporter)
+docker compose build
+
+# Scan all samples and generate CBOM
+docker compose run --rm cryptograph scan \
+    --input /app/samples \
+    --output /app/output/result.json \
+    --backend fraunhofer
+
+# Generate CPG visualization
+docker compose run --rm cryptograph graph \
+    --input /app/samples \
+    --output /app/output/cpg.json \
+    --dot /app/output/cpg.dot \
+    --html /app/output/cpg.html \
+    --backend fraunhofer
+
+# Generate HTML report from CBOM
+docker compose run --rm cryptograph report \
+    --input /app/output/run-YYYYMMDDTHHMMSSZ-xxxxxxxx/result.json \
+    --output /app/output/report.html
+```
+
+### Expected Results
+
+**Latest Test Run (April 15, 2026)**:
+- **Total Findings**: 39 cryptographic assets
+- **Risk Breakdown**: 6 high-risk, 33 info/low-risk
+- **Graph Size**: 545 nodes, 493 edges
+- **Algorithms Detected**:
+  - Symmetric: AES, ChaCha20
+  - Asymmetric: RSA, ECC, ECDSA
+  - Hashing: SHA-256, SHA-512, MD5 (deprecated)
+  - KDF: PBKDF2, Scrypt, Argon2
+  - Auth: HMAC, X.509 certificates
+  - Random: os.urandom, secrets module
+
+See [TEST-RESULTS.md](TEST-RESULTS.md) for detailed test report and analysis.
+
+## Backend Modes
+
+| Mode | Backend | Fallback | Use Case |
+|------|---------|----------|----------|
+| `fraunhofer` (default) | Fraunhofer AISEC CPG | Yes → ast-lite | Production: accurate CPG, but graceful degradation |
+| `fraunhofer-strict` | Fraunhofer AISEC CPG | No | Validation/CI: fail if CPG fails (no silent fallback) |
+| `ast-lite` | Python AST (no JVM) | —— | Development: fastest, lightweight, for iteration |
+
+### Fallback Behavior
+
+When `--backend fraunhofer` is used:
+
+1. Attempts to invoke Fraunhofer CPG exporter (subprocess)
+2. If exporter is unavailable or crashes → falls back to ast-lite with warning on stderr
+3. CBOM result includes `backend` field to track whether data came from CPG or fallback
+
+When `--backend fraunhofer-strict` is used:
+
+- Fails immediately if exporter is unavailable or crashes
+- Suitable for CI/CD pipelines and validation workflows
+- No silent degradation
+
 ## Documentation
 
 ### English Documentation

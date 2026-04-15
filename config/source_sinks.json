@@ -12,8 +12,53 @@
     },
     {
       "id": "generated_random",
-      "labels": ["token_bytes", "urandom", "generate_key", "randbytes"],
+      "labels": ["token_bytes", "urandom", "generate_key", "randbytes", "token_hex", "token_urlsafe"],
       "classification": "generated_random"
+    },
+    {
+      "id": "configuration_source",
+      "labels": ["config", "settings", "environment", "environ", "getenv", "configuration"],
+      "classification": "configuration"
+    },
+    {
+      "id": "file_io_source",
+      "labels": ["read", "open", "load", "read_file", "read_bytes", "from_file"],
+      "classification": "file_input"
+    },
+    {
+      "id": "network_source",
+      "labels": ["socket", "request", "response", "urllib", "http", "network", "remote"],
+      "classification": "network_input"
+    },
+    {
+      "id": "database_source",
+      "labels": ["database", "db", "query", "select", "fetch", "cursor", "connection"],
+      "classification": "database_input"
+    },
+    {
+      "id": "certificate_source",
+      "labels": ["certificate", "cert", "x509", "csr", "pem", "der", "public_key", "certificate_data"],
+      "classification": "certificate"
+    },
+    {
+      "id": "jwt_token_source",
+      "labels": ["jwt", "token", "jwt_payload", "claims", "jwt_header"],
+      "classification": "jwt_token"
+    },
+    {
+      "id": "serialized_source",
+      "labels": ["json", "pickle", "yaml", "xml", "serialize", "dump", "loads"],
+      "classification": "serialized_data"
+    },
+    {
+      "id": "command_line_source",
+      "labels": ["argv", "args", "sys.argv", "command_line", "cli", "commandline"],
+      "classification": "command_line_input"
+    },
+    {
+      "id": "hardcoded_source",
+      "labels": ["hardcoded", "literal", "constant", "SECRET", "KEY", "PASSWORD"],
+      "classification": "hardcoded_constant"
     }
   ],
   "sinks": [
@@ -26,6 +71,115 @@
       "id": "key_generation",
       "primitives": ["symmetric_key_generation", "asymmetric_key_generation", "random_generation"],
       "classification": "key_material_sink"
+    },
+    {
+      "id": "signature_operation",
+      "primitives": ["digital_signature"],
+      "classification": "signature_sink"
+    },
+    {
+      "id": "certificate_operation",
+      "primitives": ["certificate_management", "certificate_request", "certificate_attribute", "certificate_extension"],
+      "classification": "certificate_sink"
+    },
+    {
+      "id": "jwt_operation",
+      "labels": ["jwt.encode", "jwt.decode", "jwt.sign"],
+      "classification": "jwt_sink"
+    },
+    {
+      "id": "file_output",
+      "labels": ["write", "save", "dump", "export", "file.write", "open"],
+      "classification": "file_output"
+    },
+    {
+      "id": "network_output",
+      "labels": ["send", "post", "put", "response", "return", "socket.send"],
+      "classification": "network_output"
+    },
+    {
+      "id": "database_output",
+      "labels": ["insert", "update", "delete", "execute", "commit", "database.save"],
+      "classification": "database_output"
+    },
+    {
+      "id": "logging_output",
+      "labels": ["print", "log", "debug", "info", "warning", "error", "logger"],
+      "classification": "logging_output"
+    },
+    {
+      "id": "serialization_output",
+      "labels": ["dumps", "dump", "to_json", "to_dict", "serialize", "encode"],
+      "classification": "serialization_output"
+    },
+    {
+      "id": "memory_storage",
+      "labels": ["cache", "session", "memory", "dict", "store"],
+      "classification": "memory_storage"
+    },
+    {
+      "id": "return_value",
+      "labels": ["return", "yield", "pass"],
+      "classification": "function_output"
+    }
+  ],
+  "dataflow_patterns": [
+    {
+      "id": "key_to_crypto",
+      "source": "key_material",
+      "sink": "crypto_sink",
+      "risk": "high",
+      "message": "Key material flowing to cryptographic operation; ensure integrity and confidentiality."
+    },
+    {
+      "id": "user_to_hash",
+      "source": "user_input",
+      "sink": "crypto_sink",
+      "risk": "medium",
+      "message": "User input flowing to hash function; verify hash algorithm is not deprecated."
+    },
+    {
+      "id": "random_to_key",
+      "source": "generated_random",
+      "sink": "key_material_sink",
+      "risk": "low",
+      "message": "Random source flowing to key generation; verify CSPRNG is used."
+    },
+    {
+      "id": "key_to_file",
+      "source": "key_material",
+      "sink": "file_output",
+      "risk": "high",
+      "message": "Key material flowing to file; ensure proper encryption and permissions."
+    },
+    {
+      "id": "key_to_logging",
+      "source": "key_material",
+      "sink": "logging_output",
+      "risk": "high",
+      "message": "Key material flowing to logging; this is a critical security leak."
+    },
+    {
+      "id": "cert_to_validation",
+      "source": "certificate",
+      "sink": "certificate_sink",
+      "risk": "medium",
+      "message": "Certificate data in use; verify validation chain and expiration."
+    },
+    {
+      "id": "jwt_to_decode",
+      "source": "jwt_token",
+      "sink": "jwt_sink",
+      "risk": "medium",
+      "message": "JWT token being decoded; ensure signature validation enabled."
+    },
+    {
+      "id": "hardcoded_to_crypto",
+      "source": "hardcoded_constant",
+      "sink": "crypto_sink",
+      "risk": "high",
+      "message": "Hardcoded value in cryptographic operation; likely a security issue."
     }
   ]
 }
+
