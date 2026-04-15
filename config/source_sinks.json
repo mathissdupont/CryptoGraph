@@ -1,0 +1,31 @@
+{
+  "sources": [
+    {
+      "id": "user_input",
+      "labels": ["request", "input", "form", "query", "args", "json", "body", "payload", "message", "note", "data", "token", "password"],
+      "classification": "user_input"
+    },
+    {
+      "id": "key_material",
+      "labels": ["key", "secret", "private_key", "public_key", "password", "salt", "nonce", "iv"],
+      "classification": "key_material"
+    },
+    {
+      "id": "generated_random",
+      "labels": ["token_bytes", "urandom", "generate_key", "randbytes"],
+      "classification": "generated_random"
+    }
+  ],
+  "sinks": [
+    {
+      "id": "crypto_operation",
+      "primitives": ["symmetric_encryption", "authenticated_encryption", "asymmetric_encryption", "hash", "message_authentication", "key_derivation"],
+      "classification": "crypto_sink"
+    },
+    {
+      "id": "key_generation",
+      "primitives": ["symmetric_key_generation", "asymmetric_key_generation", "random_generation"],
+      "classification": "key_material_sink"
+    }
+  ]
+}

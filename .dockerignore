@@ -1,0 +1,15 @@
+.git/
+.venv*/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+pytest-cache-files-*/
+.gradle/
+**/.gradle/
+output/
+build/
+dist/
+*.egg-info/
+tools/fraunhofer-exporter/build/
+hs_err_pid*.log
+core.*

@@ -1,0 +1,224 @@
+{
+  "AES.new": {
+    "algorithm": "AES",
+    "primitive": "symmetric_encryption",
+    "provider": "pycryptodome",
+    "family": "block_cipher"
+  },
+  "DES.new": {
+    "algorithm": "DES",
+    "primitive": "symmetric_encryption",
+    "provider": "pycryptodome",
+    "family": "block_cipher"
+  },
+  "DES3.new": {
+    "algorithm": "3DES",
+    "primitive": "symmetric_encryption",
+    "provider": "pycryptodome",
+    "family": "block_cipher"
+  },
+  "PKCS1_OAEP.new": {
+    "algorithm": "RSA-OAEP",
+    "primitive": "asymmetric_encryption",
+    "provider": "pycryptodome",
+    "family": "public_key_encryption"
+  },
+  "RSA.generate": {
+    "algorithm": "RSA",
+    "primitive": "asymmetric_key_generation",
+    "provider": "pycryptodome",
+    "family": "public_key"
+  },
+  "rsa.generate_private_key": {
+    "algorithm": "RSA",
+    "primitive": "asymmetric_key_generation",
+    "provider": "cryptography",
+    "family": "public_key"
+  },
+  "ec.generate_private_key": {
+    "algorithm": "ECC",
+    "primitive": "asymmetric_key_generation",
+    "provider": "cryptography",
+    "family": "public_key"
+  },
+  "Cipher": {
+    "algorithm": "Cipher",
+    "primitive": "symmetric_encryption",
+    "provider": "cryptography",
+    "family": "cipher_context"
+  },
+  "algorithms.AES": {
+    "algorithm": "AES",
+    "primitive": "symmetric_encryption",
+    "provider": "cryptography",
+    "family": "block_cipher"
+  },
+  "algorithms.TripleDES": {
+    "algorithm": "3DES",
+    "primitive": "symmetric_encryption",
+    "provider": "cryptography",
+    "family": "block_cipher"
+  },
+  "modes.ECB": {
+    "algorithm": "ECB",
+    "primitive": "cipher_mode",
+    "provider": "cryptography",
+    "family": "mode"
+  },
+  "modes.CBC": {
+    "algorithm": "CBC",
+    "primitive": "cipher_mode",
+    "provider": "cryptography",
+    "family": "mode"
+  },
+  "modes.GCM": {
+    "algorithm": "GCM",
+    "primitive": "cipher_mode",
+    "provider": "cryptography",
+    "family": "mode"
+  },
+  "hashlib.sha256": {
+    "algorithm": "SHA-256",
+    "primitive": "hash",
+    "provider": "python-stdlib",
+    "family": "hash"
+  },
+  "hashlib.sha512": {
+    "algorithm": "SHA-512",
+    "primitive": "hash",
+    "provider": "python-stdlib",
+    "family": "hash"
+  },
+  "hashlib.sha1": {
+    "algorithm": "SHA-1",
+    "primitive": "hash",
+    "provider": "python-stdlib",
+    "family": "hash"
+  },
+  "hashlib.md5": {
+    "algorithm": "MD5",
+    "primitive": "hash",
+    "provider": "python-stdlib",
+    "family": "hash"
+  },
+  "hashes.SHA256": {
+    "algorithm": "SHA-256",
+    "primitive": "hash",
+    "provider": "cryptography",
+    "family": "hash"
+  },
+  "hashes.SHA1": {
+    "algorithm": "SHA-1",
+    "primitive": "hash",
+    "provider": "cryptography",
+    "family": "hash"
+  },
+  "hashes.MD5": {
+    "algorithm": "MD5",
+    "primitive": "hash",
+    "provider": "cryptography",
+    "family": "hash"
+  },
+  "hashlib.pbkdf2_hmac": {
+    "algorithm": "PBKDF2",
+    "primitive": "key_derivation",
+    "provider": "python-stdlib",
+    "family": "kdf"
+  },
+  "pbkdf2_hmac": {
+    "algorithm": "PBKDF2",
+    "primitive": "key_derivation",
+    "provider": "python-stdlib",
+    "family": "kdf"
+  },
+  "PBKDF2HMAC": {
+    "algorithm": "PBKDF2",
+    "primitive": "key_derivation",
+    "provider": "cryptography",
+    "family": "kdf"
+  },
+  "HKDF": {
+    "algorithm": "HKDF",
+    "primitive": "key_derivation",
+    "provider": "cryptography",
+    "family": "kdf"
+  },
+  "Scrypt": {
+    "algorithm": "scrypt",
+    "primitive": "key_derivation",
+    "provider": "cryptography",
+    "family": "kdf"
+  },
+  "bcrypt.kdf": {
+    "algorithm": "bcrypt-kdf",
+    "primitive": "key_derivation",
+    "provider": "bcrypt",
+    "family": "kdf"
+  },
+  "hmac.new": {
+    "algorithm": "HMAC",
+    "primitive": "message_authentication",
+    "provider": "python-stdlib",
+    "family": "mac"
+  },
+  "HMAC": {
+    "algorithm": "HMAC",
+    "primitive": "message_authentication",
+    "provider": "cryptography",
+    "family": "mac"
+  },
+  "Fernet": {
+    "algorithm": "Fernet",
+    "primitive": "authenticated_encryption",
+    "provider": "cryptography",
+    "family": "aead"
+  },
+  "Fernet.generate_key": {
+    "algorithm": "Fernet",
+    "primitive": "symmetric_key_generation",
+    "provider": "cryptography",
+    "family": "key_generation"
+  },
+  "AESGCM": {
+    "algorithm": "AES-GCM",
+    "primitive": "authenticated_encryption",
+    "provider": "cryptography",
+    "family": "aead"
+  },
+  "ChaCha20Poly1305": {
+    "algorithm": "ChaCha20-Poly1305",
+    "primitive": "authenticated_encryption",
+    "provider": "cryptography",
+    "family": "aead"
+  },
+  "secrets.token_bytes": {
+    "algorithm": "CSPRNG",
+    "primitive": "random_generation",
+    "provider": "python-stdlib",
+    "family": "random"
+  },
+  "secrets.token_hex": {
+    "algorithm": "CSPRNG",
+    "primitive": "random_generation",
+    "provider": "python-stdlib",
+    "family": "random"
+  },
+  "os.urandom": {
+    "algorithm": "CSPRNG",
+    "primitive": "random_generation",
+    "provider": "python-stdlib",
+    "family": "random"
+  },
+  "random.randbytes": {
+    "algorithm": "PRNG",
+    "primitive": "random_generation",
+    "provider": "python-stdlib",
+    "family": "random"
+  },
+  "random.random": {
+    "algorithm": "PRNG",
+    "primitive": "random_generation",
+    "provider": "python-stdlib",
+    "family": "random"
+  }
+}

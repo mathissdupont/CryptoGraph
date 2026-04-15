@@ -1,0 +1,10 @@
+services:
+  cryptograph:
+    build: .
+    image: cryptograph:dev
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: ["cryptograph"]
+    command: ["scan", "--input", "samples", "--output", "output/result.json"]
+

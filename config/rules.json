@@ -1,0 +1,80 @@
+{
+  "rules": [
+    {
+      "id": "AES_ECB_MODE",
+      "match": {
+        "api_name_in": ["AES.new", "modes.ECB"],
+        "argument_contains": "MODE_ECB"
+      },
+      "risk": "high",
+      "message": "AES ECB mode leaks plaintext patterns and should not be used for sensitive data."
+    },
+    {
+      "id": "ECB_MODE_OBJECT",
+      "match": {
+        "api_name": "modes.ECB"
+      },
+      "risk": "high",
+      "message": "ECB mode object detected; ECB should not be used for sensitive data."
+    },
+    {
+      "id": "LEGACY_BLOCK_CIPHER",
+      "match": {
+        "algorithm_in": ["DES", "3DES"]
+      },
+      "risk": "high",
+      "message": "Legacy block cipher detected."
+    },
+    {
+      "id": "DEPRECATED_HASH",
+      "match": {
+        "algorithm_in": ["MD5", "SHA-1"]
+      },
+      "risk": "high",
+      "message": "Deprecated hash algorithm detected."
+    },
+    {
+      "id": "RSA_SMALL_KEY",
+      "match": {
+        "algorithm_in": ["RSA", "RSA-OAEP"],
+        "numeric_argument_less_than": 2048
+      },
+      "risk": "high",
+      "message": "RSA key size below 2048 bits detected."
+    },
+    {
+      "id": "PBKDF2_LOW_ITERATIONS",
+      "match": {
+        "algorithm_in": ["PBKDF2"],
+        "numeric_argument_less_than": 100000
+      },
+      "risk": "medium",
+      "message": "PBKDF2 iteration count appears low for modern password-derived key material."
+    },
+    {
+      "id": "WEAK_PRNG",
+      "match": {
+        "api_name_in": ["random.randbytes", "random.random"]
+      },
+      "risk": "medium",
+      "message": "Non-cryptographic random source detected near crypto-sensitive code."
+    },
+    {
+      "id": "HARDCODED_CRYPTO_LITERAL",
+      "match": {
+        "has_string_literal_argument": true
+      },
+      "risk": "high",
+      "message": "String literal used near a cryptographic call; review for hardcoded secrets."
+    },
+    {
+      "id": "CBC_REQUIRES_AUTH_REVIEW",
+      "match": {
+        "argument_contains_any": ["MODE_CBC", "modes.CBC"]
+      },
+      "risk": "medium",
+      "message": "CBC mode requires authentication and careful IV handling; review surrounding code."
+    }
+  ],
+  "default_risk": "info"
+}
