@@ -51,15 +51,21 @@ def test_cbom_builder_returns_summary() -> None:
     cbom = build_cbom(findings, source="samples", backend=graph.backend)
 
     assert cbom["cbom_format"] == "cryptograph-custom"
+    assert cbom["spec_version"] == "0.2"
     assert cbom["analysis"]["graph"]["available"] is False
     assert cbom["summary"]["total_assets"] >= 5
     assert cbom["summary"]["by_primitive"]["key_derivation"] >= 1
     aes = next(asset for asset in cbom["cryptographic_assets"] if asset["evidence"]["api_call"] == "AES.new")
     assert aes["asset_id"].startswith("crypto-")
     assert aes["crypto_metadata"]["mode"] == "ECB"
-    assert aes["flow"]["key_source"] == "classified_key_material"
-    assert "confidence" in aes["inference"]
-    assert "insecure_mode" in aes["inference"]["risk_tags"]
+    assert aes["usage"]["operation"] == "encryption"
+    assert aes["flow"]["key_source"] in {"function_parameter", "classified_key_material"}
+    assert "iv_source" in aes["flow"]
+    assert "confidence" in aes["risk"]
+    assert isinstance(aes["risk"]["confidence"], float)
+    assert "node_ref" in aes["evidence"]
+    assert "raw_node_id" in aes["evidence"]
+    assert "insecure_mode" in aes["risk"]["tags"]
 
     cbom_with_graph = build_cbom(findings, source="samples", backend=graph.backend, graph=graph, run_id="test-run")
     assert cbom_with_graph["metadata"]["run_id"] == "test-run"
@@ -68,13 +74,14 @@ def test_cbom_builder_returns_summary() -> None:
     auth_aes = next(
         asset
         for asset in cbom_with_graph["cryptographic_assets"]
-        if asset["evidence"]["api_call"] == "AES.new" and asset["code_context"]["file"] == "auth_flow.py"
+        if asset["evidence"]["api_call"] == "AES.new" and asset["context"]["file"] == "auth_flow.py"
     )
-    assert auth_aes["code_context"]["call_chain"] == [
+    assert auth_aes["context"]["call_chain"] == [
         "auth_flow.login",
         "auth_flow.encrypt_auth_token",
     ]
     assert auth_aes["flow"]["source_to_sink"]["inferred"] is True
+    assert auth_aes["flow"]["data_source"] == "classified_user_input"
 
 
 def test_report_builder_writes_html() -> None:

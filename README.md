@@ -89,8 +89,8 @@ cryptograph graph --input samples --backend ast-lite --output output/cpg.json --
 
 - Python source samples.
 - AES, RSA, SHA, MD5, PBKDF2, HMAC, Fernet, random and secrets APIs.
-- Custom CryptoGraph CBOM JSON shaped around crypto metadata, code context, flow, control, inference and evidence.
+- Custom CryptoGraph CBOM JSON shaped around crypto metadata, usage, context, flow, control, risk and evidence.
 - Per-asset graph evidence with AST function/callee/argument edges and confidence reasons.
-- Source/sink classification and call-chain evidence for crypto flows.
+- Source/sink classification, variable-origin tracking and call-chain evidence for crypto flows.
 - Per-run manifest with artifact paths, graph counts, finding counts and config hashes.
 - Batch-friendly local scanning, with scale notes in `docs/scale-notes.md`.

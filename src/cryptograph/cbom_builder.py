@@ -2,8 +2,19 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from hashlib import sha256
+from typing import Any
 
 from cryptograph.models import CryptoFinding, NormalizedGraph
+
+UNKNOWN = "unknown"
+
+ENCRYPTION_PRIMITIVES = {
+    "symmetric_encryption",
+    "authenticated_encryption",
+    "asymmetric_encryption",
+}
+KEYED_PRIMITIVES = ENCRYPTION_PRIMITIVES | {"key_derivation", "message_authentication"}
+DATA_PRIMITIVES = ENCRYPTION_PRIMITIVES | {"hash", "key_derivation", "message_authentication"}
 
 
 def build_cbom(
@@ -15,7 +26,7 @@ def build_cbom(
 ) -> dict:
     return {
         "cbom_format": "cryptograph-custom",
-        "spec_version": "0.1",
+        "spec_version": "0.2",
         "metadata": {
             "tool": "CryptoGraph",
             "generated_at": datetime.now(UTC).isoformat(),
@@ -26,16 +37,12 @@ def build_cbom(
             "schema_note": "CryptoGraph custom CBOM format, not CycloneDX CBOM.",
         },
         "analysis": {
-            "scope": {
-                "input": source,
-                "language": "python",
-                "backend": backend,
-            },
+            "scope": {"input": source, "language": "python", "backend": backend},
             "graph": _graph_summary(graph),
             "limitations": [
-                "MVP normalizes selected CPG node and edge types.",
-                "Usage intent is inferred from API, file/function names and local graph context.",
-                "Full interprocedural dataflow is not yet complete.",
+                "Variable-level dataflow is currently local and graph-assisted.",
+                "Interprocedural propagation uses normalized CALLS edges and function signatures where available.",
+                "Unknown values are emitted as 'unknown' when applicable but unresolved; null means not applicable.",
             ],
         },
         "cryptographic_assets": [_asset_from_finding(finding) for finding in findings],
@@ -45,63 +52,71 @@ def build_cbom(
             "by_primitive": _count_by(findings, "primitive"),
             "by_algorithm": _count_by(findings, "algorithm"),
             "by_provider": _count_by(findings, "provider"),
+            "by_operation": _count_operations(findings),
         },
     }
 
 
 def _asset_from_finding(finding: CryptoFinding) -> dict:
     signals = finding.context.get("signals", {})
-    mode = signals.get("mode")
-    mode_arg = _first_argument_containing(finding.arguments, "MODE_")
     graph_context = finding.context.get("graph", {})
-    source_summary = _source_summary(signals.get("sources", []))
+    dataflow = finding.context.get("dataflow", {})
+    risk_tags = _risk_tags_for(finding)
+    confidence = _confidence_score(finding, graph_context, dataflow)
 
     return {
         "asset_id": _asset_id(finding),
         "crypto_metadata": {
             "algorithm": finding.algorithm,
             "primitive": finding.primitive,
-            "usage": _usage_for(finding),
-            "mode": mode,
-            "provider": finding.provider,
+            "mode": _mode_for(finding),
+            "padding": _padding_for(finding),
+            "provider": finding.provider or UNKNOWN,
+            "key_size": _key_size_for(finding),
         },
-        "code_context": {
+        "usage": {
+            "operation": _operation_for(finding),
+            "intent": _intent_for(finding),
+        },
+        "context": {
             "file": finding.file,
             "function": finding.function,
             "line": finding.line,
             "call_chain": _call_chain_for(finding),
-            "scope_kind": graph_context.get("backend_node_kind", "call"),
+            "usage_context": _usage_context_for(finding),
         },
         "flow": {
-            "key_source": _key_source_for(finding),
-            "data_source": _data_source_for(finding),
-            "source_classifications": signals.get("sources", []),
-            "sink_classification": signals.get("sink"),
-            "source_to_sink": _source_to_sink_for(source_summary, signals.get("sink")),
-            "dfg_edges": _edges_with_prefix(graph_context, "DFG"),
-            "argument_sources": _argument_sources(graph_context),
+            "key_source": _flow_source(finding, "key"),
+            "data_source": _flow_source(finding, "data"),
+            "iv_source": _flow_source(finding, "iv"),
+            "salt_source": _flow_source(finding, "salt"),
+            "randomness_source": _flow_source(finding, "randomness"),
+            "source_to_sink": _source_to_sink_for(signals.get("sources", []), signals.get("sink")),
+            "variable_flows": dataflow.get("sources_reaching_sink", []),
         },
         "control": {
             "execution_path": _execution_path_for(graph_context),
-            "eog_edges": _edges_with_prefix(graph_context, "EOG"),
-            "ast_parent": _first_edge_neighbor(graph_context, "AST_FUNCTION", direction="incoming"),
+            "branch_condition": finding.context.get("control", {}).get("branch_condition"),
+            "inside_loop": bool(finding.context.get("control", {}).get("inside_loop", False)),
+            "guarded_by_condition": bool(finding.context.get("control", {}).get("guarded_by_condition", False)),
             "call_graph": graph_context.get("call_graph", {}),
         },
-        "inference": {
-            "usage_context": _usage_context_for(finding),
-            "intent": _intent_for(finding),
-            "risk_tags": _risk_tags_for(finding),
-            "risk_level": finding.risk,
-            "confidence": _confidence_for(finding, graph_context),
-            "confidence_reasons": _confidence_reasons(finding, graph_context),
+        "risk": {
+            "tags": risk_tags,
+            "level": finding.risk,
+            "confidence": confidence,
+            "confidence_reasons": _confidence_reasons(finding, graph_context, dataflow),
         },
         "evidence": {
             "api_call": finding.api_name,
             "resolved_name": finding.context.get("call", {}).get("resolved_name"),
             "callee": finding.context.get("call", {}).get("callee"),
-            "mode_arg": mode_arg,
+            "mode_arg": _mode_argument(finding),
             "arguments": finding.arguments,
-            "node_id": finding.node_id,
+            "argument_signals": signals.get("arguments", []),
+            "node_ref": _node_ref(finding),
+            "location_ref": _location_ref(finding),
+            "raw_node_id": finding.node_id,
             "graph_edges": graph_context.get("incoming_edges", []) + graph_context.get("outgoing_edges", []),
             "graph_edge_kinds": graph_context.get("edge_kinds", []),
             "rules": [
@@ -110,14 +125,6 @@ def _asset_from_finding(finding: CryptoFinding) -> dict:
             ],
         },
     }
-
-
-def _count_by(findings: list[CryptoFinding], field: str) -> dict[str, int]:
-    counts: dict[str, int] = {}
-    for finding in findings:
-        value = str(getattr(finding, field) or "unknown")
-        counts[value] = counts.get(value, 0) + 1
-    return counts
 
 
 def _graph_summary(graph: NormalizedGraph | None) -> dict:
@@ -140,75 +147,147 @@ def _graph_summary(graph: NormalizedGraph | None) -> dict:
     }
 
 
-def _first_argument_containing(arguments: list[str], needle: str) -> str | None:
-    return next((argument for argument in arguments if needle in argument), None)
+def _count_by(findings: list[CryptoFinding], field: str) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for finding in findings:
+        value = str(getattr(finding, field) or UNKNOWN)
+        counts[value] = counts.get(value, 0) + 1
+    return counts
+
+
+def _count_operations(findings: list[CryptoFinding]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for finding in findings:
+        operation = _operation_for(finding)
+        counts[operation] = counts.get(operation, 0) + 1
+    return counts
 
 
 def _asset_id(finding: CryptoFinding) -> str:
-    stable = "|".join(
-        [
-            finding.api_name,
-            finding.file,
-            str(finding.line),
-            finding.function or "",
-            finding.node_id,
-        ]
-    )
+    stable = "|".join([finding.api_name, finding.file, str(finding.line), finding.function or "", finding.node_id])
     return f"crypto-{sha256(stable.encode('utf-8')).hexdigest()[:16]}"
 
 
-def _usage_for(finding: CryptoFinding) -> str:
-    usage_by_primitive = {
-        "symmetric_encryption": "encryption",
-        "authenticated_encryption": "encryption",
-        "asymmetric_encryption": "encryption",
-        "asymmetric_key_generation": "key_generation",
-        "symmetric_key_generation": "key_generation",
-        "key_derivation": "key_derivation",
-        "hash": "digest",
-        "message_authentication": "authentication",
-        "random_generation": "random_generation",
-    }
-    return usage_by_primitive.get(finding.primitive, finding.primitive)
+def _node_ref(finding: CryptoFinding) -> str:
+    stable = "|".join([finding.file, str(finding.line), finding.function or "", finding.api_name])
+    return f"n_{sha256(stable.encode('utf-8')).hexdigest()[:12]}"
+
+
+def _location_ref(finding: CryptoFinding) -> str:
+    return f"{finding.file}:{finding.line or UNKNOWN}"
+
+
+def _operation_for(finding: CryptoFinding) -> str:
+    api = finding.api_name.lower()
+    if "decrypt" in api:
+        return "decryption"
+    if "sign" in api:
+        return "signing"
+    if finding.primitive in {"symmetric_encryption", "authenticated_encryption", "asymmetric_encryption"}:
+        return "encryption"
+    if finding.primitive in {"symmetric_key_generation", "asymmetric_key_generation"}:
+        return "key_generation"
+    if finding.primitive == "key_derivation":
+        return "key_derivation"
+    if finding.primitive == "hash":
+        return "digest"
+    if finding.primitive == "message_authentication":
+        return "authentication"
+    if finding.primitive == "random_generation":
+        return "random_generation"
+    if finding.primitive == "cipher_mode":
+        return "mode_selection"
+    return finding.primitive
+
+
+def _mode_for(finding: CryptoFinding) -> str | None:
+    if finding.primitive not in ENCRYPTION_PRIMITIVES and finding.primitive != "cipher_mode":
+        return None
+    return finding.context.get("signals", {}).get("mode") or UNKNOWN
+
+
+def _padding_for(finding: CryptoFinding) -> str | None:
+    if finding.primitive not in ENCRYPTION_PRIMITIVES:
+        return None
+    return finding.context.get("signals", {}).get("padding") or UNKNOWN
+
+
+def _key_size_for(finding: CryptoFinding) -> int | str | None:
+    if finding.primitive not in KEYED_PRIMITIVES and "key_generation" not in finding.primitive:
+        return None
+    return finding.context.get("signals", {}).get("key_size") or UNKNOWN
+
+
+def _mode_argument(finding: CryptoFinding) -> str | None:
+    return next((argument for argument in finding.arguments if "MODE_" in argument or "modes." in argument), None)
 
 
 def _call_chain_for(finding: CryptoFinding) -> list[str]:
     call_chain = finding.context.get("scope", {}).get("call_chain")
     if call_chain:
         return call_chain
-    if finding.function:
-        return [finding.function]
-    return []
+    return [finding.function] if finding.function else []
 
 
-def _key_source_for(finding: CryptoFinding) -> str | None:
+def _flow_source(finding: CryptoFinding, role: str) -> str | None:
+    if not _flow_role_applies(finding, role):
+        return None
+    argument_signals = finding.context.get("signals", {}).get("arguments", [])
+    role_matches = [signal for signal in argument_signals if signal.get("role") == role]
     classifications = finding.context.get("signals", {}).get("sources", [])
-    if any(item.get("classification") == "key_material" for item in classifications):
-        return "classified_key_material"
-    if any(item.get("classification") == "generated_random" for item in classifications):
+
+    if role == "key" and any(item.get("classification") == "key_material" for item in classifications):
+        return "function_parameter" if _has_origin(role_matches, "function_parameter") else "classified_key_material"
+    if role == "data" and any(item.get("classification") == "user_input" for item in classifications):
+        return "function_parameter" if _has_origin(role_matches, "function_parameter") else "classified_user_input"
+    if role == "randomness" and any(item.get("classification") == "generated_random" for item in classifications):
         return "generated_random"
-    joined = " ".join(finding.arguments).lower()
-    if "generate_key" in finding.api_name or finding.primitive.endswith("key_generation"):
-        return "generated_in_function"
-    if "token_bytes" in finding.api_name or "urandom" in finding.api_name:
-        return "csprng"
-    if "key" in joined or "password" in joined:
+    if _has_origin(role_matches, "function_parameter"):
         return "function_parameter"
-    return None
+    if _has_origin(role_matches, "assignment"):
+        return "local_assignment"
+    return UNKNOWN
 
 
-def _data_source_for(finding: CryptoFinding) -> str | None:
-    classifications = finding.context.get("signals", {}).get("sources", [])
-    if any(item.get("classification") == "user_input" for item in classifications):
-        return "classified_user_input"
-    joined = " ".join(finding.arguments).lower()
-    if any(name in joined for name in ["data", "payload", "message", "token", "password", "note"]):
-        return "function_parameter"
-    return None
+def _flow_role_applies(finding: CryptoFinding, role: str) -> bool:
+    if role == "key":
+        return finding.primitive in KEYED_PRIMITIVES or "key_generation" in finding.primitive
+    if role == "data":
+        return finding.primitive in DATA_PRIMITIVES
+    if role == "iv":
+        return finding.primitive in {"symmetric_encryption", "authenticated_encryption"}
+    if role == "salt":
+        return finding.primitive == "key_derivation"
+    if role == "randomness":
+        return finding.primitive in {"random_generation", "symmetric_key_generation", "asymmetric_key_generation", "key_derivation"}
+    return False
 
 
-def _usage_context_for(finding: CryptoFinding) -> str | None:
-    text = f"{finding.file} {finding.function or ''}".lower()
+def _has_origin(argument_signals: list[dict[str, Any]], origin_kind: str) -> bool:
+    return any((signal.get("assignment_origin") or {}).get("kind") == origin_kind for signal in argument_signals)
+
+
+def _source_to_sink_for(sources: list[dict], sink: dict | None) -> dict:
+    grouped: dict[str, list[str]] = {}
+    for source in sources:
+        classification = source.get("classification")
+        argument = source.get("argument")
+        if classification and argument:
+            grouped.setdefault(classification, []).append(argument)
+    return {"sources": grouped, "sink": sink, "inferred": bool(grouped and sink)}
+
+
+def _execution_path_for(graph_context: dict) -> str:
+    edge_kinds = set(graph_context.get("edge_kinds", []))
+    if any(kind.startswith("EOG") for kind in edge_kinds):
+        return "graph_eog"
+    if "AST_FUNCTION" in edge_kinds:
+        return "direct"
+    return UNKNOWN
+
+
+def _usage_context_for(finding: CryptoFinding) -> str:
+    text = f"{finding.file} {finding.function or ''} {' '.join(_call_chain_for(finding))}".lower()
     if any(token in text for token in ["auth", "login", "token", "password"]):
         return "authentication_flow"
     if any(token in text for token in ["rsa", "recipient"]):
@@ -217,19 +296,21 @@ def _usage_context_for(finding: CryptoFinding) -> str | None:
 
 
 def _intent_for(finding: CryptoFinding) -> str:
-    usage = _usage_for(finding)
-    if usage == "encryption":
+    operation = _operation_for(finding)
+    if operation in {"encryption", "decryption"}:
         return "protect_data_confidentiality"
-    if usage == "key_derivation":
+    if operation == "key_derivation":
         return "derive_key_material"
-    if usage == "digest":
+    if operation == "digest":
         return "produce_data_digest"
-    if usage == "authentication":
+    if operation == "authentication":
         return "protect_message_integrity"
-    if usage == "key_generation":
+    if operation == "key_generation":
         return "create_key_material"
-    if usage == "random_generation":
+    if operation == "random_generation":
         return "create_random_material"
+    if operation == "signing":
+        return "prove_data_origin_or_integrity"
     return "cryptographic_operation"
 
 
@@ -251,93 +332,43 @@ def _risk_tags_for(finding: CryptoFinding) -> list[str]:
     return tags
 
 
-def _edges_with_prefix(graph_context: dict, prefix: str) -> list[dict]:
-    edges = graph_context.get("incoming_edges", []) + graph_context.get("outgoing_edges", [])
-    return [edge for edge in edges if str(edge.get("kind", "")).startswith(prefix)]
-
-
-def _argument_sources(graph_context: dict) -> list[dict]:
-    edges = graph_context.get("outgoing_edges", [])
-    return [edge for edge in edges if str(edge.get("kind", "")).startswith("AST_ARGUMENT")]
-
-
-def _execution_path_for(graph_context: dict) -> str:
-    edge_kinds = set(graph_context.get("edge_kinds", []))
-    if any(kind.startswith("EOG") for kind in edge_kinds):
-        return "graph_eog"
-    if "AST_FUNCTION" in edge_kinds:
-        return "function_scope"
-    return "direct"
-
-
-def _first_edge_neighbor(graph_context: dict, kind: str, direction: str) -> dict | None:
-    edges = graph_context.get("incoming_edges", []) + graph_context.get("outgoing_edges", [])
-    for edge in edges:
-        if edge.get("kind") == kind and edge.get("direction") == direction:
-            return {
-                "node_id": edge.get("neighbor_id"),
-                "kind": edge.get("neighbor_kind"),
-                "name": edge.get("neighbor_name"),
-                "code": edge.get("neighbor_code"),
-            }
-    return None
-
-
-def _confidence_for(finding: CryptoFinding, graph_context: dict) -> str:
-    score = 0
+def _confidence_score(finding: CryptoFinding, graph_context: dict, dataflow: dict) -> float:
+    score = 0.15
     if finding.api_name:
-        score += 1
+        score += 0.15
     if finding.file and finding.line:
-        score += 1
-    if graph_context.get("edge_kinds"):
-        score += 1
-    if finding.rule_ids:
-        score += 1
+        score += 0.10
     if finding.context.get("call", {}).get("callee"):
-        score += 1
-    if finding.context.get("signals", {}).get("sources"):
-        score += 1
+        score += 0.12
+    if graph_context.get("edge_kinds"):
+        score += 0.12
     if graph_context.get("call_graph", {}).get("call_chain"):
-        score += 1
-    if score >= 5:
-        return "high"
-    if score >= 2:
-        return "medium"
-    return "low"
+        score += 0.10
+    if finding.context.get("signals", {}).get("sources"):
+        score += 0.10
+    if dataflow.get("available"):
+        score += 0.16
+    if finding.rule_ids:
+        score += 0.10
+    return round(min(score, 1.0), 2)
 
 
-def _confidence_reasons(finding: CryptoFinding, graph_context: dict) -> list[str]:
+def _confidence_reasons(finding: CryptoFinding, graph_context: dict, dataflow: dict) -> list[str]:
     reasons = []
     if finding.api_name:
         reasons.append("api_mapping_match")
     if finding.file and finding.line:
         reasons.append("source_location_available")
-    if graph_context.get("edge_kinds"):
-        reasons.append("graph_context_available")
-    if finding.rule_ids:
-        reasons.append("risk_rule_matched")
     if finding.context.get("call", {}).get("callee"):
         reasons.append("fraunhofer_callee_available")
-    if finding.context.get("signals", {}).get("sources"):
-        reasons.append("source_sink_classification_available")
+    if graph_context.get("edge_kinds"):
+        reasons.append("graph_context_available")
     if graph_context.get("call_graph", {}).get("call_chain"):
         reasons.append("call_chain_available")
+    if finding.context.get("signals", {}).get("sources"):
+        reasons.append("source_sink_classification_available")
+    if dataflow.get("available"):
+        reasons.append("dataflow_or_assignment_origin_available")
+    if finding.rule_ids:
+        reasons.append("risk_rule_matched")
     return reasons
-
-
-def _source_summary(classifications: list[dict]) -> dict[str, list[str]]:
-    result: dict[str, list[str]] = {}
-    for item in classifications:
-        classification = item.get("classification")
-        argument = item.get("argument")
-        if classification and argument:
-            result.setdefault(classification, []).append(argument)
-    return result
-
-
-def _source_to_sink_for(source_summary: dict[str, list[str]], sink: dict | None) -> dict:
-    return {
-        "sources": source_summary,
-        "sink": sink,
-        "inferred": bool(source_summary and sink),
-    }
