@@ -5,6 +5,7 @@ from pathlib import Path
 
 from cryptograph.cbom_builder_v2 import build_cbom
 from cryptograph.context_extractor import enrich_context
+from cryptograph.cyclonedx_cbom import convert_to_cyclonedx_cbom
 from cryptograph.cpg_loader import CpgLoadError, load_graph
 from cryptograph.cpg_visualizer import write_dot, write_graph_json, write_html
 from cryptograph.crypto_matcher_v2 import find_crypto_calls
@@ -51,6 +52,10 @@ def main(argv: list[str] | None = None) -> int:
     report.add_argument("--input", required=True, type=Path, help="CryptoGraph CBOM JSON input.")
     report.add_argument("--output", required=True, type=Path, help="HTML report output.")
 
+    cyclonedx = subparsers.add_parser("cyclonedx", help="Convert CryptoGraph CBOM JSON to CycloneDX hybrid CBOM.")
+    cyclonedx.add_argument("--input", required=True, type=Path, help="CryptoGraph CBOM JSON input.")
+    cyclonedx.add_argument("--output", required=True, type=Path, help="CycloneDX CBOM JSON output.")
+
     args = parser.parse_args(argv)
     try:
         if args.command == "scan":
@@ -63,6 +68,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "report":
         build_html_report(args.input, args.output)
         print(f"Wrote CryptoGraph HTML report to {args.output}")
+        return 0
+    if args.command == "cyclonedx":
+        cyclonedx_cbom = convert_to_cyclonedx_cbom(load_json(args.input))
+        write_json(args.output, cyclonedx_cbom)
+        print(f"Wrote CycloneDX CBOM to {args.output}")
         return 0
     return 1
 
@@ -137,6 +147,18 @@ def _scan(args: argparse.Namespace) -> int:
 
 
 def _graph(args: argparse.Namespace) -> int:
+    explicit_outputs = [args.output, args.dot, args.html]
+    if (
+        args.run_dir is None
+        and any(explicit_outputs)
+        and all(path is None or path.is_absolute() for path in explicit_outputs)
+    ):
+        graph = load_graph(args.input, args.backend)
+        wrote_anything = _write_graph_outputs(graph, args.output, args.dot, args.html)
+        if not wrote_anything:
+            print(f"Loaded graph with {len(graph.nodes)} nodes and {len(graph.edges)} edges from {graph.backend}")
+        return 0
+
     run_dir = _resolve_run_dir(args.run_dir)
     if not args.output and not args.dot and not args.html:
         args.output = run_dir / "cpg.json"
@@ -147,19 +169,7 @@ def _graph(args: argparse.Namespace) -> int:
         args.dot = path_in_run_dir(args.dot, run_dir)
         args.html = path_in_run_dir(args.html, run_dir)
     graph = load_graph(args.input, args.backend)
-    wrote_anything = False
-    if args.output:
-        write_graph_json(graph, args.output)
-        print(f"Wrote normalized graph JSON to {args.output}")
-        wrote_anything = True
-    if args.dot:
-        write_dot(graph, args.dot)
-        print(f"Wrote Graphviz DOT graph to {args.dot}")
-        wrote_anything = True
-    if args.html:
-        write_html(graph, args.html)
-        print(f"Wrote CPG HTML viewer to {args.html}")
-        wrote_anything = True
+    wrote_anything = _write_graph_outputs(graph, args.output, args.dot, args.html)
     manifest_path = write_manifest(
         run_dir=run_dir,
         command="graph",
@@ -174,6 +184,28 @@ def _graph(args: argparse.Namespace) -> int:
         print(f"Wrote run manifest to {manifest_path}")
         print(f"Run artifacts directory: {run_dir}")
     return 0
+
+
+def _write_graph_outputs(
+    graph,
+    output: Path | None,
+    dot: Path | None,
+    html: Path | None,
+) -> bool:
+    wrote_anything = False
+    if output:
+        write_graph_json(graph, output)
+        print(f"Wrote normalized graph JSON to {output}")
+        wrote_anything = True
+    if dot:
+        write_dot(graph, dot)
+        print(f"Wrote Graphviz DOT graph to {dot}")
+        wrote_anything = True
+    if html:
+        write_html(graph, html)
+        print(f"Wrote CPG HTML viewer to {html}")
+        wrote_anything = True
+    return wrote_anything
 
 
 def _resolve_run_dir(run_dir: Path | None) -> Path:

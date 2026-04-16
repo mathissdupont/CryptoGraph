@@ -6,5 +6,11 @@ services:
       - .:/app
     working_dir: /app
     entrypoint: ["cryptograph"]
-    command: ["scan", "--input", "samples", "--output", "output/result.json"]
+    command: ["scan", "--input", "samples", "--output", "/app/output/result.json"]
 
+  cbom-viewer:
+    build: ./viewer
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./output:/app/output:ro

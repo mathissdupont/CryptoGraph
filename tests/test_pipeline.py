@@ -27,6 +27,35 @@ def test_ast_lite_detects_expected_sample_crypto() -> None:
     assert "CALLS" in {edge.kind for edge in graph.edges}
 
 
+def test_adversarial_crypto_patterns_detect_aliases_wrappers_and_flow() -> None:
+    graph = load_graph(project_path("samples", "adversarial_crypto_patterns.py"), backend="ast-lite")
+    findings = find_crypto_calls(
+        graph,
+        project_path("config", "api_mappings.json"),
+        project_path("config", "rules.json"),
+    )
+    findings = enrich_context(findings, graph)
+    api_names = {finding.api_name for finding in findings}
+    functions = {finding.function for finding in findings}
+
+    assert "AES.new" in api_names
+    assert "hashlib.pbkdf2_hmac" in api_names
+    assert "Cipher" in api_names
+    assert "algorithms.AES" in api_names
+    assert "modes.CBC" in api_names
+    assert "modes.CTR" in api_names
+    assert "HMAC" in api_names
+    assert "os.urandom" in api_names
+    assert "adversarial_crypto_patterns._pycryptodome_wrapper" in functions
+    assert "adversarial_crypto_patterns.nested_hazmat_pipeline" in functions
+    assert "adversarial_crypto_patterns._mac" in functions
+    assert "CALLS" in {edge.kind for edge in graph.edges}
+
+    cbom = build_cbom(findings, source="samples/adversarial_crypto_patterns.py", backend=graph.backend, graph=graph)
+    algorithms = {asset["crypto_metadata"]["algorithm"] for asset in cbom["cryptographic_assets"]}
+    assert {"AES", "Cipher", "PBKDF2", "HMAC", "CSPRNG"} <= algorithms
+
+
 def test_rules_mark_aes_ecb_high_risk() -> None:
     graph = load_graph(project_path("samples", "insecure_aes.py"), backend="ast-lite")
     findings = find_crypto_calls(
@@ -55,7 +84,11 @@ def test_cbom_builder_returns_summary() -> None:
     assert cbom["analysis"]["graph"]["available"] is False
     assert cbom["summary"]["total_assets"] >= 5
     assert cbom["summary"]["by_primitive"]["key_derivation"] >= 1
-    aes = next(asset for asset in cbom["cryptographic_assets"] if asset["evidence"]["api_call"] == "AES.new")
+    aes = next(
+        asset
+        for asset in cbom["cryptographic_assets"]
+        if asset["evidence"]["api_call"] == "AES.new" and asset["context"]["file"] == "insecure_aes.py"
+    )
     assert aes["asset_id"].startswith("crypto-")
     assert aes["crypto_metadata"]["mode"] == "ECB"
     assert aes["usage"]["operation"] == "encryption"

@@ -61,15 +61,15 @@ if ($Mode -eq "scan" -or $Mode -eq "both") {
     if ($LASTEXITCODE -eq 0) {
         Write-Host "✓ CBOM generation successful" -ForegroundColor Green
         
-        # Check if result.json exists
-        $LatestResult = Get-ChildItem -Path $OutputDir -Filter "result.json" -Recurse | Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1
-        if ($LatestResult) {
-            $FileSizeKB = [Math]::Round($LatestResult.Length / 1KB, 2)
-            Write-Host "  Result file: $($LatestResult.FullName) ($FileSizeKB KB)" -ForegroundColor Gray
+        $ResultPath = Join-Path $OutputDir "result.json"
+        if (Test-Path $ResultPath) {
+            $ResultFile = Get-Item $ResultPath
+            $FileSizeKB = [Math]::Round($ResultFile.Length / 1KB, 2)
+            Write-Host "  Result file: $($ResultFile.FullName) ($FileSizeKB KB)" -ForegroundColor Gray
             
             # Count findings
-            $ResultJson = Get-Content $LatestResult.FullName -Raw | ConvertFrom-Json
-            $FindingCount = $ResultJson.findings.Count
+            $ResultJson = Get-Content $ResultFile.FullName -Raw | ConvertFrom-Json
+            $FindingCount = $ResultJson.cryptographic_assets.Count
             Write-Host "  Total findings: $FindingCount" -ForegroundColor Cyan
         }
     } else {
@@ -100,9 +100,9 @@ if ($Mode -eq "graph" -or $Mode -eq "both") {
     if ($LASTEXITCODE -eq 0) {
         Write-Host "✓ CPG visualization successful" -ForegroundColor Green
         
-        $LatestCpg = Get-ChildItem -Path $OutputDir -Filter "cpg.html" -Recurse | Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1
-        if ($LatestCpg) {
-            Write-Host "  HTML viewer: $($LatestCpg.FullName)" -ForegroundColor Gray
+        $CpgPath = Join-Path $OutputDir "cpg.html"
+        if (Test-Path $CpgPath) {
+            Write-Host "  HTML viewer: $CpgPath" -ForegroundColor Gray
         }
     } else {
         Write-Host "✗ CPG visualization failed" -ForegroundColor Red
@@ -116,12 +116,12 @@ if ($Mode -eq "graph" -or $Mode -eq "both") {
 if ($Mode -eq "scan" -or $Mode -eq "both") {
     Write-Host "[3/3] Generating HTML report..." -ForegroundColor Yellow
     
-    $LatestResult = Get-ChildItem -Path $OutputDir -Filter "result.json" -Recurse | Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1
-    if ($LatestResult) {
+    $ResultPath = Join-Path $OutputDir "result.json"
+    if (Test-Path $ResultPath) {
         $Cmd = @(
             "docker", "compose", "run", "--rm", "cryptograph",
             "report",
-            "--input", "/app/$($LatestResult.FullName -replace [regex]::Escape($ProjectRoot), '.')",
+            "--input", "/app/output/result.json",
             "--output", "/app/output/report.html"
         )
         
@@ -131,9 +131,9 @@ if ($Mode -eq "scan" -or $Mode -eq "both") {
         if ($LASTEXITCODE -eq 0) {
             Write-Host "✓ Report generation successful" -ForegroundColor Green
             
-            $LatestReport = Get-ChildItem -Path $OutputDir -Filter "report.html" -Recurse | Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1
-            if ($LatestReport) {
-                Write-Host "  Report file: $($LatestReport.FullName)" -ForegroundColor Gray
+            $ReportPath = Join-Path $OutputDir "report.html"
+            if (Test-Path $ReportPath) {
+                Write-Host "  Report file: $ReportPath" -ForegroundColor Gray
             }
         } else {
             Write-Host "✗ Report generation failed" -ForegroundColor Red
@@ -148,16 +148,15 @@ Write-Host "Test Summary:" -ForegroundColor Green
 Write-Host "=============" -ForegroundColor Green
 Write-Host ""
 Write-Host "Output artifacts:" -ForegroundColor Cyan
-Get-ChildItem -Path $OutputDir -Recurse -File | 
-    Where-Object { $_.DirectoryName -match "run-\d+" } |
+Get-ChildItem -Path $OutputDir -File |
     Sort-Object -Property LastWriteTime -Descending |
     Select-Object -First 20 |
     ForEach-Object { Write-Host "  $($_.FullName -replace [regex]::Escape($ProjectRoot), '.')" -ForegroundColor Gray }
 
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Yellow
-Write-Host "  1. Open HTML report: start $(Get-ChildItem -Path $OutputDir -Filter 'report.html' -Recurse | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | ForEach-Object { $_.FullName })"
-Write-Host "  2. View CPG graph: start $(Get-ChildItem -Path $OutputDir -Filter 'cpg.html' -Recurse | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | ForEach-Object { $_.FullName })"
+Write-Host "  1. Open HTML report: start $(Join-Path $OutputDir 'report.html')"
+Write-Host "  2. View CPG graph: start $(Join-Path $OutputDir 'cpg.html')"
 
 Write-Host ""
 Write-Host "Test completed successfully!" -ForegroundColor Green

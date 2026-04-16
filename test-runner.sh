@@ -37,12 +37,11 @@ docker compose run --rm cryptograph graph \
 
 echo ""
 echo "[STEP 3] Generating HTML report..."
-LATEST_RESULT=$(find "$OUTPUT_DIR" -name "result.json" -type f -printf '%T@ %p\n' | sort -rn | head -1 | cut -d' ' -f2-)
+LATEST_RESULT="$OUTPUT_DIR/result.json"
 
-if [ -n "$LATEST_RESULT" ]; then
-    LATEST_RESULT_REL="${LATEST_RESULT#$PROJECT_ROOT/}"
+if [ -f "$LATEST_RESULT" ]; then
     docker compose run --rm cryptograph report \
-        --input "/app/$LATEST_RESULT_REL" \
+        --input /app/output/result.json \
         --output /app/output/report.html
 else
     echo "Warning: No result.json found"
@@ -56,26 +55,26 @@ echo ""
 
 # List output files
 echo "Output artifacts:"
-find "$OUTPUT_DIR" -type f -name "*.json" -o -name "*.html" -o -name "*.dot" | sort | while read file; do
+find "$OUTPUT_DIR" -maxdepth 1 -type f \( -name "*.json" -o -name "*.html" -o -name "*.dot" \) | sort | while read file; do
     size=$(du -h "$file" | cut -f1)
     echo "  [$size] $file"
 done
 
 echo ""
 echo "Summary:"
-if [ -n "$LATEST_RESULT" ] && [ -f "$LATEST_RESULT" ]; then
-    finding_count=$(jq '.findings | length' "$LATEST_RESULT" 2>/dev/null || echo "unknown")
+if [ -f "$LATEST_RESULT" ]; then
+    finding_count=$(jq '.cryptographic_assets | length' "$LATEST_RESULT" 2>/dev/null || echo "unknown")
     echo "  Total findings: $finding_count"
 fi
 
 echo ""
 echo "View results:"
-REPORT=$(find "$OUTPUT_DIR" -name "report.html" -type f -printf '%T@ %p\n' | sort -rn | head -1 | cut -d' ' -f2-)
+REPORT="$OUTPUT_DIR/report.html"
 if [ -n "$REPORT" ]; then
     echo "  Report: $REPORT"
 fi
 
-CPGHTML=$(find "$OUTPUT_DIR" -name "cpg.html" -type f -printf '%T@ %p\n' | sort -rn | head -1 | cut -d' ' -f2-)
+CPGHTML="$OUTPUT_DIR/cpg.html"
 if [ -n "$CPGHTML" ]; then
     echo "  CPG Graph: $CPGHTML"
 fi
