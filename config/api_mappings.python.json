@@ -1,0 +1,125 @@
+{
+  "language": "python",
+  "mappings": [
+    {
+      "api_pattern": "hashlib.md5",
+      "algorithm": "MD5",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "hashlib",
+      "notes": "Detect direct use of hashlib.md5 or hashlib.new('md5')."
+    },
+    {
+      "api_pattern": "hashlib.sha1",
+      "algorithm": "SHA-1",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "hashlib",
+      "notes": "Detect use of SHA-1 via hashlib.sha1."
+    },
+    {
+      "api_pattern": "os.urandom",
+      "algorithm": "CSPRNG",
+      "primitive": "random_generation",
+      "mode": null,
+      "provider": "os",
+      "notes": "os.urandom is cryptographically secure; avoid random.random for secrets."
+    },
+    {
+      "api_pattern": "cryptography.hazmat.primitives.ciphers.Cipher",
+      "algorithm": "detect_from_args",
+      "primitive": "symmetric_encryption",
+      "mode": "detect_from_args",
+      "provider": "cryptography",
+      "notes": "Detect usage of cryptography library Cipher and modes."
+    },
+    {
+      "api_pattern": "secrets",
+      "algorithm": "CSPRNG",
+      "primitive": "random_generation",
+      "mode": null,
+      "provider": "secrets",
+      "notes": "Detect use of the 'secrets' module for token generation (recommended)."
+    },
+    {
+      "api_pattern": "random.",
+      "algorithm": "non-crypto-rng",
+      "primitive": "random_generation",
+      "mode": null,
+      "provider": "random",
+      "notes": "Detect use of random.random or random.randint which are not secure for secrets."
+    },
+    {
+      "api_pattern": "hashlib.sha256",
+      "algorithm": "SHA-256",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "hashlib",
+      "notes": "Detect SHA-256 usage (good practice)."
+    },
+    {
+      "api_pattern": "hashlib.sha512",
+      "algorithm": "SHA-512",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "hashlib",
+      "notes": "Detect SHA-512 usage."
+    },
+    {
+      "api_pattern": "Fernet",
+      "algorithm": "Fernet",
+      "primitive": "authenticated_encryption",
+      "mode": null,
+      "provider": "cryptography",
+      "notes": "Detect Fernet symmetric authenticated encryption."
+    },
+    {
+      "api_pattern": "rsa.generate_private_key",
+      "algorithm": "RSA",
+      "primitive": "asymmetric_key_generation",
+      "mode": null,
+      "provider": "cryptography",
+      "notes": "Detect RSA key pair generation."
+    },
+    {
+      "api_pattern": "ec.generate_private_key",
+      "algorithm": "ECDSA",
+      "primitive": "digital_signature",
+      "mode": null,
+      "provider": "cryptography",
+      "notes": "Detect ECDSA key generation."
+    },
+    {
+      "api_pattern": "hashes.SHA256",
+      "algorithm": "SHA-256",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "cryptography",
+      "notes": "Detect SHA-256 via cryptography library."
+    },
+    {
+      "api_pattern": "PBKDF2HMAC",
+      "algorithm": "PBKDF2",
+      "primitive": "key_derivation",
+      "mode": null,
+      "provider": "cryptography",
+      "notes": "Detect PBKDF2 KDF usage."
+    },
+    {
+      "api_pattern": "bcrypt",
+      "algorithm": "bcrypt",
+      "primitive": "password_hashing",
+      "mode": null,
+      "provider": "bcrypt",
+      "notes": "Detect bcrypt password hashing."
+    },
+    {
+      "api_pattern": "Argon2",
+      "algorithm": "Argon2",
+      "primitive": "password_hashing",
+      "mode": null,
+      "provider": "argon2-cffi",
+      "notes": "Detect Argon2 password hashing (modern best practice)."
+    }
+  ]
+}

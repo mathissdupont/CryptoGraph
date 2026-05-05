@@ -218,4 +218,5 @@ def _operation_for(api: str, primitive: str) -> str:
         "cipher_mode": "mode_selection",
         "certificate_management": "certificate_management",
         "digital_signature": "signing",
+        "protocol": "secure_transport",
     }.get(primitive, primitive)

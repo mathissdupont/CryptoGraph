@@ -1,0 +1,62 @@
+{
+  "run_id": "run-c-src-8",
+  "tool": "CryptoGraph",
+  "generated_at": "2026-04-30T20:21:54.575204+00:00",
+  "command": "scan",
+  "source": "/app/results/quickfix-scan-fast/run-c-src-8/input",
+  "backend": "c-cpp-lite",
+  "artifacts": {
+    "cbom": "/app/results/quickfix-scan-fast/run-c-src-8/cbom-c-src.json"
+  },
+  "graph": {
+    "available": true,
+    "backend": "c-cpp-lite",
+    "root": "/app/results/quickfix-scan-fast/run-c-src-8/input",
+    "nodes": 173,
+    "edges": 164,
+    "node_kinds": {
+      "call": 166,
+      "function": 7
+    },
+    "edge_kinds": {
+      "AST_FUNCTION": 164
+    }
+  },
+  "findings": {
+    "total": 56,
+    "by_risk": {
+      "low": 56
+    },
+    "by_algorithm": {
+      "SSL/TLS": 24,
+      "X.509": 12,
+      "RSA": 2,
+      "DH": 1,
+      "PublicKey": 5,
+      "CSPRNG": 3,
+      "PrivateKey": 5,
+      "TLS": 2,
+      "TLS-CipherSuites": 2
+    },
+    "by_primitive": {
+      "protocol": 28,
+      "certificate_management": 12,
+      "key_serialization": 7,
+      "key_derivation": 1,
+      "asymmetric_key_generation": 5,
+      "random_generation": 3
+    }
+  },
+  "config": [
+    {
+      "path": "/app/config/api_mappings.c_cpp.json",
+      "sha256": "613aeb5d6df76c9c0dbef5206e5cd01797a088a06334e8793182a79fcb14a094",
+      "bytes": 9092
+    },
+    {
+      "path": "/app/config/rules_v2.c_cpp.json",
+      "sha256": "78a737a8f2d9ed3ec9ee8b22305937f03022569177f333c3772b40dfb60be9af",
+      "bytes": 5507
+    }
+  ]
+}

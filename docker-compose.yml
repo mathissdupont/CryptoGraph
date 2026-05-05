@@ -4,13 +4,26 @@ services:
     image: cryptograph:dev
     volumes:
       - .:/app
+      - ./results:/results
     working_dir: /app
     entrypoint: ["cryptograph"]
     command: ["scan", "--input", "samples", "--output", "/app/output/result.json"]
+
+  scanner:
+    build: .
+    image: cryptograph:dev
+    ports:
+      - "8502:8502"
+    volumes:
+      - .:/app
+      - ./results:/app/results
+    working_dir: /app
+    entrypoint: ["streamlit", "run", "viewer/scanner.py", "--server.port=8502", "--server.address=0.0.0.0"]
 
   cbom-viewer:
     build: ./viewer
     ports:
       - "8501:8501"
     volumes:
-      - ./output:/app/output:ro
+      - ./output:/app/output
+      - .:/app

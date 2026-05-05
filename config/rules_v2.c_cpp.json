@@ -1,0 +1,135 @@
+{
+  "language": "c_cpp",
+  "rules": [
+    {
+      "id": "C_CPP_EVP_ECB",
+      "preconditions": {},
+      "match": {"api_name_in": ["EVP_CipherInit_ex"], "mode_in": ["ECB"]},
+      "risk": "critical",
+      "priority": 95,
+      "actionable": true,
+      "message": "ECB mode detected in OpenSSL EVP usage; avoid for confidential data.",
+      "remediation": "Use AEAD ciphers like AES-GCM or implement authenticated encryption."
+    },
+    {
+      "id": "C_CPP_DEPRECATED_HASH",
+      "preconditions": {},
+      "match": {"api_name_in": ["MD5"], "algorithm_in": ["MD5"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "MD5 detected in C/C++ code; do not use for cryptographic purposes.",
+      "remediation": "Use SHA-256 or stronger alternatives."
+    },
+    {
+      "id": "C_CPP_RAND_BYTES",
+      "preconditions": {},
+      "match": {"api_name_in": ["RAND_pseudo_bytes"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "RAND_pseudo_bytes is deprecated and may not be cryptographically secure.",
+      "remediation": "Use RAND_bytes for cryptographic randomness."
+    },
+    {
+      "id": "C_CPP_AES_GCM_GOOD",
+      "preconditions": {},
+      "match": {"api_name_in": ["EVP_aes_256_gcm", "EVP_aes_128_gcm"]},
+      "risk": "low",
+      "priority": 20,
+      "actionable": false,
+      "message": "AES-GCM (AEAD) detected; best practice for authenticated encryption.",
+      "remediation": "Continue using AES-GCM or similar AEAD modes."
+    },
+    {
+      "id": "C_CPP_CBC_AUTHENTICATION",
+      "preconditions": {},
+      "match": {"api_name_in": ["EVP_aes_128_cbc", "EVP_aes_256_cbc"]},
+      "risk": "medium",
+      "priority": 70,
+      "actionable": true,
+      "message": "CBC mode detected; ensure HMAC is applied for authentication.",
+      "remediation": "Use GCM mode or apply Encrypt-then-MAC pattern with HMAC-SHA256."
+    },
+    {
+      "id": "C_CPP_RSA_SMALL_KEY",
+      "preconditions": {},
+      "match": {"api_name_in": ["RSA_generate_key_ex", "RSA_size"], "key_size_less_than": 2048},
+      "risk": "high",
+      "priority": 85,
+      "actionable": true,
+      "message": "RSA key size below 2048 bits detected.",
+      "remediation": "Use RSA-2048 minimum (3072+ preferred) or modern hybrid/PQC strategy."
+    },
+    {
+      "id": "C_CPP_RSA_PKCS1V15",
+      "preconditions": {},
+      "match": {"argument_contains_any": ["RSA_PKCS1_PADDING"]},
+      "risk": "medium",
+      "priority": 72,
+      "actionable": true,
+      "message": "Legacy RSA PKCS#1 v1.5 padding constant detected.",
+      "remediation": "Prefer OAEP for encryption and modern signature settings."
+    },
+    {
+      "id": "C_CPP_WEAK_TLS_PROTOCOL",
+      "preconditions": {},
+      "match": {"protocol_in": ["SSLv3", "TLSv1", "TLSv1.0", "TLSv1.1"]},
+      "risk": "high",
+      "priority": 86,
+      "actionable": true,
+      "message": "Weak SSL/TLS protocol version detected.",
+      "remediation": "Use TLSv1.2+ and prefer TLSv1.3."
+    },
+    {
+      "id": "C_CPP_LEGACY_SSL_METHOD",
+      "preconditions": {},
+      "match": {"api_name_in": ["SSL_CTX_new"], "argument_contains_any": ["SSLv2_", "SSLv3_", "SSLv23_"]},
+      "risk": "medium",
+      "priority": 82,
+      "actionable": true,
+      "message": "Legacy OpenSSL SSL context method detected; verify protocol options disable SSLv2/SSLv3/TLSv1.0/TLSv1.1.",
+      "remediation": "Prefer TLS_client_method/TLS_server_method and explicitly allow only TLSv1.2+."
+    },
+    {
+      "id": "C_CPP_WEAK_TLS_CIPHER_SUITE",
+      "preconditions": {},
+      "match": {"api_name_in": ["SSL_CTX_set_cipher_list", "SSL_CTX_set_ciphersuites"], "argument_contains_any": ["aNULL", "eNULL", "NULL", "EXPORT", "LOW", "RC4", "DES", "3DES", "MD5"]},
+      "risk": "high",
+      "priority": 88,
+      "actionable": true,
+      "message": "TLS cipher suite expression contains weak or unauthenticated cipher tokens.",
+      "remediation": "Use a modern TLS policy that excludes NULL, export, RC4, DES/3DES, MD5, and anonymous suites."
+    },
+    {
+      "id": "C_CPP_OPENSSL_MANUAL_RAND_SEED",
+      "preconditions": {},
+      "match": {"api_name_in": ["RAND_seed"]},
+      "risk": "medium",
+      "priority": 66,
+      "actionable": true,
+      "message": "Manual OpenSSL PRNG seeding detected; review entropy quality and whether it is needed on supported OpenSSL versions.",
+      "remediation": "Rely on OpenSSL's operating-system entropy sources where possible; avoid predictable seeds such as time, pid, or stack bytes."
+    },
+    {
+      "id": "C_CPP_PBKDF2_LOW_ITERATIONS",
+      "preconditions": {},
+      "match": {"api_name_in": ["PKCS5_PBKDF2_HMAC"], "iterations_less_than": 100000},
+      "risk": "medium",
+      "priority": 74,
+      "actionable": true,
+      "message": "PBKDF2 iteration count appears low.",
+      "remediation": "Increase PBKDF2 iterations and review migration to memory-hard KDFs where feasible."
+    },
+    {
+      "id": "C_CPP_PQC_PUBLIC_KEY_MIGRATION",
+      "preconditions": {},
+      "match": {"primitive_in": ["asymmetric_encryption", "asymmetric_key_generation", "digital_signature"]},
+      "risk": "medium",
+      "priority": 68,
+      "actionable": true,
+      "message": "Classical public-key cryptography detected; plan post-quantum migration.",
+      "remediation": "Plan hybrid transition with ML-KEM/ML-DSA in compatible environments."
+    }
+  ]
+}

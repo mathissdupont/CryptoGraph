@@ -21,6 +21,7 @@ class RuleMatch:
 
     rule_id: str
     message: str
+    risk: str
     priority: int  # Higher = more important to report
     is_actionable: bool  # Can user fix this?
     explanation: str  # Why does this rule apply?
@@ -74,6 +75,7 @@ class RuleEngine:
                 RuleMatch(
                     rule_id=rule["id"],
                     message=rule.get("message", ""),
+                    risk=rule.get("risk", "info"),
                     priority=priority,
                     is_actionable=is_actionable,
                     explanation=explanation,
@@ -138,6 +140,9 @@ class RuleEngine:
         if "algorithm_in" in match and finding.algorithm not in match["algorithm_in"]:
             return False
 
+        if "primitive_in" in match and finding.primitive not in match["primitive_in"]:
+            return False
+
         # Signal-based matches
         signals = finding.context.get("signals", {})
 
@@ -157,6 +162,16 @@ class RuleEngine:
         if "argument_contains" in match:
             needle = match["argument_contains"]
             if not any(needle in arg for arg in finding.arguments):
+                return False
+
+        if "argument_contains_any" in match:
+            needles = [str(needle) for needle in match["argument_contains_any"]]
+            if not any(any(needle in str(arg) for needle in needles) for arg in finding.arguments):
+                return False
+
+        if "protocol_in" in match:
+            protocols = [str(protocol).lower() for protocol in match["protocol_in"]]
+            if not any(any(protocol in str(arg).lower() for protocol in protocols) for arg in finding.arguments):
                 return False
 
         # String literal detection

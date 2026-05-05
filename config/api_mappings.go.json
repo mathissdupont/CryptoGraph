@@ -1,0 +1,101 @@
+{
+  "language": "go",
+  "mappings": [
+    {
+      "api_pattern": "NewCBCEncrypter",
+      "algorithm": "AES",
+      "primitive": "symmetric_encryption",
+      "mode": "CBC",
+      "provider": "crypto/cipher",
+      "notes": "Detect NewCBCEncrypter / NewCBCDecrypter usage; check for AEAD or HMAC for authentication."
+    },
+    {
+      "api_pattern": "rsa.GenerateKey",
+      "algorithm": "RSA",
+      "primitive": "asymmetric_key_generation",
+      "mode": null,
+      "provider": "crypto/rsa",
+      "notes": "Detect RSA key generation and key sizes (bits argument)."
+    },
+    {
+      "api_pattern": "md5.New",
+      "algorithm": "MD5",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "crypto/md5",
+      "notes": "Detect md5 usage via md5.New or crypto/md5.Sum."
+    },
+    {
+      "api_pattern": "math/rand",
+      "algorithm": "non-crypto-rng",
+      "primitive": "random_generation",
+      "mode": null,
+      "provider": "math/rand",
+      "notes": "Detect usage of math/rand which is not suitable for cryptographic randomness."
+    },
+    {
+      "api_pattern": "argon2.IDKey",
+      "algorithm": "Argon2",
+      "primitive": "kdf",
+      "mode": null,
+      "provider": "golang.org/x/crypto/argon2",
+      "notes": "Detect use of Argon2 KDF from x/crypto."
+    },
+    {
+      "api_pattern": "sha256.Sum256",
+      "algorithm": "SHA-256",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "crypto/sha256",
+      "notes": "Detect SHA-256 usage in Go."
+    },
+    {
+      "api_pattern": "sha512.Sum512",
+      "algorithm": "SHA-512",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "crypto/sha512",
+      "notes": "Detect SHA-512 usage in Go."
+    },
+    {
+      "api_pattern": "aes.NewCipher",
+      "algorithm": "AES",
+      "primitive": "symmetric_encryption",
+      "mode": null,
+      "provider": "crypto/aes",
+      "notes": "Detect AES cipher creation; check mode used with it."
+    },
+    {
+      "api_pattern": "cipher.NewGCM",
+      "algorithm": "AES-GCM",
+      "primitive": "authenticated_encryption",
+      "mode": "GCM",
+      "provider": "crypto/cipher",
+      "notes": "Detect GCM mode usage (AEAD)."
+    },
+    {
+      "api_pattern": "ecdsa.GenerateKey",
+      "algorithm": "ECDSA",
+      "primitive": "digital_signature",
+      "mode": null,
+      "provider": "crypto/ecdsa",
+      "notes": "Detect ECDSA key generation."
+    },
+    {
+      "api_pattern": "dsa.GenerateParameters",
+      "algorithm": "DSA",
+      "primitive": "digital_signature",
+      "mode": null,
+      "provider": "crypto/dsa",
+      "notes": "Detect DSA key generation (legacy)."
+    },
+    {
+      "api_pattern": "x509.ParseCertificate",
+      "algorithm": "X.509",
+      "primitive": "certificate_management",
+      "mode": null,
+      "provider": "crypto/x509",
+      "notes": "Detect X.509 certificate parsing."
+    }
+  ]
+}

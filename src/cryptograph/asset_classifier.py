@@ -31,6 +31,7 @@ PRIMARY_PRIMITIVES = {
     "certificate_management",
     "password_hashing",
     "password_verification",
+    "protocol",
 }
 
 SUPPORTING_PRIMITIVES = {

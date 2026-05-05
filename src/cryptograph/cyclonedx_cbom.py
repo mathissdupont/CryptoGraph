@@ -14,18 +14,26 @@ def convert_to_cyclonedx_cbom(custom_cbom: dict[str, Any]) -> dict[str, Any]:
     context, flow, risk, inference, rules, graph context, and evidence live under
     each cryptographic component's custom ``analysis`` extension.
     """
-    assets = _assets(custom_cbom)
+    scan_records = _scan_records(custom_cbom)
+    assets = [asset for record in scan_records for asset in _assets(record)]
     provider_components = _provider_components(assets)
-    asset_components = [_asset_component(asset) for asset in assets]
+    asset_components = [_asset_component(asset, record_metadata=record.get("metadata", {})) for record in scan_records for asset in _assets(record)]
 
     return {
         "bomFormat": "CycloneDX",
         "specVersion": "1.5",
         "version": 1,
-        "metadata": _metadata(custom_cbom),
+        "metadata": _metadata(custom_cbom, scan_records),
         "components": [*asset_components, *provider_components],
         "dependencies": _dependencies(assets, provider_components),
     }
+
+
+def _scan_records(custom_cbom: dict[str, Any]) -> list[dict[str, Any]]:
+    raw_cboms = custom_cbom.get("cboms")
+    if isinstance(raw_cboms, list) and raw_cboms:
+        return [record for record in raw_cboms if isinstance(record, dict)]
+    return [custom_cbom]
 
 
 def _assets(custom_cbom: dict[str, Any]) -> list[dict[str, Any]]:
@@ -33,11 +41,18 @@ def _assets(custom_cbom: dict[str, Any]) -> list[dict[str, Any]]:
     return [asset for asset in raw_assets if isinstance(asset, dict)]
 
 
-def _metadata(custom_cbom: dict[str, Any]) -> dict[str, Any]:
+def _metadata(custom_cbom: dict[str, Any], scan_records: list[dict[str, Any]]) -> dict[str, Any]:
     source_metadata = custom_cbom.get("metadata", {})
     if not isinstance(source_metadata, dict):
         source_metadata = {}
     timestamp = source_metadata.get("generated_at") or datetime.now(UTC).isoformat()
+    languages = sorted(
+        {
+            str(_dict(record.get("metadata")).get("detected_language"))
+            for record in scan_records
+            if _dict(record.get("metadata")).get("detected_language") not in (None, "", UNKNOWN)
+        }
+    )
     metadata = {
         "timestamp": timestamp,
         "component": {
@@ -53,6 +68,13 @@ def _metadata(custom_cbom: dict[str, Any]) -> dict[str, Any]:
             }
         ],
     }
+    if languages:
+        metadata["properties"] = _properties(
+            {
+                "cryptograph:detected_languages": ",".join(languages),
+                "cryptograph:scan_count": len(scan_records),
+            }
+        )
     properties = _properties(
         {
             "cryptograph:source": source_metadata.get("source"),
@@ -62,11 +84,12 @@ def _metadata(custom_cbom: dict[str, Any]) -> dict[str, Any]:
         }
     )
     if properties:
-        metadata["properties"] = properties
+        metadata.setdefault("properties", [])
+        metadata["properties"].extend(properties)
     return metadata
 
 
-def _asset_component(asset: dict[str, Any]) -> dict[str, Any]:
+def _asset_component(asset: dict[str, Any], record_metadata: dict[str, Any] | None = None) -> dict[str, Any]:
     crypto = _dict(asset.get("crypto_metadata"))
     usage = _dict(asset.get("usage"))
     algorithm = _known(crypto.get("algorithm"), fallback="unknown-algorithm")
@@ -98,9 +121,15 @@ def _asset_component(asset: dict[str, Any]) -> dict[str, Any]:
         },
     }
 
+    detected_language = _known(_dict(record_metadata or {}).get("detected_language"))
+    if detected_language != UNKNOWN:
+        component.setdefault("properties", [])
+        component["properties"].append({"name": "cryptograph:detected_language", "value": detected_language})
+
     provider = _known(crypto.get("provider"))
     if provider != UNKNOWN:
-        component["properties"] = [{"name": "cryptograph:provider", "value": provider}]
+        component.setdefault("properties", [])
+        component["properties"].append({"name": "cryptograph:provider", "value": provider})
     return component
 
 

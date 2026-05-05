@@ -1,0 +1,109 @@
+{
+  "language": "javascript",
+  "mappings": [
+    {
+      "api_pattern": "createCipher",
+      "algorithm": "AES",
+      "primitive": "symmetric_encryption",
+      "mode": "detect_from_args",
+      "provider": "node:crypto",
+      "notes": "Detect crypto.createCipher/createCipheriv and infer algorithm/mode from first argument."
+    },
+    {
+      "api_pattern": "createHash",
+      "algorithm": "detect_from_args",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "node:crypto",
+      "notes": "Detect crypto.createHash('md5'|'sha1'|'sha256')."
+    },
+    {
+      "api_pattern": "randomBytes",
+      "algorithm": "CSPRNG",
+      "primitive": "random_generation",
+      "mode": null,
+      "provider": "node:crypto",
+      "notes": "crypto.randomBytes is cryptographically secure; Math.random is not."
+    },
+    {
+      "api_pattern": "pbkdf2",
+      "algorithm": "PBKDF2",
+      "primitive": "kdf",
+      "mode": null,
+      "provider": "node:crypto",
+      "notes": "Detect crypto.pbkdf2 / crypto.pbkdf2Sync usage and iteration counts."
+    },
+    {
+      "api_pattern": "scrypt",
+      "algorithm": "scrypt",
+      "primitive": "kdf",
+      "mode": null,
+      "provider": "node:crypto",
+      "notes": "Detect scrypt usage (Node.js >=10) as a better alternative to PBKDF2 for password hashing."
+    },
+    {
+      "api_pattern": "subtle",
+      "algorithm": "webcrypto",
+      "primitive": "webcrypto",
+      "mode": null,
+      "provider": "webcrypto",
+      "notes": "Detect WebCrypto SubtleCrypto API usage (browser or Node's webcrypto). Prefer it for secure primitives when available."
+    },
+    {
+      "api_pattern": "createDecipher",
+      "algorithm": "AES",
+      "primitive": "symmetric_encryption",
+      "mode": "detect_from_args",
+      "provider": "node:crypto",
+      "notes": "Detect deprecated crypto.createDecipher (use createDecipheriv instead)."
+    },
+    {
+      "api_pattern": "privateDecrypt",
+      "algorithm": "RSA",
+      "primitive": "asymmetric_encryption",
+      "mode": null,
+      "provider": "node:crypto",
+      "notes": "Detect RSA decryption via crypto.privateDecrypt."
+    },
+    {
+      "api_pattern": "publicEncrypt",
+      "algorithm": "RSA",
+      "primitive": "asymmetric_encryption",
+      "mode": null,
+      "provider": "node:crypto",
+      "notes": "Detect RSA encryption via crypto.publicEncrypt."
+    },
+    {
+      "api_pattern": "sign",
+      "algorithm": "Signature",
+      "primitive": "digital_signature",
+      "mode": null,
+      "provider": "node:crypto",
+      "notes": "Detect crypto.sign for digital signatures."
+    },
+    {
+      "api_pattern": "verify",
+      "algorithm": "Signature",
+      "primitive": "digital_signature",
+      "mode": null,
+      "provider": "node:crypto",
+      "notes": "Detect crypto.verify for signature verification."
+    },
+    {
+      "api_pattern": "generateKeyPair",
+      "algorithm": "KeyGeneration",
+      "primitive": "key_generation",
+      "mode": null,
+      "provider": "node:crypto",
+      "notes": "Detect RSA/EC key pair generation."
+    },
+    {
+      "api_pattern": "timingSafeEqual",
+      "algorithm": "comparison",
+      "primitive": "timing_safe_ops",
+      "mode": null,
+      "provider": "node:crypto",
+      "notes": "Detect timing-safe comparison (constant-time)."
+    }
+  ]
+}

@@ -18,7 +18,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="cryptograph")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
-    scan = subparsers.add_parser("scan", help="Scan Python source and emit CryptoGraph CBOM.")
+    scan = subparsers.add_parser("scan", help="Scan source and emit CryptoGraph CBOM.")
     scan.add_argument("--input", required=True, type=Path, help="Source file or directory to scan.")
     scan.add_argument("--output", required=True, type=Path, help="Path for CryptoGraph CBOM JSON output.")
     scan.add_argument(
@@ -27,7 +27,7 @@ def main(argv: list[str] | None = None) -> int:
         default="fraunhofer",
         help=(
             "Graph backend to use. fraunhofer may fall back to ast-lite; "
-            "fraunhofer-strict fails instead of falling back."
+            "fraunhofer-strict fails instead of falling back. Ruby inputs use the lightweight Ruby scanner."
         ),
     )
     scan.add_argument("--mappings", type=Path, default=project_path("config", "api_mappings.json"))
@@ -56,12 +56,44 @@ def main(argv: list[str] | None = None) -> int:
     cyclonedx.add_argument("--input", required=True, type=Path, help="CryptoGraph CBOM JSON input.")
     cyclonedx.add_argument("--output", required=True, type=Path, help="CycloneDX CBOM JSON output.")
 
+    # Orchestrator: scan external repository and export merged CBOMs
+    orchestrator = subparsers.add_parser("scan-repo", help="Scan a repository (local path or git URL) and emit merged CBOMs.")
+    orchestrator.add_argument("--repo", required=True, help="Local path or git URL of repository to scan.")
+    orchestrator.add_argument("--out-dir", required=True, type=Path, help="Directory to write scan artifacts.")
+    orchestrator.add_argument(
+        "--backend",
+        choices=["fraunhofer", "fraunhofer-strict", "ast-lite"],
+        default="fraunhofer",
+        help="Graph backend to use for scans.",
+    )
+    orchestrator.add_argument("--build-cpg", action="store_true", help="Attempt to build Fraunhofer CPG exporter (requires git/gradle/java).")
+    orchestrator.add_argument(
+        "--max-workers",
+        type=int,
+        help="Maximum number of language-root scans to run in parallel. Defaults to CPU count.",
+    )
+
     args = parser.parse_args(argv)
     try:
         if args.command == "scan":
             return _scan(args)
         if args.command == "graph":
             return _graph(args)
+        if args.command == "scan-repo":
+            from cryptograph.orchestrator import scan_repo, export_cbom_to_jsonl
+
+            out = Path(args.out_dir)
+            out.mkdir(parents=True, exist_ok=True)
+            merged = scan_repo(
+                args.repo,
+                out,
+                args.backend,
+                build_exporter=bool(getattr(args, "build_cpg", False)),
+                max_workers=getattr(args, "max_workers", None),
+            )
+            count = export_cbom_to_jsonl(merged, out / "dataset.jsonl")
+            print(f"Exported {count} assets to {out / 'dataset.jsonl'}")
+            return 0
     except CpgLoadError as exc:
         print(f"CryptoGraph CPG error: {exc}")
         return 2

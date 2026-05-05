@@ -1,0 +1,13 @@
+{
+  "language": "{{language}}",
+  "mappings": [
+    {
+      "api_pattern": "example_api",
+      "algorithm": "AES",
+      "primitive": "symmetric_encryption",
+      "mode": "CBC",
+      "provider": "{{language}}-stdlib",
+      "notes": "Replace with real API patterns for the language"
+    }
+  ]
+}

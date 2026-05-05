@@ -1,9 +1,9 @@
 package io.cryptograph.exporter
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import de.fraunhofer.aisec.cpg.InferenceConfiguration
 import de.fraunhofer.aisec.cpg.TranslationConfiguration
 import de.fraunhofer.aisec.cpg.TranslationManager
-import de.fraunhofer.aisec.cpg.frontends.python.PythonLanguage
 import de.fraunhofer.aisec.cpg.graph.Node
 import de.fraunhofer.aisec.cpg.graph.declarations.FunctionDeclaration
 import de.fraunhofer.aisec.cpg.graph.statements.expressions.CallExpression
@@ -40,7 +40,7 @@ fun main(args: Array<String>) {
     val input = option(args, "--input") ?: error("--input is required")
     val output = option(args, "--output") ?: error("--output is required")
     val root = Path(input)
-    val files = pythonFiles(root)
+    val files = sourceFiles(root)
 
     val graph =
         try {
@@ -55,12 +55,32 @@ fun main(args: Array<String>) {
     jacksonObjectMapper().writerWithDefaultPrettyPrinter().writeValue(File(output), graph)
 }
 
-private fun pythonFiles(root: java.nio.file.Path): List<java.nio.file.Path> {
+private val supportedExtensions =
+    setOf(
+        "c",
+        "cc",
+        "cpp",
+        "cxx",
+        "h",
+        "hh",
+        "hpp",
+        "hxx",
+        "go",
+        "java",
+        "js",
+        "jsx",
+        "py",
+        "rb",
+        "ts",
+        "tsx",
+    )
+
+private fun sourceFiles(root: java.nio.file.Path): List<java.nio.file.Path> {
     return if (root.isRegularFile()) {
-        listOf(root).filter { it.toString().endsWith(".py") }
+        listOf(root).filter { it.extension().lowercase() in supportedExtensions }
     } else {
         Files.walk(root).use { paths ->
-            paths.filter { Files.isRegularFile(it) && it.toString().endsWith(".py") }.toList()
+            paths.filter { Files.isRegularFile(it) && it.extension().lowercase() in supportedExtensions }.toList()
         }
     }
 }
@@ -69,14 +89,31 @@ private fun buildFraunhoferCpgGraph(
     root: java.nio.file.Path,
     files: List<java.nio.file.Path>,
 ): NormalizedGraph {
-    val config =
+    val inferenceConfig =
+        InferenceConfiguration.Companion.builder()
+            .enabled(true)
+            .inferRecords(true)
+            .inferFunctions(true)
+            .inferVariables(true)
+            .inferReturnTypes(true)
+            .inferDfgForUnresolvedCalls(true)
+            .build()
+
+    val builder =
         TranslationConfiguration.Companion.builder()
             .sourceLocations(files.map { it.toFile() })
             .topLevel(if (root.isRegularFile()) root.parent.toFile() else root.toFile())
-            .registerLanguage(PythonLanguage())
+            .inferenceConfiguration(inferenceConfig)
+            .defaultPasses()
             .codeInNodes(true)
             .failOnError(false)
-            .build()
+
+    languageNamesFor(files).forEach { language ->
+        builder.registerLanguage(language)
+    }
+
+    val config =
+        builder.build()
 
     val result = TranslationManager.builder().config(config).build().analyze().get()
     val calls =
@@ -97,6 +134,29 @@ private fun buildFraunhoferCpgGraph(
     addCallGraphEdges(calls, functions, nodes, edges)
 
     return NormalizedGraph("fraunhofer-cpg", root.absolutePathString(), nodes.values.toList(), edges.toList())
+}
+
+private fun languageNamesFor(files: List<java.nio.file.Path>): List<String> {
+    val languages = linkedSetOf<String>()
+    files.forEach { file ->
+        when (file.extension().lowercase()) {
+            "c", "cc", "cpp", "cxx", "h", "hh", "hpp", "hxx" -> languages.add("CXXLanguage")
+            "go" -> languages.add("GoLanguage")
+            "java" -> languages.add("JavaLanguage")
+            "js", "jsx", "ts", "tsx" -> languages.add("TypeScriptLanguage")
+            "py" -> languages.add("PythonLanguage")
+            "rb" -> languages.add("RubyLanguage")
+        }
+    }
+    if (languages.isEmpty()) {
+        languages.add("PythonLanguage")
+    }
+    return languages.toList()
+}
+
+private fun java.nio.file.Path.extension(): String {
+    val name = fileName?.toString() ?: return ""
+    return name.substringAfterLast('.', missingDelimiterValue = "")
 }
 
 private fun flattenAst(node: Node): Sequence<Node> =

@@ -1,0 +1,136 @@
+{
+  "language": "ruby",
+  "rules": [
+    {
+      "id": "RUBY_AES_ECB",
+      "preconditions": {
+        "algorithm_in": ["AES"],
+        "operation_in": ["symmetric_encryption"]
+      },
+      "match": {
+        "mode_in": ["ECB"]
+      },
+      "risk": "critical",
+      "priority": 95,
+      "actionable": true,
+      "message": "AES ECB mode detected in Ruby; ECB leaks plaintext patterns and is insecure for confidential data.",
+      "remediation": "Use AES-GCM or ChaCha20-Poly1305; avoid ECB."
+    },
+    {
+      "id": "RUBY_DEPRECATED_HASH",
+      "preconditions": {},
+      "match": {
+        "api_name_in": ["Digest::MD5.hexdigest", "Digest::SHA1.hexdigest"],
+        "algorithm_in": ["MD5", "SHA-1"]
+      },
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Weak or deprecated hash algorithm detected (MD5/SHA-1).",
+      "remediation": "Use SHA-256 or stronger; for password hashing use bcrypt, Argon2, or PBKDF2 with strong parameters."
+    },
+    {
+      "id": "RUBY_WEAK_PRNG",
+      "preconditions": {},
+      "match": {
+        "api_name_in": ["Random.rand"]
+      },
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Non-cryptographic random source detected; use SecureRandom for secrets.",
+      "remediation": "Replace Random.rand with SecureRandom.bytes or SecureRandom.random_bytes."
+    },
+    {
+      "id": "RUBY_RSA_SMALL_KEY",
+      "preconditions": {
+        "algorithm_in": ["RSA"]
+      },
+      "match": {
+        "key_size_less_than": 2048
+      },
+      "risk": "high",
+      "priority": 85,
+      "actionable": true,
+      "message": "RSA key size below 2048 bits detected.",
+      "remediation": "Use at least 2048-bit keys (4096 recommended)."
+    },
+    {
+      "id": "RUBY_CBC_MODE",
+      "preconditions": {
+        "algorithm_in": ["AES", "3DES"]
+      },
+      "match": {
+        "mode_in": ["CBC"]
+      },
+      "risk": "medium",
+      "priority": 65,
+      "actionable": true,
+      "message": "CBC mode requires authentication and careful IV handling.",
+      "remediation": "Use AEAD modes like GCM or add HMAC-SHA256."
+    },
+    {
+      "id": "RUBY_PBKDF2_LOW_ITERATIONS",
+      "preconditions": {
+        "algorithm_in": ["PBKDF2"]
+      },
+      "match": {
+        "pbkdf2_iterations_less_than": 100000
+      },
+      "risk": "medium",
+      "priority": 70,
+      "actionable": true,
+      "message": "PBKDF2 iteration count appears low for modern password-derived key material.",
+      "remediation": "Increase iterations to at least 100,000 or use Argon2."
+    },
+    {
+      "id": "RUBY_SSL_WEAK_PROTOCOL",
+      "preconditions": {},
+      "match": {
+        "api_name_in": ["OpenSSL::SSL::SSLContext.new"],
+        "protocol_in": ["SSLv3", "TLSv1", "TLSv1.0", "TLSv1.1"]
+      },
+      "risk": "high",
+      "priority": 86,
+      "actionable": true,
+      "message": "Weak SSL/TLS protocol version detected.",
+      "remediation": "Use TLSv1.2/TLSv1.3 and enforce certificate verification."
+    },
+    {
+      "id": "RUBY_RSA_PKCS1V15_REVIEW",
+      "preconditions": {},
+      "match": {
+        "argument_contains_any": ["RSA_PKCS1_PADDING", "PKCS1"]
+      },
+      "risk": "medium",
+      "priority": 70,
+      "actionable": true,
+      "message": "Legacy RSA PKCS#1 v1.5 pattern detected.",
+      "remediation": "Prefer OAEP for encryption and modern signature algorithms."
+    },
+    {
+      "id": "RUBY_PQC_PUBLIC_KEY_MIGRATION",
+      "preconditions": {},
+      "match": {
+        "primitive_in": ["asymmetric_encryption", "asymmetric_key_generation", "digital_signature"]
+      },
+      "risk": "medium",
+      "priority": 68,
+      "actionable": true,
+      "message": "Classical public-key crypto detected; prepare post-quantum migration plan.",
+      "remediation": "Adopt hybrid migration strategy with ML-KEM/ML-DSA where applicable."
+    },
+    {
+      "id": "RUBY_AEAD_GOOD_PRACTICE",
+      "preconditions": {},
+      "match": {
+        "mode_in": ["GCM"]
+      },
+      "risk": "low",
+      "priority": 25,
+      "actionable": false,
+      "message": "AEAD mode detected in Ruby code.",
+      "remediation": "Continue enforcing nonce uniqueness and key rotation policy."
+    }
+  ]
+}

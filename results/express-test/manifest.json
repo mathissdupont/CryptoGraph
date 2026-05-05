@@ -1,0 +1,38 @@
+{
+  "run_id": "express-test",
+  "tool": "CryptoGraph",
+  "generated_at": "2026-04-27T19:09:44.223965+00:00",
+  "command": "scan",
+  "source": "/results/express-test/repo/test/support",
+  "backend": "fraunhofer-cpg",
+  "artifacts": {
+    "cbom": "/results/express-test/cbom-javascript-support.json"
+  },
+  "graph": {
+    "available": true,
+    "backend": "fraunhofer-cpg",
+    "root": "/results/express-test/repo/test/support",
+    "nodes": 0,
+    "edges": 0,
+    "node_kinds": {},
+    "edge_kinds": {}
+  },
+  "findings": {
+    "total": 0,
+    "by_risk": {},
+    "by_algorithm": {},
+    "by_primitive": {}
+  },
+  "config": [
+    {
+      "path": "/app/config/api_mappings.javascript.json",
+      "sha256": "0b11d1f50ec7bd26e7eccea6022da810a85fa3e4b0c53c5af51f885d6e57c546",
+      "bytes": 3424
+    },
+    {
+      "path": "/app/config/rules_v2.javascript.json",
+      "sha256": "9c63bb01b32d33304488738aa3ce333269f0591138b8a03395b32b541133104a",
+      "bytes": 3205
+    }
+  ]
+}

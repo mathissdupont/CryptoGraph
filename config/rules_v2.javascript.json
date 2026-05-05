@@ -1,0 +1,125 @@
+{
+  "language": "javascript",
+  "rules": [
+    {
+      "id": "JS_AES_ECB",
+      "preconditions": {},
+      "match": {"api_name_in": ["createCipher", "createCipheriv"], "mode_in": ["ECB"]},
+      "risk": "critical",
+      "priority": 95,
+      "actionable": true,
+      "message": "AES ECB mode detected in JavaScript; ECB leaks patterns and is insecure for confidential data.",
+      "remediation": "Use AES-GCM or ChaCha20-Poly1305; prefer Node's `crypto.createCipheriv` with AEAD algorithms."
+    },
+    {
+      "id": "JS_CBC_REQUIRES_AUTH",
+      "preconditions": {},
+      "match": {"api_name_in": ["createCipheriv", "createDecipheriv"], "mode_in": ["CBC"]},
+      "risk": "medium",
+      "priority": 76,
+      "actionable": true,
+      "message": "AES-CBC detected; ensure authentication is enforced.",
+      "remediation": "Use AEAD modes (GCM/ChaCha20-Poly1305) or add encrypt-then-MAC."
+    },
+    {
+      "id": "JS_DEPRECATED_HASH",
+      "preconditions": {},
+      "match": {"api_name_in": ["createHash"], "algorithm_in": ["md5", "sha1"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Weak or deprecated hash algorithm used (MD5/SHA-1).",
+      "remediation": "Use SHA-256 or stronger; for password hashing use Argon2/bcrypt/scrypt."
+    },
+    {
+      "id": "JS_WEAK_PRNG",
+      "preconditions": {},
+      "match": {"api_name_in": ["Math.random"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Non-cryptographic RNG used for crypto purposes.",
+      "remediation": "Use crypto.randomBytes or webcrypto.getRandomValues for cryptographic randomness."
+    },
+    {
+      "id": "JS_PBKDF2_WEAK",
+      "preconditions": {},
+      "match": {"api_name_in": ["pbkdf2", "pbkdf2Sync"], "iterations_less_than": 100000},
+      "risk": "medium",
+      "priority": 80,
+      "actionable": true,
+      "message": "PBKDF2 used with low iteration count.",
+      "remediation": "Use at least 100k+ iterations for PBKDF2 or prefer scrypt/Argon2 for password hashing."
+    },
+    {
+      "id": "JS_RECOMMEND_WEBCRYPTO",
+      "preconditions": {},
+      "match": {"api_name_in": ["subtle"]},
+      "risk": "info",
+      "priority": 40,
+      "actionable": false,
+      "message": "WebCrypto SubtleCrypto detected.",
+      "remediation": "Prefer WebCrypto/SubtleCrypto when available for built-in secure primitives."
+    },
+    {
+      "id": "JS_DEPRECATED_DECIPHER",
+      "preconditions": {},
+      "match": {"api_name_in": ["createDecipher"]},
+      "risk": "high",
+      "priority": 85,
+      "actionable": true,
+      "message": "Deprecated createDecipher function detected (evp_BytesToKey is weak).",
+      "remediation": "Use crypto.createDecipheriv with explicit key and IV."
+    },
+    {
+      "id": "JS_RSA_PADDING",
+      "preconditions": {},
+      "match": {"api_name_in": ["publicEncrypt", "privateDecrypt"]},
+      "risk": "medium",
+      "priority": 70,
+      "actionable": true,
+      "message": "RSA encryption/decryption detected; ensure OAEP padding is used.",
+      "remediation": "Use OAEP padding for RSA operations (avoid PKCS#1 v1.5)."
+    },
+    {
+      "id": "JS_SIGNATURE_ALGORITHM",
+      "preconditions": {},
+      "match": {"api_name_in": ["sign", "verify"]},
+      "risk": "medium",
+      "priority": 60,
+      "actionable": true,
+      "message": "Digital signature operation detected; verify SHA-256 or stronger hash.",
+      "remediation": "Use modern algorithms (SHA-256 with RSA, ECDSA, or EdDSA)."
+    },
+    {
+      "id": "JS_RSA_SMALL_KEY",
+      "preconditions": {},
+      "match": {"api_name_in": ["generateKeyPair"], "key_size_less_than": 2048},
+      "risk": "high",
+      "priority": 84,
+      "actionable": true,
+      "message": "RSA key generation below 2048 bits detected.",
+      "remediation": "Use at least 2048 bits (3072+ recommended for long-lived keys)."
+    },
+    {
+      "id": "JS_WEAK_TLS_PROTOCOL",
+      "preconditions": {},
+      "match": {"protocol_in": ["SSLv3", "TLSv1", "TLSv1.0", "TLSv1.1"]},
+      "risk": "high",
+      "priority": 86,
+      "actionable": true,
+      "message": "Weak TLS/SSL protocol version detected in crypto-related arguments.",
+      "remediation": "Enforce TLSv1.2+ and prefer TLSv1.3."
+    },
+    {
+      "id": "JS_PQC_PUBLIC_KEY_MIGRATION",
+      "preconditions": {},
+      "match": {"primitive_in": ["asymmetric_encryption", "asymmetric_key_generation", "digital_signature"]},
+      "risk": "medium",
+      "priority": 68,
+      "actionable": true,
+      "message": "Classical public-key cryptography detected; prepare post-quantum migration plan.",
+      "remediation": "Adopt hybrid migration paths with ML-KEM/ML-DSA where feasible."
+    }
+  ]
+}

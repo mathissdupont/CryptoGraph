@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 from hashlib import sha256
+from pathlib import Path
 from typing import Any
 
 from cryptograph.algorithm_normalizer import NormalizedCrypto, normalize_finding
@@ -15,6 +16,26 @@ from cryptograph.risk_engine import RiskEngine
 from cryptograph.rule_engine import RuleEngine
 
 UNKNOWN = "unknown"
+EXTENSION_LANGUAGES = {
+    ".c": "c",
+    ".cc": "cpp",
+    ".cpp": "cpp",
+    ".cxx": "cpp",
+    ".h": "c",
+    ".hh": "cpp",
+    ".hpp": "cpp",
+    ".hxx": "cpp",
+    ".go": "go",
+    ".java": "java",
+    ".js": "javascript",
+    ".jsx": "javascript",
+    ".kt": "kotlin",
+    ".kts": "kotlin",
+    ".py": "python",
+    ".rb": "ruby",
+    ".ts": "typescript",
+    ".tsx": "typescript",
+}
 
 
 def build_cbom(
@@ -56,6 +77,7 @@ def build_cbom(
         _asset_from_finding(finding, normalized, classification, rule_engine, risk_engine)
         for finding, normalized, classification in supporting
     ]
+    source_language = _source_language(source, findings)
 
     return {
         "cbom_format": "cryptograph-custom-v2",
@@ -66,14 +88,14 @@ def build_cbom(
             "source": source,
             "backend": backend,
             "run_id": run_id,
-            "source_language": "python",
+            "source_language": source_language,
             "schema_note": (
                 "Refactored CBOM v2: Improved risk scoring, "
                 "conditional rule filtering, and explainability"
             ),
         },
         "analysis": {
-            "scope": {"input": source, "language": "python", "backend": backend},
+            "scope": {"input": source, "language": source_language, "backend": backend},
             "graph": _graph_summary(graph),
             "methodology": {
                 "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
@@ -100,6 +122,30 @@ def _classify_for_output(
     normalized = normalize_finding(finding)
     classification = classify_asset(finding, normalized)
     return finding, normalized, classification
+
+
+def _source_language(source: str, findings: list[CryptoFinding]) -> str:
+    """Infer the source language from finding files or the scanned path."""
+    for finding in findings:
+        language = EXTENSION_LANGUAGES.get(Path(finding.file).suffix.lower())
+        if language:
+            return language
+
+    source_path = Path(source)
+    if source_path.is_file():
+        return EXTENSION_LANGUAGES.get(source_path.suffix.lower(), UNKNOWN)
+
+    try:
+        for path in source_path.rglob("*"):
+            if not path.is_file():
+                continue
+            language = EXTENSION_LANGUAGES.get(path.suffix.lower())
+            if language:
+                return language
+    except OSError:
+        return UNKNOWN
+
+    return UNKNOWN
 
 
 def _asset_from_finding(
@@ -191,18 +237,19 @@ def _asset_from_finding(
         context=normalized_context,
     )
 
+    rule_matches = rule_engine.match_rules(normalized_finding.model_copy(update={"context": normalized_context}))
     risk = {
-        "level": risk_score.level,
+        "level": _max_risk_level(risk_score.level, [match.risk for match in rule_matches]),
         "confidence": round(risk_score.confidence, 3),
         "tags": risk_score.tags,
         "derivation_summary": risk_score.derivation,
     }
 
-    rule_matches = rule_engine.match_rules(normalized_finding.model_copy(update={"context": normalized_context}))
     rules = [
         {
             "id": match.rule_id,
             "message": match.message,
+            "risk": match.risk,
             "priority": match.priority,
             "actionable": match.is_actionable,
             "explanation": match.explanation,
@@ -453,6 +500,12 @@ def _build_summary(primary: list[dict], supporting: list[dict], ignored_count: i
         "by_provider": by_provider,
         "by_operation": by_operation,
     }
+
+
+def _max_risk_level(base: str, candidates: list[str]) -> str:
+    order = {"info": 0, "low": 1, "medium": 2, "high": 3, "critical": 4}
+    levels = [base, *candidates]
+    return max(levels, key=lambda level: order.get(str(level), 0))
 
 
 def _asset_id(finding: CryptoFinding) -> str:

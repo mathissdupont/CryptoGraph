@@ -1,0 +1,41 @@
+{
+  "language": "typescript",
+  "mappings": [
+    {
+      "api_pattern": "createCipher",
+      "algorithm": "AES",
+      "primitive": "symmetric_encryption",
+      "provider": "node:crypto"
+    },
+    {
+      "api_pattern": "createHash",
+      "algorithm": "detect_from_args",
+      "primitive": "hash",
+      "provider": "node:crypto"
+    },
+    {
+      "api_pattern": "randomBytes",
+      "algorithm": "CSPRNG",
+      "primitive": "random_generation",
+      "provider": "node:crypto"
+    },
+    {
+      "api_pattern": "pbkdf2",
+      "algorithm": "PBKDF2",
+      "primitive": "kdf",
+      "provider": "node:crypto"
+    },
+    {
+      "api_pattern": "subtle",
+      "algorithm": "webcrypto",
+      "primitive": "webcrypto",
+      "provider": "webcrypto"
+    },
+    {
+      "api_pattern": "Math.random",
+      "algorithm": "non-crypto-rng",
+      "primitive": "random_generation",
+      "provider": "Math"
+    }
+  ]
+}

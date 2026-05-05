@@ -1,66 +1,340 @@
 # Architecture
 
-CryptoGraph separates graph creation from crypto analysis.
+CryptoGraph is a multi-language cryptographic API analyzer with a modular architecture:
 
-## Backends
-
-The preferred backend is Fraunhofer AISEC CPG. The Python package does not depend on Fraunhofer JVM classes directly. Instead, `cpg_loader` expects an exporter that emits a normalized graph JSON document with call nodes and lightweight properties.
-
-The MVP also includes `ast-lite`, a Python AST fallback backend. It keeps development fast and gives the matcher a stable input shape for local iteration.
-
-`fraunhofer-strict` must be used when validating real CPG behavior. It fails if the JVM exporter fails, so production-like scans cannot silently downgrade to AST data.
-
-## Normalized Graph
-
-The normalized graph uses:
-
-- `nodes`: function, call, callee, argument and nearby flow nodes with file, line, function, arguments and resolved names.
-- `edges`: AST function/callee/argument edges plus DFG/EOG edges when Fraunhofer emits them for the source pattern.
-- `backend`: provenance for whether results came from Fraunhofer or fallback parsing.
-
-## CPG Inspection
-
-The `cryptograph graph` command exports normalized graph JSON, Graphviz DOT and a standalone HTML viewer. This is a debug surface for understanding the CPG normalization layer, not a product UI.
-
-```bash
-docker compose run --rm cryptograph graph --input samples --backend fraunhofer-strict --output output/cpg-fraunhofer.json --dot output/cpg-fraunhofer.dot --html output/cpg-fraunhofer.html
+```
+User Input (Web UI or CLI)
+    ↓
+Repository Orchestrator (scan-repo command)
+    ├─→ Clone/fetch repo (git)
+    ├─→ Language Detection (file extensions)
+    └─→ Per-Language Scanning (for each detected language)
+            ↓
+        Language-Specific Config Selection
+            ├─→ api_mappings.<lang>.json
+            └─→ rules_v2.<lang>.json
+            ↓
+        Code Analysis Backend
+            ├─→ Fraunhofer CPG (accurate, slower)
+            └─→ ast-lite (fast, lightweight)
+            ↓
+        CPG/AST → Normalized Graph
+            ↓
+        Crypto Matcher (detect APIs per language rules)
+            ↓
+        Context Extractor (enrich with flow, call chains)
+            ↓
+        CBOM Builder (apply risk rules, generate findings)
+            ↓
+        Per-Language CBOM
+            ↓
+        Merge CBOMs
+            ↓
+        JSONL Exporter (for LLM)
+            ↓
+        LLM Labeler (optional: risk assessment + remediation)
+            ↓
+Output (JSON, HTML, JSONL)
 ```
 
-The Docker image pins Python Jep to the same major/minor version used by the shaded Fraunhofer exporter dependency and sets `CPG_JEP_LIBRARY` explicitly. This avoids Java Jep/native Jep mismatches when the Python frontend initializes inside the JVM.
+---
 
-## Run Artifacts
+## Component Overview
 
-CLI commands group generated artifacts under a per-run directory when paths are placed directly under `output/`.
+### 1. Web UI (`viewer/scanner.py`)
 
-```text
-output/run-YYYYMMDDTHHMMSSZ-xxxxxxxx/
+Streamlit-based interface for easy repository scanning:
+- Accept GitHub URL or local path
+- Select backend (Fraunhofer/ast-lite)
+- Display real-time results (languages, assets, risks)
+- LLM labeling with AI-generated insights
+- Export findings in multiple formats
+
+### 2. Repository Orchestrator (`src/cryptograph/orchestrator.py`)
+
+Coordinates multi-language scanning:
+- Detects language roots by file extension (EXT_LANG_MAP)
+- Selects per-language config files (api_mappings.<lang>.json, rules_v2.<lang>.json)
+- Invokes `_scan()` for each language
+- Merges all per-language CBOMs into `merged-cboms.json`
+- Exports JSONL dataset for LLM
+
+### 3. Language Detection (`src/cryptograph/langdetect.py`)
+
+File extension-based language identification:
+- Maps 26+ file extensions to language IDs
+- Groups repository into language roots
+- Fallback chain: specific > general > default config
+
+**Supported Languages:**
+- Java (.java, .kt, .kts)
+- JavaScript (.js, .jsx)
+- TypeScript (.ts, .tsx)
+- Go (.go)
+- Python (.py)
+- C/C++ (.c, .cpp, .h)
+- Ruby (.rb)
+- And 20+ others
+
+### 4. Per-Language Configuration
+
+**API Mappings** (`config/api_mappings.<lang>.json`)
+
+```json
+{
+  "api_pattern": "crypto.createCipher",
+  "algorithm": "AES",
+  "primitive": "symmetric_encryption",
+  "provider": "node:crypto",
+  "notes": "Deprecated, use WebCrypto"
+}
 ```
 
-This keeps large scans reviewable and avoids mixing CBOM, graph JSON, DOT and report files from unrelated runs.
+**Risk Rules** (`config/rules_v2.<lang>.json`)
 
-Each scan run writes `manifest.json` with:
+```json
+{
+  "id": "JS_AES_ECB",
+  "match": {"api_name_in": ["createCipher"], "mode_in": ["ECB"]},
+  "risk": "high",
+  "message": "ECB mode leaks patterns",
+  "remediation": "Use GCM or ChaCha20-Poly1305"
+}
+```
 
-- artifact paths
-- graph node and edge counts
-- finding counts by risk, algorithm and primitive
-- config file SHA-256 hashes
+### 5. Analysis Backends
 
-## CBOM Evidence Model
+#### Fraunhofer CPG (Preferred)
 
-Each cryptographic asset includes a stable `asset_id` plus the top-level sections `crypto_metadata`, `usage`, `context`, `flow`, `control`, `risk` and `evidence`. `primitive` describes the cryptographic category, while `usage.operation` describes the action, such as encryption, digest, authentication or key generation.
+- Multi-language code property graph extraction
+- Accurate interprocedural dataflow tracking
+- Requires: Java 8+, Gradle
+- Slower but more accurate
+- Built via: `scripts/build_fraunhofer_exporter.sh`
+- Invoked via: subprocess to `joern-export-plugin.jar`
 
-Evidence carries the matched API, resolved Fraunhofer callee, arguments, graph edge kinds and local graph neighbors such as function, callee and argument nodes. `node_ref` is stable and CBOM-facing; `raw_node_id` is preserved only for debugging.
+#### ast-lite (Fast Fallback)
 
-Risk confidence is a float from `0.0` to `1.0`, derived from API mapping, source location, graph context, call-chain availability, source/sink classification, dataflow evidence, risk-rule matches and Fraunhofer callee availability.
+- Python AST-based analysis (Python code only)
+- No JVM overhead
+- Fast local iteration
+- Lighter dataflow tracking
 
-Source/sink classification is configured in `config/source_sinks.json`. The context layer classifies arguments and function scope terms into source categories such as `user_input`, `key_material` and `generated_random`, then connects them to crypto sinks in the CBOM `flow.source_to_sink` field.
+#### ruby-lite (Fast Fallback)
 
-Variable-level flow is graph-assisted. The context layer follows normalized `DFG`, `DATA_FLOW` and `REACHES` edges when present, and also records local assignment/function-parameter origins for call arguments. Missing-but-applicable values are emitted as `unknown`; truly not-applicable values are emitted as `null`.
+- Lightweight Ruby call-pattern analysis (.rb)
+- No JVM overhead
+- Designed to feed the same matcher / CBOM pipeline as the other backends
+- Fallback when Fraunhofer unavailable
 
-Call graph edges use the normalized `CALLS` edge. When Fraunhofer `invokes` data is unavailable, the exporter adds a local synthetic call edge for same-module function calls so CBOM assets can include a useful call chain.
+### 6. Crypto Matching & Context Extraction
 
-## Analysis Layers
+**Crypto Matcher:**
+- Maps call nodes to configured API patterns
+- Extracts algorithm, primitive, mode, key size from patterns
+- Per-language rule matching
 
-- `crypto_matcher` maps call nodes to configured cryptographic APIs.
-- `context_extractor` adds call-chain, argument-level signals, literal tracking, source/sink classification and graph-assisted dataflow.
-- `cbom_builder` converts enriched findings into the CryptoGraph custom CBOM JSON schema.
+**Context Extractor:**
+- Traces call chains (function → function → crypto API)
+- Extracts literal values (hardcoded keys, constants)
+- Tracks data flow (user input → crypto sink)
+- Records source/sink classification
+
+**CBOM Builder:**
+- Applies per-language risk rules
+- Assigns risk severity (high/medium/low/info)
+- Adds remediation suggestions
+- Records evidence (matched API, graph edges, local flow)
+
+### 7. LLM Integration (`scripts/llm-label-cbom.py`)
+
+**Current Mode:** Heuristic simulation (no API calls)
+**Future:** Real LLM API (OpenAI, Anthropic, local)
+
+Input: `dataset.jsonl` (one asset per line)
+Output: `labeled.jsonl` (with risk_level, reasoning, remediation)
+
+```json
+{
+  "asset_id": "crypto-java-1234",
+  "input": {
+    "crypto_metadata": {"algorithm": "AES", "mode": "ECB", ...},
+    "usage": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\")",
+    "context": {"file": "Crypto.java", "line": 42, ...}
+  },
+  "labels": {
+    "risk_level": "critical",
+    "reasoning": "ECB mode leaks plaintext patterns",
+    "remediation": "Use GCM or ChaCha20-Poly1305",
+    "pqc_compatible": false,
+    "references": ["NIST SP 800-38A", "CWE-327"]
+  }
+}
+```
+
+### 8. Output Formats
+
+**merged-cboms.json:** Structured findings with metadata
+**dataset.jsonl:** One asset per line for LLM consumption
+**labeled.jsonl:** After LLM labeling with risk assessments
+**report.html:** Interactive HTML report
+
+---
+
+## Data Flow Example
+
+### Input: GitHub Repository (Node.js)
+
+```
+https://github.com/nodejs/node.git
+```
+
+### Detection Phase
+
+1. Clone repo
+2. Scan files: `*.js` → JavaScript, `*.c` → C, `*.cc` → C++
+3. Group by language
+
+### Scanning Phase (JavaScript)
+
+1. Load `config/api_mappings.javascript.json` (12 APIs)
+2. Load `config/rules_v2.javascript.json` (7 rules)
+3. Run Fraunhofer CPG exporter (or ast-lite fallback)
+4. Match crypto APIs: `crypto.createCipher`, `crypto.randomBytes`, etc.
+5. Apply rules: Flag ECB, deprecated ciphers, weak PRNG
+6. Generate `cbom-javascript-*.json`
+
+### Scanning Phase (C/C++)
+
+1. Load `config/api_mappings.c_cpp.json` (8 APIs)
+2. Load `config/rules_v2.c_cpp.json` (5 rules)
+3. Run Fraunhofer CPG exporter
+4. Match: `EVP_CipherInit_ex`, `RSA_generate_key_ex`, `RAND_bytes`
+5. Apply rules: Flag ECB, RAND_pseudo_bytes, key sizes
+6. Generate `cbom-c_cpp-*.json`
+
+### Merging Phase
+
+Combine all CBOMs into `merged-cboms.json` with language metadata
+
+### JSONL Export Phase
+
+Flatten each asset into JSONL format for LLM
+
+### LLM Labeling Phase (Optional)
+
+Send each asset to LLM:
+- Analyze crypto metadata
+- Assess real-world risk
+- Provide remediation
+- Check PQC compatibility
+- Record references
+
+### Output
+
+```
+results/scan_20260427_103000/
+├── merged-cboms.json       # All findings
+├── cbom-javascript-*.json  # JavaScript findings
+├── cbom-c_cpp-*.json       # C/C++ findings
+├── dataset.jsonl           # For LLM (before labeling)
+└── labeled.jsonl           # After LLM labeling
+```
+
+---
+
+## Design Decisions
+
+### 1. Per-Language Configs (vs. Single Config)
+
+**Decision:** Separate `api_mappings.<lang>.json` and `rules_v2.<lang>.json`
+
+**Rationale:**
+- Each language has different crypto libraries
+- JavaScript uses `crypto` module, Java uses `javax.crypto.Cipher`
+- Per-language rules avoid false positives (e.g., `Math.random()` is risky in crypto but common elsewhere)
+- Allows customization without affecting other languages
+
+### 2. Web UI (vs. CLI Only)
+
+**Decision:** Add Streamlit-based web interface
+
+**Rationale:**
+- Users can paste repo link without knowing CLI
+- Visual results (charts, tables) are easier to understand
+- LLM labeling UI is more intuitive
+- Reduces barrier to entry
+
+### 3. JSONL Export (vs. Requiring CBOM Direct Input to LLM)
+
+**Decision:** Export flat JSONL format for LLM
+
+**Rationale:**
+- LLMs work better with flat, structured data
+- One asset per line makes batch processing natural
+- Easier to filter/analyze with standard tools (jq, pandas)
+- Avoids tree-traversal complexity in LLM prompts
+
+### 4. Heuristic Labeling (vs. Requiring LLM API Key)
+
+**Decision:** Default to heuristic simulation, optional real LLM
+
+**Rationale:**
+- System works out-of-the-box without API key
+- Fast feedback for demos and testing
+- Scaffolding ready for real LLM API integration
+- Users can opt-in to OpenAI/Anthropic without system redesign
+
+---
+
+## Scalability Considerations
+
+### Current
+
+- ✅ Multi-language support with per-language config
+- ✅ Web UI for easy access
+- ✅ Batch scanning script
+- ✅ JSONL export for large datasets
+
+### Pending
+
+- ⏳ Timeouts for CPG jobs (large repos can hang)
+- ⏳ Parallel workers for batch scanning
+- ⏳ Resource limits (memory, CPU per language)
+- ⏳ Incremental scanning (skip unchanged files)
+
+---
+
+## Extension Points
+
+### Adding a New Language
+
+1. Create `config/api_mappings.<new_lang>.json` with API patterns
+2. Create `config/rules_v2.<new_lang>.json` with risk rules
+3. Add file extension to `EXT_LANG_MAP` in `langdetect.py`
+4. (Optional) Add Fraunhofer CPG support if available
+5. Test with `cryptograph scan-repo --repo <repo_with_new_lang>`
+
+### Real LLM Integration
+
+1. Modify `scripts/llm-label-cbom.py` to call real API
+2. Add environment variables for credentials
+3. Implement rate limiting & retry logic
+4. Update web UI to show LLM status
+
+### Custom Risk Rules
+
+1. Edit `config/rules_v2.<lang>.json`
+2. Add new `match` conditions (api_name_in, mode_in, key_size_lt, etc.)
+3. Set `risk` level and `remediation`
+4. Restart scanner to reload configs
+
+---
+
+## Testing Strategy
+
+- **Unit Tests:** Per-module functionality
+- **Integration Tests:** End-to-end repo scanning
+- **Example Repos:** Real GitHub projects (Node.js, Spring, etc.)
+- **LLM Tests:** Heuristic labeling correctness
+- **Performance Tests:** Scalability on large repos

@@ -1,0 +1,47 @@
+{
+  "language": "csharp",
+  "mappings": [
+    {
+      "api_pattern": "Aes.Create",
+      "algorithm": "AES",
+      "primitive": "symmetric_encryption",
+      "provider": "dotnet:cryptography"
+    },
+    {
+      "api_pattern": "SHA1.Create",
+      "algorithm": "SHA-1",
+      "primitive": "hash",
+      "provider": "dotnet:cryptography"
+    },
+    {
+      "api_pattern": "MD5.Create",
+      "algorithm": "MD5",
+      "primitive": "hash",
+      "provider": "dotnet:cryptography"
+    },
+    {
+      "api_pattern": "SHA256.Create",
+      "algorithm": "SHA-256",
+      "primitive": "hash",
+      "provider": "dotnet:cryptography"
+    },
+    {
+      "api_pattern": "RandomNumberGenerator.Create",
+      "algorithm": "CSPRNG",
+      "primitive": "random_generation",
+      "provider": "dotnet:cryptography"
+    },
+    {
+      "api_pattern": "RSA.Create",
+      "algorithm": "RSA",
+      "primitive": "asymmetric_key_generation",
+      "provider": "dotnet:cryptography"
+    },
+    {
+      "api_pattern": "Rfc2898DeriveBytes",
+      "algorithm": "PBKDF2",
+      "primitive": "kdf",
+      "provider": "dotnet:cryptography"
+    }
+  ]
+}

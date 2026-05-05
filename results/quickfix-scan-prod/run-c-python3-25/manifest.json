@@ -1,0 +1,38 @@
+{
+  "run_id": "run-c-python3-25",
+  "tool": "CryptoGraph",
+  "generated_at": "2026-04-30T19:44:52.771324+00:00",
+  "command": "scan",
+  "source": "/app/results/quickfix/src/python3",
+  "backend": "c-cpp-lite",
+  "artifacts": {
+    "cbom": "/app/results/quickfix-scan-prod/run-c-python3-25/cbom-c-python3.json"
+  },
+  "graph": {
+    "available": true,
+    "backend": "c-cpp-lite",
+    "root": "/app/results/quickfix/src/python3",
+    "nodes": 0,
+    "edges": 0,
+    "node_kinds": {},
+    "edge_kinds": {}
+  },
+  "findings": {
+    "total": 0,
+    "by_risk": {},
+    "by_algorithm": {},
+    "by_primitive": {}
+  },
+  "config": [
+    {
+      "path": "/app/config/api_mappings.python.json",
+      "sha256": "59d6d25d73f3fec8c773b1a9a9fbd059f6efe14ed253b01cc7c6c27adc271fa8",
+      "bytes": 3674
+    },
+    {
+      "path": "/app/config/rules_v2.python.json",
+      "sha256": "bba7c6381b6742a0b24ba03dc826f912a467d580fa6d773043b340ed51bfacec",
+      "bytes": 5152
+    }
+  ]
+}

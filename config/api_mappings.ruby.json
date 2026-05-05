@@ -1,0 +1,86 @@
+{
+  "OpenSSL::Cipher.new": {
+    "algorithm": "AES",
+    "primitive": "symmetric_encryption",
+    "provider": "ruby:openssl",
+    "family": "block_cipher"
+  },
+  "OpenSSL::Digest.new": {
+    "algorithm": "detect_from_args",
+    "primitive": "hash",
+    "provider": "ruby:openssl",
+    "family": "digest"
+  },
+  "Digest::MD5.hexdigest": {
+    "algorithm": "MD5",
+    "primitive": "hash",
+    "provider": "ruby:digest",
+    "family": "digest"
+  },
+  "Digest::SHA1.hexdigest": {
+    "algorithm": "SHA-1",
+    "primitive": "hash",
+    "provider": "ruby:digest",
+    "family": "digest"
+  },
+  "Digest::SHA256.hexdigest": {
+    "algorithm": "SHA-256",
+    "primitive": "hash",
+    "provider": "ruby:digest",
+    "family": "digest"
+  },
+  "Digest::SHA512.hexdigest": {
+    "algorithm": "SHA-512",
+    "primitive": "hash",
+    "provider": "ruby:digest",
+    "family": "digest"
+  },
+  "OpenSSL::HMAC.digest": {
+    "algorithm": "HMAC",
+    "primitive": "message_authentication",
+    "provider": "ruby:openssl",
+    "family": "mac"
+  },
+  "OpenSSL::KDF.pbkdf2_hmac": {
+    "algorithm": "PBKDF2",
+    "primitive": "key_derivation",
+    "provider": "ruby:openssl",
+    "family": "kdf"
+  },
+  "OpenSSL::PKey::RSA.generate": {
+    "algorithm": "RSA",
+    "primitive": "asymmetric_key_generation",
+    "provider": "ruby:openssl",
+    "family": "public_key"
+  },
+  "OpenSSL::PKey::EC.generate": {
+    "algorithm": "ECC",
+    "primitive": "asymmetric_key_generation",
+    "provider": "ruby:openssl",
+    "family": "elliptic_curve"
+  },
+  "SecureRandom.bytes": {
+    "algorithm": "CSPRNG",
+    "primitive": "random_generation",
+    "provider": "ruby:securerandom",
+    "family": "random"
+  },
+  "Random.rand": {
+    "algorithm": "non-crypto-rng",
+    "primitive": "random_generation",
+    "provider": "ruby:random",
+    "family": "random"
+  },
+  "OpenSSL::SSL::SSLContext.new": {
+    "algorithm": "SSL/TLS",
+    "primitive": "protocol",
+    "provider": "ruby:openssl",
+    "family": "transport"
+  },
+  "BCrypt::Password.create": {
+    "algorithm": "bcrypt",
+    "primitive": "key_derivation",
+    "provider": "ruby:bcrypt",
+    "family": "password_hash"
+  }
+}

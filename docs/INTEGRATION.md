@@ -1,53 +1,533 @@
-# Integration Guide: Switching to CryptoGraph CBOM v2
+# Integration Guide: Multi-Language Scanning & LLM Labeling
 
-This guide explains how to use the refactored system and switch from the old implementation.
+This guide explains how to integrate CryptoGraph's multi-language scanning, web UI, and LLM labeling into your workflows.
 
 ---
 
 ## Quick Start
 
-### Option 1: Direct Replacement (Recommended)
+### Option 1: Web UI (Easiest)
 
-Modify your pipeline script to use the new modules:
+```bash
+# Start web scanner
+docker-compose up scanner
 
-```python
-# OLD CODE
-from cryptograph.crypto_matcher import find_crypto_calls
-from cryptograph.cbom_builder import build_cbom
-
-# NEW CODE  
-from cryptograph.crypto_matcher_v2 import find_crypto_calls
-from cryptograph.cbom_builder_v2 import build_cbom
+# Open http://localhost:8502
+# Paste GitHub repo → Click Scan → View Results → Enable LLM
 ```
 
-That's it! The new modules have the same interface as the old ones.
+**No CLI knowledge required.** UI handles all setup automatically.
 
-### Option 2: Side-by-Side Testing
-
-Run both systems and compare outputs:
+### Option 2: CLI (Programmatic)
 
 ```python
-from cryptograph.crypto_matcher import find_crypto_calls as find_crypto_old
-from cryptograph.crypto_matcher_v2 import find_crypto_calls as find_crypto_new
-from cryptograph.cbom_builder import build_cbom as build_cbom_old
-from cryptograph.cbom_builder_v2 import build_cbom as build_cbom_v2
+import subprocess
+import json
 
-# Load data
-graph = NormalizedGraph(...)
-rules_old = load_json("config/rules.json")
-rules_new = load_json("config/rules_v2.json")
+# Scan repository
+result = subprocess.run([
+    "cryptograph", "scan-repo",
+    "--repo", "https://github.com/nodejs/node.git",
+    "--out-dir", "./results/node",
+    "--backend", "fraunhofer"
+], capture_output=True)
 
-# Run both
-findings_old = find_crypto_old(graph, mappings_path, rules_path)
-findings_new = find_crypto_new(graph, mappings_path, rules_path)
+# Load results
+with open("./results/node/merged-cboms.json") as f:
+    cbom = json.load(f)
 
-cbom_old = build_cbom_old(findings_old, "src", "fraunhofer", graph, run_id)
-cbom_new = build_cbom_v2(findings_new, "src", "fraunhofer", graph, run_id, rules_new)
+# Label with LLM
+subprocess.run([
+    "python", "scripts/llm-label-cbom.py",
+    "--input", "./results/node/dataset.jsonl",
+    "--output", "./results/node/labeled.jsonl"
+])
 
-# Compare
-print(f"Old risk distribution: {cbom_old['summary']['by_risk']}")
-print(f"New risk distribution: {cbom_new['summary']['by_risk']}")
+# Process labeled results
+with open("./results/node/labeled.jsonl") as f:
+    for line in f:
+        asset = json.loads(line)
+        print(f"Risk: {asset['labels']['risk_level']}")
+        print(f"Remediation: {asset['labels']['remediation']}")
 ```
+
+### Option 3: Docker Compose (Container-Based)
+
+```bash
+# Scan in container
+docker-compose run cryptograph scan-repo \
+  --repo https://github.com/nodejs/node.git \
+  --out-dir /results/scan
+
+# Label results
+docker-compose run cryptograph \
+  python scripts/llm-label-cbom.py \
+  --input /results/scan/dataset.jsonl \
+  --output /results/scan/labeled.jsonl
+
+# Results in ./results/scan/
+```
+
+---
+
+## Multi-Language Scanning Integration
+
+### How Language Detection Works
+
+CryptoGraph automatically detects languages by file extension:
+
+```python
+from cryptograph.langdetect import detect_language_roots, EXT_LANG_MAP
+
+# Get language roots
+roots = detect_language_roots(Path("https://github.com/nodejs/node.git"))
+# Output: {"javascript": ["/root/src"], "c_cpp": ["/root/deps"], ...}
+
+# View supported extensions
+print(EXT_LANG_MAP)
+# {'java': ['.java', '.kt', '.kts'], 'javascript': ['.js', '.jsx'], ...}
+```
+
+### Per-Language Configuration
+
+For each detected language, CryptoGraph automatically loads:
+
+1. **API Mappings:** `config/api_mappings.<lang>.json`
+2. **Risk Rules:** `config/rules_v2.<lang>.json`
+
+If language-specific files don't exist, falls back to:
+- `config/api_mappings.json` (default)
+- `config/rules_v2.json` (default)
+
+**Example: JavaScript Scanning**
+
+```json
+// config/api_mappings.javascript.json
+[
+  {
+    "api_pattern": "crypto.createCipher",
+    "algorithm": "AES",
+    "primitive": "symmetric_encryption",
+    "provider": "node:crypto",
+    "notes": "Deprecated, vulnerable to known-plaintext attacks"
+  }
+]
+
+// config/rules_v2.javascript.json
+[
+  {
+    "id": "JS_AES_ECB",
+    "match": {"api_name_in": ["createCipher"], "mode_in": ["ECB"]},
+    "risk": "high",
+    "message": "ECB mode leaks plaintext patterns",
+    "remediation": "Use GCM or ChaCha20-Poly1305 instead"
+  }
+]
+```
+
+### Adding Support for New Languages
+
+1. **Create API mapping file:**
+   ```json
+   // config/api_mappings.ruby.json
+   [
+     {
+       "api_pattern": "Digest::MD5.hexdigest",
+       "algorithm": "MD5",
+       "primitive": "hash",
+       "provider": "ruby:digest"
+     }
+   ]
+   ```
+
+2. **Create risk rules file:**
+   ```json
+   // config/rules_v2.ruby.json
+   [
+     {
+       "id": "RUBY_MD5",
+       "match": {"api_name_in": ["Digest::MD5"]},
+       "risk": "high",
+       "message": "MD5 is cryptographically broken",
+       "remediation": "Use Digest::SHA256 or SHA-512"
+     }
+   ]
+   ```
+
+3. **Update language extensions (optional):**
+   ```python
+   # In langdetect.py
+   EXT_LANG_MAP["ruby"] = [".rb"]
+   ```
+
+4. **Test:**
+   ```bash
+   cryptograph scan-repo --repo https://github.com/example/ruby-project.git --out-dir ./results/ruby
+   ```
+
+---
+
+## Web UI Integration
+
+### Embedding in Dashboard
+
+The web UI (`viewer/scanner.py`) is a standalone Streamlit app. To embed in a larger dashboard:
+
+```python
+# dashboard.py
+import streamlit as st
+from streamlit_option_menu import option_menu
+
+page = option_menu(
+    menu_title="Security Hub",
+    options=["CryptoGraph", "SAST", "Dependency Check", "Settings"],
+    default_index=0
+)
+
+if page == "CryptoGraph":
+    st.info("CryptoGraph Scanner")
+    # Load scanner UI via iframe or subprocess
+    subprocess.run(["streamlit", "run", "viewer/scanner.py"])
+```
+
+### Customizing the Web UI
+
+Edit `viewer/scanner.py` to:
+- Add company logo
+- Change color scheme
+- Add custom integrations
+- Modify result visualization
+
+```python
+# Example: Add company branding
+st.set_page_config(
+    page_title="ACME CryptoGraph",
+    page_icon="🏢",
+    layout="wide"
+)
+
+st.image("assets/company-logo.png", width=100)
+st.title("ACME Security - CryptoGraph Scanner")
+```
+
+---
+
+## LLM Labeling Integration
+
+### Current: Heuristic Simulation
+
+By default, LLM labeling uses rule-based heuristics (no API calls):
+
+```bash
+python scripts/llm-label-cbom.py \
+  --input ./results/scan/dataset.jsonl \
+  --output ./results/scan/labeled.jsonl \
+  --llm-api simulate  # Default
+```
+
+Output includes risk levels, reasoning, and remediation suggestions.
+
+### Future: Real LLM APIs
+
+#### OpenAI Integration (When Implemented)
+
+```python
+python scripts/llm-label-cbom.py \
+  --input ./results/scan/dataset.jsonl \
+  --output ./results/scan/labeled.jsonl \
+  --llm-api openai \
+  --llm-model gpt-4 \
+  --api-key sk-...
+```
+
+#### Local LLM (When Implemented)
+
+```python
+python scripts/llm-label-cbom.py \
+  --input ./results/scan/dataset.jsonl \
+  --output ./results/scan/labeled.jsonl \
+  --llm-api local \
+  --llm-endpoint http://localhost:8000
+```
+
+### Processing Labeled Results
+
+```python
+import json
+
+with open("./results/scan/labeled.jsonl") as f:
+    for line in f:
+        asset = json.loads(line)
+        
+        # Filter by risk
+        if asset["labels"]["risk_level"] in ["critical", "high"]:
+            print(f"Asset: {asset['asset_id']}")
+            print(f"Algorithm: {asset['input']['crypto_metadata']['algorithm']}")
+            print(f"Issue: {asset['labels']['reasoning']}")
+            print(f"Fix: {asset['labels']['remediation']}\n")
+        
+        # Check PQC compatibility
+        if not asset["labels"]["pqc_compatible"]:
+            print(f"⚠️  Not PQC-ready: {asset['asset_id']}")
+```
+
+---
+
+## Batch Scanning Integration
+
+### Processing Multiple Repositories
+
+```bash
+# 1. Create repos.txt
+cat > repos.txt << EOF
+https://github.com/nodejs/node.git
+https://github.com/expressjs/express.git
+https://github.com/spring-projects/spring-framework.git
+EOF
+
+# 2. Batch scan
+bash scripts/batch-scan-repos.sh repos.txt
+
+# 3. Merge all results
+cat results/batch-scan-TIMESTAMP/*/dataset.jsonl > all-repos.jsonl
+
+# 4. Label all at once
+python scripts/llm-label-cbom.py --input all-repos.jsonl --output all-repos-labeled.jsonl
+
+# 5. Analyze combined results
+jq -r '.labels.risk_level' all-repos-labeled.jsonl | sort | uniq -c
+```
+
+### Programmatic Batch Scanning
+
+```python
+import subprocess
+from pathlib import Path
+
+repos = [
+    "https://github.com/nodejs/node.git",
+    "https://github.com/expressjs/express.git",
+]
+
+results = []
+
+for repo in repos:
+    out_dir = f"./results/{repo.split('/')[-1].replace('.git', '')}"
+    
+    # Scan
+    subprocess.run([
+        "cryptograph", "scan-repo",
+        "--repo", repo,
+        "--out-dir", out_dir
+    ])
+    
+    # Label
+    subprocess.run([
+        "python", "scripts/llm-label-cbom.py",
+        "--input", f"{out_dir}/dataset.jsonl",
+        "--output", f"{out_dir}/labeled.jsonl"
+    ])
+    
+    results.append(out_dir)
+
+print(f"Scanned {len(results)} repos")
+```
+
+---
+
+## CI/CD Integration
+
+### GitHub Actions Workflow
+
+```yaml
+name: CryptoGraph Security Scan
+on: 
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 2 * * 0'  # Weekly
+
+jobs:
+  cryptograph:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install CryptoGraph
+        run: |
+          pip install -e .
+      
+      - name: Scan Repository
+        run: |
+          cryptograph scan-repo \
+            --repo . \
+            --out-dir ./cryptograph-results \
+            --backend ast-lite
+      
+      - name: Label Findings
+        run: |
+          python scripts/llm-label-cbom.py \
+            --input ./cryptograph-results/dataset.jsonl \
+            --output ./cryptograph-results/labeled.jsonl
+      
+      - name: Generate Report
+        run: |
+          cryptograph report \
+            --input ./cryptograph-results/merged-cboms.json \
+            --output ./cryptograph-results/report.html
+      
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cryptograph-results
+          path: cryptograph-results/
+      
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const results = JSON.parse(fs.readFileSync('./cryptograph-results/merged-cboms.json', 'utf8'));
+            const assets = results.cboms[0].cryptographic_assets || [];
+            const highRisk = assets.filter(a => a.risk === 'high').length;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🔐 CryptoGraph Analysis\n- **Total Assets:** ${assets.length}\n- **High Risk:** ${highRisk}\n\n[Full Report](${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/actions/runs/${process.env.GITHUB_RUN_ID})`
+            });
+```
+
+### GitLab CI Integration
+
+```yaml
+cryptograph:
+  stage: security
+  image: cryptograph:latest
+  script:
+    - cryptograph scan-repo --repo . --out-dir ./cryptograph-results
+    - python scripts/llm-label-cbom.py 
+        --input ./cryptograph-results/dataset.jsonl 
+        --output ./cryptograph-results/labeled.jsonl
+    - cryptograph report --input ./cryptograph-results/merged-cboms.json 
+        --output ./cryptograph-results/report.html
+  artifacts:
+    paths:
+      - cryptograph-results/
+    reports:
+      sast: cryptograph-results/merged-cboms.json
+```
+
+---
+
+## Webhook & Automation
+
+### GitHub Push Trigger
+
+```python
+# app.py - Flask webhook handler
+from flask import Flask, request
+import subprocess
+import json
+
+app = Flask(__name__)
+
+@app.route('/webhook/github', methods=['POST'])
+def github_webhook():
+    payload = request.json
+    repo_url = payload['repository']['clone_url']
+    
+    # Scan pushed repository
+    result = subprocess.run([
+        "cryptograph", "scan-repo",
+        "--repo", repo_url,
+        "--out-dir", f"./results/{payload['repository']['name']}"
+    ], capture_output=True)
+    
+    # Label results
+    subprocess.run([
+        "python", "scripts/llm-label-cbom.py",
+        "--input", f"./results/{payload['repository']['name']}/dataset.jsonl",
+        "--output", f"./results/{payload['repository']['name']}/labeled.jsonl"
+    ])
+    
+    # Notify (Slack, email, etc.)
+    return {"status": "scanned"}
+
+if __name__ == "__main__":
+    app.run(port=5000)
+```
+
+---
+
+## Output & Reporting
+
+### HTML Report Generation
+
+```bash
+cryptograph report \
+  --input ./results/scan/merged-cboms.json \
+  --output ./results/scan/report.html
+```
+
+Opens in browser with:
+- Risk distribution charts
+- Language breakdown
+- Detailed asset listings
+- Remediation suggestions
+- Export options
+
+### Exporting to Other Formats
+
+**CSV (via jq):**
+```bash
+jq -r '[.cboms[].cryptographic_assets[] | [.asset_id, .crypto_metadata.algorithm, .risk]] | @csv' \
+  ./results/scan/merged-cboms.json > findings.csv
+```
+
+**CycloneDX SBOM:**
+```bash
+cryptograph cyclonedx \
+  --input ./results/scan/merged-cboms.json \
+  --output ./results/scan/cyclonedx-sbom.json
+```
+
+---
+
+## Best Practices
+
+1. **Use Fraunhofer CPG for production scans** (more accurate)
+2. **Use ast-lite for quick iterations** (faster)
+3. **Enable LLM labeling** for better context understanding
+4. **Run regular batch scans** on all repositories
+5. **Review high-risk findings first**
+6. **Track remediation progress** over time
+7. **Share reports with security teams**
+8. **Integrate into CI/CD** for continuous monitoring
+
+---
+
+## Troubleshooting
+
+### Issue: No assets detected
+**Solution:** Ensure repo has crypto code. Try `--backend ast-lite`
+
+### Issue: Slow scans on large repos
+**Solution:** Use `--backend ast-lite` instead of Fraunhofer
+
+### Issue: LLM labeling fails
+**Solution:** Check if `scripts/llm-label-cbom.py` is in correct path
+
+### Issue: Docker build fails
+**Solution:** Run `docker-compose build --no-cache`
 
 ---
 

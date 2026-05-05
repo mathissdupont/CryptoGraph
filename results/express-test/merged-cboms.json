@@ -1,0 +1,2056 @@
+{
+  "cboms": [
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:08:51.126392+00:00",
+        "source": "/results/express-test/repo",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:08:52.513558+00:00",
+        "source": "/results/express-test/repo/examples/auth",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/auth",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/auth",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:08:53.831653+00:00",
+        "source": "/results/express-test/repo/examples/content-negotiation",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/content-negotiation",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/content-negotiation",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:08:55.049334+00:00",
+        "source": "/results/express-test/repo/examples/cookie-sessions",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/cookie-sessions",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/cookie-sessions",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:08:56.401085+00:00",
+        "source": "/results/express-test/repo/examples/cookies",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/cookies",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/cookies",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:08:57.732808+00:00",
+        "source": "/results/express-test/repo/examples/downloads",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/downloads",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/downloads",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:08:58.967135+00:00",
+        "source": "/results/express-test/repo/examples/ejs",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/ejs",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/ejs",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:00.295630+00:00",
+        "source": "/results/express-test/repo/examples/error",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/error",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/error",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:02.117479+00:00",
+        "source": "/results/express-test/repo/examples/error-pages",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/error-pages",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/error-pages",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:03.713603+00:00",
+        "source": "/results/express-test/repo/examples/hello-world",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/hello-world",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/hello-world",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:05.086760+00:00",
+        "source": "/results/express-test/repo/examples/markdown",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/markdown",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/markdown",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:06.554345+00:00",
+        "source": "/results/express-test/repo/examples/multi-router",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/multi-router",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/multi-router",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:08.161018+00:00",
+        "source": "/results/express-test/repo/examples/multi-router/controllers",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/multi-router/controllers",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/multi-router/controllers",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:09.829074+00:00",
+        "source": "/results/express-test/repo/examples/mvc",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/mvc",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/mvc",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:11.365494+00:00",
+        "source": "/results/express-test/repo/examples/mvc/controllers/main",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/mvc/controllers/main",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/mvc/controllers/main",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:12.982552+00:00",
+        "source": "/results/express-test/repo/examples/mvc/controllers/pet",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/mvc/controllers/pet",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/mvc/controllers/pet",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:14.483881+00:00",
+        "source": "/results/express-test/repo/examples/mvc/controllers/user",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/mvc/controllers/user",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/mvc/controllers/user",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:15.891955+00:00",
+        "source": "/results/express-test/repo/examples/mvc/controllers/user-pet",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/mvc/controllers/user-pet",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/mvc/controllers/user-pet",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:17.154376+00:00",
+        "source": "/results/express-test/repo/examples/mvc/lib",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/mvc/lib",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/mvc/lib",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:18.535761+00:00",
+        "source": "/results/express-test/repo/examples/online",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/online",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/online",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:19.874612+00:00",
+        "source": "/results/express-test/repo/examples/params",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/params",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/params",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:21.145028+00:00",
+        "source": "/results/express-test/repo/examples/resource",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/resource",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/resource",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:22.463846+00:00",
+        "source": "/results/express-test/repo/examples/route-map",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/route-map",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/route-map",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:23.842651+00:00",
+        "source": "/results/express-test/repo/examples/route-middleware",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/route-middleware",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/route-middleware",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:25.329248+00:00",
+        "source": "/results/express-test/repo/examples/route-separation",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/route-separation",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/route-separation",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:26.681358+00:00",
+        "source": "/results/express-test/repo/examples/search",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/search",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/search",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:28.030822+00:00",
+        "source": "/results/express-test/repo/examples/search/public",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/search/public",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/search/public",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:29.347450+00:00",
+        "source": "/results/express-test/repo/examples/session",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/session",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/session",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:30.956462+00:00",
+        "source": "/results/express-test/repo/examples/static-files",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/static-files",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/static-files",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:32.353858+00:00",
+        "source": "/results/express-test/repo/examples/static-files/public/js",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/static-files/public/js",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/static-files/public/js",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:33.832353+00:00",
+        "source": "/results/express-test/repo/examples/vhost",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/vhost",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/vhost",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:35.348925+00:00",
+        "source": "/results/express-test/repo/examples/view-constructor",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/view-constructor",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/view-constructor",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:36.762303+00:00",
+        "source": "/results/express-test/repo/examples/view-locals",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/view-locals",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/view-locals",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:38.198500+00:00",
+        "source": "/results/express-test/repo/examples/web-service",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/examples/web-service",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/examples/web-service",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:39.466518+00:00",
+        "source": "/results/express-test/repo/lib",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/lib",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/lib",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:41.394264+00:00",
+        "source": "/results/express-test/repo/test",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/test",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/test",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:42.818067+00:00",
+        "source": "/results/express-test/repo/test/acceptance",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/test/acceptance",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/test/acceptance",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    },
+    {
+      "cbom_format": "cryptograph-custom-v2",
+      "spec_version": "1.0",
+      "metadata": {
+        "tool": "CryptoGraph",
+        "generated_at": "2026-04-27T19:09:44.211582+00:00",
+        "source": "/results/express-test/repo/test/support",
+        "backend": "fraunhofer-cpg",
+        "run_id": "express-test",
+        "source_language": "python",
+        "schema_note": "Refactored CBOM v2: Improved risk scoring, conditional rule filtering, and explainability",
+        "detected_language": "javascript"
+      },
+      "analysis": {
+        "scope": {
+          "input": "/results/express-test/repo/test/support",
+          "language": "python",
+          "backend": "fraunhofer-cpg"
+        },
+        "graph": {
+          "available": true,
+          "backend": "fraunhofer-cpg",
+          "root": "/results/express-test/repo/test/support",
+          "node_count": 0,
+          "edge_count": 0,
+          "node_kinds": {},
+          "edge_kinds": {}
+        },
+        "methodology": {
+          "asset_classification": "Primary cryptographic assets separated from supporting artifacts",
+          "algorithm_normalization": "Wrapper APIs are resolved into inner algorithms and modes where possible",
+          "risk_scoring": "Multi-factor (algorithm, mode, key size, parameter quality, source material, context)",
+          "rule_filtering": "Conditional with preconditions and priorities",
+          "inference": "Flow-based with explanation tracing"
+        },
+        "limitations": [
+          "Variable-level dataflow is local; interprocedural uses CALLS edges.",
+          "Graph context limited to Fraunhofer CPG node properties.",
+          "Inference confidence decreases with call chain depth > 3."
+        ]
+      },
+      "cryptographic_assets": [],
+      "supporting_artifacts": [],
+      "summary": {
+        "total_assets": 0,
+        "supporting_artifacts": 0,
+        "ignored_findings": 0,
+        "by_risk": {},
+        "by_primitive": {},
+        "by_algorithm": {},
+        "by_provider": {},
+        "by_operation": {}
+      }
+    }
+  ]
+}

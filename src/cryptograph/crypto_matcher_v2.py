@@ -25,7 +25,7 @@ def find_crypto_calls(
     Returns:
         List of findings with accurate risk scores
     """
-    mappings = load_json(mappings_path)
+    mappings = _normalize_mappings(load_json(mappings_path))
     rules_config = load_json(rules_path)
     risk_engine = RiskEngine()
 
@@ -113,9 +113,69 @@ def _match_api_name(node: GraphNode, mappings: dict[str, Any]) -> str | None:
     ]
     for candidate in candidates:
         for api_name in mappings:
-            if candidate == api_name or candidate.endswith(f".{api_name}"):
+            if _candidate_matches(candidate, api_name):
                 return api_name
     return None
+
+
+def _normalize_mappings(raw_mappings: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """Support both mapping schemas:
+
+    1) Flat schema: {"API": {"algorithm": ..., "primitive": ...}}
+    2) Language schema: {"language": "x", "mappings": [{"api_pattern": ..., ...}]}
+    """
+    if not isinstance(raw_mappings, dict):
+        return {}
+
+    if isinstance(raw_mappings.get("mappings"), list):
+        normalized: dict[str, dict[str, Any]] = {}
+        for entry in raw_mappings.get("mappings", []):
+            if not isinstance(entry, dict):
+                continue
+            api_pattern = entry.get("api_pattern")
+            if not api_pattern:
+                continue
+            normalized[str(api_pattern)] = {
+                "algorithm": entry.get("algorithm", "unknown"),
+                "primitive": _normalize_primitive(str(entry.get("primitive", "unknown"))),
+                "provider": entry.get("provider"),
+            }
+        return normalized
+
+    # already flat format
+    normalized = {}
+    for api_name, payload in raw_mappings.items():
+        if not isinstance(payload, dict):
+            continue
+        normalized[str(api_name)] = {
+            "algorithm": payload.get("algorithm", "unknown"),
+            "primitive": _normalize_primitive(str(payload.get("primitive", "unknown"))),
+            "provider": payload.get("provider"),
+        }
+    return normalized
+
+
+def _normalize_primitive(primitive: str) -> str:
+    mapping = {
+        "kdf": "key_derivation",
+        "password_hashing": "key_derivation",
+        "key_generation": "asymmetric_key_generation",
+    }
+    return mapping.get(primitive, primitive)
+
+
+def _candidate_matches(candidate: str, api_pattern: str) -> bool:
+    if not candidate or not api_pattern:
+        return False
+    if candidate == api_pattern or candidate.endswith(f".{api_pattern}"):
+        return True
+    # Prefix patterns like "random." should match random.* calls
+    if api_pattern.endswith(".") and candidate.startswith(api_pattern):
+        return True
+    # Namespace patterns like "javax.crypto.Mac" should match suffix or full path
+    if "." in api_pattern and candidate.endswith(api_pattern):
+        return True
+    return False
 
 
 def _extract_mode(finding: CryptoFinding, node: GraphNode) -> str | None:
@@ -314,16 +374,65 @@ def _old_style_rule_matches(
         return False
 
     # List matches
-    if "api_name_in" in match and finding.api_name not in match["api_name_in"]:
+    if "api_name_in" in match and not _ci_in(str(finding.api_name), match["api_name_in"]):
         return False
 
-    if "algorithm_in" in match and finding.algorithm not in match["algorithm_in"]:
+    if "algorithm_in" in match and not _ci_in(str(finding.algorithm), match["algorithm_in"]):
         return False
+
+    if "primitive_in" in match and not _ci_in(str(finding.primitive), match["primitive_in"]):
+        return False
+
+    if "provider_in" in match and not _ci_in(str(finding.provider or ""), match["provider_in"]):
+        return False
+
+    if "mode_in" in match:
+        mode = str((finding.context.get("signals") or {}).get("mode") or "")
+        if not _ci_in(mode, match["mode_in"]):
+            return False
+
+    if "padding_in" in match:
+        padding = str((finding.context.get("signals") or {}).get("padding") or "")
+        if not _ci_in(padding, match["padding_in"]):
+            return False
+
+    if "key_size_less_than" in match:
+        threshold = int(match["key_size_less_than"])
+        key_size = (finding.context.get("signals") or {}).get("key_size")
+        if not isinstance(key_size, int) or key_size >= threshold:
+            return False
+
+    if "pbkdf2_iterations_less_than" in match:
+        threshold = int(match["pbkdf2_iterations_less_than"])
+        if not any(
+            _parse_int(argument) is not None and _parse_int(argument) < threshold
+            for argument in finding.arguments
+        ):
+            return False
+
+    # Backward-compatible alias used by some rule packs
+    if "iterations_less_than" in match:
+        threshold = int(match["iterations_less_than"])
+        if not any(
+            _parse_int(argument) is not None and _parse_int(argument) < threshold
+            for argument in finding.arguments
+        ):
+            return False
+
+    if "argument_contains_any" in match:
+        needles = [str(needle) for needle in match["argument_contains_any"]]
+        if not any(any(needle in str(arg) for needle in needles) for arg in finding.arguments):
+            return False
+
+    if "protocol_in" in match:
+        protocols = [str(p).lower() for p in match["protocol_in"]]
+        if not any(any(proto in str(arg).lower() for proto in protocols) for arg in finding.arguments):
+            return False
 
     # Argument-based matches
     if "argument_contains" in match:
-        needle = match["argument_contains"]
-        if not any(needle in arg for arg in finding.arguments):
+        needle = str(match["argument_contains"])
+        if not any(needle in str(arg) for arg in finding.arguments):
             return False
 
     # String literal detection
@@ -352,3 +461,13 @@ def _parse_int(value: str) -> int | None:
         return int(value)
     except (ValueError, TypeError):
         return None
+
+
+def _ci_in(value: str, candidates: Any) -> bool:
+    if not isinstance(candidates, list):
+        return False
+    value_norm = str(value).strip().lower()
+    for item in candidates:
+        if value_norm == str(item).strip().lower():
+            return True
+    return False

@@ -1,0 +1,15 @@
+{
+  "language": "{{language}}",
+  "rules": [
+    {
+      "id": "EXAMPLE_INSECURE_API",
+      "preconditions": {},
+      "match": {"api_name": "example_api"},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Example insecure API detected; replace with secure alternative",
+      "remediation": "Use a secure API"
+    }
+  ]
+}

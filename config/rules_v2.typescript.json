@@ -1,0 +1,95 @@
+{
+  "language": "typescript",
+  "rules": [
+    {
+      "id": "TS_AES_ECB",
+      "match": {"api_name_in": ["createCipher"], "mode_in": ["ECB"]},
+      "risk": "critical",
+      "priority": 95,
+      "actionable": true,
+      "message": "AES ECB mode detected in TypeScript; ECB leaks plaintext patterns.",
+      "remediation": "Use GCM or ChaCha20-Poly1305 instead."
+    },
+    {
+      "id": "TS_DEPRECATED_CIPHER_API",
+      "match": {"api_name_in": ["createCipher", "createDecipher"]},
+      "risk": "high",
+      "priority": 92,
+      "actionable": true,
+      "message": "Deprecated Node crypto API detected (createCipher/createDecipher).",
+      "remediation": "Use createCipheriv/createDecipheriv with explicit key+IV and modern AEAD modes."
+    },
+    {
+      "id": "TS_DEPRECATED_HASH",
+      "match": {"algorithm_in": ["MD5", "SHA-1", "SHA1"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Weak hash algorithm detected.",
+      "remediation": "Use SHA-256 or stronger."
+    },
+    {
+      "id": "TS_PBKDF2_LOW_ITERATIONS",
+      "match": {"api_name_in": ["pbkdf2", "pbkdf2Sync"], "numeric_argument_less_than": 100000},
+      "risk": "medium",
+      "priority": 80,
+      "actionable": true,
+      "message": "PBKDF2 iteration count appears low.",
+      "remediation": "Use at least 100k+ iterations or consider Argon2id/scrypt."
+    },
+    {
+      "id": "TS_WEAK_PRNG",
+      "match": {"api_name_in": ["Math.random"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Non-cryptographic RNG used for cryptographic purpose.",
+      "remediation": "Use crypto.randomBytes or webcrypto.getRandomValues."
+    },
+    {
+      "id": "TS_RSA_SMALL_KEY",
+      "match": {"algorithm_in": ["RSA"], "key_size_less_than": 2048},
+      "risk": "high",
+      "priority": 86,
+      "actionable": true,
+      "message": "RSA key size below 2048 bits detected.",
+      "remediation": "Use at least 2048 bits (3072+ recommended)."
+    },
+    {
+      "id": "TS_RSA_PADDING_REVIEW",
+      "match": {"api_name_in": ["publicEncrypt", "privateDecrypt"]},
+      "risk": "medium",
+      "priority": 72,
+      "actionable": true,
+      "message": "RSA encryption/decryption detected; verify OAEP padding is enforced.",
+      "remediation": "Use OAEP and disable legacy PKCS#1 v1.5 encryption mode."
+    },
+    {
+      "id": "TS_WEBCRYPTO_RECOMMENDED",
+      "match": {"api_name_in": ["subtle"]},
+      "risk": "info",
+      "priority": 40,
+      "actionable": false,
+      "message": "WebCrypto/SubtleCrypto usage detected.",
+      "remediation": "Prefer standardized WebCrypto APIs and vetted algorithm profiles."
+    },
+    {
+      "id": "TS_PQC_PUBLIC_KEY_MIGRATION",
+      "match": {"primitive_in": ["asymmetric_encryption", "asymmetric_key_generation", "digital_signature"]},
+      "risk": "medium",
+      "priority": 68,
+      "actionable": true,
+      "message": "Classical public-key crypto detected; plan post-quantum migration.",
+      "remediation": "Adopt hybrid migration plans (e.g., ML-KEM/ML-DSA alongside classical algorithms)."
+    },
+    {
+      "id": "TS_AEAD_GOOD_PRACTICE",
+      "match": {"mode_in": ["GCM", "CHACHA20-POLY1305"]},
+      "risk": "low",
+      "priority": 35,
+      "actionable": false,
+      "message": "AEAD mode detected.",
+      "remediation": "Continue enforcing nonce uniqueness and key rotation policy."
+    }
+  ]
+}

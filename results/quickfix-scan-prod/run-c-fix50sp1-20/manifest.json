@@ -1,0 +1,38 @@
+{
+  "run_id": "run-c-fix50sp1-20",
+  "tool": "CryptoGraph",
+  "generated_at": "2026-04-30T19:44:32.916759+00:00",
+  "command": "scan",
+  "source": "/app/results/quickfix/src/C++/fix50sp1",
+  "backend": "c-cpp-lite",
+  "artifacts": {
+    "cbom": "/app/results/quickfix-scan-prod/run-c-fix50sp1-20/cbom-c-fix50sp1.json"
+  },
+  "graph": {
+    "available": true,
+    "backend": "c-cpp-lite",
+    "root": "/app/results/quickfix/src/C++/fix50sp1",
+    "nodes": 0,
+    "edges": 0,
+    "node_kinds": {},
+    "edge_kinds": {}
+  },
+  "findings": {
+    "total": 0,
+    "by_risk": {},
+    "by_algorithm": {},
+    "by_primitive": {}
+  },
+  "config": [
+    {
+      "path": "/app/config/api_mappings.c_cpp.json",
+      "sha256": "613aeb5d6df76c9c0dbef5206e5cd01797a088a06334e8793182a79fcb14a094",
+      "bytes": 9092
+    },
+    {
+      "path": "/app/config/rules_v2.c_cpp.json",
+      "sha256": "78a737a8f2d9ed3ec9ee8b22305937f03022569177f333c3772b40dfb60be9af",
+      "bytes": 5507
+    }
+  ]
+}

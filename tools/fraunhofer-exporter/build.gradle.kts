@@ -9,7 +9,12 @@ version = "0.1.0"
 
 dependencies {
     implementation("de.fraunhofer.aisec:cpg-core:9.0.2")
+    implementation("de.fraunhofer.aisec:cpg-language-cxx:9.0.2")
+    implementation("de.fraunhofer.aisec:cpg-language-go:9.0.2")
+    implementation("de.fraunhofer.aisec:cpg-language-java:9.0.2")
     implementation("de.fraunhofer.aisec:cpg-language-python:9.0.2")
+    implementation("de.fraunhofer.aisec:cpg-language-ruby:9.0.2")
+    implementation("de.fraunhofer.aisec:cpg-language-typescript:9.0.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
 }
 

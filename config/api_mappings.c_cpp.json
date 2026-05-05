@@ -1,0 +1,309 @@
+{
+  "language": "c_cpp",
+  "mappings": [
+    {
+      "api_pattern": "EVP_CipherInit_ex",
+      "algorithm": "detect_from_args",
+      "primitive": "symmetric_encryption",
+      "mode": "detect_from_args",
+      "provider": "openssl",
+      "notes": "Detect OpenSSL EVP_* APIs and extract cipher names (AES-ECB, AES-GCM, etc.)"
+    },
+    {
+      "api_pattern": "RSA_generate_key_ex",
+      "algorithm": "RSA",
+      "primitive": "asymmetric_key_generation",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect OpenSSL RSA key generation and bits argument."
+    },
+    {
+      "api_pattern": "MD5",
+      "algorithm": "MD5",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect MD5 usage via OpenSSL APIs or direct MD5 functions."
+    },
+    {
+      "api_pattern": "RAND_bytes",
+      "algorithm": "CSPRNG",
+      "primitive": "random_generation",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect RAND_bytes as OpenSSL CSPRNG; RAND_pseudo_bytes is deprecated/weak."
+    },
+    {
+      "api_pattern": "RAND_pseudo_bytes",
+      "algorithm": "non-crypto-rng",
+      "primitive": "random_generation",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect RAND_pseudo_bytes which may not be cryptographically secure."
+    },
+    {
+      "api_pattern": "HMAC",
+      "algorithm": "HMAC",
+      "primitive": "message_authentication",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect HMAC_* functions or HMAC usage via OpenSSL."
+    },
+    {
+      "api_pattern": "EVP_Digest",
+      "algorithm": "hash",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect OpenSSL EVP_DigestInit, EVP_DigestUpdate, EVP_DigestFinal for hashing."
+    },
+    {
+      "api_pattern": "SHA256",
+      "algorithm": "SHA-256",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect SHA-256 usage via OpenSSL."
+    },
+    {
+      "api_pattern": "EVP_aes_256_gcm",
+      "algorithm": "AES-256-GCM",
+      "primitive": "authenticated_encryption",
+      "mode": "GCM",
+      "provider": "openssl",
+      "notes": "Detect AES-256 GCM mode usage in OpenSSL."
+    },
+    {
+      "api_pattern": "EVP_aes_128_cbc",
+      "algorithm": "AES-128-CBC",
+      "primitive": "symmetric_encryption",
+      "mode": "CBC",
+      "provider": "openssl",
+      "notes": "Detect AES-128 CBC mode (check for authentication)."
+    },
+    {
+      "api_pattern": "RSA_size",
+      "algorithm": "RSA",
+      "primitive": "asymmetric_key_generation",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect RSA key sizing."
+    },
+    {
+      "api_pattern": "SSL_CTX_new",
+      "algorithm": "SSL/TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect SSL/TLS context creation."
+    },
+    {
+      "api_pattern": "TLS_server_method",
+      "algorithm": "TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect TLS server context method selection."
+    },
+    {
+      "api_pattern": "TLS_client_method",
+      "algorithm": "TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect TLS client context method selection."
+    },
+    {
+      "api_pattern": "SSL_new",
+      "algorithm": "SSL/TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect creation of an SSL/TLS session object."
+    },
+    {
+      "api_pattern": "SSL_connect",
+      "algorithm": "SSL/TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect client-side TLS handshake."
+    },
+    {
+      "api_pattern": "SSL_accept",
+      "algorithm": "SSL/TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect server-side TLS handshake."
+    },
+    {
+      "api_pattern": "SSL_read",
+      "algorithm": "SSL/TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect encrypted transport reads through OpenSSL."
+    },
+    {
+      "api_pattern": "SSL_write",
+      "algorithm": "SSL/TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect encrypted transport writes through OpenSSL."
+    },
+    {
+      "api_pattern": "SSL_set_tlsext_host_name",
+      "algorithm": "SSL/TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect SNI hostname configuration for TLS."
+    },
+    {
+      "api_pattern": "SSL_CTX_set_cipher_list",
+      "algorithm": "TLS-CipherSuites",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect TLS cipher suite configuration."
+    },
+    {
+      "api_pattern": "SSL_CTX_set_ciphersuites",
+      "algorithm": "TLS-CipherSuites",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect TLS 1.3 cipher suite configuration."
+    },
+    {
+      "api_pattern": "SSL_CTX_set_options",
+      "algorithm": "SSL/TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect SSL/TLS protocol option configuration."
+    },
+    {
+      "api_pattern": "SSL_CTX_set_verify",
+      "algorithm": "X.509",
+      "primitive": "certificate_management",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect peer certificate verification configuration."
+    },
+    {
+      "api_pattern": "SSL_CTX_load_verify_locations",
+      "algorithm": "X.509",
+      "primitive": "certificate_management",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect trusted CA store loading."
+    },
+    {
+      "api_pattern": "SSL_CTX_set_default_verify_paths",
+      "algorithm": "X.509",
+      "primitive": "certificate_management",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect default trusted CA path loading."
+    },
+    {
+      "api_pattern": "SSL_CTX_use_certificate",
+      "algorithm": "X.509",
+      "primitive": "certificate_management",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect certificate loading into an SSL/TLS context."
+    },
+    {
+      "api_pattern": "SSL_CTX_use_PrivateKey",
+      "algorithm": "PrivateKey",
+      "primitive": "key_serialization",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect private key loading into an SSL/TLS context."
+    },
+    {
+      "api_pattern": "SSL_CTX_use_RSAPrivateKey",
+      "algorithm": "RSA",
+      "primitive": "key_serialization",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect RSA private key loading into an SSL/TLS context."
+    },
+    {
+      "api_pattern": "SSL_CTX_check_private_key",
+      "algorithm": "PrivateKey",
+      "primitive": "key_serialization",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect certificate/private-key consistency checks."
+    },
+    {
+      "api_pattern": "PEM_read_PrivateKey",
+      "algorithm": "PrivateKey",
+      "primitive": "key_serialization",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect PEM private key parsing."
+    },
+    {
+      "api_pattern": "PEM_read_bio_DHparams",
+      "algorithm": "DH",
+      "primitive": "key_derivation",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect Diffie-Hellman parameter loading."
+    },
+    {
+      "api_pattern": "EVP_PKEY_bits",
+      "algorithm": "PublicKey",
+      "primitive": "asymmetric_key_generation",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect public/private key size inspection."
+    },
+    {
+      "api_pattern": "EVP_PKEY_type",
+      "algorithm": "PublicKey",
+      "primitive": "asymmetric_key_generation",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect public/private key type inspection."
+    },
+    {
+      "api_pattern": "EVP_PKEY_base_id",
+      "algorithm": "PublicKey",
+      "primitive": "asymmetric_key_generation",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect public/private key algorithm inspection."
+    },
+    {
+      "api_pattern": "X509_CRL_verify",
+      "algorithm": "X.509",
+      "primitive": "certificate_management",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect CRL signature verification."
+    },
+    {
+      "api_pattern": "X509_get_pubkey",
+      "algorithm": "X.509",
+      "primitive": "certificate_management",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect public key extraction from certificates."
+    },
+    {
+      "api_pattern": "RAND_seed",
+      "algorithm": "CSPRNG",
+      "primitive": "random_generation",
+      "mode": null,
+      "provider": "openssl",
+      "notes": "Detect explicit OpenSSL PRNG seeding."
+    }
+  ]
+}

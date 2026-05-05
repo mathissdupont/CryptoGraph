@@ -148,3 +148,76 @@ def test_converter_prunes_noisy_unknown_analysis_placeholders() -> None:
         "api_call": "os.urandom",
         "callee": "os.urandom",
     }
+
+
+def test_convert_merged_cboms_to_cyclonedx_keeps_detected_languages() -> None:
+    cyclonedx = convert_to_cyclonedx_cbom(
+        {
+            "cboms": [
+                {
+                    "metadata": {
+                        "tool": "CryptoGraph",
+                        "generated_at": "2026-04-16T12:00:00+00:00",
+                        "source": "repo/java",
+                        "backend": "fraunhofer-cpg",
+                        "run_id": "scan-1",
+                        "source_language": "python",
+                        "detected_language": "java",
+                    },
+                    "cryptographic_assets": [
+                        {
+                            "asset_id": "crypto-java-1",
+                            "crypto_metadata": {
+                                "algorithm": "AES",
+                                "primitive": "symmetric_encryption",
+                                "mode": "CBC",
+                                "provider": "javax.crypto",
+                            },
+                            "usage": {"operation": "encryption"},
+                            "risk": {"level": "medium", "confidence": 0.8, "tags": []},
+                            "evidence": {"summary": {"api_call": "Cipher.getInstance"}},
+                        }
+                    ],
+                },
+                {
+                    "metadata": {
+                        "tool": "CryptoGraph",
+                        "generated_at": "2026-04-16T12:00:00+00:00",
+                        "source": "repo/ruby",
+                        "backend": "ruby-lite",
+                        "run_id": "scan-1",
+                        "source_language": "python",
+                        "detected_language": "ruby",
+                    },
+                    "cryptographic_assets": [
+                        {
+                            "asset_id": "crypto-ruby-1",
+                            "crypto_metadata": {
+                                "algorithm": "MD5",
+                                "primitive": "hash",
+                                "provider": "ruby:digest",
+                            },
+                            "usage": {"operation": "digest"},
+                            "risk": {"level": "high", "confidence": 0.9, "tags": ["deprecated_hash"]},
+                            "evidence": {"summary": {"api_call": "Digest::MD5.hexdigest"}},
+                        }
+                    ],
+                },
+            ]
+        }
+    )
+
+    assert cyclonedx["bomFormat"] == "CycloneDX"
+    properties = {prop["name"]: prop["value"] for prop in cyclonedx["metadata"].get("properties", [])}
+    assert properties["cryptograph:detected_languages"] == "java,ruby"
+    assert properties["cryptograph:scan_count"] == "2"
+
+    component_names = {component["name"] for component in cyclonedx["components"] if component["type"] == "cryptographic-asset"}
+    assert {"AES", "MD5"} <= component_names
+
+    java_asset = next(component for component in cyclonedx["components"] if component["bom-ref"] == "crypto-java-1")
+    ruby_asset = next(component for component in cyclonedx["components"] if component["bom-ref"] == "crypto-ruby-1")
+    java_props = {prop["name"]: prop["value"] for prop in java_asset.get("properties", [])}
+    ruby_props = {prop["name"]: prop["value"] for prop in ruby_asset.get("properties", [])}
+    assert java_props["cryptograph:detected_language"] == "java"
+    assert ruby_props["cryptograph:detected_language"] == "ruby"

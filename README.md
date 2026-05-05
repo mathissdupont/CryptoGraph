@@ -1,203 +1,370 @@
-# CryptoGraph
+# CryptoGraph 🔐
 
-CryptoGraph is a graph-based prototype for discovering cryptographic assets from Python source code and generating a custom CryptoGraph CBOM JSON representation.
+**Cryptographic API Analysis & Risk Assessment Tool**
 
-The MVP is designed to grow beyond toy examples: the Python pipeline works on normalized graph data, while the CPG backend is isolated behind a loader so Fraunhofer AISEC CPG can be used without coupling the matcher to JVM internals.
+Analyze any public or private repository for cryptographic API usage, security vulnerabilities, and Post-Quantum Cryptography (PQC) compatibility. Supports **Java, JavaScript, Go, C/C++, and Python**.
 
 ## What is CryptoGraph?
 
-CryptoGraph analyzes Python source code to:
+CryptoGraph is a multi-language cryptographic API analyzer that:
 
-1. **Detect cryptographic API calls**: Identify usage of encryption, hashing, key generation, and other crypto primitives.
-2. **Extract context**: Trace where data comes from (user input, hardcoded keys, random sources) and how it flows to crypto operations.
-3. **Generate CBOM**: Produce a cryptographic component bill of materials (CBOM) with structured metadata, risk scores, and evidence.
-4. **Scale to large repositories**: Architecture supports incremental scanning, parallel graph generation, and artifact sharding.
+1. **Detects crypto API usage** in 5 programming languages (Java, JavaScript, Go, C/C++, Python)
+2. **Extracts context** from call chains, arguments, data flow, and control flow
+3. **Applies per-language risk rules** to flag insecure patterns (ECB mode, weak hashes, small RSA keys, weak PRNG)
+4. **Generates structured CBOM** (Cryptographic Bill of Materials) with metadata, risk scores, and evidence
+5. **Enables LLM-based labeling** for contextual risk assessment and remediation guidance
+6. **Supports web UI** for easy repository scanning without CLI knowledge
 
-### Key Innovation: Variable-Level Dataflow
+### Key Features
 
-When Fraunhofer AISEC CPG's Python frontend cannot emit complete interprocedural dataflow edges, CryptoGraph combines:
+✅ **Multi-Language**: Java, JavaScript, Go, C/C++, Python  
+✅ **Web UI**: Paste repo link → Get results (no CLI needed)  
+✅ **50+ Crypto APIs**: Comprehensive per-language detection  
+✅ **Per-Language Rules**: 7+ risk rules per language  
+✅ **LLM Integration**: AI-powered labeling & remediation  
+✅ **Flexible Backends**: Fraunhofer CPG (accurate) or ast-lite (fast)  
+✅ **Batch Scanning**: Process multiple repos  
+✅ **PQC Assessment**: Quantum-safe algorithm tracking  
+✅ **Docker Ready**: One command to run  
 
-- **Graph-based tracking**: Follow DFG, DATA_FLOW, and REACHES edges from the normalized graph.
-- **Local AST analysis**: Extract function-local assignments and parameter origins.
-- **Hybrid evidence**: Report both graph and local sources in the CBOM `flow` section.
+### Risk Examples
 
-Example: `request["token"] → token → encrypt(token)` is traced even when the CPG graph lacks a complete edge chain, by combining graph edges with local assignment origin extraction.
+- **ECB mode** in AES encryption (high risk)
+- **MD5/SHA-1** for hashing (high risk)
+- **RSA keys <2048 bits** (high risk)
+- **Math.random()** for secrets (high risk)
+- **Random module** in crypto context (high risk)
 
-## Goal
+### Roadmap
 
-- Detect cryptographic API usage in source code.
-- Extract usage context from graph relations and call arguments.
-- Produce structured CryptoGraph CBOM JSON output with risk scores and evidence.
-- Run reproducibly through Docker for future large-codebase scans.
-- Support hybrid dataflow extraction when CPG edges are incomplete.
+The Fraunhofer-first language roadmap is documented in [docs/ROADMAP.md](docs/ROADMAP.md). It prioritizes Java, Kotlin, JavaScript, TypeScript, C#, and C++ and keeps fallback analyzers only where Fraunhofer cannot be used.
 
-## Pipeline
+---
 
-```text
-source directory
-  ↓
-  → [Fraunhofer CPG exporter (preferred) or ast-lite fallback (lightweight)]
-  ↓
-  → normalized graph JSON
-  ↓
-  → crypto matcher (identify API calls via config/api_mappings.json)
-  ↓
-  → context extractor (enrich with call chain, arguments, variable-level dataflow)
-  ↓
-  → CryptoGraph CBOM builder (apply risk rules, generate final CBOM)
-  ↓
-  output/result.json + report.html + manifest.json
-```
+## 🚀 Quick Start (30 seconds)
 
-## Quick Start
-
-### Prerequisites
-
-- **Python 3.11+**
-- **Optional: Java 11+** (for Fraunhofer CPG exporter; Docker handles this automatically)
-- **Docker & Docker Compose** (recommended for consistent environment)
-
-### Local Development (AST-lite backend, fastest)
+### 1. Start Web UI
 
 ```bash
-# Setup Python environment
-python -m venv .venv
-.venv\Scripts\activate              # Windows
-source .venv/bin/activate           # macOS/Linux
+# Option A: Docker (easiest)
+docker-compose build && docker-compose up scanner
 
-# Install dependencies
+# Option B: Direct Python
+pip install -e .
+streamlit run viewer/scanner.py
+```
+
+### 2. Open Browser
+
+```
+http://localhost:8502
+```
+
+### 3. Paste Repository Link
+
+```
+https://github.com/nodejs/node.git
+```
+
+### 4. Click "Scan" → Get Results
+
+✅ Languages detected automatically  
+✅ Risk patterns flagged  
+✅ LLM labels added  
+✅ Export JSON/JSONL  
+
+---
+
+## 📥 Installation
+
+### Requirements
+
+- **Python 3.10+**
+- **Docker & Docker Compose** (recommended)
+- **Java 8+** (optional, for Fraunhofer CPG)
+- **Git**
+
+### Setup
+
+```bash
+# Clone repository
+git clone https://github.com/you/cryptograph.git
+cd cryptograph
+
+# Install Python dependencies
 pip install -r requirements.txt
 pip install -e .
 
-# Scan samples
-cryptograph scan --input samples --output output/result.json --backend ast-lite
+# (Optional) Build Fraunhofer exporter for advanced analysis
+bash scripts/build_fraunhofer_exporter.sh ./cpg-build
+export CRYPTOGRAPH_FRAUNHOFER_EXPORTER=./cpg-build/joern-export-plugin.jar
+```
+
+---
+
+## 🎮 Usage
+
+### Web Interface (Easiest)
+
+```bash
+# Start the web scanner UI
+docker-compose up scanner
+
+# Or direct Python:
+streamlit run viewer/scanner.py
+```
+
+Open: `http://localhost:8502`
+
+**Workflow:**
+1. Paste GitHub URL or local path
+2. Select backend (Fraunhofer/ast-lite)  
+3. Click "Scan"
+4. Review findings
+5. Enable LLM labeling
+6. Download results
+
+### Command Line
+
+```bash
+# Scan single repository
+cryptograph scan-repo \
+  --repo https://github.com/nodejs/node.git \
+  --out-dir ./results/node-scan
+
+# Use fast backend
+cryptograph scan-repo \
+  --repo . \
+  --out-dir ./results/local \
+  --backend ast-lite
+
+# Label findings
+python scripts/llm-label-cbom.py \
+  --input ./results/node-scan/dataset.jsonl \
+  --output ./results/node-scan/labeled.jsonl
 
 # Generate HTML report
-cryptograph report --input output/result.json --output output/report.html
+cryptograph report \
+  --input ./results/node-scan/merged-cboms.json \
+  --output ./results/node-scan/report.html
 ```
 
-### Production (Fraunhofer CPG backend, more accurate)
+### Batch Scanning
 
 ```bash
-# Build Docker image with Fraunhofer exporter
-docker compose build
+# Create repos.txt (one repo per line)
+echo "https://github.com/nodejs/node.git" > repos.txt
+echo "https://github.com/expressjs/express.git" >> repos.txt
 
-# Scan with automatic fallback to ast-lite if exporter fails
-docker compose run --rm cryptograph scan --input samples --output output/result.json
+# Batch scan
+bash scripts/batch-scan-repos.sh repos.txt
 
-# Strict mode: fail if Fraunhofer exporter is unavailable
-docker compose run --rm cryptograph scan --input samples --output output/result.json --backend fraunhofer-strict
+# Results in ./results/batch-scan-TIMESTAMP/
 ```
 
-### CPG Inspection (Debugging)
+---
 
-Export the normalized graph for inspection:
+## 📊 Supported Languages
+
+| Language | APIs | Rules | Example |
+|----------|------|-------|---------|
+| **Java** | 15+ | 7 | `Cipher.getInstance("AES/ECB/PKCS5Padding")` |
+| **JavaScript** | 12+ | 7 | `crypto.createCipher("aes-256-ecb", key)` |
+| **Go** | 10+ | 6 | `cipher.NewGCMEncrypter(block)` |
+| **C/C++** | 8+ | 5 | `EVP_CipherInit_ex(ctx, EVP_aes_128_ecb(), ...)` |
+| **Python** | 13+ | 8 | `hashlib.md5()` / `cryptography.Cipher` |
+
+---
+
+## 📂 Output Structure
+
+```
+results/scan_TIMESTAMP/
+├── merged-cboms.json         # All findings merged
+├── cbom-java-*.json          # Per-language results
+├── cbom-javascript-*.json
+├── cbom-python-*.json
+├── dataset.jsonl             # One asset per line (for LLM)
+├── labeled.jsonl             # After LLM labeling
+└── report.html               # Interactive HTML report
+```
+
+### CBOM Format
+
+```json
+{
+  "cboms": [
+    {
+      "metadata": {
+        "detected_language": "java",
+        "scan_timestamp": "2026-04-27T10:30:00Z"
+      },
+      "cryptographic_assets": [
+        {
+          "asset_id": "java-crypto-1234",
+          "crypto_metadata": {
+            "algorithm": "AES",
+            "mode": "ECB",
+            "key_size": 256
+          },
+          "usage": "Cipher.getInstance(\"AES/ECB/PKCS5Padding\")",
+          "risk": "high",
+          "rules": ["JAVA_AES_ECB"],
+          "evidence": {
+            "summary": "ECB mode detected",
+            "remediation": "Use GCM or CTR+HMAC"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## 🔧 Configuration
+
+### Per-Language API Mappings
+
+Edit `config/api_mappings.<lang>.json`:
+
+```json
+{
+  "api_pattern": "crypto.subtle",
+  "algorithm": "WebCrypto",
+  "primitive": "authenticated_encryption",
+  "provider": "node:crypto"
+}
+```
+
+### Per-Language Risk Rules
+
+Edit `config/rules_v2.<lang>.json`:
+
+```json
+{
+  "id": "JS_ECB_MODE",
+  "match": {"api_name_in": ["createCipher"], "mode_in": ["ECB"]},
+  "risk": "high",
+  "message": "ECB mode is insecure",
+  "remediation": "Use GCM or ChaCha20-Poly1305"
+}
+```
+
+### Environment Variables
 
 ```bash
-# Local: fast graph export (ast-lite only)
-cryptograph graph --input samples --backend ast-lite --output output/cpg.json --dot output/cpg.dot --html output/cpg.html
-
-# Docker: inspect Fraunhofer graph (requires strict mode for guarantees)
-docker compose run --rm cryptograph graph --input samples --backend fraunhofer-strict --output output/cpg.json --dot output/cpg.dot --html output/cpg.html
+export CRYPTOGRAPH_FRAUNHOFER_EXPORTER=/path/to/joern-export-plugin.jar
+export LLM_API_KEY=sk-...
 ```
 
-This generates:
-- `cpg.json`: Full normalized graph (all nodes and edges)
-- `cpg.dot`: Graphviz visualization
-- `cpg.html`: Standalone interactive viewer
+---
 
-## Output Structure
+## 📚 Documentation
 
-All CLI commands write artifacts under run directories when paths are under `output/`:
+- **[Web Scanner Guide](docs/EXTERNAL-REPO-SCANNING.md)** — Full web UI workflow
+- **[CLI Usage Guide](docs/USAGE-EXTERNAL-REPOS.md)** — Advanced features
+- **[Quick Examples](docs/QUICK-EXAMPLES.md)** — Real repo examples
+- **[Quick Reference](docs/QUICK-REFERENCE.md)** — One-page cheat sheet
+- **[Architecture](docs/architecture.md)** — System design
 
-```text
-output/run-YYYYMMDDTHHMMSSZ-xxxxxxxx/
-  ├── result.json          # CryptoGraph CBOM (all findings)
-  ├── report.html          # Human-readable HTML report
-  ├── manifest.json        # Metadata: tool version, backend, counts, config hashes
-  ├── cpg.json             # (if --graph used) Normalized graph JSON
-  ├── cpg.dot              # (if --graph used) Graphviz format
-  └── cpg.html             # (if --graph used) Interactive viewer
-```
+---
 
-Use `--run-dir output/my-custom-run` to specify a custom directory name if desired.
-
-## Backend Modes
-
-| Mode | Backend | Fallback | Use Case |
-|------|---------|----------|----------|
-| `fraunhofer` (default) | Fraunhofer AISEC CPG | Yes → ast-lite | Production: accurate CPG, but graceful degradation |
-| `fraunhofer-strict` | Fraunhofer AISEC CPG | No | Validation/CI: fail if CPG fails (no silent fallback) |
-| `ast-lite` | Python AST (no JVM) | —— | Development: fastest, lightweight, for iteration |
-
-### Fallback Behavior
-
-When `--backend fraunhofer` is used:
-
-1. Attempts to invoke Fraunhofer CPG exporter (subprocess)
-2. If exporter is unavailable or crashes → falls back to ast-lite with warning on stderr
-3. CBOM result includes `backend` field to track whether data came from CPG or fallback
-
-When `--backend fraunhofer-strict` is used:
-
-- Fails immediately if exporter is unavailable or crashes
-- Suitable for CI/CD pipelines and validation workflows
-- No silent degradation
-
-## Testing
-
-### Comprehensive Test Suite
-
-CryptoGraph includes 13 sample Python files demonstrating cryptographic usage patterns:
-
-**Core samples** (6):
-- `hash_example.py`: SHA, MD5 hashing
-- `insecure_aes.py`: AES-ECB (insecure) encryption
-- `pbkdf2_example.py`: PBKDF2 key derivation
-- `rsa_example.py`: RSA encryption and key generation
-- `fernet_example.py`: High-level authenticated encryption
-- `auth_flow.py`: Authentication flow with password hashing
-
-**Extended samples** (7, new):
-- `hmac_example.py`: HMAC-SHA256 message authentication
-- `chacha20_example.py`: ChaCha20 stream cipher
-- `scrypt_example.py`: Scrypt key derivation + PBKDF2 fallback
-- `ecdsa_example.py`: ECDSA digital signatures
-- `gcm_mode_example.py`: AES-GCM authenticated encryption
-- `certificate_example.py`: X.509 certificate generation
-- `argon2_example.py`: Argon2 modern password hashing
-
-### Run Tests with Fraunhofer Backend
+## 🧪 Testing
 
 ```bash
-# Build Docker image (includes Fraunhofer exporter)
-docker compose build
+# Run pytest
+pytest tests/ -v
 
-# Scan all samples and generate CBOM
-docker compose run --rm cryptograph scan \
-    --input /app/samples \
-    --output /app/output/result.json \
-    --backend fraunhofer
+# Test with Docker
+docker-compose run cryptograph scan --input samples --output /results/test.json
 
-# Generate CPG visualization
-docker compose run --rm cryptograph graph \
-    --input /app/samples \
-    --output /app/output/cpg.json \
-    --dot /app/output/cpg.dot \
-    --html /app/output/cpg.html \
-    --backend fraunhofer
-
-# Generate HTML report from CBOM
-docker compose run --rm cryptograph report \
-    --input /app/output/run-YYYYMMDDTHHMMSSZ-xxxxxxxx/result.json \
-    --output /app/output/report.html
+# Check results
+cat results/test.json | jq '.cboms[].cryptographic_assets | length'
 ```
 
-### Expected Results
+---
 
-**Latest Test Run (April 15, 2026)**:
-- **Total Findings**: 39 cryptographic assets
-- **Risk Breakdown**: 6 high-risk, 33 info/low-risk
+## 🔌 CI/CD Integration
+
+### GitHub Actions
+
+```yaml
+name: CryptoGraph Security Scan
+on: [push, pull_request]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+      - run: pip install -e .
+      - run: cryptograph scan-repo --repo . --out-dir ./results
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cryptograph-results
+          path: results/
+```
+
+---
+
+## 🐛 Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| Streamlit not found | `pip install -r requirements.txt` |
+| Docker build fails | `docker-compose build --no-cache` |
+| No assets detected | Check repo has crypto code; try `--backend ast-lite` |
+| CPG exporter missing | `bash scripts/build_fraunhofer_exporter.sh ./cpg-build` |
+| Slow scan | Use `--backend ast-lite` for faster analysis |
+
+---
+
+## 📈 Performance Tips
+
+| Scenario | Backend | Time |
+|----------|---------|------|
+| Quick scan | ast-lite | 2-5 min |
+| Accurate scan | fraunhofer | 5-20 min |
+| Large repo (>1GB) | ast-lite | 10-60 min |
+
+---
+
+## 🎯 Roadmap
+
+- [x] Multi-language repository scanning
+- [x] Web UI for easy use
+- [x] LLM-based risk labeling
+- [x] Per-language API mappings & rules
+- [ ] Real LLM API integration (OpenAI, Claude)
+- [ ] Parallel scanning
+- [ ] Resource limits & timeouts
+- [ ] Integration test suite
+- [ ] CI/CD templates
+- [ ] VSCode extension
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Areas of interest:
+- Additional language support
+- LLM API integrations
+- Performance optimizations
+- Enhanced UI features
+- Integration tests
+
+---
+
+## 📄 License
+
+MIT License - See LICENSE file
+
+---
+
+**Made with ❤️ for secure cryptography**
 - **Graph Size**: 545 nodes, 493 edges
 - **Algorithms Detected**:
   - Symmetric: AES, ChaCha20

@@ -1,0 +1,115 @@
+{
+  "language": "java",
+  "rules": [
+    {
+      "id": "JAVA_AES_ECB",
+      "preconditions": {},
+      "match": {"api_name_in": ["Cipher.getInstance"], "mode_in": ["ECB"]},
+      "risk": "critical",
+      "priority": 95,
+      "actionable": true,
+      "message": "AES ECB mode detected in Java; ECB leaks patterns and should not be used for confidential data.",
+      "remediation": "Use AES/GCM or AES/CTR+HMAC. Ensure unique IV/nonce management and authentication."
+    },
+    {
+      "id": "JAVA_AES_CBC_REQUIRES_AUTH",
+      "preconditions": {},
+      "match": {"api_name_in": ["Cipher.getInstance"], "mode_in": ["CBC"]},
+      "risk": "medium",
+      "priority": 78,
+      "actionable": true,
+      "message": "AES-CBC detected; encryption should be authenticated.",
+      "remediation": "Prefer AES-GCM. If CBC is required, enforce Encrypt-then-MAC and strict IV management."
+    },
+    {
+      "id": "JAVA_DEPRECATED_HASH",
+      "preconditions": {},
+      "match": {"api_name_in": ["MessageDigest.getInstance"], "algorithm_in": ["MD5", "SHA-1"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Deprecated hash algorithm detected (MD5 or SHA-1).",
+      "remediation": "Use SHA-256 or SHA-3 family for integrity checks; use appropriate KDFs for key derivation."
+    },
+    {
+      "id": "JAVA_RSA_SMALL_KEY",
+      "preconditions": {},
+      "match": {"api_name_in": ["KeyPairGenerator.getInstance"], "key_size_less_than": 2048},
+      "risk": "high",
+      "priority": 85,
+      "actionable": true,
+      "message": "RSA key size below 2048 bits detected.",
+      "remediation": "Use RSA with at least 2048 bits (prefer 3072+) or migrate to hybrid/PQC approaches."
+    },
+    {
+      "id": "JAVA_WEAK_PRNG",
+      "preconditions": {},
+      "match": {"api_name_in": ["Random", "ThreadLocalRandom"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Non-cryptographic PRNG used for cryptographic purposes.",
+      "remediation": "Use java.security.SecureRandom or other CSPRNG for key/nonce material."
+    },
+    {
+      "id": "JAVA_PBKDF2_LOW_ITERATIONS",
+      "preconditions": {},
+      "match": {"api_name_in": ["SecretKeyFactory", "PBEKeySpec"], "iterations_less_than": 100000},
+      "risk": "medium",
+      "priority": 76,
+      "actionable": true,
+      "message": "PBKDF2 iteration count appears low.",
+      "remediation": "Use at least 100k+ iterations and periodically re-evaluate per hardware baseline."
+    },
+    {
+      "id": "JAVA_SSL_VERSION",
+      "preconditions": {},
+      "match": {"api_name_in": ["SSLContext"], "protocol_in": ["SSLv3", "TLSv1.0", "TLSv1.1"]},
+      "risk": "high",
+      "priority": 85,
+      "actionable": true,
+      "message": "Weak SSL/TLS version detected (SSLv3, TLSv1.0, TLSv1.1 are deprecated).",
+      "remediation": "Use TLSv1.2 or TLSv1.3 for secure communication."
+    },
+    {
+      "id": "JAVA_SIGNATURE_WEAK_HASH",
+      "preconditions": {},
+      "match": {"api_name_in": ["Signature"], "algorithm_in": ["SHA1withRSA", "MD5withRSA"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Weak hash algorithm used in signature algorithm.",
+      "remediation": "Use SHA256withRSA, SHA256withECDSA, or stronger alternatives."
+    },
+    {
+      "id": "JAVA_RSA_PADDING_REVIEW",
+      "preconditions": {},
+      "match": {"api_name_in": ["Cipher.getInstance"], "argument_contains_any": ["RSA/ECB/PKCS1Padding"]},
+      "risk": "medium",
+      "priority": 72,
+      "actionable": true,
+      "message": "Legacy RSA PKCS#1 v1.5 encryption padding pattern detected.",
+      "remediation": "Prefer OAEP padding for RSA encryption/decryption operations."
+    },
+    {
+      "id": "JAVA_PQC_PUBLIC_KEY_MIGRATION",
+      "preconditions": {},
+      "match": {"primitive_in": ["asymmetric_encryption", "asymmetric_key_generation", "digital_signature"]},
+      "risk": "medium",
+      "priority": 68,
+      "actionable": true,
+      "message": "Classical public-key cryptography detected; prepare post-quantum migration plan.",
+      "remediation": "Adopt hybrid transition plans with ML-KEM/ML-DSA where policy allows."
+    },
+    {
+      "id": "JAVA_GENERIC_CIPHER",
+      "preconditions": {},
+      "match": {"api_name_in": ["Cipher.getInstance"]},
+      "risk": "info",
+      "priority": 30,
+      "actionable": false,
+      "message": "Generic cipher instance created; verify mode and algorithm are secure.",
+      "remediation": "Ensure transformation string specifies secure algorithm and mode (e.g., AES/GCM/NoPadding)."
+    }
+  ]
+}

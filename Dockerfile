@@ -16,7 +16,7 @@ ENV LD_LIBRARY_PATH=/usr/local/lib/python3.12/site-packages/jep
 ENV CPG_JEP_LIBRARY=/usr/local/lib/python3.12/site-packages/jep/libjep.so
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential openjdk-17-jdk-headless \
+    && apt-get install -y --no-install-recommends build-essential openjdk-17-jdk-headless git \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -28,10 +28,12 @@ COPY samples ./samples
 COPY docs ./docs
 COPY tools ./tools
 COPY tests ./tests
+COPY viewer ./viewer
+COPY scripts ./scripts
 COPY --from=fraunhofer-exporter-builder /workspace/tools/fraunhofer-exporter/build/libs/fraunhofer-exporter.jar /opt/cryptograph/fraunhofer-exporter.jar
 
-RUN pip install --no-cache-dir -r requirements.txt \
-    && pip install --no-cache-dir -e .
+RUN pip install --no-cache-dir --default-timeout=100 -r requirements.txt \
+    && pip install --no-cache-dir --default-timeout=100 -e .
 
 ENTRYPOINT ["cryptograph"]
 CMD ["scan", "--input", "samples", "--output", "output/result.json"]

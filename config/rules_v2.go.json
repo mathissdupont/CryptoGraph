@@ -1,0 +1,105 @@
+{
+  "language": "go",
+  "rules": [
+    {
+      "id": "GO_CBC_MODE",
+      "preconditions": {},
+      "match": {"api_name_in": ["NewCBCEncrypter", "NewCBCDecrypter"], "mode_in": ["CBC"]},
+      "risk": "medium",
+      "priority": 75,
+      "actionable": true,
+      "message": "CBC mode detected in Go; ensure encryption is authenticated or use AEAD.",
+      "remediation": "Prefer cipher.AEAD (GCM) or apply Encrypt-then-MAC with HMAC-SHA256."
+    },
+    {
+      "id": "GO_DEPRECATED_HASH",
+      "preconditions": {},
+      "match": {"api_name_in": ["md5.New"], "algorithm_in": ["MD5", "SHA-1"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "MD5 detected in Go code; MD5 is deprecated for cryptographic uses.",
+      "remediation": "Use SHA-256 or stronger hash functions; for passwords, use Argon2/bcrypt/scrypt."
+    },
+    {
+      "id": "GO_RSA_SMALL_KEY",
+      "preconditions": {},
+      "match": {"api_name_in": ["rsa.GenerateKey"], "key_size_less_than": 2048},
+      "risk": "high",
+      "priority": 85,
+      "actionable": true,
+      "message": "RSA key generation with small key size detected.",
+      "remediation": "Use at least 2048-bit keys or migrate to modern primitives."
+    },
+    {
+      "id": "GO_USE_MATH_RAND",
+      "preconditions": {},
+      "match": {"api_name_in": ["math/rand"], "notes": "non-crypto PRNG"},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Non-cryptographic RNG (math/rand) used in Go code.",
+      "remediation": "Use crypto/rand for generating keys, nonces, and secrets."
+    },
+    {
+      "id": "GO_AEAD_BEST_PRACTICE",
+      "preconditions": {},
+      "match": {"api_name_in": ["cipher.NewGCM"]},
+      "risk": "low",
+      "priority": 20,
+      "actionable": false,
+      "message": "AEAD mode (GCM) detected; best practice for authenticated encryption.",
+      "remediation": "Continue using GCM or ChaCha20-Poly1305 for authenticated encryption."
+    },
+    {
+      "id": "GO_DSA_LEGACY",
+      "preconditions": {},
+      "match": {"api_name_in": ["dsa.GenerateParameters"]},
+      "risk": "medium",
+      "priority": 65,
+      "actionable": true,
+      "message": "DSA detected; prefer ECDSA or RSA for new systems.",
+      "remediation": "Migrate to ECDSA (P-256 or P-384) or RSA-2048+ for signatures."
+    },
+    {
+      "id": "GO_RSA_PKCS1V15_ENCRYPTION",
+      "preconditions": {},
+      "match": {"api_name_in": ["rsa.EncryptPKCS1v15", "rsa.DecryptPKCS1v15"]},
+      "risk": "medium",
+      "priority": 72,
+      "actionable": true,
+      "message": "Legacy RSA PKCS#1 v1.5 encryption API detected.",
+      "remediation": "Prefer rsa.EncryptOAEP/rsa.DecryptOAEP for new encryption flows."
+    },
+    {
+      "id": "GO_PBKDF2_LOW_ITERATIONS",
+      "preconditions": {},
+      "match": {"api_name_in": ["pbkdf2.Key"], "iterations_less_than": 100000},
+      "risk": "medium",
+      "priority": 74,
+      "actionable": true,
+      "message": "PBKDF2 iteration count appears low.",
+      "remediation": "Increase to >=100k and reassess policy regularly; consider Argon2id where suitable."
+    },
+    {
+      "id": "GO_WEAK_TLS_PROTOCOL",
+      "preconditions": {},
+      "match": {"protocol_in": ["SSLv3", "TLS1.0", "TLS1.1"]},
+      "risk": "high",
+      "priority": 86,
+      "actionable": true,
+      "message": "Weak TLS protocol version detected.",
+      "remediation": "Use TLS1.2+ and prefer TLS1.3."
+    },
+    {
+      "id": "GO_PQC_PUBLIC_KEY_MIGRATION",
+      "preconditions": {},
+      "match": {"primitive_in": ["asymmetric_encryption", "asymmetric_key_generation", "digital_signature"]},
+      "risk": "medium",
+      "priority": 68,
+      "actionable": true,
+      "message": "Classical public-key cryptography detected; prepare post-quantum migration plan.",
+      "remediation": "Use hybrid migration strategy with ML-KEM/ML-DSA plus classical algorithms during transition."
+    }
+  ]
+}

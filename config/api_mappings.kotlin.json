@@ -1,0 +1,35 @@
+{
+  "language": "kotlin",
+  "mappings": [
+    {
+      "api_pattern": "Cipher.getInstance",
+      "algorithm": "AES",
+      "primitive": "symmetric_encryption",
+      "provider": "javax.crypto"
+    },
+    {
+      "api_pattern": "MessageDigest.getInstance",
+      "algorithm": "detect_from_args",
+      "primitive": "hash",
+      "provider": "java.security"
+    },
+    {
+      "api_pattern": "SecureRandom",
+      "algorithm": "CSPRNG",
+      "primitive": "random_generation",
+      "provider": "java.security"
+    },
+    {
+      "api_pattern": "KeyPairGenerator.getInstance",
+      "algorithm": "RSA",
+      "primitive": "asymmetric_key_generation",
+      "provider": "java.security"
+    },
+    {
+      "api_pattern": "Mac.getInstance",
+      "algorithm": "HMAC",
+      "primitive": "message_authentication",
+      "provider": "javax.crypto"
+    }
+  ]
+}

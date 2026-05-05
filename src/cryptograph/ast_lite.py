@@ -36,10 +36,29 @@ when Fraunhofer CPG is unavailable.
 from __future__ import annotations
 
 import ast
+import sys
 from pathlib import Path
 
 from cryptograph.models import GraphEdge, GraphNode, NormalizedGraph
 from cryptograph.utils import as_posix_relative
+
+_CRYPTO_MARKERS = (
+    "hashlib",
+    "hmac",
+    "secrets",
+    "os.urandom",
+    "random.",
+    "ssl.",
+    "cryptography",
+    "Crypto.",
+    "Crypto.Cipher",
+    "Crypto.PublicKey",
+    "OpenSSL",
+    "Fernet",
+    "PBKDF2HMAC",
+    "bcrypt",
+    "Argon2",
+)
 
 
 class _CallVisitor(ast.NodeVisitor):
@@ -174,7 +193,16 @@ def build_ast_lite_graph(input_path: Path) -> NormalizedGraph:
         if any(part.startswith(".") for part in relative_parts):
             continue
         source = file_path.read_text(encoding="utf-8")
-        tree = ast.parse(source, filename=file_path.as_posix())
+        if not _contains_crypto_marker(source):
+            continue
+        try:
+            tree = ast.parse(source, filename=file_path.as_posix())
+        except SyntaxError as exc:
+            print(
+                f"[cryptograph][warning] Skipping unparsable Python file {file_path}: {exc.msg} at line {exc.lineno}",
+                file=sys.stderr,
+            )
+            continue
         visitor = _CallVisitor(file_path, scan_root)
         visitor.visit(tree)
         graph.nodes.extend(visitor.nodes)
@@ -182,6 +210,11 @@ def build_ast_lite_graph(input_path: Path) -> NormalizedGraph:
 
     _add_synthetic_call_edges(graph)
     return graph
+
+
+def _contains_crypto_marker(source: str) -> bool:
+    lowered = source.lower()
+    return any(marker.lower() in lowered for marker in _CRYPTO_MARKERS)
 
 
 def _add_synthetic_call_edges(graph: NormalizedGraph) -> None:

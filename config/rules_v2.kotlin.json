@@ -1,0 +1,95 @@
+{
+  "language": "kotlin",
+  "rules": [
+    {
+      "id": "KOTLIN_AES_ECB",
+      "match": {"api_name_in": ["Cipher.getInstance"], "mode_in": ["ECB"]},
+      "risk": "critical",
+      "priority": 95,
+      "actionable": true,
+      "message": "AES ECB mode detected in Kotlin/JVM code.",
+      "remediation": "Use AES/GCM/NoPadding and unique nonce management."
+    },
+    {
+      "id": "KOTLIN_CBC_REQUIRES_AUTH",
+      "match": {"api_name_in": ["Cipher.getInstance"], "mode_in": ["CBC"]},
+      "risk": "medium",
+      "priority": 75,
+      "actionable": true,
+      "message": "CBC mode detected; encryption must be authenticated.",
+      "remediation": "Use GCM or add encrypt-then-MAC with strong key separation."
+    },
+    {
+      "id": "KOTLIN_DEPRECATED_HASH",
+      "match": {"algorithm_in": ["MD5", "SHA-1"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Deprecated hash algorithm detected.",
+      "remediation": "Use SHA-256+ or SHA-3 family."
+    },
+    {
+      "id": "KOTLIN_RSA_SMALL_KEY",
+      "match": {"algorithm_in": ["RSA"], "key_size_less_than": 2048},
+      "risk": "high",
+      "priority": 86,
+      "actionable": true,
+      "message": "RSA key size below 2048 bits detected.",
+      "remediation": "Use at least 2048-bit keys (prefer 3072+)."
+    },
+    {
+      "id": "KOTLIN_WEAK_TLS_PROTOCOL",
+      "match": {"api_name_in": ["SSLContext"], "protocol_in": ["SSLv3", "TLSv1.0", "TLSv1.1"]},
+      "risk": "high",
+      "priority": 88,
+      "actionable": true,
+      "message": "Deprecated SSL/TLS protocol version detected.",
+      "remediation": "Use TLSv1.2+ and prefer TLSv1.3 where possible."
+    },
+    {
+      "id": "KOTLIN_SIGNATURE_WEAK_HASH",
+      "match": {"api_name_in": ["Signature"], "argument_contains_any": ["SHA1with", "MD5with"]},
+      "risk": "high",
+      "priority": 85,
+      "actionable": true,
+      "message": "Weak hash function in signature algorithm detected.",
+      "remediation": "Use SHA256withRSA, SHA256withECDSA, or stronger."
+    },
+    {
+      "id": "KOTLIN_WEAK_PRNG",
+      "match": {"api_name_in": ["Random", "ThreadLocalRandom"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Non-cryptographic RNG used in crypto context.",
+      "remediation": "Use java.security.SecureRandom."
+    },
+    {
+      "id": "KOTLIN_PBKDF2_LOW_ITERATIONS",
+      "match": {"api_name_in": ["PBEKeySpec", "SecretKeyFactory"], "numeric_argument_less_than": 100000},
+      "risk": "medium",
+      "priority": 78,
+      "actionable": true,
+      "message": "PBKDF2 iteration count appears low.",
+      "remediation": "Use >=100k iterations (or higher per policy) and review memory-hard KDF options."
+    },
+    {
+      "id": "KOTLIN_PQC_PUBLIC_KEY_MIGRATION",
+      "match": {"primitive_in": ["asymmetric_encryption", "asymmetric_key_generation", "digital_signature"]},
+      "risk": "medium",
+      "priority": 68,
+      "actionable": true,
+      "message": "Classical public-key crypto detected; plan post-quantum migration.",
+      "remediation": "Adopt hybrid migration strategies (ML-KEM/ML-DSA with classical schemes)."
+    },
+    {
+      "id": "KOTLIN_AEAD_GOOD_PRACTICE",
+      "match": {"mode_in": ["GCM"]},
+      "risk": "low",
+      "priority": 35,
+      "actionable": false,
+      "message": "AEAD cipher mode detected.",
+      "remediation": "Keep nonce uniqueness and key lifecycle controls in place."
+    }
+  ]
+}

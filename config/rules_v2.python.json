@@ -1,0 +1,135 @@
+{
+  "language": "python",
+  "rules": [
+    {
+      "id": "PY_MD5_SHA1",
+      "preconditions": {},
+      "match": {"api_name_in": ["hashlib.md5", "hashlib.sha1"], "algorithm_in": ["MD5", "SHA-1"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Weak hash algorithm used in Python code.",
+      "remediation": "Use hashlib.sha256 or cryptography.hazmat.primitives.hashes.SHA256; for passwords use Argon2."
+    },
+    {
+      "id": "PY_WEAK_PRNG",
+      "preconditions": {},
+      "match": {"api_name_in": ["random.random", "random.randint"], "notes": "non-crypto PRNG"},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Non-cryptographic RNG used for secrets.",
+      "remediation": "Use os.urandom or secrets.token_bytes / secrets.token_urlsafe for generating secrets."
+    },
+    {
+      "id": "PY_INSECURE_CIPHER_MODE",
+      "preconditions": {},
+      "match": {"api_name_in": ["cryptography.hazmat.primitives.ciphers.modes.ECB"]},
+      "risk": "critical",
+      "priority": 95,
+      "actionable": true,
+      "message": "ECB mode detected in Python cryptography usage.",
+      "remediation": "Use modes.GCM or modes.CBC combined with authentication (AEAD preferred)."
+    },
+    {
+      "id": "PY_CBC_REQUIRES_AUTH",
+      "preconditions": {},
+      "match": {"api_name_in": ["cryptography.hazmat.primitives.ciphers.modes.CBC"], "mode_in": ["CBC"]},
+      "risk": "medium",
+      "priority": 76,
+      "actionable": true,
+      "message": "CBC mode detected; ensure authentication is enforced.",
+      "remediation": "Prefer GCM/ChaCha20-Poly1305 or add encrypt-then-MAC."
+    },
+    {
+      "id": "PY_RECOMMEND_SECRETS",
+      "preconditions": {},
+      "match": {"api_name_in": ["secrets", "os.urandom"]},
+      "risk": "info",
+      "priority": 40,
+      "actionable": false,
+      "message": "Secure RNG usage detected.",
+      "remediation": "Continue using 'secrets' or os.urandom for secret generation."
+    },
+    {
+      "id": "PY_FERNET_GOOD",
+      "preconditions": {},
+      "match": {"api_name_in": ["Fernet"]},
+      "risk": "low",
+      "priority": 25,
+      "actionable": false,
+      "message": "Fernet symmetric authenticated encryption detected (good practice).",
+      "remediation": "Fernet is a solid choice for symmetric authenticated encryption with good defaults."
+    },
+    {
+      "id": "PY_BCRYPT_PASSWORD",
+      "preconditions": {},
+      "match": {"api_name_in": ["bcrypt"]},
+      "risk": "low",
+      "priority": 25,
+      "actionable": false,
+      "message": "bcrypt password hashing detected.",
+      "remediation": "bcrypt is a solid password hashing algorithm; verify cost factor is adequate (≥12)."
+    },
+    {
+      "id": "PY_ARGON2_BEST",
+      "preconditions": {},
+      "match": {"api_name_in": ["Argon2"]},
+      "risk": "low",
+      "priority": 20,
+      "actionable": false,
+      "message": "Argon2 password hashing detected (modern best practice).",
+      "remediation": "Argon2 is recommended; verify memory and time parameters are appropriate."
+    },
+    {
+      "id": "PY_RSA_KEY_SIZE",
+      "preconditions": {},
+      "match": {"api_name_in": ["rsa.generate_private_key"], "key_size_less_than": 2048},
+      "risk": "high",
+      "priority": 85,
+      "actionable": true,
+      "message": "RSA key size below 2048 bits detected.",
+      "remediation": "Use at least 2048-bit RSA keys (4096+ recommended)."
+    },
+    {
+      "id": "PY_PBKDF2_ITERATIONS",
+      "preconditions": {},
+      "match": {"api_name_in": ["PBKDF2HMAC"], "iterations_less_than": 100000},
+      "risk": "medium",
+      "priority": 70,
+      "actionable": true,
+      "message": "PBKDF2 with low iteration count detected.",
+      "remediation": "Use at least 100,000 iterations (or prefer Argon2/bcrypt for passwords)."
+    },
+    {
+      "id": "PY_RSA_PKCS1V15_REVIEW",
+      "preconditions": {},
+      "match": {"argument_contains_any": ["PKCS1v15", "PKCS1"]},
+      "risk": "medium",
+      "priority": 72,
+      "actionable": true,
+      "message": "Potential RSA PKCS#1 v1.5 usage detected.",
+      "remediation": "Prefer OAEP for encryption and modern signature profiles."
+    },
+    {
+      "id": "PY_WEAK_TLS_PROTOCOL",
+      "preconditions": {},
+      "match": {"protocol_in": ["SSLv3", "TLSv1", "TLSv1.0", "TLSv1.1"]},
+      "risk": "high",
+      "priority": 86,
+      "actionable": true,
+      "message": "Weak TLS/SSL protocol version detected.",
+      "remediation": "Use TLS 1.2+ and prefer TLS 1.3."
+    },
+    {
+      "id": "PY_PQC_PUBLIC_KEY_MIGRATION",
+      "preconditions": {},
+      "match": {"primitive_in": ["asymmetric_encryption", "asymmetric_key_generation", "digital_signature"]},
+      "risk": "medium",
+      "priority": 68,
+      "actionable": true,
+      "message": "Classical public-key cryptography detected; prepare post-quantum migration plan.",
+      "remediation": "Adopt hybrid migration roadmap (ML-KEM/ML-DSA with classical schemes) where feasible."
+    }
+  ]
+}

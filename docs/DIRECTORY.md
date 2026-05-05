@@ -1,83 +1,344 @@
-# CryptoGraph Directory Structure - After Refactoring
+# CryptoGraph Directory Structure
 
 ## Overview
 
 ```
 CryptoGraph/
+├── README.md                         Main project documentation
+├── Dockerfile                        Docker image (Python + Java)
+├── docker-compose.yml               Docker Compose (scanner + viewer)
+├── pyproject.toml                    Python package config
+├── requirements.txt                  Python dependencies
+│
 ├── src/cryptograph/
-│   ├── [EXISTING FILES]
-│   │   ├── __init__.py
-│   │   ├── models.py
-│   │   ├── utils.py
-│   │   ├── ast_lite.py
-│   │   ├── cpg_loader.py
-│   │   ├── context_extractor.py
-│   │   ├── crypto_matcher.py         (ORIGINAL - kept for reference)
-│   │   ├── cbom_builder.py           (ORIGINAL - kept for reference)
-│   │   ├── cpg_visualizer.py
-│   │   ├── manifest.py
-│   │   ├── report_builder.py
-│   │   └── main.py
+│   ├── __init__.py
+│   ├── main.py                       ✨ CLI entry point (scan, scan-repo, report, cyclonedx)
+│   ├── models.py                     Data models (FindingModel, CBOMModel)
+│   ├── utils.py                      Utility functions
 │   │
-│   └── [NEW MODULES - REFACTORING v2]
-│       ├── risk_engine.py            ✨ NEW (350 lines)
-│       ├── rule_engine.py            ✨ NEW (280 lines)
-│       ├── inference_explainer.py    ✨ NEW (280 lines)
-│       ├── cbom_builder_v2.py        ✨ NEW (400 lines)
-│       └── crypto_matcher_v2.py      ✨ NEW (400 lines)
+│   ├── orchestrator.py               ✨ Multi-language repo orchestrator
+│   ├── langdetect.py                 ✨ Language detection (EXT_LANG_MAP)
+│   │
+│   ├── cpg_loader.py                 CPG backend (Fraunhofer exporter)
+│   ├── ast_lite.py                   AST-lite fallback backend
+│   │
+│   ├── crypto_matcher_v2.py          Crypto API detection
+│   ├── context_extractor.py          Call chain & dataflow extraction
+│   ├── cbom_builder_v2.py            CBOM generation with risk scoring
+│   │
+│   ├── risk_engine.py                Multi-factor risk scoring
+│   ├── rule_engine.py                Rule matching & filtering
+│   ├── inference_explainer.py        Risk reasoning & explanation
+│   │
+│   ├── cpg_visualizer.py             Graph visualization
+│   ├── report_builder.py             HTML report generation
+│   ├── manifest.py                   Metadata tracking
+│   └── cryptograph.egg-info/         Package metadata
 │
 ├── config/
-│   ├── api_mappings.json             (UNCHANGED - still used)
-│   ├── rules.json                    (ORIGINAL - for reference)
-│   └── rules_v2.json                 ✨ NEW (improved rule format)
+│   ├── api_mappings.json             Default API mappings (150+ APIs)
+│   ├── api_mappings.java.json        ✨ Java-specific (15 APIs)
+│   ├── api_mappings.javascript.json  ✨ JavaScript-specific (12 APIs)
+│   ├── api_mappings.go.json          ✨ Go-specific (10 APIs)
+│   ├── api_mappings.c_cpp.json       ✨ C/C++-specific (8 APIs)
+│   ├── api_mappings.python.json      ✨ Python-specific (13 APIs)
+│   │
+│   ├── rules_v2.json                 Default risk rules (20+ rules)
+│   ├── rules_v2.java.json            ✨ Java rules (7 rules)
+│   ├── rules_v2.javascript.json      ✨ JavaScript rules (7 rules)
+│   ├── rules_v2.go.json              ✨ Go rules (6 rules)
+│   ├── rules_v2.c_cpp.json           ✨ C/C++ rules (5 rules)
+│   ├── rules_v2.python.json          ✨ Python rules (8 rules)
+│   │
+│   ├── source_sinks.json             Source/sink classification
+│   └── README.md                     Configuration guide
 │
 ├── docs/
-│   ├── architecture.md               (EXISTING)
-│   ├── notes.md                      (EXISTING)
-│   └── scale-notes.md                (EXISTING)
+│   ├── README.md                     Documentation index
+│   ├── architecture.md               ✨ System design & components
+│   ├── ROADMAP.md                    ✨ Fraunhofer-first language roadmap
+│   ├── INTEGRATION.md                ✨ Web UI, LLM, batch scanning
+│   ├── USAGE-EXTERNAL-REPOS.md       ✨ CLI & advanced usage
+│   ├── EXTERNAL-REPO-SCANNING.md     ✨ Complete workflow guide
+│   ├── QUICK-EXAMPLES.md             ✨ Real repo examples
+│   ├── QUICK-REFERENCE.md            ✨ One-page cheat sheet
+│   │
+│   ├── CBOM-REFACTORING.md           Legacy: v1 → v2 migration
+│   ├── REFACTORING.md                Legacy: system refactoring notes
+│   ├── CPG-INTEGRATION.md            Legacy: CPG setup guide
+│   ├── scale-notes.md                Legacy: scalability notes
+│   ├── notes.md                      Legacy: misc notes
+│   ├── DELIVERABLES.md               Legacy: project deliverables
+│   ├── EXAMPLES.md                   Legacy: example patterns
+│   ├── EXTENDED-TEST-RESULTS.md      Legacy: test results
+│   │
+│   ├── en/                           English docs
+│   │   ├── architecture.md
+│   │   ├── code-map.md
+│   │   ├── notes.md
+│   │   ├── pipeline.md
+│   │   ├── scale-notes.md
+│   │   └── schema.md
+│   │
+│   └── tr/                           Turkish docs
+│       ├── architecture.md
+│       ├── code-map.md
+│       ├── notes.md
+│       ├── pipeline.md
+│       ├── scale-notes.md
+│       └── schema.md
 │
-├── samples/                          (21 Python files - for testing)
+├── scripts/
+│   ├── build_fraunhofer_exporter.sh  Build Fraunhofer CPG exporter
+│   ├── demo-scan-external-repo.sh    ✨ Demo scanning script
+│   ├── batch-scan-repos.sh           ✨ Batch scanning script
+│   ├── llm-label-cbom.py             ✨ LLM labeling script
+│   └── README.md                     Script documentation
 │
-├── output/                           (Analysis results - various)
+├── viewer/
+│   ├── scanner.py                    ✨ Streamlit web UI
+│   ├── app.py                        CBOM viewer app
+│   ├── requirements.txt               Viewer dependencies
+│   └── Dockerfile                    Viewer Docker image
 │
-└── [DOCUMENTATION - NEW]
-    ├── REFACTORING.md                ✨ NEW (8 KB technical spec)
-    ├── EXAMPLES.md                   ✨ NEW (6 KB before/after)
-    ├── INTEGRATION.md                ✨ NEW (7 KB migration guide)
-    ├── CBOM-REFACTORING.md           ✨ NEW (5 KB executive summary)
+├── tools/
+│   └── fraunhofer-exporter/          Fraunhofer CPG exporter source
+│       ├── build.gradle.kts
+│       ├── settings.gradle.kts
+│       └── src/
+│
+├── samples/                          Test data (13 Python files)
+│   ├── hash_example.py
+│   ├── insecure_aes.py
+│   ├── auth_flow.py
+│   └── ... (10 more)
+│
+├── tests/
+│   ├── test_pipeline.py              Integration test
+│   ├── test_cyclonedx_cbom.py        SBOM test
+│   └── __pycache__/
+│
+├── output/                           Analysis results
+│   ├── result.json                   Sample CBOM
+│   ├── report.html                   Sample report
+│   ├── test-*.json                   Test outputs
+│   └── ... (various outputs)
+│
+└── results/                          ✨ NEW - Scan results go here
+    ├── scan_TIMESTAMP/
+    │   ├── merged-cboms.json         All findings
+    │   ├── cbom-java-*.json          Per-language CBOMs
+    │   ├── cbom-javascript-*.json
+    │   ├── dataset.jsonl             For LLM input
+    │   └── labeled.jsonl             After LLM labeling
     │
-    ├── [EXISTING]
-    ├── README.md
-    ├── pyproject.toml
-    ├── requirements.txt
-    ├── Dockerfile
-    └── docker-compose.yml
+    └── batch-scan-TIMESTAMP/
+        ├── repo1/
+        ├── repo2/
+        └── ...
 ```
 
 ---
 
-## What Changed
+## Key Modules
 
-### New Python Modules (1,710 lines)
+### Orchestration Layer
 
-| Module | Lines | Purpose |
-|--------|-------|---------|
-| **risk_engine.py** | 350 | Multi-factor risk scoring with confidence |
-| **rule_engine.py** | 280 | Conditional rule filtering with priorities |
-| **inference_explainer.py** | 280 | Inference tracing with explanations |
-| **cbom_builder_v2.py** | 400 | Refactored CBOM generation |
-| **crypto_matcher_v2.py** | 400 | Graph analysis with new risk engine |
-| **TOTAL** | 1,710 | Complete refactoring |
+| Module | Purpose | New? |
+|--------|---------|------|
+| **orchestrator.py** | Multi-language repo scanning | ✨ |
+| **langdetect.py** | Language detection & routing | ✨ |
+| **main.py** | CLI interface (scan-repo command) | ✨ |
 
-### New Config Files
+### Analysis Layer
 
-| File | Purpose |
-|------|---------|
-| **rules_v2.json** | Rules with preconditions, priorities, remediations |
+| Module | Purpose | Notes |
+|--------|---------|-------|
+| crypto_matcher_v2.py | Detect crypto APIs | Per-language configs |
+| context_extractor.py | Extract call chains & flow | Dataflow tracking |
+| cbom_builder_v2.py | Build CBOM with risks | Risk scoring |
+| risk_engine.py | Multi-factor risk scoring | Confidence-based |
+| rule_engine.py | Apply risk rules | Per-language rules |
 
-### New Documentation (26 KB)
+### Backend Layer
 
-| File | Purpose |
+| Module | Purpose | Supported |
+|--------|---------|-----------|
+| cpg_loader.py | Fraunhofer CPG (JVM) | Java, JS, Go, C/C++ |
+| ast_lite.py | Python AST fallback | Python only |
+
+### Output Layer
+
+| Module | Purpose | Formats |
+|--------|---------|---------|
+| cbom_builder_v2.py | CBOM generation | JSON |
+| orchestrator.py | JSONL export | JSONL (for LLM) |
+| report_builder.py | HTML reports | HTML, Graphviz |
+| manifest.py | Metadata tracking | JSON |
+
+### Web UI Layer
+
+| Module | Purpose | Tech |
+|--------|---------|------|
+| **viewer/scanner.py** | Web interface | ✨ Streamlit |
+| viewer/app.py | Legacy CBOM viewer | Streamlit |
+
+---
+
+## Configuration Files
+
+### API Mappings
+
+Default `config/api_mappings.json` contains 150+ APIs across all languages.
+
+Per-language overrides:
+- `api_mappings.java.json` (15 APIs)
+- `api_mappings.javascript.json` (12 APIs)
+- `api_mappings.go.json` (10 APIs)
+- `api_mappings.c_cpp.json` (8 APIs)
+- `api_mappings.python.json` (13 APIs)
+
+### Risk Rules
+
+Default `config/rules_v2.json` contains generic rules.
+
+Per-language specifics:
+- `rules_v2.java.json` (7 rules)
+- `rules_v2.javascript.json` (7 rules)
+- `rules_v2.go.json` (6 rules)
+- `rules_v2.c_cpp.json` (5 rules)
+- `rules_v2.python.json` (8 rules)
+
+Each rule specifies:
+- `id`: Unique rule identifier
+- `match`: Conditions (api_name, mode, key_size, etc.)
+- `risk`: Severity (high/medium/low/info)
+- `message`: Human-readable description
+- `remediation`: Fix recommendation
+
+---
+
+## Output Directories
+
+### Single Repository Scan
+
+```
+results/scan_20260427_103000/
+├── merged-cboms.json          # All languages merged
+├── cbom-java-*.json           # Java-specific findings
+├── cbom-javascript-*.json     # JavaScript-specific findings
+├── cbom-python-*.json         # Python-specific findings
+├── cbom-go-*.json             # Go-specific findings
+├── cbom-c_cpp-*.json          # C/C++-specific findings
+├── dataset.jsonl              # JSONL format (for LLM)
+├── labeled.jsonl              # After LLM labeling
+├── report.html                # Interactive report
+└── scan.log                   # Scan log
+```
+
+### Batch Scanning
+
+```
+results/batch-scan-20260427_103000/
+├── node/                      # Per-repo subdirectory
+│   ├── merged-cboms.json
+│   ├── dataset.jsonl
+│   └── labeled.jsonl
+├── express/
+│   ├── merged-cboms.json
+│   ├── dataset.jsonl
+│   └── labeled.jsonl
+└── spring-framework/
+    └── ...
+```
+
+---
+
+## New Files Added
+
+### Core System (April 2026)
+
+✨ **orchestrator.py** — Multi-language repo scanning orchestrator
+✨ **langdetect.py** — Language detection system
+✨ **viewer/scanner.py** — Streamlit web UI
+
+### Configuration Files (April 2026)
+
+✨ **config/api_mappings.{java,javascript,go,c_cpp,python}.json** — Per-language APIs
+✨ **config/rules_v2.{java,javascript,go,c_cpp,python}.json** — Per-language rules
+
+### Helper Scripts (April 2026)
+
+✨ **scripts/demo-scan-external-repo.sh** — Demo script
+✨ **scripts/batch-scan-repos.sh** — Batch scanning
+✨ **scripts/llm-label-cbom.py** — LLM labeling
+
+### Documentation (April 2026)
+
+✨ **docs/architecture.md** — System architecture (updated)
+✨ **docs/INTEGRATION.md** — Integration guide (new)
+✨ **docs/USAGE-EXTERNAL-REPOS.md** — CLI usage
+✨ **docs/EXTERNAL-REPO-SCANNING.md** — Web UI guide
+✨ **docs/QUICK-EXAMPLES.md** — Real examples
+✨ **docs/QUICK-REFERENCE.md** — Cheat sheet
+
+---
+
+## File Statistics
+
+### Source Code
+- **Python modules:** 14 (main + orchestration + analysis + output)
+- **Lines of code:** ~3,500
+- **Test files:** 2
+- **Sample files:** 13
+
+### Configuration
+- **API mapping files:** 6 (1 default + 5 per-language)
+- **Rule files:** 6 (1 default + 5 per-language)
+- **Total APIs:** 150+
+- **Total rules:** 33
+
+### Documentation
+- **Doc files:** 15 (3 primary + 12 legacy/i18n)
+- **Total pages:** 50+
+- **Code examples:** 100+
+- **Languages:** 3 (English, Turkish, diagrams)
+
+### Container
+- **Docker images:** 2 (main + viewer)
+- **Docker Compose services:** 3 (cryptograph, scanner, cbom-viewer)
+- **Build stages:** 2 (Gradle + Python)
+
+---
+
+## How to Navigate
+
+### I want to...
+
+**Scan a GitHub repo**
+→ Start `docker-compose up scanner` and use web UI
+→ Or run: `cryptograph scan-repo --repo <url> --out-dir ./results`
+
+**Understand the system**
+→ Read [docs/architecture.md](architecture.md)
+
+**Use CLI for advanced features**
+→ Read [docs/USAGE-EXTERNAL-REPOS.md](USAGE-EXTERNAL-REPOS.md)
+
+**Integrate with CI/CD**
+→ Read [docs/INTEGRATION.md](INTEGRATION.md)
+
+**Add support for new language**
+→ Create `config/api_mappings.newlang.json` and `config/rules_v2.newlang.json`
+
+**Customize risk rules**
+→ Edit `config/rules_v2.<lang>.json` for your language
+
+**Process labeled results**
+→ Parse `results/*/labeled.jsonl` with your favorite tool
+
+**Deploy to production**
+→ Use Docker Compose: `docker-compose build && docker-compose up scanner`
 |------|---------|
 | **REFACTORING.md** | Complete technical specification |
 | **EXAMPLES.md** | Before/after examples with metrics |

@@ -1,0 +1,101 @@
+{
+  "language": "java",
+  "mappings": [
+    {
+      "api_pattern": "Cipher.getInstance",
+      "algorithm": "AES",
+      "primitive": "symmetric_encryption",
+      "mode": "detect_from_args",
+      "provider": "javax.crypto",
+      "notes": "Detect Cipher.getInstance(...). Parse mode parameter (e.g., AES/ECB/PKCS5Padding) to infer mode and padding."
+    },
+    {
+      "api_pattern": "MessageDigest.getInstance",
+      "algorithm": "detect_from_args",
+      "primitive": "hash",
+      "mode": null,
+      "provider": "java.security",
+      "notes": "Detect MessageDigest (MD5, SHA-1, SHA-256, ...)."
+    },
+    {
+      "api_pattern": "KeyPairGenerator.getInstance",
+      "algorithm": "RSA",
+      "primitive": "asymmetric_key_generation",
+      "mode": null,
+      "provider": "java.security",
+      "notes": "Detect RSA key generation and key sizes from init() calls."
+    },
+    {
+      "api_pattern": "SecureRandom",
+      "algorithm": "CSPRNG",
+      "primitive": "random_generation",
+      "mode": null,
+      "provider": "java.security",
+      "notes": "Detect use of SecureRandom vs java.util.Random."
+    },
+    {
+      "api_pattern": "javax.crypto.Mac",
+      "algorithm": "HMAC",
+      "primitive": "message_authentication",
+      "mode": null,
+      "provider": "javax.crypto",
+      "notes": "Detect use of Mac for HMAC constructions and extract underlying hash when possible."
+    },
+    {
+      "api_pattern": "javax.crypto.Cipher",
+      "algorithm": "detect_from_args",
+      "primitive": "symmetric_encryption",
+      "mode": "detect_from_args",
+      "provider": "javax.crypto",
+      "notes": "Generic Cipher API; parse transformation string for algorithm/mode."
+    },
+    {
+      "api_pattern": "javax.net.ssl.SSLContext",
+      "algorithm": "SSL/TLS",
+      "primitive": "protocol",
+      "mode": null,
+      "provider": "javax.net.ssl",
+      "notes": "Detect SSL/TLS context creation and protocol versions."
+    },
+    {
+      "api_pattern": "java.security.KeyFactory",
+      "algorithm": "KeyFactory",
+      "primitive": "key_generation",
+      "mode": null,
+      "provider": "java.security",
+      "notes": "Detect key factory usage for RSA, DSA, EC."
+    },
+    {
+      "api_pattern": "java.security.Signature",
+      "algorithm": "Signature",
+      "primitive": "digital_signature",
+      "mode": null,
+      "provider": "java.security",
+      "notes": "Detect digital signature operations (SHA256withRSA, SHA256withDSA, SHA256withECDSA)."
+    },
+    {
+      "api_pattern": "java.security.KeyStore",
+      "algorithm": "KeyStore",
+      "primitive": "key_management",
+      "mode": null,
+      "provider": "java.security",
+      "notes": "Detect KeyStore usage for certificate/key storage."
+    },
+    {
+      "api_pattern": "java.security.cert.CertificateFactory",
+      "algorithm": "X.509",
+      "primitive": "certificate_management",
+      "mode": null,
+      "provider": "java.security.cert",
+      "notes": "Detect X.509 certificate processing."
+    },
+    {
+      "api_pattern": "java.util.Random",
+      "algorithm": "non-crypto-rng",
+      "primitive": "random_generation",
+      "mode": null,
+      "provider": "java.util",
+      "notes": "Detect java.util.Random which is not cryptographically secure."
+    }
+  ]
+}

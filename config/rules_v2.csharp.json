@@ -1,0 +1,95 @@
+{
+  "language": "csharp",
+  "rules": [
+    {
+      "id": "CSHARP_AES_ECB",
+      "match": {"algorithm_in": ["AES"], "mode_in": ["ECB"]},
+      "risk": "critical",
+      "priority": 95,
+      "actionable": true,
+      "message": "AES ECB mode detected in C# code.",
+      "remediation": "Use AesGcm/AesCcm or CBC+HMAC with strict IV policy."
+    },
+    {
+      "id": "CSHARP_CBC_REQUIRES_AUTH",
+      "match": {"algorithm_in": ["AES"], "mode_in": ["CBC"]},
+      "risk": "medium",
+      "priority": 75,
+      "actionable": true,
+      "message": "CBC mode detected; authentication must be enforced.",
+      "remediation": "Use AEAD (AesGcm/AesCcm) or encrypt-then-MAC construction."
+    },
+    {
+      "id": "CSHARP_DEPRECATED_HASH",
+      "match": {"api_name_in": ["SHA1.Create", "MD5.Create"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "Weak hash algorithm used in C# code.",
+      "remediation": "Use SHA-256 or stronger."
+    },
+    {
+      "id": "CSHARP_WEAK_PRNG",
+      "match": {"api_name_in": ["Random"]},
+      "risk": "high",
+      "priority": 90,
+      "actionable": true,
+      "message": "System.Random is not cryptographically secure.",
+      "remediation": "Use RandomNumberGenerator.Create."
+    },
+    {
+      "id": "CSHARP_RSA_SMALL_KEY",
+      "match": {"algorithm_in": ["RSA"], "key_size_less_than": 2048},
+      "risk": "high",
+      "priority": 86,
+      "actionable": true,
+      "message": "RSA key size below 2048 bits detected.",
+      "remediation": "Use >= 2048 bits and prefer 3072+ for long-lived keys."
+    },
+    {
+      "id": "CSHARP_PBKDF2_LOW_ITERATIONS",
+      "match": {"api_name_in": ["Rfc2898DeriveBytes"], "numeric_argument_less_than": 100000},
+      "risk": "medium",
+      "priority": 75,
+      "actionable": true,
+      "message": "PBKDF2 iteration count appears low.",
+      "remediation": "Use at least 100,000+ iterations or stronger KDF options."
+    },
+    {
+      "id": "CSHARP_TLS_WEAK_PROTOCOL",
+      "match": {"argument_contains_any": ["Ssl3", "Tls", "Tls11"]},
+      "risk": "high",
+      "priority": 88,
+      "actionable": true,
+      "message": "Weak SSL/TLS protocol selection detected.",
+      "remediation": "Use TLS 1.2+ and prefer TLS 1.3."
+    },
+    {
+      "id": "CSHARP_HMAC_GOOD_PRACTICE",
+      "match": {"algorithm_in": ["HMAC", "SHA-256", "SHA-512"]},
+      "risk": "low",
+      "priority": 35,
+      "actionable": false,
+      "message": "Strong MAC/hash primitives detected.",
+      "remediation": "Keep key rotation and secret handling controls in place."
+    },
+    {
+      "id": "CSHARP_PQC_PUBLIC_KEY_MIGRATION",
+      "match": {"primitive_in": ["asymmetric_encryption", "asymmetric_key_generation", "digital_signature"]},
+      "risk": "medium",
+      "priority": 68,
+      "actionable": true,
+      "message": "Classical public-key crypto detected; prepare post-quantum migration.",
+      "remediation": "Plan hybrid migration to ML-KEM/ML-DSA where compliance permits."
+    },
+    {
+      "id": "CSHARP_CSPRNG_RECOMMENDED",
+      "match": {"api_name_in": ["RandomNumberGenerator.Create"]},
+      "risk": "info",
+      "priority": 30,
+      "actionable": false,
+      "message": "CSPRNG API detected.",
+      "remediation": "Continue using cryptographic RNG for secret generation."
+    }
+  ]
+}

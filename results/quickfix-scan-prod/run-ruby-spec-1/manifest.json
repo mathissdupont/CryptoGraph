@@ -1,0 +1,40 @@
+{
+  "run_id": "run-ruby-spec-1",
+  "tool": "CryptoGraph",
+  "generated_at": "2026-04-30T19:16:39.498508+00:00",
+  "command": "scan",
+  "source": "/app/results/quickfix/spec",
+  "backend": "ruby-lite",
+  "artifacts": {
+    "cbom": "/app/results/quickfix-scan-prod/run-ruby-spec-1/cbom-ruby-spec.json"
+  },
+  "graph": {
+    "available": true,
+    "backend": "ruby-lite",
+    "root": "/app/results/quickfix/spec",
+    "nodes": 137,
+    "edges": 0,
+    "node_kinds": {
+      "function": 137
+    },
+    "edge_kinds": {}
+  },
+  "findings": {
+    "total": 0,
+    "by_risk": {},
+    "by_algorithm": {},
+    "by_primitive": {}
+  },
+  "config": [
+    {
+      "path": "/app/config/api_mappings.ruby.json",
+      "sha256": "629320ef0ea28f800e13601b3a4162e5108643cae1a0fc13dd5d0ebeab0cb3e7",
+      "bytes": 2226
+    },
+    {
+      "path": "/app/config/rules_v2.ruby.json",
+      "sha256": "705eb4738dcf6379063d8c16a6641e0f93f2ce139f85c42c0b4f1385c75e22a7",
+      "bytes": 4362
+    }
+  ]
+}
