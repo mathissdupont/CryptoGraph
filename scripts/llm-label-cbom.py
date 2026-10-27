@@ -149,6 +149,11 @@ def main():
     )
     
     args = parser.parse_args()
+    if args.llm_api != "simulate":
+        parser.error(
+            f"LLM provider '{args.llm_api}' is not implemented yet. "
+            "Only --llm-api simulate (deterministic rule-based baseline) is supported."
+        )
     
     # Determine output path
     if args.output:
@@ -169,9 +174,7 @@ def main():
                 # Demo: simple heuristic labeling
                 label = simulate_llm_label(asset)
             else:
-                # TODO: Implement real LLM API calls
-                print(f"Warning: LLM API '{args.llm_api}' not yet implemented. Using simulation.")
-                label = simulate_llm_label(asset)
+                raise AssertionError("Unsupported LLM provider passed validation")
             
             # Add label to asset
             asset["labels"] = label
