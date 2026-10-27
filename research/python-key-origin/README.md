@@ -31,7 +31,7 @@ observations and a record containing actual backend, environment and input hashe
 Strict mode does not substitute AST-lite if the exporter fails. The main study
 will require a pinned environment and an independently reviewed corpus.
 
-## Observations on the current development version
+## Preserved observations from the existing policy
 
 Both AST-lite and the full Docker Python/JEP/Fraunhofer path produced the following
 key-source strings for the eight `AES.new` targets:
@@ -57,6 +57,41 @@ randomness classification in `flow_analyzer.py`, and a function-wide assignment
 dictionary in `context_extractor.py` that is not indexed by the sink location.
 Repairing those mechanisms alone would be an implementation fix, not a new
 research contribution. This pilot preserves the observations before changes.
+
+## Bounded evidence-policy development comparison
+
+The new policy is available separately from the existing CBOM heuristic:
+
+```bash
+python scripts/research-pilot.py --backend ast-lite --policy both --check-pilot --out-dir output/policy-ast
+```
+
+See [CONTRACT.md](CONTRACT.md) for the Docker/CPG command, schema, limitations and
+review instructions. The matched-input development runs produce:
+
+| Case | AST evidence-policy output | CPG evidence-policy output |
+| --- | --- | --- |
+| `direct_random` | `csprng_api`, must | same |
+| `misleading_helper` | `literal`, must | abstained: matching wrapper witness unavailable |
+| `assignment_after_sink` | `literal`, must | same |
+| `mixed_branch` | `csprng_api` + `literal`, may | same |
+| `parameter_boundary` | abstained; parameter boundary retained | same |
+| `aliased_random` | `csprng_api`, must | same |
+| `literal_final_assignment` | `literal`, must | same |
+| `wrapper_random` | `csprng_api`, must | same |
+
+In the CPG export, the `misleading_helper` CALLS target is a DFG-classified,
+inferred node with no matching function span and a different source file. The
+policy rejects that witness. This is an observation about the exported graph,
+not a root-cause finding about the CPG library. AST resolves seven ultimate source
+sets and abstains on one; CPG resolves six and abstains on two in this run.
+
+These are model-conditional outputs on examples used during implementation, not
+an independently validated accuracy result. The current policy consumes source
+syntax and CALLS witnesses; these outputs do not establish a general absence of
+CPG benefit. Independent review is pending and metric generation is gated on a
+completed review record. Source fixtures use fixed LF line endings to keep their
+review fingerprints stable across operating systems.
 
 ## Study boundary
 

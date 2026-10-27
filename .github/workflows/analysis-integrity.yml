@@ -85,3 +85,20 @@ jobs:
         env:
           CRYPTOGRAPH_TEST_EXPORTER: ${{ runner.temp }}/exporter.jar
         run: python -m pytest tests/test_exporter_integration.py -q
+
+  python-research:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Python and JEP runtime
+        run: docker build -t cryptograph-python-research .
+      - name: Compare policies under both graph backends
+        run: |
+          mkdir -p "$RUNNER_TEMP/cryptograph-research"
+          docker run --rm --network none --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research,target=/results" --entrypoint python cryptograph-python-research scripts/research-pilot.py --backend ast-lite --policy both --check-pilot --out-dir /results/ast
+          docker run --rm --network none --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research,target=/results" --entrypoint python cryptograph-python-research scripts/research-pilot.py --backend fraunhofer-strict --policy both --check-pilot --out-dir /results/cpg
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: python-key-origin-development-observations
+          path: ${{ runner.temp }}/cryptograph-research

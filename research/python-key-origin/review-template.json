@@ -1,0 +1,174 @@
+{
+  "analysis_model": "python-key-origin-subset-v0.1",
+  "review_independence": "Must be supplied by a reviewer; the software cannot establish independence.",
+  "cases": [
+    {
+      "case_id": "direct_random",
+      "source": "cases/direct_random.py",
+      "source_sha256": "38c86c382e933f7869f004f6954bf571510048ec93d949c3bcb293eff20cd6a5",
+      "split": "development",
+      "scenario_family": "rng_binding",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "direct_random.py",
+        "line": 6,
+        "column": 11,
+        "end_line": 6,
+        "end_column": 37
+      },
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "misleading_helper",
+      "source": "cases/misleading_helper.py",
+      "source_sha256": "2281e3eb973a9b2141dd360eddd2a73ac18f8f7ed972632cad78e0d84e7e3fb1",
+      "split": "development",
+      "scenario_family": "same_file_wrapper",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "misleading_helper.py",
+        "line": 9,
+        "column": 11,
+        "end_line": 9,
+        "end_column": 37
+      },
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "assignment_after_sink",
+      "source": "cases/assignment_after_sink.py",
+      "source_sha256": "482c76e6a89d83f548d8bc5d2e56c1a5196585d4d80b9390cf749e15882d8de8",
+      "split": "development",
+      "scenario_family": "assignment_order",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "assignment_after_sink.py",
+        "line": 6,
+        "column": 13,
+        "end_line": 6,
+        "end_column": 39
+      },
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "mixed_branch",
+      "source": "cases/mixed_branch.py",
+      "source_sha256": "a22ca7afb07e3c178e6130e6326d0e128dc9b38a2d73844d1fcfdd6ab8b7c52c",
+      "split": "development",
+      "scenario_family": "branch_alternatives",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "mixed_branch.py",
+        "line": 9,
+        "column": 11,
+        "end_line": 9,
+        "end_column": 37
+      },
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "parameter_boundary",
+      "source": "cases/parameter_boundary.py",
+      "source_sha256": "0e93f87b951e44041b171414b7f5c66c1a06706eb070c44e608eaf833426ee88",
+      "split": "development",
+      "scenario_family": "parameter_boundary",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "parameter_boundary.py",
+        "line": 5,
+        "column": 11,
+        "end_line": 5,
+        "end_column": 37
+      },
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "aliased_random",
+      "source": "cases/aliased_random.py",
+      "source_sha256": "9dc1b57d5a44ff376eea4122961477169def199ee117bf0f2d4e9b8b03014afe",
+      "split": "development",
+      "scenario_family": "rng_binding",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "aliased_random.py",
+        "line": 6,
+        "column": 11,
+        "end_line": 6,
+        "end_column": 37
+      },
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "literal_final_assignment",
+      "source": "cases/literal_final_assignment.py",
+      "source_sha256": "af7cd29ce5ab6a6171196901e51eb613d0167eb0816dc1a63b06eb428d574267",
+      "split": "development",
+      "scenario_family": "assignment_order",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "literal_final_assignment.py",
+        "line": 7,
+        "column": 11,
+        "end_line": 7,
+        "end_column": 37
+      },
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "wrapper_random",
+      "source": "cases/wrapper_random.py",
+      "source_sha256": "691e02b440b1c7fcb2d60d800083cf352cbdb91611e102ea3eed60dc42da181b",
+      "split": "development",
+      "scenario_family": "same_file_wrapper",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "wrapper_random.py",
+        "line": 9,
+        "column": 11,
+        "end_line": 9,
+        "end_column": 37
+      },
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    }
+  ]
+}

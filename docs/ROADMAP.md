@@ -24,8 +24,10 @@ Split by project rather than repeated code fragments.
 
 ## 3. Controlled comparison
 
-Implement AST/CPG context crossed with existing/evidence-constrained policies,
-plus a direct-call reference. Use identical inputs and account for failed/unparsed
+A bounded development comparison now records AST/CPG context with both policies;
+its new policy consumes source syntax and CALLS witnesses. Establish a common
+candidate population, fuller context ablations and a direct-call reference. Use
+identical inputs and account for failed/unparsed
 programs. Report detection separately from
 context accuracy, abstention, unsupported claims and fallback/coverage rates.
 

@@ -12,6 +12,8 @@ Start with the [project README](../README.md). The current reading path is:
 8. [Validation snapshot](VALIDATION.md): checks actually performed and their limits.
 9. [Literature and language decision](research/LITERATURE-2026-10-27.md): overlap, artifact checks and the Python scope.
 10. [Python feasibility pilot](../research/python-key-origin/README.md): source cases and reproducible observations.
+11. [Key-origin contract and review workflow](../research/python-key-origin/CONTRACT.md): implemented subset, evidence checks and review-gated diagnostics.
+12. [Development checkpoint](research/DEVELOPMENT-2026-10-27.md): observed backend differences, checks and remaining research work.
 
 ## Historical notes
 

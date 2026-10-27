@@ -1,0 +1,109 @@
+{
+  "analysis_model": "python-key-origin-subset-v0.1",
+  "status": "assistant_source_inspection_proposals_not_independent_ground_truth",
+  "cases": [
+    {
+      "case_id": "direct_random",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The reaching assignment is an imported os.urandom call."
+    },
+    {
+      "case_id": "misleading_helper",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The same-file helper returns a byte literal repeated by the supplied constant length; its name supplies no randomness."
+    },
+    {
+      "case_id": "assignment_after_sink",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "Only the literal assignment precedes the target; the later random assignment cannot reach the earlier call."
+    },
+    {
+      "case_id": "mixed_branch",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "may",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The boolean parameter selects one of two source categories. Both must remain possible under this model."
+    },
+    {
+      "case_id": "parameter_boundary",
+      "proposed_reference": {
+        "status": "abstained",
+        "origins": [],
+        "origin_set_complete": false,
+        "modality": "unknown",
+        "immediate_boundary": "parameter"
+      },
+      "source_inspection_rationale": "The immediate parameter is known, but no caller context determines its ultimate origin."
+    },
+    {
+      "case_id": "aliased_random",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The import binds rnd to os.urandom before its use."
+    },
+    {
+      "case_id": "literal_final_assignment",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The final assignment before the target replaces the random-derived value with a literal."
+    },
+    {
+      "case_id": "wrapper_random",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The same-file helper returns os.urandom(16), fixing the upstream category under the intended standard-library API contract."
+    }
+  ]
+}

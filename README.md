@@ -121,8 +121,10 @@ The first study will hold matching and normalization constant while comparing:
 2. CPG context with the same two policies.
 3. A limited literal/direct-call reference.
 
-These controlled conditions still need implementation and independent labels;
-the eight feasibility cases are not a benchmark. The repository has
+A bounded development implementation now records both policies under either
+backend; see the [contract and review workflow](research/python-key-origin/CONTRACT.md).
+A common candidate population, full ablations and independent labels remain
+pending. The eight development cases are not a held-out benchmark. The repository has
 no published ground-truth corpus, precision/recall results, calibrated intent
 scores, or demonstrated improvement over an API-only baseline.
 
@@ -136,6 +138,7 @@ src/cryptograph/           Analysis pipeline and CLI
 config/                   Bundled mappings, rules and source/sink definitions
 tools/fraunhofer-exporter/ Kotlin/JVM graph exporter
 samples/                  Controlled examples; some intentionally insecure
+research/                 Development probes, claim contract and review packets
 tests/                    Regression tests, including legacy compatibility
 scripts/                  Reproduction and auxiliary workflows
 viewer/                   Streamlit interfaces

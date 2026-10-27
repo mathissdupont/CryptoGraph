@@ -52,7 +52,10 @@ duplication must not increase the denominator. Each proposed claim record needs:
   dependency/actual-formal binding path used in the derivation;
 - unresolved reasons and relevant assumptions.
 
-This is a **proposed contract**, not the current output schema. The current
+The bounded v0.1 research implementation now supplies this contract separately;
+see [the contract, limits and review workflow](../research/python-key-origin/CONTRACT.md).
+It initially supports literal, recognized CSPRNG API and environment categories;
+KDF provenance and general Python semantics are not implemented. The legacy
 `flow.key_source` string conflates some boundaries and origins and lacks explicit
 may/must semantics. An `os.environ` source may be identifiable while the runtime
 key value is unknown. A parameter boundary may be correct while its ultimate
@@ -79,8 +82,8 @@ containing `urandom` is insufficient. A later assignment cannot supply a value t
 an earlier call. Missing definitions can justify an immediate boundary while
 requiring abstention on a more specific upstream category.
 
-These checks need implementation and tests. They are not a formal soundness
-proof. Correct source-origin claims and structurally valid evidence are separate
+The first bounded subset is implemented and behaviorally tested. It is not a
+formal soundness proof. Correct source-origin claims and structurally valid evidence are separate
 properties and must be evaluated separately.
 
 ## Experimental conditions
@@ -90,12 +93,18 @@ matching constant. Plan a factorial comparison:
 
 | Context | Existing inference policy | Proposed evidence-constrained policy |
 | --- | --- | --- |
-| Local AST | A | B |
+| AST-derived graph | A | B |
 | Fraunhofer CPG | C | D |
 
-Add a literal/direct-call-only reference as a limited ablation. Neither the old
-and v2 matchers nor the existing AST/CPG CLI flags alone implement this controlled
-comparison. Policy gates and an ablation interface are still pending.
+The pilot runner now records both policies under either backend. The bounded
+policy uses the same source interpreter in both contexts and currently consumes
+CALLS witnesses, not DFG value recovery. AST-derived graphs can also authorize
+same-file wrapper expansion. Four development cells are observable, but a complete
+causal ablation remains pending: legacy strings lack the new modality/set
+contract, and target-binding differences need to be accounted for. Add a
+literal/direct-call reference and a common candidate population before claiming
+a controlled held-out comparison. The old and v2 matchers are not valid A/B
+experimental conditions by themselves.
 
 External comparators are screened on overlapping tasks and APIs: CBOMkit for
 inventory/parameters, and appropriate Python misuse tools for their documented
