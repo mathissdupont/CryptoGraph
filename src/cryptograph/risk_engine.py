@@ -112,7 +112,7 @@ class RiskEngine:
         derivation: dict[str, Any] = {}
 
         # 1. Base level from algorithm
-        base_level = self.ALGORITHM_RISK.get(algorithm, "low")
+        base_level = self.ALGORITHM_RISK.get(algorithm, "medium")
         derivation["base_algorithm_risk"] = base_level
 
         # 2. Mode-specific escalation (for block ciphers)
@@ -129,6 +129,9 @@ class RiskEngine:
 
         # 3. Context-specific modifiers
         tags: list[str] = []
+        if algorithm not in self.ALGORITHM_RISK:
+            tags.append("algorithm_needs_review")
+            derivation["algorithm_unclassified"] = True
         confidence = 0.8
 
         # Check for weak key size (RSA < 2048, ECC < 256)

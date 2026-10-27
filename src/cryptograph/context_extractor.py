@@ -272,10 +272,10 @@ def _dataflow_analysis(
         reached_sources.extend(reaches)
 
     return {
-        "available": bool(dataflow_edges or reached_sources),
+        "available": bool(reached_sources),
         "edge_kinds": sorted({edge.kind for edge in dataflow_edges}),
         "sources_reaching_sink": reached_sources,
-        "unresolved_reason": None if dataflow_edges or reached_sources else "no_dataflow_edges_or_assignment_origin",
+        "unresolved_reason": None if reached_sources else "no_dataflow_edges_or_assignment_origin",
     }
 
 
@@ -305,13 +305,13 @@ def _reaching_dataflow_sources(
         current, path = queue.popleft()
         if len(path) >= MAX_DATAFLOW_DEPTH:
             continue
+        # DFG edges are directed source -> target. Walking outgoing edges
+        # would incorrectly treat downstream consumers as origins of the sink.
         candidate_edges = [
             edge for edge in incoming_edges.get(current, []) if edge.kind in DATA_FLOW_EDGE_KINDS
-        ] + [
-            edge for edge in outgoing_edges.get(current, []) if edge.kind in DATA_FLOW_EDGE_KINDS
         ]
         for edge in candidate_edges:
-            neighbor_id = edge.source if edge.target == current else edge.target
+            neighbor_id = edge.source
             if neighbor_id in visited:
                 continue
             visited.add(neighbor_id)

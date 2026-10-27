@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 from cryptograph.cbom_builder_v2 import build_cbom
@@ -93,6 +94,14 @@ def main(argv: list[str] | None = None) -> int:
             )
             count = export_cbom_to_jsonl(merged, out / "dataset.jsonl")
             print(f"Exported {count} assets to {out / 'dataset.jsonl'}")
+            failed = merged.get("summary", {}).get("failed", 0)
+            if failed:
+                print(
+                    f"CryptoGraph scan incomplete: {failed} job(s) failed. "
+                    f"Inspect {out / 'merged-cboms.json'} for details.",
+                    file=sys.stderr,
+                )
+                return 3
             return 0
     except CpgLoadError as exc:
         print(f"CryptoGraph CPG error: {exc}")
