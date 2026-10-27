@@ -7,7 +7,7 @@ import pytest
 
 from cryptograph.cpg_loader import load_graph
 from cryptograph.key_origin import MODEL, analyze_key_origins
-from cryptograph.research_eval import ReviewPending, score_reviewed
+from cryptograph.research_eval import ReviewPending, score_provisional, score_reviewed
 from cryptograph.utils import project_path
 
 
@@ -111,3 +111,79 @@ def test_review_packet_sources_are_frozen_and_remain_development_cases():
         assert hashlib.sha256(raw).hexdigest() == case["source_sha256"]
         assert b"\r\n" not in raw
         assert case["split"] == "development"
+
+
+def provisional_data(data):
+    root, annotations, observations = data
+    entry = annotations["cases"][0]
+    proposal = {field: copy.deepcopy(entry[field]) for field in ("case_id", "source_sha256", "target", "target_api")}
+    proposal.update(proposed_reference=entry["independent_review"]["reviewed_reference"],
+                    source_inspection_rationale="Synthetic source-inspection fixture, not a real review.")
+    entry["independent_review"] = {"status": "pending", "reviewer": None, "reviewed_reference": None}
+    proposals = {"analysis_model": MODEL,
+                 "status": "assistant_source_inspection_proposals_not_independent_ground_truth", "cases": [proposal]}
+    return root, annotations, proposals, observations
+
+
+def test_provisional_mode_does_not_approve_reviews_or_claim_accuracy(data):
+    root, annotations, proposals, observations = provisional_data(data)
+    original = copy.deepcopy(annotations)
+    result = score_provisional(annotations, proposals, observations, root)
+    assert annotations == original
+    assert result["status"] == "provisional_development_agreement_only"
+    assert result["by_split"]["development"]["proposed_reference_disagreements_among_resolved"] == 0
+    assert "semantic_error" not in json.dumps(result)
+    with pytest.raises(ReviewPending):
+        score_reviewed(annotations, observations, root)
+
+
+@pytest.mark.parametrize("mutation", ["held_out", "stale_source", "missing_id", "duplicate_id", "missing_rationale", "unmarked_proposals"])
+def test_provisional_mode_rejects_misleading_or_mismatched_references(data, mutation):
+    root, annotations, proposals, observations = provisional_data(data)
+    if mutation == "held_out":
+        annotations["cases"][0]["split"] = "held_out"
+    elif mutation == "stale_source":
+        proposals["cases"][0]["source_sha256"] = "stale"
+    elif mutation == "missing_id":
+        proposals["cases"] = []
+    elif mutation == "duplicate_id":
+        proposals["cases"].append(copy.deepcopy(proposals["cases"][0]))
+    elif mutation == "missing_rationale":
+        proposals["cases"][0]["source_inspection_rationale"] = ""
+    else:
+        proposals["status"] = "ground_truth"
+    with pytest.raises(ValueError):
+        score_provisional(annotations, proposals, observations, root)
+
+
+def test_provisional_disagreement_and_abstention_remain_distinct(data):
+    root, annotations, proposals, observations = provisional_data(data)
+    claim = observations["cases"][0]["evidence_policy"][0]["claim"]
+    claim["origins"] = ["csprng_api"]
+    group = score_provisional(annotations, proposals, observations, root)["by_split"]["development"]
+    assert group["proposed_reference_disagreements_among_resolved"] == 1
+    claim.update(origins=[], status="abstained", origin_set_complete=False, modality="unknown", unresolved_reasons=["fixture"])
+    group = score_provisional(annotations, proposals, observations, root)["by_split"]["development"]
+    assert group["resolved_coverage"] == 0
+    assert group["proposed_reference_disagreement_rate_among_resolved"] is None
+
+
+def test_corpus_inventory_proposals_and_sources_match():
+    root = project_path("research", "python-key-origin")
+    packet = json.loads((root / "review-template.json").read_text())
+    proposals = json.loads((root / "review-proposals.json").read_text())
+    manifest = json.loads((root / "cases.json").read_text())
+    entries = {entry["case_id"]: entry for entry in packet["cases"]}
+    assert len(entries) == len(packet["cases"]) == len(proposals["cases"]) == len(manifest["cases"]) == 24
+    assert set(entries) == {entry["id"] for entry in manifest["cases"]}
+    for proposal in proposals["cases"]:
+        entry = entries[proposal["case_id"]]
+        for field in ("source_sha256", "target", "target_api"):
+            assert proposal[field] == entry[field]
+        assert entry["independent_review"]["status"] == "pending"
+        assert entry["independent_review"]["reviewed_reference"] is None
+        # This checks candidate-site identity only, not origin-label correctness.
+        claims = analyze_key_origins(root / entry["source"])
+        assert len(claims) == 1
+        assert claims[0].target.model_dump() == entry["target"]
+        assert claims[0].target_api == entry["target_api"]

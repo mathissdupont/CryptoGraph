@@ -101,8 +101,10 @@ policy uses the same source interpreter in both contexts and currently consumes
 CALLS witnesses, not DFG value recovery. AST-derived graphs can also authorize
 same-file wrapper expansion. Four development cells are observable, but a complete
 causal ablation remains pending: legacy strings lack the new modality/set
-contract, and target-binding differences need to be accounted for. Add a
-literal/direct-call reference and a common candidate population before claiming
+contract, and target-binding differences need to be accounted for. The expanded
+runner freezes 24 common candidate source spans and adds a source-only condition
+that withholds CALLS witnesses. This measures available CALLS in this interpreter,
+not the value of full DFG analysis. Add a literal/direct-call reference before claiming
 a controlled held-out comparison. The old and v2 matchers are not valid A/B
 experimental conditions by themselves.
 
@@ -115,9 +117,16 @@ as inventing origins. Run failures remain visible and are not successful abstent
 
 ## Corpus and annotation
 
-The eight committed probes are development cases, authored to inspect failure
+The 24 committed probes are development cases, authored to inspect failure
 mechanisms. Their observations are not independent ground truth or an accuracy
-estimate. Preserve them before implementing repairs.
+estimate. Observations on the original eight are preserved separately. The
+expanded experiment includes pyca constructors, configuration sources, partial
+sets and unsupported behavior. Every independent-review slot remains pending.
+
+Research engineering can proceed without a reviewer: opt-in provisional checks
+compare source-inspection proposals only on development splits. Their reports
+say agreement/disagreement, not validated accuracy, and retain source snapshots
+and rationales. They do not replace independent annotation for the planned study.
 
 Design the annotation pilot around direct calls, aliases, shadowing, wrappers,
 reassignment, assignments after the call, branches, parameters, configuration
@@ -174,7 +183,7 @@ a fair comparison, findings reduce to simple bugs unique to CryptoGraph, or
 evidence gates only suppress nearly all output. Do not turn this scoping review
 into a novelty or publishability claim.
 
-The full Docker runtime and real Python frontend now run on the eight probes.
+The full Docker runtime and real Python frontend now run on the 24 probes.
 That establishes feasibility, not complete graph semantics or general accuracy.
 The earlier [validation snapshot](VALIDATION.md) records implementation checks;
 the pilot records the later Python feasibility observation. CycloneDX conformance

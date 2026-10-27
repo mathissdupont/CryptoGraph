@@ -1,4 +1,4 @@
-"""Review-gated diagnostics for the development key-origin experiment."""
+"""Separate reviewed diagnostics from explicitly provisional development checks."""
 from __future__ import annotations
 
 import hashlib
@@ -43,6 +43,49 @@ def score_reviewed(annotations: dict, observations: dict, source_root: Path, gra
     actual independence. Development-case metrics remain development diagnostics
     even after review; they do not become held-out research results.
     """
+    return _score(annotations, observations, source_root, graph)
+
+
+def score_provisional(annotations: dict, proposals: dict, observations: dict,
+                      source_root: Path, graph: NormalizedGraph | None = None) -> dict:
+    """Opt-in agreement checks against assistant proposals, on development only.
+
+    This does not approve review records. Proposal files have no independent
+    authority, and agreement is not a measurement of research accuracy.
+    """
+    if proposals.get("analysis_model") != MODEL or proposals.get("status") != "assistant_source_inspection_proposals_not_independent_ground_truth":
+        raise ValueError("Expected explicitly provisional source-inspection proposals")
+    entries = annotations["cases"]
+    if any(entry["split"] != "development" for entry in entries):
+        raise ValueError("Provisional references are restricted to development cases")
+    proposal_ids = [entry["case_id"] for entry in proposals["cases"]]
+    if len(set(proposal_ids)) != len(proposal_ids) or set(proposal_ids) != {entry["case_id"] for entry in entries}:
+        raise ValueError("Proposal and annotation case identities must match exactly")
+    references = {}
+    by_id = {entry["case_id"]: entry for entry in entries}
+    for entry in proposals["cases"]:
+        if not entry.get("source_inspection_rationale", "").strip():
+            raise ValueError("Every provisional reference needs a source-inspection rationale")
+        if any(entry.get(field) != by_id[entry["case_id"]][field] for field in ("source_sha256", "target", "target_api")):
+            raise ValueError("Provisional proposal/source target snapshot mismatch")
+        references[entry["case_id"]] = entry["proposed_reference"]
+    result = _score(annotations, observations, source_root, graph, references)
+    result.update(status="provisional_development_agreement_only",
+                  review_independence="none_assistant_source_inspection_proposals",
+                  scope="Development checks against unreviewed proposals; not accuracy, ground truth or held-out evidence.")
+    # Avoid presenting agreement with the model's own proposals as semantic truth.
+    for group in result["by_split"].values():
+        group["proposed_reference_disagreements_among_resolved"] = group.pop("semantic_errors_among_resolved")
+        group["proposed_reference_disagreement_rate_among_resolved"] = group.pop("semantic_error_rate_among_resolved")
+        group["proposed_boundary_disagreements"] = group.pop("boundary_errors")
+    for row in result["cases"]:
+        row["proposed_reference_disagreement"] = row.pop("semantic_error")
+        if "boundary_error" in row:
+            row["proposed_boundary_disagreement"] = row.pop("boundary_error")
+    return result
+
+
+def _score(annotations, observations, source_root, graph, provisional_references=None):
     if annotations.get("analysis_model") != MODEL or observations.get("analysis_model") != MODEL:
         raise ValueError("Analysis model mismatch")
     if observations.get("policy") not in {"both", "evidence"}:
@@ -69,7 +112,7 @@ def score_reviewed(annotations: dict, observations: dict, source_root: Path, gra
         entry.get("independent_review", {}).get("status") != "approved"
         or not entry.get("independent_review", {}).get("reviewer")
         or not entry.get("independent_review", {}).get("reviewed_reference")]
-    if pending:
+    if pending and provisional_references is None:
         raise ReviewPending("Independent review is pending for: " + ", ".join(pending))
     observed = {case["case_id"]: case for case in observations["cases"]}
     rows = []
@@ -79,7 +122,9 @@ def score_reviewed(annotations: dict, observations: dict, source_root: Path, gra
             raise ValueError("Annotation source is outside the corpus")
         if hashlib.sha256(path.read_bytes()).hexdigest() != entry["source_sha256"]:
             raise ValueError(f"Reference source changed: {entry['case_id']}")
-        reference = OriginReference.model_validate(entry["independent_review"]["reviewed_reference"])
+        payload = (entry["independent_review"]["reviewed_reference"] if provisional_references is None
+                   else provisional_references[entry["case_id"]])
+        reference = OriginReference.model_validate(payload)
         candidates = []
         for item in observed[entry["case_id"]].get("evidence_policy", []):
             payload = item.get("claim", {})

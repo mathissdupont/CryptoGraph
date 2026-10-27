@@ -1,14 +1,17 @@
 # Python key-origin feasibility pilot
 
-These eight small programs probe what CryptoGraph says about the origin of an
-AES key. They were authored during research scoping on 27 October 2026. They are
+These 24 small programs probe what CryptoGraph says about the origin of an
+AES key across PyCryptodome and pyca/cryptography. They were authored during
+research scoping and development on 27 October 2026. They are
 **not independently annotated ground truth, a held-out benchmark, or evidence of
 general accuracy**. The manifest records review questions instead of scored labels.
 
 The programs are intentionally insecure examples. Parse them as data; do not use
 them as encryption implementations. The harness never imports or executes them.
-Their shared ECB mode holds the API shape constant; misuse detection is not the
-measurement in this pilot.
+The original eight fixtures use ECB to hold the API shape constant. Added
+fixtures include AES/AESGCM constructors, configuration defaults, partial source
+sets, argument binding, loops and opaque external factories. Misuse detection
+is not the measurement in this pilot.
 
 ## Reproduce
 
@@ -31,7 +34,7 @@ observations and a record containing actual backend, environment and input hashe
 Strict mode does not substitute AST-lite if the exporter fails. The main study
 will require a pinned environment and an independently reviewed corpus.
 
-## Preserved observations from the existing policy
+## Preserved observations from the original eight cases
 
 Both AST-lite and the full Docker Python/JEP/Fraunhofer path produced the following
 key-source strings for the eight `AES.new` targets:
@@ -58,7 +61,7 @@ dictionary in `context_extractor.py` that is not indexed by the sink location.
 Repairing those mechanisms alone would be an implementation fix, not a new
 research contribution. This pilot preserves the observations before changes.
 
-## Bounded evidence-policy development comparison
+## Preserved bounded-policy comparison on the original eight cases
 
 The new policy is available separately from the existing CBOM heuristic:
 
@@ -89,9 +92,52 @@ sets and abstains on one; CPG resolves six and abstains on two in this run.
 These are model-conditional outputs on examples used during implementation, not
 an independently validated accuracy result. The current policy consumes source
 syntax and CALLS witnesses; these outputs do not establish a general absence of
-CPG benefit. Independent review is pending and metric generation is gated on a
-completed review record. Source fixtures use fixed LF line endings to keep their
+CPG benefit. Independent review is pending. Reviewed metrics require a completed
+review record; explicitly provisional development agreement is available separately.
+Source fixtures use fixed LF line endings to keep their
 review fingerprints stable across operating systems.
+
+## Matched 24-case development experiment
+
+Run all three bounded-policy conditions in the full Python/JEP Docker runtime:
+
+```bash
+docker compose build cryptograph
+docker compose run --rm --entrypoint python cryptograph scripts/run-key-origin-matrix.py --out-dir /results/key-origin-matrix --provisional-proposals research/python-key-origin/review-proposals.json
+```
+
+Use a fresh output directory. Omit `--provisional-proposals` to retain raw
+observations without comparing unreviewed labels. The runner checks identical
+source/config/code hashes, declared candidate spans and proposal fingerprints
+across cells. All cells use the same bounded source interpreter. The source-only
+cell withholds graph witnesses; AST and CPG cells can authorize same-file calls.
+The legacy CBOM heuristic is recorded alongside these cells, with its different
+output contract preserved.
+
+| Bounded-policy context | Complete source sets | Partial sets | Abstentions | Claims using CALLS |
+| --- | ---: | ---: | ---: | ---: |
+| Source only | 13 | 1 | 10 | 0 |
+| AST-derived CALLS | 17 | 1 | 6 | 4 |
+| Fraunhofer CALLS | 15 | 1 | 8 | 2 |
+
+All 24 declared sites produced one structurally checked claim in each condition.
+The legacy matcher found 23 sites and missed the aliased AESGCM constructor.
+This difference is retained as detection coverage, not an abstention. The CPG
+condition rejected wrapper witnesses in `misleading_helper` and
+`wrapper_actual_parameter` that the AST condition could accept.
+
+Resolved sets did not disagree with the unreviewed assistant proposals in this
+run. This is **development agreement, not measured accuracy**. One boundary
+disagreement remains: `unsupported_loop` has proposed `local_assignment` while
+the interpreter emits `expression` after unsupported writes. It is recorded
+without changing the proposal to fit the output. Partial-set semantic error
+measurement remains to be designed; partial claims are not counted as complete.
+
+The optional [PQCensus observation adapter](../../scripts/observe-pqcensus.py)
+pins a source revision, retains native outputs and checks positive controls. Its
+inspected revision did not detect these AES constructors and has no equivalent
+ultimate key-origin contract. This is not a suitable origin-accuracy comparator;
+see [the expanded checkpoint](../../docs/research/EXPANDED-2026-10-27.md).
 
 ## Study boundary
 

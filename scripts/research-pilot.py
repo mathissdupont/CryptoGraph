@@ -36,8 +36,12 @@ def main() -> int:
     parser.add_argument("--backend", choices=["ast-lite", "fraunhofer-strict"], required=True)
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--policy", choices=["existing", "evidence", "both"], default="both")
-    parser.add_argument("--check-pilot", action="store_true", help="Require one target and structurally checked evidence for each development case.")
+    parser.add_argument("--context-evidence", choices=["graph", "none"], default="graph",
+                        help="Disable graph witnesses for a source-only ablation of the same evidence policy.")
+    parser.add_argument("--check-pilot", action="store_true", help="Require one source-matched, structurally checked evidence claim per declared development site.")
     args = parser.parse_args()
+    if args.check_pilot and args.policy == "existing":
+        parser.error("--check-pilot requires evidence-policy claims; use --policy evidence or both.")
     out = args.out_dir.resolve()
     if out.exists() and (not out.is_dir() or any(out.iterdir())):
         parser.error(f"Use a new or empty output directory: {out}")
@@ -46,13 +50,18 @@ def main() -> int:
     source = ROOT / "research" / "python-key-origin" / "cases"
     definition = source.parent / "cases.json"
     manifest = load_json(definition)
+    packet_path = source.parent / "review-template.json"
+    sites = {entry["case_id"]: entry for entry in load_json(packet_path)["cases"]}
+    if set(sites) != {entry["id"] for entry in manifest["cases"]}:
+        parser.error("Manifest and source-site inventory must have identical case identities.")
     mappings = project_path("config", "api_mappings.json")
     rules = project_path("config", "rules_v2.json")
     inputs = sorted([
-        definition, *source.glob("*.py"), mappings, rules,
+        definition, packet_path, *source.glob("*.py"), mappings, rules,
         project_path("config", "source_sinks.json"),
         *ROOT.joinpath("src", "cryptograph").glob("*.py"),
-        Path(__file__).resolve(), ROOT / "pyproject.toml",
+        *[ROOT / "scripts" / name for name in ("research-pilot.py", "score-key-origin.py", "run-key-origin-matrix.py")],
+        ROOT / "pyproject.toml",
     ])
     dirty = git_value("status", "--porcelain", "--untracked-files=normal")
     record = {
@@ -66,6 +75,7 @@ def main() -> int:
         "dependencies": {name: version(name) for name in ("cryptograph", "networkx", "pydantic")},
         "requested_backend": args.backend,
         "requested_policy": args.policy,
+        "context_evidence": args.context_evidence,
         "evidence_analysis_model": MODEL,
         "inputs_sha256": {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest() for path in inputs},
         "status": "started",
@@ -84,9 +94,10 @@ def main() -> int:
     write_json(out / "cbom.json", cbom)
     write_graph_json(graph, out / "graph.json")
     claims_by_file = {}
+    claim_graph = graph if args.context_evidence == "graph" else None
     if args.policy != "existing":
         for path in sorted(source.glob("*.py")):
-            claims_by_file[path.name] = analyze_key_origins(path, graph)
+            claims_by_file[path.name] = analyze_key_origins(path, claim_graph)
         write_json(out / "key-origin-claims.json", {
             "analysis_model": MODEL,
             "claims": [claim.model_dump() for claims in claims_by_file.values() for claim in claims],
@@ -100,6 +111,7 @@ def main() -> int:
         ]
         observations.append({
             "case_id": case["id"],
+            "eligible_target": {key: sites[case["id"]][key] for key in ("target", "target_api", "source_sha256")},
             "target_count": len(matches),
             "review_question": case["review_question"],
             "observed": [{
@@ -110,20 +122,23 @@ def main() -> int:
             } for asset in matches] if args.policy != "evidence" else [],
             "evidence_policy": [{
                 "claim": claim.model_dump(),
-                "structural_errors": audit_claim_structure(claim, source / case["file"], graph),
+                "structural_errors": audit_claim_structure(claim, source / case["file"], claim_graph),
             } for claim in claims_by_file.get(case["file"], [])],
         })
     write_json(out / "observations.json", {
         "annotation_status": manifest["annotation_status"], "policy": args.policy,
         "analysis_model": MODEL, "cases": observations,
+        "context_evidence": args.context_evidence,
     })
     checks = []
     if args.check_pilot:
         for observation in observations:
-            if observation["target_count"] != 1:
-                checks.append(f"{observation['case_id']}: expected exactly one legacy target")
             if args.policy != "existing" and (len(observation["evidence_policy"]) != 1 or any(item["structural_errors"] for item in observation["evidence_policy"])):
                 checks.append(f"{observation['case_id']}: missing/ambiguous claim or structural error")
+            elif args.policy != "existing":
+                claim = observation["evidence_policy"][0]["claim"]
+                if any(claim[key] != observation["eligible_target"][key] for key in ("target", "target_api", "source_sha256")):
+                    checks.append(f"{observation['case_id']}: claim does not match frozen source site")
     if checks:
         record.update(status="failed", validation_errors=checks)
         write_json(out / "run.json", record)

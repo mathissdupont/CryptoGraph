@@ -92,11 +92,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build Python and JEP runtime
         run: docker build -t cryptograph-python-research .
-      - name: Compare policies under both graph backends
+      - name: Compare matched source-only, AST and CPG development cells
         run: |
           mkdir -p "$RUNNER_TEMP/cryptograph-research"
-          docker run --rm --network none --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research,target=/results" --entrypoint python cryptograph-python-research scripts/research-pilot.py --backend ast-lite --policy both --check-pilot --out-dir /results/ast
-          docker run --rm --network none --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research,target=/results" --entrypoint python cryptograph-python-research scripts/research-pilot.py --backend fraunhofer-strict --policy both --check-pilot --out-dir /results/cpg
+          docker run --rm --network none --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research,target=/results" --entrypoint python cryptograph-python-research scripts/run-key-origin-matrix.py --out-dir /results/matrix --provisional-proposals research/python-key-origin/review-proposals.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:

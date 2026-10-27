@@ -58,8 +58,10 @@ docker compose build cryptograph
 docker compose run --rm --entrypoint python cryptograph scripts/research-pilot.py --backend fraunhofer-strict --policy both --check-pilot --out-dir /results/policy-cpg
 ```
 
-Use fresh directories. `--check-pilot` checks one target per committed case and
-structural validity, not semantic accuracy. Existing CBOMs and new claims remain
+Use fresh directories. `--check-pilot` checks one claim matching each frozen
+source-site span/API/hash and structural validity, not semantic accuracy. Missing
+legacy detections remain visible rather than changing the common candidate set.
+Existing CBOMs and new claims remain
 separate. Four development cells are observable; this is not yet a completed
 causal ablation. Legacy source strings lack a comparable set/modality contract,
 binding verification must be accounted for, and this version does not evaluate
@@ -67,7 +69,7 @@ the added value of DFG recovery.
 
 ## Independent review and scoring
 
-No independent review is recorded. All eight cases were used during development.
+No independent review is recorded. All 24 cases are development data.
 
 - `review-template.json` holds source hashes, spans, families and empty review slots.
 - `review-proposals.json` holds separate assistant-generated source-inspection
@@ -85,6 +87,23 @@ python scripts/score-key-origin.py --annotations research/python-key-origin/revi
 The pending template intentionally returns exit **2** and writes no score.
 Invalid/mismatched inputs return **3**; existing output paths are rejected to
 avoid stale scores. Proposals remain separate after review.
+
+Work can continue without a reviewer. Explicitly opt in to **provisional
+development agreement**, using the separate proposal file:
+
+```bash
+python scripts/score-key-origin.py --annotations research/python-key-origin/review-template.json --observations output/policy-ast/observations.json --provisional-proposals research/python-key-origin/review-proposals.json --output output/policy-ast/provisional-agreement.json
+```
+
+This mode requires matching proposal IDs, source fingerprints, target spans and
+API names. It refuses non-development splits, never fills review slots and
+reports proposal disagreement instead of semantic accuracy. A source-inspection
+proposal can itself be wrong. Leaving the flag out retains the review gate.
+
+`scripts/run-key-origin-matrix.py` runs source-only, AST CALLS and CPG CALLS cells
+and verifies identical candidate and input snapshots. The source-only condition
+withholds the graph from the interpreter; its legacy CBOM still uses AST context
+and is not a separate legacy baseline. No DFG benefit is tested by these cells.
 
 Reviewed diagnostics separate splits, eligible sites, resolved/partial/abstained
 and missing outcomes, invalid contracts, resolved coverage, semantic origin-set

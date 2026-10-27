@@ -63,6 +63,14 @@ does not rank language-wide cryptographic usage or detector performance.
 
 ## Judgment
 
+Follow-up implementation and reproduction notes are recorded in the
+[expanded checkpoint](EXPANDED-2026-10-27.md). The corpus now includes pyca
+constructors for future shared-API comparisons. A pinned PQCensus audit passed
+SHA-256/RSA controls but emitted no findings for the 24 AES examples; inspection
+of that revision found no AES-constructor classifier or equivalent ultimate
+key-origin contract. It remains related engineering work, rather than a scored
+origin comparator for these examples. This does not reproduce its own benchmarks.
+
 The broad question "can graphs/context/evidence improve crypto analysis?" is too
 close to existing work to use as the contribution claim. A narrower empirical
 study of **key-origin claim fidelity, evidence validity and coverage under explicit
