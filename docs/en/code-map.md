@@ -36,5 +36,6 @@
 - `report_builder.py`: creates the standalone HTML report from CBOM JSON.
 - `manifest.py`: writes run metadata and config hashes.
 - `scripts/reproduce.py`: records a local demonstration, input hashes and environment.
+- `scripts/research-pilot.py`: records unscored Python key-origin feasibility observations.
 - `cyclonedx_cbom.py`: experimental hybrid export, not schema-validated.
 - `llm_labeling.py`: deterministic labeling baseline; no external model integration.

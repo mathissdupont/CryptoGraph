@@ -1,0 +1,55 @@
+{
+  "annotation_status": "provisional_author_designed_not_independently_reviewed",
+  "purpose": "Feasibility probes for source-origin claims; not a held-out evaluation corpus.",
+  "semantic_boundary": "Source programs are parsed and not executed. No security conclusion follows from the use of AES.MODE_ECB in these intentionally insecure fixtures.",
+  "cases": [
+    {
+      "id": "direct_random",
+      "file": "direct_random.py",
+      "target_api": "AES.new",
+      "review_question": "Positive control: does an unshadowed os.urandom assignment reach the AES argument?"
+    },
+    {
+      "id": "misleading_helper",
+      "file": "misleading_helper.py",
+      "target_api": "AES.new",
+      "review_question": "Does the name fake_urandom incorrectly imply randomness despite its constant-returning body?"
+    },
+    {
+      "id": "assignment_after_sink",
+      "file": "assignment_after_sink.py",
+      "target_api": "AES.new",
+      "review_question": "Does an assignment after the AES call incorrectly overwrite the origin at the call?"
+    },
+    {
+      "id": "mixed_branch",
+      "file": "mixed_branch.py",
+      "target_api": "AES.new",
+      "review_question": "Can the output express both possible sources, without implying one definite runtime origin?"
+    },
+    {
+      "id": "parameter_boundary",
+      "file": "parameter_boundary.py",
+      "target_api": "AES.new",
+      "review_question": "Can a parameter boundary be reported without claiming an ultimate upstream origin?"
+    },
+    {
+      "id": "aliased_random",
+      "file": "aliased_random.py",
+      "target_api": "AES.new",
+      "review_question": "Can a renamed import retain the os.urandom source identity, or explicitly remain unresolved?"
+    },
+    {
+      "id": "literal_final_assignment",
+      "file": "literal_final_assignment.py",
+      "target_api": "AES.new",
+      "review_question": "Positive control: does the final pre-call literal assignment replace the earlier random assignment?"
+    },
+    {
+      "id": "wrapper_random",
+      "file": "wrapper_random.py",
+      "target_api": "AES.new",
+      "review_question": "Does the analysis distinguish a return-value boundary from a traced CSPRNG origin?"
+    }
+  ]
+}

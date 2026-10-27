@@ -5,6 +5,12 @@ on commit `f4515c4221adf3edab27cecea508be5793eeb8a5`. The changes were uncommitt
 when checked; the base commit alone does not contain the fixes described here.
 This is implementation validation, not a research evaluation or release.
 
+Follow-up on the same date: [GitHub workflow 40516866088](https://github.com/mathissdupont/CryptoGraph/actions/runs/40516866088)
+completed all seven jobs successfully for commit `f5f0b1e`. The full Docker
+Python/JEP runtime also built and ran the later
+[Python feasibility pilot](../research/python-key-origin/README.md). The original
+local snapshot below predates those checks; the pilot is not an accuracy benchmark.
+
 ## Checks performed
 
 | Check | Observed result | Scope |
@@ -22,8 +28,8 @@ The exporter tests are opt-in. Set `CRYPTOGRAPH_TEST_EXPORTER` to an absolute pa
 to the built JAR and run `python -m pytest -q`. Without this variable, the two
 real-JVM tests skip. The UI test skips when Streamlit is not installed; install
 `.[dev,ui]` to include it. CI now defines separate package, UI and exporter jobs
-as well as Windows/Linux Python 3.12/3.14 regression jobs. Those remote jobs have
-not been run for this local branch.
+as well as Windows/Linux Python 3.12/3.14 regression jobs. At the time of the
+original local snapshot those remote jobs had not yet run; see the follow-up above.
 
 ## Reliability fixes exercised
 
@@ -41,8 +47,8 @@ not been run for this local branch.
 ## Remaining validation
 
 No labeled corpus, precision/recall results, calibrated confidence or evidence of
-improvement over API-only analysis is supplied. Full runtime Docker image setup,
-Python/JEP operation, other frontends, mixed projects, cross-function bindings and
+improvement over API-only analysis is supplied. Beyond the later limited Python
+runtime pilot, other frontends, mixed projects, cross-function bindings and
 data-flow completeness need separate evaluation. The successful Java smoke test
 does not establish those properties. CycloneDX schema conformance and actual LLM
 provider integration remain outstanding.

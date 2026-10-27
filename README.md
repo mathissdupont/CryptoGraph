@@ -14,6 +14,14 @@ local source analysis, and rule-based assessment. It records call context,
 inferred material sources, risk derivations, and unresolved fields. Accuracy,
 intent inference, and standards interoperability remain under evaluation.
 
+**First research study: Python key-origin evidence.** The current investigation
+asks whether explicit evidence requirements can reduce unsupported key-source
+claims while retaining useful coverage, and what CPG context adds over AST.
+Application intent and LLM analysis are later directions. See the
+[Python research protocol](docs/RESEARCH.md),
+[literature screening](docs/research/LITERATURE-2026-10-27.md), and
+[eight-case feasibility pilot](research/python-key-origin/README.md).
+
 ## Try it locally
 
 Requires **Python 3.12+** and Git. The lightweight demo needs no JVM, API key, or
@@ -107,13 +115,14 @@ For exporter/Docker setup, see [reproducibility](docs/REPRODUCIBILITY.md).
 
 ## Research direction
 
-The planned comparison uses the same annotated inputs for:
+The first study will hold matching and normalization constant while comparing:
 
-1. API and parameter extraction alone.
-2. Graph-enriched contextual analysis.
-3. Evidence-grounded intent inference, potentially using an LLM.
+1. AST context with existing and evidence-constrained inference policies.
+2. CPG context with the same two policies.
+3. A limited literal/direct-call reference.
 
-These are experimental conditions to implement and evaluate. The repository has
+These controlled conditions still need implementation and independent labels;
+the eight feasibility cases are not a benchmark. The repository has
 no published ground-truth corpus, precision/recall results, calibrated intent
 scores, or demonstrated improvement over an API-only baseline.
 

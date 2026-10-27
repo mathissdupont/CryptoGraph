@@ -10,6 +10,8 @@ Start with the [project README](../README.md). The current reading path is:
 6. [Roadmap](ROADMAP.md): research milestones.
 7. [Contributing](../CONTRIBUTING.md): installation and checks.
 8. [Validation snapshot](VALIDATION.md): checks actually performed and their limits.
+9. [Literature and language decision](research/LITERATURE-2026-10-27.md): overlap, artifact checks and the Python scope.
+10. [Python feasibility pilot](../research/python-key-origin/README.md): source cases and reproducible observations.
 
 ## Historical notes
 
