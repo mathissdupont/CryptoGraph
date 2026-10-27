@@ -42,15 +42,10 @@ fun main(args: Array<String>) {
     val root = Path(input)
     val files = sourceFiles(root)
 
-    val graph =
-        try {
-            buildFraunhoferCpgGraph(root, files)
-        } catch (error: Throwable) {
-            System.err.println(
-                "[cryptograph-exporter] Fraunhofer CPG traversal failed; using source boundary fallback: ${error.message}",
-            )
-            buildSourceBoundaryGraph(root, files)
-        }
+    require(files.isNotEmpty()) { "No supported source files found in $input" }
+    // Propagate failures to the caller. Fallback policy belongs to the Python
+    // loader; a source-pattern result must never masquerade as a successful CPG.
+    val graph = buildFraunhoferCpgGraph(root, files)
 
     jacksonObjectMapper().writerWithDefaultPrettyPrinter().writeValue(File(output), graph)
 }
@@ -106,7 +101,7 @@ private fun buildFraunhoferCpgGraph(
             .inferenceConfiguration(inferenceConfig)
             .defaultPasses()
             .codeInNodes(true)
-            .failOnError(false)
+            .failOnError(true)
 
     languageNamesFor(files).forEach { language ->
         builder.registerLanguage(language)
@@ -140,16 +135,15 @@ private fun languageNamesFor(files: List<java.nio.file.Path>): List<String> {
     val languages = linkedSetOf<String>()
     files.forEach { file ->
         when (file.extension().lowercase()) {
-            "c", "cc", "cpp", "cxx", "h", "hh", "hpp", "hxx" -> languages.add("CXXLanguage")
-            "go" -> languages.add("GoLanguage")
-            "java" -> languages.add("JavaLanguage")
-            "js", "jsx", "ts", "tsx" -> languages.add("TypeScriptLanguage")
-            "py" -> languages.add("PythonLanguage")
-            "rb" -> languages.add("RubyLanguage")
+            "c", "h" -> languages.add("de.fraunhofer.aisec.cpg.frontends.cxx.CLanguage")
+            "cc", "cpp", "cxx", "hh", "hpp", "hxx" -> languages.add("de.fraunhofer.aisec.cpg.frontends.cxx.CPPLanguage")
+            "go" -> languages.add("de.fraunhofer.aisec.cpg.frontends.golang.GoLanguage")
+            "java" -> languages.add("de.fraunhofer.aisec.cpg.frontends.java.JavaLanguage")
+            "js", "jsx" -> languages.add("de.fraunhofer.aisec.cpg.frontends.typescript.JavaScriptLanguage")
+            "ts", "tsx" -> languages.add("de.fraunhofer.aisec.cpg.frontends.typescript.TypeScriptLanguage")
+            "py" -> languages.add("de.fraunhofer.aisec.cpg.frontends.python.PythonLanguage")
+            "rb" -> languages.add("de.fraunhofer.aisec.cpg.frontends.ruby.RubyLanguage")
         }
-    }
-    if (languages.isEmpty()) {
-        languages.add("PythonLanguage")
     }
     return languages.toList()
 }
@@ -273,7 +267,13 @@ private fun CallExpression.toCallGraphNode(): GraphNode {
         properties = mapOf(
             "arguments" to arguments,
             "resolved_name" to this.name.toString(),
-            "callee" to (this.callee?.code ?: this.callee?.name?.toString()),
+            // Unresolved member calls can be named UNKNOWN.getInstance by CPG.
+            // Preserve the source receiver for syntactic API matching without
+            // presenting it as a resolved semantic name.
+            "callee" to (this.code?.substringBefore("(")?.trim()?.removePrefix("new ")
+                ?: this.callee?.code ?: this.callee?.name?.toString()),
+            "cpg_callee" to (this.callee?.code ?: this.callee?.name?.toString()),
+            "raw_code" to this.code,
             "invokes" to this.invokes.map { it.name.toString() },
             "prev_dfg" to this.prevDFG.map { it.name.toString() },
             "next_dfg" to this.nextDFG.map { it.name.toString() },
@@ -326,157 +326,9 @@ private fun inferFileFromFunction(function: String?): String? {
     return module?.let { "$it.py" }
 }
 
-private fun buildSourceBoundaryGraph(
-    root: java.nio.file.Path,
-    files: List<java.nio.file.Path>,
-): NormalizedGraph {
-    val files =
-        if (files.isEmpty() && root.isRegularFile()) listOf(root) else files
-    val nodes = files.flatMap { file ->
-        var currentFunction: String? = null
-        File(file.absolutePathString()).readLines().mapIndexedNotNull { index, line ->
-            functionName(line)?.let { currentFunction = it }
-            val callName = knownCalls.firstOrNull { line.contains("$it(") }
-            if (callName == null) {
-                null
-            } else {
-                val arguments = extractArguments(line, callName)
-                GraphNode(
-                    id = "${file.absolutePathString()}:${index + 1}",
-                    kind = "call",
-                    name = callName,
-                    file = file.toString(),
-                    line = index + 1,
-                    function = currentFunction,
-                    properties = mapOf(
-                        "arguments" to arguments,
-                        "resolved_name" to callName,
-                        "literal_arguments" to arguments.filter { isStringLiteral(it) },
-                    ),
-                )
-            }
-        }
-    }
-    return NormalizedGraph("fraunhofer-cpg-boundary", root.absolutePathString(), nodes)
-}
-
-private val knownCalls = listOf(
-    "AES.new",
-    "PKCS1_OAEP.new",
-    "RSA.generate",
-    "hashlib.sha256",
-    "hashlib.sha1",
-    "hashlib.md5",
-    "hashlib.pbkdf2_hmac",
-    "hmac.new",
-    "Fernet.generate_key",
-    "Fernet",
-    "secrets.token_bytes",
-    "os.urandom",
-    "random.randbytes",
-)
-
 private fun option(args: Array<String>, name: String): String? {
     val index = args.indexOf(name)
     return if (index >= 0 && index + 1 < args.size) args[index + 1] else null
-}
-
-private fun functionName(line: String): String? {
-    val match = Regex("""^\s*def\s+([A-Za-z_][A-Za-z0-9_]*)\s*\(""").find(line)
-    return match?.groupValues?.get(1)
-}
-
-private fun extractArguments(line: String, callName: String): List<String> {
-    val start = line.indexOf("$callName(")
-    if (start < 0) {
-        return emptyList()
-    }
-    val argsStart = start + callName.length + 1
-    val args = StringBuilder()
-    var depth = 0
-    var quote: Char? = null
-    var escaped = false
-
-    for (index in argsStart until line.length) {
-        val char = line[index]
-        if (quote != null) {
-            args.append(char)
-            if (escaped) {
-                escaped = false
-            } else if (char == '\\') {
-                escaped = true
-            } else if (char == quote) {
-                quote = null
-            }
-            continue
-        }
-        when (char) {
-            '\'', '"' -> {
-                quote = char
-                args.append(char)
-            }
-            '(' -> {
-                depth += 1
-                args.append(char)
-            }
-            ')' -> {
-                if (depth == 0) {
-                    return splitArguments(args.toString())
-                }
-                depth -= 1
-                args.append(char)
-            }
-            else -> args.append(char)
-        }
-    }
-    return splitArguments(args.toString())
-}
-
-private fun splitArguments(raw: String): List<String> {
-    val result = mutableListOf<String>()
-    val current = StringBuilder()
-    var depth = 0
-    var quote: Char? = null
-    var escaped = false
-
-    for (char in raw) {
-        if (quote != null) {
-            current.append(char)
-            if (escaped) {
-                escaped = false
-            } else if (char == '\\') {
-                escaped = true
-            } else if (char == quote) {
-                quote = null
-            }
-            continue
-        }
-        when (char) {
-            '\'', '"' -> {
-                quote = char
-                current.append(char)
-            }
-            '(', '[', '{' -> {
-                depth += 1
-                current.append(char)
-            }
-            ')', ']', '}' -> {
-                depth -= 1
-                current.append(char)
-            }
-            ',' -> {
-                if (depth == 0) {
-                    current.toString().trim().takeIf { it.isNotEmpty() }?.let { result.add(it) }
-                    current.clear()
-                } else {
-                    current.append(char)
-                }
-            }
-            else -> current.append(char)
-        }
-    }
-    current.toString().trim().takeIf { it.isNotEmpty() }?.let { result.add(it) }
-    return result
 }
 
 private fun isStringLiteral(value: String): Boolean {

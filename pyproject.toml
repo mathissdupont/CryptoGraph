@@ -8,19 +8,36 @@ version = "0.1.0"
 description = "Graph-based cryptographic asset discovery with CBOM-like output."
 readme = "README.md"
 requires-python = ">=3.12"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Topic :: Security",
+]
 dependencies = [
     "networkx>=3.2",
     "pydantic>=2.6",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0"]
+dev = ["pytest>=8.0", "build>=1.2"]
+ui = ["streamlit>=1.40", "pandas>=2.0"]
+
+[project.urls]
+Repository = "https://github.com/mathissdupont/CryptoGraph"
+Issues = "https://github.com/mathissdupont/CryptoGraph/issues"
 
 [project.scripts]
 cryptograph = "cryptograph.main:main"
 
-[tool.setuptools.packages.find]
-where = ["src"]
+[tool.setuptools]
+packages = ["cryptograph", "cryptograph.config"]
+
+[tool.setuptools.package-dir]
+cryptograph = "src/cryptograph"
+"cryptograph.config" = "config"
+
+[tool.setuptools.package-data]
+"cryptograph.config" = ["*.json", "templates/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -1,20 +1,87 @@
-name: Analysis integrity regression tests
+name: Tests and package smoke check
 
 on:
   pull_request:
   push:
     branches:
-      - fix/analysis-integrity-2026-10-27
+      - master
+      - main
+
+permissions:
+  contents: read
 
 jobs:
-  integrity:
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.12', '3.14']
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install
+        run: python -m pip install -e '.[dev]'
+      - name: Run full regression suite
+        run: python -m pytest -q
+
+  package:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install
-        run: python -m pip install -e '.[dev]'
-      - name: Run integrity regression tests
-        run: python -m pytest tests/test_analysis_integrity.py -q
+      - name: Build wheel and source distribution
+        run: |
+          python -m pip install build
+          python -m build
+      - name: Install wheel in an isolated environment
+        run: |
+          python -m venv "$RUNNER_TEMP/cryptograph-env"
+          "$RUNNER_TEMP/cryptograph-env/bin/python" -m pip install dist/*.whl
+      - name: Scan outside the checkout
+        working-directory: ${{ runner.temp }}
+        run: |
+          mkdir cryptograph-smoke
+          cd cryptograph-smoke
+          printf 'import hashlib\nhashlib.md5(b"example")\n' > example.py
+          "$RUNNER_TEMP/cryptograph-env/bin/cryptograph" scan --input example.py --backend ast-lite --output cbom.json --report report.html
+          "$RUNNER_TEMP/cryptograph-env/bin/python" -c 'import json; from pathlib import Path; data=json.loads(Path("cbom.json").read_text()); assert data["cryptographic_assets"]; assert Path("report.html").is_file(); assert len(list(Path("output").glob("run-*/manifest.json"))) == 1'
+
+  ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e '.[dev,ui]'
+      - run: python -m pytest tests/test_viewer.py -q
+
+  exporter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - run: python -m pip install -e '.[dev]'
+      - name: Build bundled exporter
+        run: docker build --target fraunhofer-exporter-builder -t cryptograph-exporter-check .
+      - name: Extract built JAR
+        run: |
+          container=$(docker create cryptograph-exporter-check)
+          docker cp "$container:/workspace/tools/fraunhofer-exporter/build/libs/fraunhofer-exporter.jar" "$RUNNER_TEMP/exporter.jar"
+          docker rm "$container"
+      - name: Run real Java exporter smoke tests
+        env:
+          CRYPTOGRAPH_TEST_EXPORTER: ${{ runner.temp }}/exporter.jar
+        run: python -m pytest tests/test_exporter_integration.py -q

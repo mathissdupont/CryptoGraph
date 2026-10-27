@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](../README.md).
+
 # CryptoGraph Pipeline
 
 CryptoGraph turns Python source code into a graph-backed custom CBOM in six deterministic stages.

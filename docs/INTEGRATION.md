@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # Integration Guide: Multi-Language Scanning & LLM Labeling
 
 This guide explains how to integrate CryptoGraph's multi-language scanning, web UI, and LLM labeling into your workflows.

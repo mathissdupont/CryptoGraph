@@ -168,7 +168,8 @@ def main():
     print(f"\nLabeling with {args.llm_api} ({args.llm_model})...")
     
     labeled_count = 0
-    with open(output_file, "w") as out_f:
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_file, "w", encoding="utf-8") as out_f:
         for i, asset in enumerate(assets):
             if args.llm_api == "simulate":
                 # Demo: simple heuristic labeling
@@ -187,12 +188,12 @@ def main():
             if (i + 1) % max(1, len(assets) // 10) == 0:
                 print(f"  {i + 1}/{len(assets)} assets labeled")
     
-    print(f"\n✓ Labeled {labeled_count} assets")
-    print(f"✓ Wrote to {output_file}")
+    print(f"\nLabeled {labeled_count} assets")
+    print(f"Wrote to {output_file}")
     
     # Show sample labels
     print(f"\nSample labeled assets (first 3):")
-    with open(output_file) as f:
+    with open(output_file, encoding="utf-8") as f:
         for i, line in enumerate(f):
             if i >= 3:
                 break

@@ -64,7 +64,9 @@ def load_graph(input_path: Path, backend: str = "fraunhofer") -> NormalizedGraph
     - ast-lite: Direct Python AST parsing, no JVM dependency.
     """
     input_path = input_path.resolve()
-    if _looks_like_ruby(input_path):
+    if backend not in {"fraunhofer", "fraunhofer-strict", "ast-lite"}:
+        raise CpgLoadError(f"Unsupported backend: {backend}")
+    if backend != "fraunhofer-strict" and _looks_like_ruby(input_path):
         graph = build_ruby_lite_graph(input_path)
         graph.backend = "ruby-lite"
         return graph
@@ -143,12 +145,16 @@ def _load_with_fraunhofer(input_path: Path, allow_fallback: bool) -> NormalizedG
                 raise subprocess.CalledProcessError(proc.returncode, proc.args, output=proc.stdout, stderr=proc.stderr)
             with output_path.open("r", encoding="utf-8") as graph_file:
                 graph = NormalizedGraph.model_validate(json.load(graph_file))
+            if not allow_fallback and graph.backend == "fraunhofer-cpg-boundary":
+                raise CpgLoadError("Fraunhofer exporter returned a source boundary fallback in strict mode.")
             # run diagnostics to ensure exporter produced expected CPG elements
             try:
                 _diagnostic_graph_report(graph, input_path, log_path)
             except Exception:
                 pass
             if looks_like_c_cpp(input_path) and _graph_has_no_usable_calls(graph):
+                if not allow_fallback:
+                    raise CpgLoadError("Fraunhofer exporter produced no usable C/C++ calls in strict mode.")
                 print(
                     "[cryptograph][warning] Fraunhofer exporter produced no usable C/C++ call graph; "
                     "using c-cpp-lite source scanner for OpenSSL/TLS API detection.",

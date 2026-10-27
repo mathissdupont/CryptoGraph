@@ -6,16 +6,19 @@
 - `cpg_loader.py`: backend selection and Fraunhofer/AST-lite loading.
 - `models.py`: shared Pydantic models for graph nodes, edges, graphs, and findings.
 - `utils.py`: path, JSON, and run-directory helpers.
+- `orchestrator.py`: language-scoped repository jobs, merged results and JSONL export.
 
 ## Graph Generation
 
 - `ast_lite.py`: Python AST fallback graph builder.
+- `ruby_lite.py` and `c_cpp_lite.py`: source-pattern scanners with narrower evidence.
 - `tools/fraunhofer-exporter/.../Main.kt`: Fraunhofer CPG exporter used inside Docker.
 - `cpg_visualizer.py`: JSON, DOT, and HTML graph visualization.
 
 ## Detection and Enrichment
 
 - `crypto_matcher_v2.py`: maps call nodes to crypto APIs.
+- `api_mappings.py`: shared normalization for flat and per-language mapping files.
 - `context_extractor.py`: adds call chain, argument roles, literal tracking, source/sink labels, and data-flow evidence.
 
 ## CBOM Semantics
@@ -32,3 +35,6 @@
 
 - `report_builder.py`: creates the standalone HTML report from CBOM JSON.
 - `manifest.py`: writes run metadata and config hashes.
+- `scripts/reproduce.py`: records a local demonstration, input hashes and environment.
+- `cyclonedx_cbom.py`: experimental hybrid export, not schema-validated.
+- `llm_labeling.py`: deterministic labeling baseline; no external model integration.

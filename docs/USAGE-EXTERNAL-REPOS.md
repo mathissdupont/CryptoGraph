@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # Using CryptoGraph on External GitHub Repositories
 
 This guide shows how to scan external GitHub repositories for cryptographic API usage and security risks using CryptoGraph's `scan-repo` command.

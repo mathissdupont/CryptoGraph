@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](../README.md).
+
 # Scaling CryptoGraph to Large Repositories
 
 CryptoGraph is architected to scale from toy samples to multi-million-line repositories. The MVP includes scalability-first design decisions that enable growth without major restructuring.

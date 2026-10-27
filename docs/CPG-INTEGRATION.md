@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # Fraunhofer CPG Integration for CryptoGraph
 
 This document describes how to prepare and use the Fraunhofer CPG exporter with CryptoGraph so you can generate full CPG-backed CBOMs for the languages supported by CPG.

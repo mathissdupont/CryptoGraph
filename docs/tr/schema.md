@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](../README.md).
+
 # CBOM Semasi
 
 CryptoGraph `cryptograph-custom-v2` ve `spec_version` `1.0` uretir.

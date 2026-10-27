@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # CryptoGraph Extended Testing Report
 **Date**: April 15, 2026  
 **Test Type**: Extended Cryptographic Analysis with Advanced Samples  

@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # Architecture
 
 CryptoGraph is a multi-language cryptographic API analyzer with a modular architecture:

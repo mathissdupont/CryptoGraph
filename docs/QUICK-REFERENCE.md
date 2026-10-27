@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # CryptoGraph: Quick Reference Card
 
 ## One-Liner: Scan Any GitHub Repo

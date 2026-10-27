@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # CryptoGraph: Quick Examples for External Repositories
 
 This document provides copy-paste ready commands for scanning popular open-source projects.

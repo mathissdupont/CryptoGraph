@@ -135,6 +135,8 @@ def _scan(args: argparse.Namespace) -> int:
             rules_config=rules_config,
         )
         write_json(args.output, cbom)
+        if args.report:
+            build_html_report(args.output, args.report)
         print(f"Wrote {len(findings)} cryptographic findings to {args.output}")
         return 0
     
