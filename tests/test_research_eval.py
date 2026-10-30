@@ -7,7 +7,7 @@ import pytest
 
 from cryptograph.cpg_loader import load_graph
 from cryptograph.key_origin import MODEL, analyze_key_origins
-from cryptograph.research_eval import ReviewPending, score_provisional, score_reviewed
+from cryptograph.research_eval import ReviewPending, always_abstain_reference, score_provisional, score_reviewed
 from cryptograph.utils import project_path
 
 
@@ -37,6 +37,19 @@ def test_pending_review_blocks_metrics_even_with_proposed_reference(data):
     review.update(status="pending", reviewer=None, reviewed_reference=None)
     with pytest.raises(ReviewPending):
         score_reviewed(annotations, observations, root)
+
+
+def test_always_abstain_reference_has_zero_coverage_and_no_invented_accuracy(data):
+    root,annotations,_=data
+    reference=always_abstain_reference(annotations)
+    result=score_reviewed(annotations,reference,root)
+    group=result['by_split']['development']
+    assert group['abstained']==1 and group['resolved_coverage']==0
+    assert group['semantic_error_rate_among_resolved'] is None
+    assert result['cases'][0]['evidence_evaluation']=='not_applicable_reference_emits_no_claims'
+    annotations['cases'][0]['independent_review']['status']='pending'
+    with pytest.raises(ReviewPending):
+        score_reviewed(annotations,reference,root)
 
 
 def test_scores_recorded_review_and_recomputes_structural_checks(data):
@@ -159,6 +172,31 @@ def test_family_leakage_is_rejected(data):
     observations["cases"].append(case)
     with pytest.raises(ValueError, match="leakage"):
         score_reviewed(annotations, observations, root)
+
+
+def test_reviewed_rejected_candidate_is_retained_outside_origin_denominator(data):
+    root,annotations,observations=data
+    entry=annotations['cases'][0]
+    entry['candidate_status']='nominal_candidate'
+    entry['independent_review'].update(reviewer_role='independent',candidate_decision='ineligible',
+                                       candidate_rationale='Synthetic fixture: the imported name is shadowed.',reviewed_reference=None)
+    result=score_reviewed(annotations,observations,root)
+    group=result['by_split']['development']
+    assert group['candidate_sites']==1 and group['eligible_sites']==0
+    assert group['excluded_ineligible_candidates']==1 and group['resolved_coverage'] is None
+    assert result['cases'][0]['outcome']=='excluded_ineligible_candidate'
+
+
+def test_candidate_rejection_needs_independent_review_and_a_reason(data):
+    root,annotations,observations=data
+    entry=annotations['cases'][0]
+    entry['candidate_status']='nominal_candidate'
+    entry['independent_review'].update(reviewer_role='independent',candidate_decision='ineligible',candidate_rationale='')
+    with pytest.raises(ReviewPending):
+        score_reviewed(annotations,observations,root)
+    entry['independent_review'].update(reviewer_role='project_author',candidate_rationale='Synthetic reason')
+    with pytest.raises(ReviewPending):
+        score_reviewed(annotations,observations,root)
 
 
 def test_duplicate_operation_cannot_inflate_denominator(data):

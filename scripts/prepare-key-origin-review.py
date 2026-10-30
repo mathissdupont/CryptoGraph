@@ -1,5 +1,6 @@
 """Prepare source/contract-only review materials, withholding tool outputs/proposals."""
 import argparse
+import hashlib
 import shutil
 from pathlib import Path
 
@@ -40,15 +41,35 @@ Kimlik/doğruluk/bağımsızlık iddiaları yazılım tarafından kanıtlanmaz.
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--manifest', type=Path, required=True)
+    parser.add_argument('--manifest', type=Path)
+    parser.add_argument('--designed', action='store_true', help='Package selected designed development files, not downloaded project sources.')
+    parser.add_argument('--case-id', action='append', default=[], help='Explicit development training subset; never an origin-evaluation split.')
     parser.add_argument('--annotations', type=Path, required=True)
     parser.add_argument('--source-root', type=Path, required=True)
     parser.add_argument('--out-dir', type=Path, required=True)
     args = parser.parse_args()
     if args.out_dir.exists():
         parser.error('Use a fresh review directory.')
-    manifest, annotations = load_json(args.manifest), load_json(args.annotations)
-    record = materialize_corpus(manifest, args.source_root)
+    if not args.manifest and not args.designed:
+        parser.error('--manifest is required for project sources')
+    annotations = load_json(args.annotations)
+    if args.case_id:
+        if any(entry['split']!='development' for entry in annotations['cases']):
+            parser.error('Training subsets must not silently select reserved evaluation cases')
+        annotations=dict(annotations,cases=[entry for entry in annotations['cases'] if entry['case_id'] in args.case_id])
+        if {entry['case_id'] for entry in annotations['cases']}!=set(args.case_id):
+            parser.error('Unknown training case identifier')
+    if args.designed:
+        manifest={'scope':'Designed development training subset, not held-out evidence.'}
+        record={'resources':[]}
+        for entry in annotations['cases']:
+            path=(args.source_root/entry['source']).resolve()
+            if not path.is_relative_to(args.source_root.resolve()) or hashlib.sha256(path.read_bytes()).hexdigest()!=entry['source_sha256']:
+                parser.error('Designed source identity mismatch')
+            record['resources'].append({'path':entry['source']})
+    else:
+        manifest=load_json(args.manifest)
+        record = materialize_corpus(manifest, args.source_root)
     args.out_dir.mkdir(parents=True)
     for resource in record['resources']:
         destination = args.out_dir / 'sources' / resource['path']

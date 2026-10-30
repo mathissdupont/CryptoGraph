@@ -108,6 +108,7 @@ jobs:
 
   python-research:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - name: Build Python and JEP runtime
@@ -124,6 +125,12 @@ jobs:
         run: |
           docker run --rm --network none --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research,target=/results" --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research/project-sources,target=/sources,readonly" --entrypoint python cryptograph-python-research scripts/run-project-key-origin.py --source-root /sources --backend ast-lite --out-dir /results/project-ast
           docker run --rm --network none -e CRYPTOGRAPH_DFG_DEPTH=12 --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research,target=/results" --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research/project-sources,target=/sources,readonly" --entrypoint python cryptograph-python-research scripts/run-project-key-origin.py --source-root /sources --backend fraunhofer-strict --dfg-probe --out-dir /results/project-cpg
+      - name: Acquire expanded development population only
+        run: docker run --rm --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research,target=/results" --entrypoint python cryptograph-python-research scripts/acquire-key-origin-corpus.py --manifest research/python-key-origin/expanded-2026-10-30/development-corpus.json --fetch --root /results/expanded-sources
+      - name: Observe expanded development projects without touching reserved origins
+        run: |
+          docker run --rm --network none --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research,target=/results" --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research/expanded-sources,target=/sources,readonly" --entrypoint python cryptograph-python-research scripts/run-project-key-origin.py --manifest research/python-key-origin/expanded-2026-10-30/development-corpus.json --annotations research/python-key-origin/expanded-2026-10-30/development-review-template.json --source-root /sources --backend ast-lite --graph-scope candidate-files --out-dir /results/expanded-ast
+          docker run --rm --network none -e CRYPTOGRAPH_DFG_DEPTH=12 --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research,target=/results" --mount "type=bind,source=$RUNNER_TEMP/cryptograph-research/expanded-sources,target=/sources,readonly" --entrypoint python cryptograph-python-research scripts/run-project-key-origin.py --manifest research/python-key-origin/expanded-2026-10-30/development-corpus.json --annotations research/python-key-origin/expanded-2026-10-30/development-review-template.json --source-root /sources --backend fraunhofer-strict --graph-scope candidate-files --dfg-probe --out-dir /results/expanded-cpg
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -132,3 +139,5 @@ jobs:
             ${{ runner.temp }}/cryptograph-research/matrix
             ${{ runner.temp }}/cryptograph-research/project-ast
             ${{ runner.temp }}/cryptograph-research/project-cpg
+            ${{ runner.temp }}/cryptograph-research/expanded-ast
+            ${{ runner.temp }}/cryptograph-research/expanded-cpg

@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from cryptograph.research_eval import OriginReference, ReviewPending
+from cryptograph.research_eval import OriginReference, ReviewPending, independent_review_ready, reviewed_candidate_excluded
 
 
 def candidate_fingerprint(packet):
@@ -26,10 +26,10 @@ def check_freeze(freeze, packet, root: Path, require_review=True):
         pending=[]
         for entry in packet['cases']:
             review=entry.get('independent_review',{})
-            if (review.get('status')!='approved' or not review.get('reviewer')
-                or review.get('candidate_verified') is not True or review.get('reviewer_role')!='independent'):
+            if (not independent_review_ready(entry) or review.get('reviewer_role') != 'independent'
+                or (not reviewed_candidate_excluded(entry) and review.get('candidate_verified') is not True)):
                 pending.append(entry['case_id'])
-            else:
+            elif not reviewed_candidate_excluded(entry):
                 OriginReference.model_validate(review.get('reviewed_reference'))
         if pending:
             raise ReviewPending('Reserved evaluation has no completed independent source/candidate review: '+', '.join(pending))

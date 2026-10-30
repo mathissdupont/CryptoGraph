@@ -13,12 +13,15 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--annotations',type=Path,default=ROOT/'research/python-key-origin/reserved-review-template.json')
+    parser.add_argument('--development-manifest',type=Path,default=ROOT/'research/python-key-origin/project-corpus.json')
+    parser.add_argument('--reserved-manifest',type=Path,default=ROOT/'research/python-key-origin/reserved-corpus.json')
     args = parser.parse_args()
     if args.output.exists():
         parser.error('Use a new freeze path; preserve previous snapshots.')
-    packet = load_json(ROOT/'research/python-key-origin/reserved-review-template.json')
-    development = load_json(ROOT/'research/python-key-origin/project-corpus.json')
-    reserved = load_json(ROOT/'research/python-key-origin/reserved-corpus.json')
+    packet = load_json(args.annotations)
+    development = load_json(args.development_manifest)
+    reserved = load_json(args.reserved_manifest)
     if {project['repository'] for project in development['projects']} & {project['repository'] for project in reserved['projects']}:
         parser.error('Development and reserved projects overlap.')
     inputs = [*ROOT.joinpath('src/cryptograph').glob('*.py'),
@@ -32,6 +35,8 @@ def main():
               ROOT/'research/python-key-origin/claim.schema.json',
               ROOT/'research/python-key-origin/project-corpus.json',
               ROOT/'research/python-key-origin/reserved-corpus.json']
+    inputs.extend([args.development_manifest.resolve(),args.reserved_manifest.resolve(),
+                   ROOT/'research/python-key-origin/repository-selection-2026-10-30.json'])
     record = {
         'status': 'methods_and_reserved_candidate_snapshot_only',
         'generated_at': datetime.now(UTC).isoformat(),
@@ -39,6 +44,8 @@ def main():
         'reserved_origin_analysis_executed': False,
         'independent_review': 'pending',
         'reserved_candidate_count': len(packet['cases']),
+        'annotation_file': args.annotations.resolve().relative_to(ROOT).as_posix(),
+        'reserved_manifest_file': args.reserved_manifest.resolve().relative_to(ROOT).as_posix(),
         'candidate_fingerprint': candidate_fingerprint(packet),
         'method_fingerprint_encoding': 'SHA-256 of file bytes with CRLF normalized to LF; resource hashes remain raw bytes.',
         'method_inputs_sha256': {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest()

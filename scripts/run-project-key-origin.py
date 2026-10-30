@@ -20,6 +20,8 @@ from cryptograph.research_baselines import direct_expression_claim
 from cryptograph.research_corpus import materialize_corpus
 from cryptograph.utils import load_json, write_json
 from cryptograph.dfg_probe import probe_key_paths
+from cryptograph.research_eval import ReviewPending
+from cryptograph.research_freeze import check_freeze
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -30,13 +32,35 @@ def main():
     parser.add_argument('--backend', choices=['ast-lite', 'fraunhofer-strict'], required=True)
     parser.add_argument('--out-dir', type=Path, required=True)
     parser.add_argument('--dfg-probe', action='store_true')
+    parser.add_argument('--manifest', type=Path, default=ROOT/'research/python-key-origin/project-corpus.json')
+    parser.add_argument('--annotations', type=Path, default=ROOT/'research/python-key-origin/project-review-template.json')
+    parser.add_argument('--graph-scope', choices=['project','candidate-files'], default='project')
+    parser.add_argument('--phase', choices=['development','reviewed-evaluation'], default='development')
+    parser.add_argument('--freeze', type=Path, help='Required for explicit reviewed evaluation; source/candidate/method review gates run before acquisition.')
     args = parser.parse_args()
     out = args.out_dir.resolve()
     if out.exists():
         parser.error('Use a new output directory.')
-    definition = ROOT / 'research/python-key-origin/project-corpus.json'
-    packet_path = ROOT / 'research/python-key-origin/project-review-template.json'
+    definition = args.manifest.resolve()
+    packet_path = args.annotations.resolve()
     manifest, packet = load_json(definition), load_json(packet_path)
+    if args.phase == 'development':
+        if any(entry['split'] != 'development' for entry in packet['cases']) or any(project.get('split', 'development') != 'development' for project in manifest['projects']):
+            parser.error('This development runner refuses reserved/evaluation projects and annotations.')
+    else:
+        if not args.freeze:
+            parser.error('Reviewed evaluation requires an explicit frozen method/candidate snapshot.')
+        try:
+            frozen=load_json(args.freeze)
+            check_freeze(frozen,packet,ROOT,require_review=True)
+            if definition != (ROOT/frozen['reserved_manifest_file']).resolve():
+                raise ValueError('Evaluation manifest differs from the frozen reserved population')
+            if any(project['split'] != 'evaluation_reserved' for project in manifest['projects']):
+                raise ValueError('Reviewed evaluation may not mix development projects')
+        except ReviewPending as exc:
+            parser.exit(2,str(exc)+'\n')
+        except (ValueError,OSError,KeyError) as exc:
+            parser.exit(3,f'Invalid reviewed-evaluation inputs: {exc}\n')
     materialize_corpus(manifest, args.source_root)  # offline verification, no implicit fetching
     out.mkdir(parents=True)
     inputs = [definition, packet_path, Path(__file__).resolve(), *ROOT.joinpath('src/cryptograph').glob('*.py'),
@@ -47,7 +71,8 @@ def main():
     exporter = Path(os.environ.get('CRYPTOGRAPH_FRAUNHOFER_EXPORTER', ''))
     record = {'status': 'started', 'scope': 'Convenience development sample; candidate matching is not reviewed detection recall or origin accuracy.',
               'generated_at': datetime.now(UTC).isoformat(),
-              'python': sys.version, 'platform': platform.platform(), 'requested_backend': args.backend,
+              'phase': args.phase,
+              'python': sys.version, 'platform': platform.platform(), 'requested_backend': args.backend, 'graph_scope': args.graph_scope,
               'dependencies': {name: version(name) for name in ('cryptograph','networkx','pydantic')},
               'exporter_sha256': hashlib.sha256(exporter.read_bytes()).hexdigest() if exporter.is_file() else None,
               'inputs_sha256': hashes, 'projects': {}}
@@ -75,8 +100,40 @@ def main():
                 destination.parent.mkdir(parents=True,exist_ok=True)
                 destination.write_bytes(b''.join(raw.splitlines(keepends=True)[:end]))
         entries = [entry for entry in packet['cases'] if entry['project'] == ident]
+        if not entries:
+            record['projects'][ident] = {'status': 'no_candidates', 'eligible_candidates': 0, 'origin_analysis_executed': False}
+            write_json(out/'run.json',record)
+            print(f'{ident}: no primary candidates; retained without origin analysis',flush=True)
+            continue
         try:
-            graph = load_graph(args.source_root / ident, args.backend)
+            if args.graph_scope == 'project':
+                graph = load_graph(args.source_root / ident, args.backend)
+            else:
+                from cryptograph.models import NormalizedGraph
+                fragments = []
+                paths_ = {(args.source_root/entry['source']).resolve() for entry in entries}
+                units = {(args.source_root/ident).resolve() if path.name=='__init__.py' else path for path in paths_}
+                units = {path for path in units if not any(parent!=path and parent.is_dir() and path.is_relative_to(parent) for parent in units)}
+                for unit in sorted(units):
+                    fragment = load_graph(unit,args.backend)
+                    if not fragment.nodes:
+                        raise CpgLoadError(f'Empty graph for candidate-bearing translation unit: {unit}')
+                    fragment_root = unit if unit.is_dir() else unit.parent
+                    for node in fragment.nodes:
+                        if node.file and not Path(node.file).is_absolute():
+                            node.file = (fragment_root/node.file).as_posix()
+                    fragments.append(fragment)
+                if len({fragment.backend for fragment in fragments}) != 1:
+                    raise ValueError('Mixed backend fragments cannot form one condition')
+                graph = NormalizedGraph(backend=fragments[0].backend,root=(args.source_root/ident).resolve().as_posix(),
+                    nodes=[node for fragment in fragments for node in fragment.nodes],
+                    edges=[edge for fragment in fragments for edge in fragment.edges],
+                    export_metadata={'graph_scope':'candidate-files','cross_file_edges':False,
+                                     'translation_units':[unit.relative_to(args.source_root.resolve()).as_posix() for unit in sorted(units)],
+                                     'dfg_truncated':any(fragment.export_metadata.get('dfg_truncated',False) for fragment in fragments),
+                                     'fragment_metadata':[fragment.export_metadata for fragment in fragments]})
+            if not graph.nodes:
+                raise CpgLoadError('Empty graph for a project with declared candidate sites')
             write_graph_json(graph, project_out / 'graph.json')
             graph_index[ident] = f'../../{ident}/graph.json'
             paths = {entry['source']: args.source_root / entry['source'] for entry in entries}
@@ -122,7 +179,7 @@ def main():
     for condition, cases in condition_outputs.items():
         folder=out/'conditions'/condition
         write_json(folder/'observations.json', {'analysis_model': packet['analysis_model'], 'policy': 'direct' if condition=='direct_expression' else 'evidence',
-                                               'annotation_status': 'pending_candidate_and_origin_review', 'cases': cases})
+                                               'annotation_status': 'review_recorded_not_verified_by_software' if args.phase=='reviewed-evaluation' else 'pending_candidate_and_origin_review', 'cases': cases})
         if condition=='graph_context':
             write_json(folder/'graph-index.json', {'graphs': graph_index})
     write_json(out / 'run.json', record)

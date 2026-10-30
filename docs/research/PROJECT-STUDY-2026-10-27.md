@@ -2,6 +2,10 @@
 
 Final development reproduction: **30 October 2026**.
 
+This is the historical four-project checkpoint. The subsequent
+[expanded population](../../research/python-key-origin/expanded-2026-10-30/README.md)
+retains separate development/reserved source inventories and diagnostics v0.4.
+
 This checkpoint extends the [24-case development run](EXPANDED-2026-10-27.md).
 It is a reproducible feasibility study, with unreviewed candidate/reference
 records. It does not establish origin accuracy, generalization or a novel method.

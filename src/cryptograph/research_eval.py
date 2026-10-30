@@ -15,6 +15,27 @@ class ReviewPending(ValueError):
     pass
 
 
+def reviewed_candidate_excluded(entry):
+    """Keep rejected nominal candidates in the inventory, outside origin metrics."""
+    return bool(entry.get('candidate_status')) and entry.get('independent_review', {}).get('candidate_decision') == 'ineligible'
+
+
+def independent_review_ready(entry):
+    review = entry.get('independent_review', {})
+    if (review.get('status') != 'approved' or not review.get('reviewer')
+        or review.get('reviewer_role') in {'author','project_author','assistant','model'}):
+        return False
+    if entry.get('candidate_status'):
+        if review.get('reviewer_role') != 'independent':
+            return False
+        decision = review.get('candidate_decision', 'eligible' if review.get('candidate_verified') is True else 'pending')
+        if decision == 'ineligible':
+            return bool(str(review.get('candidate_rationale') or '').strip())
+        if decision != 'eligible' or review.get('candidate_verified') is not True:
+            return False
+    return bool(review.get('reviewed_reference'))
+
+
 class OriginReference(BaseModel):
     model_config = ConfigDict(extra="forbid")
     status: Literal["resolved", "partial", "abstained"]
@@ -44,6 +65,12 @@ def score_reviewed(annotations: dict, observations: dict, source_root: Path, gra
     even after review; they do not become held-out research results.
     """
     return _score(annotations, observations, source_root, graph)
+
+
+def always_abstain_reference(annotations):
+    """A zero-coverage reference, not emitted evidence or a source analyzer."""
+    return {'analysis_model': MODEL, 'policy': 'always_abstain',
+            'cases': [{'case_id': entry['case_id'], 'evidence_policy': []} for entry in annotations['cases']]}
 
 
 def score_provisional(annotations: dict, proposals: dict, observations: dict,
@@ -94,7 +121,7 @@ def score_provisional(annotations: dict, proposals: dict, observations: dict,
 def _score(annotations, observations, source_root, graph, provisional_references=None):
     if annotations.get("analysis_model") != MODEL or observations.get("analysis_model") != MODEL:
         raise ValueError("Analysis model mismatch")
-    if observations.get("policy") not in {"both", "evidence", "direct"}:
+    if observations.get("policy") not in {"both", "evidence", "direct", "always_abstain"}:
         raise ValueError("Evidence-policy observations are required")
     entries = annotations["cases"]
     if not entries:
@@ -114,13 +141,7 @@ def _score(annotations, observations, source_root, graph, provisional_references
         sites.add(site)
     if any(len(splits) != 1 for splits in family_splits.values()):
         raise ValueError("Scenario family leakage across splits")
-    pending = [entry["case_id"] for entry in entries if
-        entry.get("independent_review", {}).get("status") != "approved"
-        or not entry.get("independent_review", {}).get("reviewer")
-        or not entry.get("independent_review", {}).get("reviewed_reference")
-        or entry.get('independent_review', {}).get('reviewer_role') in {'author','project_author','assistant','model'}
-        or (entry.get('candidate_status') and (entry.get('independent_review', {}).get('candidate_verified') is not True
-                                              or entry.get('independent_review', {}).get('reviewer_role') != 'independent'))]
+    pending = [entry['case_id'] for entry in entries if not independent_review_ready(entry)]
     if pending and provisional_references is None:
         raise ReviewPending("Independent review is pending for: " + ", ".join(pending))
     observed = {case["case_id"]: case for case in observations["cases"]}
@@ -131,9 +152,21 @@ def _score(annotations, observations, source_root, graph, provisional_references
             raise ValueError("Annotation source is outside the corpus")
         if hashlib.sha256(path.read_bytes()).hexdigest() != entry["source_sha256"]:
             raise ValueError(f"Reference source changed: {entry['case_id']}")
+        if provisional_references is None and reviewed_candidate_excluded(entry):
+            rows.append({'case_id': entry['case_id'], 'split': entry['split'],
+                         'scenario_family': entry['scenario_family'], 'outcome': 'excluded_ineligible_candidate',
+                         'semantic_error': None, 'structural_errors': [],
+                         'candidate_rationale': entry['independent_review']['candidate_rationale']})
+            continue
         payload = (entry["independent_review"]["reviewed_reference"] if provisional_references is None
                    else provisional_references[entry["case_id"]])
         reference = OriginReference.model_validate(payload)
+        if observations.get('policy') == 'always_abstain':
+            rows.append({'case_id': entry['case_id'], 'split': entry['split'],
+                         'scenario_family': entry['scenario_family'], 'outcome': 'abstained',
+                         'semantic_error': None, 'structural_errors': [],
+                         'evidence_evaluation': 'not_applicable_reference_emits_no_claims'})
+            continue
         candidates = []
         for item in observed[entry["case_id"]].get("evidence_policy", []):
             payload = item.get("claim", {})
@@ -184,7 +217,8 @@ def _score(annotations, observations, source_root, graph, provisional_references
     # an apparent held-out score. No uncertainty interval is implied here.
     groups = {}
     for split in sorted({row["split"] for row in rows}):
-        selected = [row for row in rows if row["split"] == split]
+        candidates = [row for row in rows if row['split'] == split]
+        selected = [row for row in candidates if row['outcome'] != 'excluded_ineligible_candidate']
         answered = [row for row in selected if row["outcome"] == "resolved"]
         judgeable_answered = [row for row in answered if row['semantic_error'] is not None]
         errors = sum(bool(row["semantic_error"]) for row in judgeable_answered)
@@ -192,6 +226,8 @@ def _score(annotations, observations, source_root, graph, provisional_references
         partial_judgeable = [row for row in selected if row.get("partial_assertion_error") is not None]
         partial_errors = sum(bool(row["partial_assertion_error"]) for row in partial_judgeable)
         groups[split] = {
+            'candidate_sites': len(candidates),
+            'excluded_ineligible_candidates': len(candidates) - len(selected),
             "eligible_sites": len(selected), "resolved": len(answered),
             "partial": sum(row["outcome"] == "partial" for row in selected),
             "abstained": sum(row["outcome"] == "abstained" for row in selected),
@@ -210,8 +246,9 @@ def _score(annotations, observations, source_root, graph, provisional_references
             "partial_assertion_error_rate": partial_errors / len(partial_judgeable) if partial_judgeable else None,
         }
     return {
-        "evaluation_contract": "key-origin-diagnostics-v0.3",
+        "evaluation_contract": "key-origin-diagnostics-v0.4",
         "analysis_model": MODEL, "status": "review_recorded_diagnostics",
+        'policy': observations['policy'],
         "review_independence": "declared_by_annotation_record_not_verified_by_software",
         "scope": "No held-out, generalization or novelty claim follows from these diagnostics.",
         "by_split": groups, "cases": rows,

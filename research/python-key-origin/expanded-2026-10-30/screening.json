@@ -1,0 +1,247 @@
+{
+  "status": "completed",
+  "catalog_sha256": "6794754f552fd46114063bf89c088d5586b5ce257af697d4e281e28c5cb3bb24",
+  "selector_sha256": "e6a403b02f6fc4bb5c7127f9ee5ae392f4a20c038c0a3f51eb0e9e63d83b8fe5",
+  "scope": "Predeclared convenience projects/source roots; nominal candidate indexing only, not origin evaluation or exhaustive detection recall.",
+  "projects": {
+    "paramiko": {
+      "status": "indexed",
+      "source_files": 42,
+      "license_files": 1,
+      "candidate_sites": 1,
+      "indirect_references": [
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 129,
+          "column": 22,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "paramiko/paramiko/pkey.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 135,
+          "column": 22,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "paramiko/paramiko/pkey.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 231,
+          "column": 21,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "paramiko/paramiko/transport.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 237,
+          "column": 21,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "paramiko/paramiko/transport.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 243,
+          "column": 21,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "paramiko/paramiko/transport.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 249,
+          "column": 21,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "paramiko/paramiko/transport.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 255,
+          "column": 21,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "paramiko/paramiko/transport.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 261,
+          "column": 21,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "paramiko/paramiko/transport.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.aead.AESGCM",
+          "line": 273,
+          "column": 21,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "paramiko/paramiko/transport.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.aead.AESGCM",
+          "line": 280,
+          "column": 21,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "paramiko/paramiko/transport.py"
+        }
+      ],
+      "ambiguous_import_calls": [],
+      "parse_failures": [],
+      "exclusions": {},
+      "origin_analysis_executed": false,
+      "target_execution": false
+    },
+    "pycryptodome": {
+      "status": "indexed",
+      "source_files": 116,
+      "license_files": 2,
+      "candidate_sites": 6,
+      "indirect_references": [],
+      "ambiguous_import_calls": [],
+      "parse_failures": [],
+      "exclusions": {
+        "test_documentation_or_vendor_python": 111
+      },
+      "origin_analysis_executed": false,
+      "target_execution": false
+    },
+    "cryptography": {
+      "status": "indexed",
+      "source_files": 78,
+      "license_files": 3,
+      "candidate_sites": 0,
+      "indirect_references": [
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 40,
+          "column": 21,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "cryptography/src/cryptography/hazmat/backends/openssl/backend.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 90,
+          "column": 14,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "cryptography/src/cryptography/hazmat/primitives/serialization/ssh.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 102,
+          "column": 12,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "cryptography/src/cryptography/hazmat/primitives/serialization/ssh.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 111,
+          "column": 12,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "cryptography/src/cryptography/hazmat/primitives/serialization/ssh.py"
+        },
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 120,
+          "column": 12,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "cryptography/src/cryptography/hazmat/primitives/serialization/ssh.py"
+        }
+      ],
+      "ambiguous_import_calls": [],
+      "parse_failures": [],
+      "exclusions": {
+        "nonregular_entry": 1
+      },
+      "origin_analysis_executed": false,
+      "target_execution": false
+    },
+    "barbican": {
+      "status": "indexed",
+      "source_files": 136,
+      "license_files": 1,
+      "candidate_sites": 0,
+      "indirect_references": [],
+      "ambiguous_import_calls": [],
+      "parse_failures": [],
+      "exclusions": {
+        "test_documentation_or_vendor_python": 89
+      },
+      "origin_analysis_executed": false,
+      "target_execution": false
+    },
+    "pypdf": {
+      "status": "indexed",
+      "source_files": 59,
+      "license_files": 1,
+      "candidate_sites": 11,
+      "indirect_references": [],
+      "ambiguous_import_calls": [],
+      "parse_failures": [],
+      "exclusions": {
+        "nonregular_entry": 1
+      },
+      "origin_analysis_executed": false,
+      "target_execution": false
+    },
+    "pyload": {
+      "status": "indexed",
+      "source_files": 568,
+      "license_files": 2,
+      "candidate_sites": 15,
+      "indirect_references": [
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 148,
+          "column": 37,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "pyload/src/pyload/webui/app/blueprints/cnl_blueprint.py"
+        }
+      ],
+      "ambiguous_import_calls": [],
+      "parse_failures": [],
+      "exclusions": {},
+      "origin_analysis_executed": false,
+      "target_execution": false
+    },
+    "oscrypto": {
+      "status": "indexed",
+      "source_files": 73,
+      "license_files": 1,
+      "candidate_sites": 0,
+      "indirect_references": [],
+      "ambiguous_import_calls": [],
+      "parse_failures": [],
+      "exclusions": {},
+      "origin_analysis_executed": false,
+      "target_execution": false
+    },
+    "jwcrypto": {
+      "status": "indexed",
+      "source_files": 11,
+      "license_files": 1,
+      "candidate_sites": 6,
+      "indirect_references": [
+        {
+          "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+          "line": 1050,
+          "column": 25,
+          "status": "noncallee_api_reference_not_a_primary_candidate",
+          "source": "jwcrypto/jwcrypto/jwa.py"
+        }
+      ],
+      "ambiguous_import_calls": [],
+      "parse_failures": [],
+      "exclusions": {},
+      "origin_analysis_executed": false,
+      "target_execution": false
+    }
+  },
+  "excluded_projects": [
+    {
+      "repository": "https://github.com/trinodb/trino",
+      "revision": "7b9b182c722587d200f191480849bbef8b2bd151",
+      "reason": "User-suggested large repository, predominantly Java. Outside this Python key-origin study; no Python/Java origin scores are pooled.",
+      "evidence": "https://github.com/trinodb/trino/blob/7b9b182c722587d200f191480849bbef8b2bd151/README.md"
+    },
+    {
+      "repository": "https://github.com/python-jose/python-jose",
+      "reason": "Public repository/HEAD lookup returned HTTP 404 during selection; not silently replaced in the sample."
+    }
+  ]
+}

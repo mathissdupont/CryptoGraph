@@ -1,5 +1,9 @@
 # Python key-origin feasibility pilot
 
+The current [expanded project population](expanded-2026-10-30/README.md) contains
+19 development and 33 reserved nominal candidates, with pending human review.
+The historical observations below remain development checkpoints.
+
 These 27 small programs probe what CryptoGraph says about the origin of an
 AES key across PyCryptodome and pyca/cryptography. They were authored during
 research scoping and development on 27 October 2026. They are

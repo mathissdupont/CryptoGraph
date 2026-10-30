@@ -204,3 +204,19 @@ The final development reproduction was completed on 30 October 2026. Its
 within this development scope. The committed method/candidate snapshot is not
 a preregistration or a completed held-out evaluation. Human review fields remain
 pending; running a regression suite does not fill them.
+
+The next [expanded source population](../research/python-key-origin/expanded-2026-10-30/README.md)
+adds eight predeclared repositories with 1,083 non-test Python files. Combined
+development and reserved inventories contain 19 and 33 nominal call sites,
+respectively, across seven projects per split. Whole source roots and historical
+selected-file slices remain distinguished. Reserved origins have not been run.
+Diagnostics v0.4 retain independently rejected candidates outside the origin
+denominator and add an explicitly gated always-abstain reference.
+
+For this small convenience sample, report per-project paired outcomes and
+coverage/error separately; do not claim population representativeness or
+inferential significance. The count of 33 nominal reserved candidates is an
+acquisition observation, not a power calculation or 33 validated labels. Review
+eligibility and agreement before deciding whether to expand the reserved sample.
+If eligible coverage remains negligible on development data, the method needs
+further development or a narrower research question before a held-out run.

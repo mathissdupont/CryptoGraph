@@ -22,6 +22,9 @@ Application intent and LLM analysis are later directions. See the
 [literature screening](docs/research/LITERATURE-2026-10-27.md), and
 [27-case development experiment](research/python-key-origin/README.md) and
 [pinned real-project feasibility results](docs/research/PROJECT-STUDY-2026-10-27.md).
+The [expanded population](research/python-key-origin/expanded-2026-10-30/README.md)
+retains 19 development and 33 reserved nominal candidates with pending source
+review. These are not accuracy results; real-source origin coverage remains limited.
 
 ## Try it locally
 
