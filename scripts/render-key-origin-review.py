@@ -46,7 +46,14 @@ document.getElementById('restore').onchange=async event=>{
  if(data.analysis_model!==packet.analysis_model||data.review_form_role!==role||data.cases.length!==packet.cases.length||new Set(data.cases.map(x=>x.case_id)).size!==packet.cases.length)throw Error('İnceleme rolü veya aday kümesi uyuşmuyor');
  const restored=boxes.map(box=>{const original=packet.cases.find(x=>x.case_id===box.dataset.case),entry=data.cases.find(x=>x.case_id===box.dataset.case);
  if(!entry||entry.source!==original.source||entry.source_sha256!==original.source_sha256||entry.target_api!==original.target_api||entry.split!==original.split||['file','line','column','end_line','end_column'].some(key=>entry.target[key]!==original.target[key]))throw Error('Kaynak/sürüm/API uyuşmuyor');
- const review=entry[role==='project_author'?'author_review':'independent_review'];if(!review||review.reviewer_role!==role)throw Error('Kayıt rolü uyuşmuyor');return {box,review};});
+ const review=entry[role==='project_author'?'author_review':'independent_review'];if(!review||review.reviewer_role!==role)throw Error('Kayıt rolü uyuşmuyor');
+ if(!['pending','approved'].includes(review.status)||!['pending','uncertain','eligible','ineligible'].includes(review.candidate_decision)||[review.reviewer,review.candidate_rationale,review.notes].some(x=>x!=null&&typeof x!=='string'))throw Error('Taslak kayıt biçimi geçersiz');
+ const ref=review.reviewed_reference;
+ if(ref!=null){if(typeof ref!=='object'||!Array.isArray(ref.origins)||ref.origins.some(x=>!['literal','csprng_api','external_configuration'].includes(x))||new Set(ref.origins).size!==ref.origins.length||typeof ref.origin_set_complete!=='boolean'||!['literal','local_assignment','parameter','return_value','object_field','expression'].includes(ref.immediate_boundary))throw Error('Taslak etiket sözleşmesi geçersiz');
+ const expected=ref.origins.length?(ref.origin_set_complete?'resolved':'partial'):'abstained',modality=ref.origins.length?(ref.origin_set_complete&&ref.origins.length===1?'must':'may'):'unknown';
+ if(ref.status!==expected||ref.modality!==modality||(!ref.origins.length&&ref.origin_set_complete))throw Error('Taslak etiket alanları tutarsız');}
+ if(review.status==='approved'&&(!review.reviewer?.trim()||!(review.candidate_rationale||review.notes)?.trim()||!['eligible','ineligible'].includes(review.candidate_decision)||(review.candidate_decision==='eligible'&&(!ref||review.candidate_verified!==true))||(review.candidate_decision==='ineligible'&&(ref||review.candidate_verified===true))))throw Error('Tamamlanmış inceleme kaydı eksik');
+ return {box,review};});
  if(new Set(restored.map(x=>x.review.reviewer).filter(Boolean)).size>1)throw Error('Bu form tek inceleyici içindir; farklı kişilerin kayıtlarını birleştirmeyin');
  restored.forEach(({box,review})=>{
  document.getElementById('reviewer').value=review.reviewer||'';box.querySelector('[name="decision"]').value=review.candidate_decision||'pending';box.querySelector('[name="rationale"]').value=review.candidate_rationale||review.notes||'';

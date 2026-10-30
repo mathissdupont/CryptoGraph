@@ -52,7 +52,7 @@ vm.runInNewContext(SCRIPT,context);elements.save.onclick();exported.text().then(
         assert review[field]['reviewed_reference'] is None
 
 
-@pytest.mark.parametrize('mutation',['none','reordered_keys','api_mismatch','late_source_mismatch'])
+@pytest.mark.parametrize('mutation',['none','reordered_keys','api_mismatch','late_source_mismatch','malformed_late_reference','invalid_late_note'])
 def test_restoring_a_draft_checks_all_identities_before_changing_the_form(tmp_path,mutation):
     raw=b'from Crypto.Cipher import AES\nvalue=AES.new(b"key",1)\n'
     source=tmp_path/'sources/example.py';source.parent.mkdir();source.write_bytes(raw)
@@ -71,6 +71,8 @@ def test_restoring_a_draft_checks_all_identities_before_changing_the_form(tmp_pa
     if mutation=='reordered_keys':draft['cases'][1]['target']=dict(reversed(list(entry['target'].items())))
     elif mutation=='api_mismatch':draft['cases'][1]['target_api']='fake.AES'
     elif mutation=='late_source_mismatch':draft['cases'][1]['source_sha256']='0'*64
+    elif mutation=='malformed_late_reference':draft['cases'][1]['author_review']['reviewed_reference']={'origins':42}
+    elif mutation=='invalid_late_note':draft['cases'][1]['author_review']['candidate_rationale']={'invalid':'not text'}
     harness='''const vm=require('node:vm');const controls=[];
 const boxes=['first','second'].map(id=>{const fields={decision:{value:'pending'},boundary:{value:''},complete:{value:''},rationale:{value:'existing unsaved text'},confirmed:{checked:false}};controls.push(fields);return {dataset:{case:id},querySelector(s){return fields[s.match(/name="(.*?)"/)[1]]},querySelectorAll(){return []}}});
 const elements={packet:{textContent:PACKET},reviewer:{value:'existing reviewer'},save:{},restore:{},status:{}};

@@ -28,7 +28,7 @@ reserved origin analyzer or independently reviewed accuracy measurement ran.
   does not establish truth; shared reviewer IDs are flagged. No record is
   automatically adjudicated or approved.
 
-The host suite passed **195 tests**; three Python/JEP-specific checks are run in
+The host suite passed **197 tests**; three Python/JEP-specific checks are run in
 the Docker CI job. Fault controls use synthetic fixtures and are not real human
 review records. The installed research wheel/source distribution and final CI
 results are checked separately from semantic research validity.

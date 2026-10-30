@@ -1,6 +1,6 @@
 {
   "status": "methods_and_reserved_candidate_snapshot_only",
-  "generated_at": "2026-10-30T18:19:22.284452+00:00",
+  "generated_at": "2026-10-30T18:28:49.707049+00:00",
   "scope": "Snapshot after development experiments and nominal reserved indexing; not a preregistration, reviewed test set or completed evaluation.",
   "reserved_origin_analysis_executed": false,
   "independent_review": "pending",
@@ -51,7 +51,7 @@
     "scripts/observe-cbomkit.py": "12a513ffa28e129129ce5f4aa265b53aa91000408ec3bb4f15729ec6ea06cac7",
     "scripts/prepare-expanded-key-origin-study.py": "a5b0dd2e822e283f35c70158344d7744d15e47afbac89b5e8f354abf465895d6",
     "scripts/prepare-key-origin-review.py": "e70e7c8f3390094284d3e53aaef5ac3701e8f1bb9d79a390503ce680d51e362a",
-    "scripts/render-key-origin-review.py": "705205849edb13227a5a7430f1722f1cb66538fa7ebe0df529c0ccbd557fee3b",
+    "scripts/render-key-origin-review.py": "ba8084feb536032693b815df22d1cf71942a7909d9244c4c5a31311448aba975",
     "scripts/report-expanded-key-origin.py": "420fbff43f555a5a1eaced1c0d72a456dbe836bcff7088e12e30d8b85430a1ad",
     "scripts/research-pilot.py": "eba10e7cc4866af0414227ac801fb8d1a797472e3442fdde498feb7bf6fbcea4",
     "scripts/run-key-origin-matrix.py": "82de0f3367b6de41d42b8fad3b279c737e3f639c5ed9d6b5d98f45fd0b94524c",
