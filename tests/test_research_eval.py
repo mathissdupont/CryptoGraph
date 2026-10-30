@@ -72,6 +72,76 @@ def test_missing_claim_is_not_counted_as_abstention(data):
     assert group["missing_or_ambiguous"] == 1 and group["abstained"] == 0
 
 
+def test_failed_scan_is_neither_missing_detection_nor_abstention(data):
+    root,annotations,observations=data
+    observations['cases'][0].update(scan_status='failed',evidence_policy=[])
+    group=score_reviewed(annotations,observations,root)['by_split']['development']
+    assert group['failed_scans']==1 and group['missing_or_ambiguous']==0 and group['abstained']==0
+
+
+def test_project_candidate_review_cannot_be_replaced_by_origin_labels_alone(data):
+    root,annotations,observations=data
+    annotations['cases'][0]['candidate_status']='nominal_import_candidate_needs_review'
+    with pytest.raises(ReviewPending):
+        score_reviewed(annotations,observations,root)
+
+
+def test_explicit_author_review_is_not_declared_independent(data):
+    root,annotations,observations=data
+    annotations['cases'][0]['independent_review']['reviewer_role']='project_author'
+    with pytest.raises(ReviewPending):
+        score_reviewed(annotations,observations,root)
+
+
+def test_project_specific_graph_contexts_are_required_when_an_index_is_supplied(data):
+    root,annotations,observations=data
+    annotations['cases'][0]['project']='example'
+    context=load_graph(root/'example.py','ast-lite')
+    result=score_reviewed(annotations,observations,root,{'example':context})
+    assert result['by_split']['development']['claims_with_structural_errors']==0
+    with pytest.raises(ValueError,match='Missing graph context'):
+        score_reviewed(annotations,observations,root,{})
+
+
+@pytest.mark.parametrize("origin,reference_complete,expected", [
+    ("literal", True, False), ("csprng_api", True, True), ("literal", False, None),
+])
+def test_partial_claims_are_judged_only_against_complete_reference_sets(data, origin, reference_complete, expected):
+    root, annotations, observations = data
+    claim = observations["cases"][0]["evidence_policy"][0]["claim"]
+    claim.update(origins=[origin], status="partial", origin_set_complete=False, modality="may", unresolved_reasons=["fixture_unknown_branch"])
+    if not reference_complete:
+        annotations["cases"][0]["independent_review"]["reviewed_reference"].update(status="partial", origin_set_complete=False, modality="may")
+    result = score_reviewed(annotations, observations, root)
+    assert result["cases"][0]["partial_assertion_error"] is expected
+    group = result["by_split"]["development"]
+    assert group["resolved"] == 0 and group["partial"] == 1
+    assert group["partial_assertions_judgeable"] == int(reference_complete)
+    assert group["partial_assertion_error_rate"] == (float(expected) if expected is not None else None)
+
+
+def test_abstention_is_not_a_judgeable_partial_assertion(data):
+    root, annotations, observations = data
+    claim = observations["cases"][0]["evidence_policy"][0]["claim"]
+    claim.update(origins=[], status="abstained", origin_set_complete=False, modality="unknown", unresolved_reasons=["fixture"])
+    group = score_reviewed(annotations, observations, root)["by_split"]["development"]
+    assert group["partial_assertions_judgeable"] == 0 and group["partial_assertion_error_rate"] is None
+
+
+@pytest.mark.parametrize('reference_status', ['partial', 'abstained'])
+def test_incomplete_reference_cannot_establish_a_resolved_claim_is_false(data, reference_status):
+    root,annotations,observations=data
+    reference=annotations['cases'][0]['independent_review']['reviewed_reference']
+    reference.update(status=reference_status,origins=['literal'] if reference_status=='partial' else [],
+                     origin_set_complete=False,modality='may' if reference_status=='partial' else 'unknown')
+    result=score_reviewed(annotations,observations,root)
+    group=result['by_split']['development']
+    assert group['resolved']==1 and group['resolved_semantics_judgeable']==0
+    assert group['semantic_error_rate_among_resolved'] is None
+    assert result['cases'][0]['semantic_error'] is None
+    assert result['cases'][0]['reference_resolution_mismatch'] is True
+
+
 def test_source_snapshot_mismatch_blocks_scoring(data):
     root, annotations, observations = data
     (root / "example.py").write_text("# changed\n", encoding="utf-8")
@@ -174,7 +244,7 @@ def test_corpus_inventory_proposals_and_sources_match():
     proposals = json.loads((root / "review-proposals.json").read_text())
     manifest = json.loads((root / "cases.json").read_text())
     entries = {entry["case_id"]: entry for entry in packet["cases"]}
-    assert len(entries) == len(packet["cases"]) == len(proposals["cases"]) == len(manifest["cases"]) == 24
+    assert len(entries) == len(packet["cases"]) == len(proposals["cases"]) == len(manifest["cases"]) == 27
     assert set(entries) == {entry["id"] for entry in manifest["cases"]}
     for proposal in proposals["cases"]:
         entry = entries[proposal["case_id"]]

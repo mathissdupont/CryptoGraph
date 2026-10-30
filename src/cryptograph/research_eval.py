@@ -36,7 +36,7 @@ class OriginReference(BaseModel):
         return self
 
 
-def score_reviewed(annotations: dict, observations: dict, source_root: Path, graph: NormalizedGraph | None = None) -> dict:
+def score_reviewed(annotations: dict, observations: dict, source_root: Path, graph: NormalizedGraph | dict[str, NormalizedGraph] | None = None) -> dict:
     """Compute diagnostics only after a declared independent review is recorded.
 
     The gate checks the review record's shape, not the reviewer's identity or
@@ -47,7 +47,7 @@ def score_reviewed(annotations: dict, observations: dict, source_root: Path, gra
 
 
 def score_provisional(annotations: dict, proposals: dict, observations: dict,
-                      source_root: Path, graph: NormalizedGraph | None = None) -> dict:
+                      source_root: Path, graph: NormalizedGraph | dict[str, NormalizedGraph] | None = None) -> dict:
     """Opt-in agreement checks against assistant proposals, on development only.
 
     This does not approve review records. Proposal files have no independent
@@ -78,17 +78,23 @@ def score_provisional(annotations: dict, proposals: dict, observations: dict,
         group["proposed_reference_disagreements_among_resolved"] = group.pop("semantic_errors_among_resolved")
         group["proposed_reference_disagreement_rate_among_resolved"] = group.pop("semantic_error_rate_among_resolved")
         group["proposed_boundary_disagreements"] = group.pop("boundary_errors")
+        group["resolved_assertions_judgeable_against_proposal"] = group.pop("resolved_semantics_judgeable")
+        group["partial_assertions_judgeable_against_proposal"] = group.pop("partial_assertions_judgeable")
+        group["partial_assertion_proposal_disagreements"] = group.pop("partial_assertion_errors")
+        group["partial_assertion_proposal_disagreement_rate"] = group.pop("partial_assertion_error_rate")
     for row in result["cases"]:
         row["proposed_reference_disagreement"] = row.pop("semantic_error")
         if "boundary_error" in row:
             row["proposed_boundary_disagreement"] = row.pop("boundary_error")
+        if "partial_assertion_error" in row:
+            row["partial_assertion_proposal_disagreement"] = row.pop("partial_assertion_error")
     return result
 
 
 def _score(annotations, observations, source_root, graph, provisional_references=None):
     if annotations.get("analysis_model") != MODEL or observations.get("analysis_model") != MODEL:
         raise ValueError("Analysis model mismatch")
-    if observations.get("policy") not in {"both", "evidence"}:
+    if observations.get("policy") not in {"both", "evidence", "direct"}:
         raise ValueError("Evidence-policy observations are required")
     entries = annotations["cases"]
     if not entries:
@@ -111,7 +117,10 @@ def _score(annotations, observations, source_root, graph, provisional_references
     pending = [entry["case_id"] for entry in entries if
         entry.get("independent_review", {}).get("status") != "approved"
         or not entry.get("independent_review", {}).get("reviewer")
-        or not entry.get("independent_review", {}).get("reviewed_reference")]
+        or not entry.get("independent_review", {}).get("reviewed_reference")
+        or entry.get('independent_review', {}).get('reviewer_role') in {'author','project_author','assistant','model'}
+        or (entry.get('candidate_status') and (entry.get('independent_review', {}).get('candidate_verified') is not True
+                                              or entry.get('independent_review', {}).get('reviewer_role') != 'independent'))]
     if pending and provisional_references is None:
         raise ReviewPending("Independent review is pending for: " + ", ".join(pending))
     observed = {case["case_id"]: case for case in observations["cases"]}
@@ -131,7 +140,9 @@ def _score(annotations, observations, source_root, graph, provisional_references
             if payload.get("target") == entry["target"] and payload.get("target_api") == entry["target_api"]:
                 candidates.append(payload)
         row = {"case_id": entry["case_id"], "split": entry["split"], "scenario_family": entry["scenario_family"]}
-        if len(candidates) != 1:
+        if observed[entry['case_id']].get('scan_status') == 'failed':
+            row.update(outcome='scan_failed', semantic_error=None, structural_errors=[])
+        elif len(candidates) != 1:
             row.update(outcome="missing_claim" if not candidates else "ambiguous_claim", semantic_error=None, structural_errors=[])
         else:
             try:
@@ -142,15 +153,29 @@ def _score(annotations, observations, source_root, graph, provisional_references
                 continue
             if claim.source_sha256 != entry["source_sha256"]:
                 raise ValueError(f"Observation/reference source mismatch: {entry['case_id']}")
-            structural_errors = audit_claim_structure(claim, path, graph)
+            context = graph
+            if isinstance(graph, dict):
+                if entry.get('project') not in graph:
+                    raise ValueError('Missing graph context for annotated project')
+                context = graph[entry['project']]
+            structural_errors = audit_claim_structure(claim, path, context)
             semantic_error = None
-            if claim.status == "resolved":
+            partial_error = None
+            partial_comparison = "not_partial"
+            if claim.status == "resolved" and reference.origin_set_complete:
                 semantic_error = (
                     sorted(claim.origins) != sorted(reference.origins)
                     or claim.modality != reference.modality
-                    or not reference.origin_set_complete
                 )
+            if claim.status == "partial":
+                if reference.origin_set_complete:
+                    partial_error = not set(claim.origins) <= set(reference.origins)
+                    partial_comparison = "outside_complete_reference" if partial_error else "within_complete_reference"
+                else:
+                    partial_comparison = "indeterminate_incomplete_reference"
             row.update(outcome=claim.status, semantic_error=semantic_error,
+                       reference_resolution_mismatch=claim.status == 'resolved' and not reference.origin_set_complete,
+                       partial_assertion_error=partial_error, partial_assertion_comparison=partial_comparison,
                        boundary_error=claim.immediate_boundary != reference.immediate_boundary,
                        structural_errors=structural_errors)
         rows.append(row)
@@ -161,21 +186,31 @@ def _score(annotations, observations, source_root, graph, provisional_references
     for split in sorted({row["split"] for row in rows}):
         selected = [row for row in rows if row["split"] == split]
         answered = [row for row in selected if row["outcome"] == "resolved"]
-        errors = sum(bool(row["semantic_error"]) for row in answered)
+        judgeable_answered = [row for row in answered if row['semantic_error'] is not None]
+        errors = sum(bool(row["semantic_error"]) for row in judgeable_answered)
         present = [row for row in selected if row["outcome"] in {"resolved", "partial", "abstained"}]
+        partial_judgeable = [row for row in selected if row.get("partial_assertion_error") is not None]
+        partial_errors = sum(bool(row["partial_assertion_error"]) for row in partial_judgeable)
         groups[split] = {
             "eligible_sites": len(selected), "resolved": len(answered),
             "partial": sum(row["outcome"] == "partial" for row in selected),
             "abstained": sum(row["outcome"] == "abstained" for row in selected),
             "missing_or_ambiguous": sum(row["outcome"] in {"missing_claim", "ambiguous_claim"} for row in selected),
             "invalid_contracts": sum(row["outcome"] == "invalid_claim_contract" for row in selected),
+            "failed_scans": sum(row['outcome'] == 'scan_failed' for row in selected),
             "resolved_coverage": len(answered) / len(selected) if selected else None,
             "semantic_errors_among_resolved": errors,
-            "semantic_error_rate_among_resolved": errors / len(answered) if answered else None,
+            "resolved_semantics_judgeable": len(judgeable_answered),
+            "resolved_with_incomplete_reference": len(answered) - len(judgeable_answered),
+            "semantic_error_rate_among_resolved": errors / len(judgeable_answered) if judgeable_answered else None,
             "claims_with_structural_errors": sum(bool(row["structural_errors"]) for row in present),
             "boundary_errors": sum(bool(row.get("boundary_error")) for row in present),
+            "partial_assertions_judgeable": len(partial_judgeable),
+            "partial_assertion_errors": partial_errors,
+            "partial_assertion_error_rate": partial_errors / len(partial_judgeable) if partial_judgeable else None,
         }
     return {
+        "evaluation_contract": "key-origin-diagnostics-v0.3",
         "analysis_model": MODEL, "status": "review_recorded_diagnostics",
         "review_independence": "declared_by_annotation_record_not_verified_by_software",
         "scope": "No held-out, generalization or novelty claim follows from these diagnostics.",

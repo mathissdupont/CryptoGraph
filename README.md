@@ -20,7 +20,8 @@ claims while retaining useful coverage, and what CPG context adds over AST.
 Application intent and LLM analysis are later directions. See the
 [Python research protocol](docs/RESEARCH.md),
 [literature screening](docs/research/LITERATURE-2026-10-27.md), and
-[24-case development experiment](research/python-key-origin/README.md).
+[27-case development experiment](research/python-key-origin/README.md) and
+[pinned real-project feasibility results](docs/research/PROJECT-STUDY-2026-10-27.md).
 
 ## Try it locally
 
@@ -124,7 +125,7 @@ The first study will hold matching and normalization constant while comparing:
 A bounded development implementation now records both policies under either
 backend; see the [contract and review workflow](research/python-key-origin/CONTRACT.md).
 A common candidate population, full ablations and independent labels remain
-pending. The 24 development cases are not a held-out benchmark. Explicit provisional
+pending. The 27 designed development cases are not a held-out benchmark. Explicit provisional
 agreement checks can run without filling independent-review slots. The repository has
 no published ground-truth corpus, precision/recall results, calibrated intent
 scores, or demonstrated improvement over an API-only baseline.

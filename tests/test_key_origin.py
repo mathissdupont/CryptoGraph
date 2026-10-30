@@ -52,6 +52,13 @@ def test_source_order_bindings_and_alternatives(tmp_path, body, origins, status,
     assert (claims[0].origins, claims[0].status, claims[0].modality) == (origins, status, modality)
 
 
+def test_unsupported_loop_keeps_assignment_boundary_without_resolving_origin(tmp_path):
+    _, claims = inspect(tmp_path, 'def f(flag):\n    key = b"fixed"\n    while flag:\n        key = os.urandom(16)\n    return AES.new(key, AES.MODE_ECB)\n')
+    assert claims[0].immediate_boundary == "local_assignment"
+    assert claims[0].status == "abstained" and claims[0].origins == []
+    assert "unsupported_write" in claims[0].unresolved_reasons
+
+
 def test_import_alias_preserves_api_identity(tmp_path):
     _, claims = inspect(tmp_path, 'from os import urandom as rng\ndef f():\n    return AES.new(rng(16), AES.MODE_ECB)\n')
     assert claims[0].origins == ["csprng_api"]

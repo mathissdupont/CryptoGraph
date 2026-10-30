@@ -1,0 +1,155 @@
+{
+  "schema_version": "0.1",
+  "frozen_on": "2026-10-27",
+  "sampling": "Convenience feasibility sample selected from crypto-related modules, not a representative or held-out evaluation.",
+  "selection": "All nominal supported AES constructor calls in seven selected complete implementation files are retained regardless of analyzer output. Three additional upstream package-context source files are provided consistently to all tools; this is not a complete-project candidate census.",
+  "source_distribution": "Download original complete files and licenses separately; upstream source is not vendored.",
+  "projects": [
+    {
+      "id": "matrix_nio",
+      "repository": "https://github.com/matrix-nio/matrix-nio",
+      "revision": "331c93ed3e9ca86e7444b4dfdf05086654842ace",
+      "split": "development",
+      "license_expression": "ISC AND Apache-2.0",
+      "resources": [
+        {
+          "path": "LICENSE.md",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/matrix-nio/matrix-nio/331c93ed3e9ca86e7444b4dfdf05086654842ace/LICENSE.md",
+          "sha256": "87ada86080b62c06a3cae886c5058972688a61cc080d26acfbc46327dcbbc30a",
+          "bytes": 832
+        },
+        {
+          "path": "apache_license.txt",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/matrix-nio/matrix-nio/331c93ed3e9ca86e7444b4dfdf05086654842ace/apache_license.txt",
+          "sha256": "a8ad31b1c3f40dca5a84119351b8fa8ddc868edd77fad8a8ebf6d8f2d16fa4ae",
+          "bytes": 11324
+        },
+        {
+          "path": "src/nio/crypto/attachments.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/matrix-nio/matrix-nio/331c93ed3e9ca86e7444b4dfdf05086654842ace/src/nio/crypto/attachments.py",
+          "sha256": "bf2a44c39dc1dc036418e70294dc5c5cb7bb9a9ed389b65f359c9ef389af7d0e",
+          "bytes": 4946
+        },
+        {
+          "path": "src/nio/crypto/key_export.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/matrix-nio/matrix-nio/331c93ed3e9ca86e7444b4dfdf05086654842ace/src/nio/crypto/key_export.py",
+          "sha256": "284813134f2c3b5bc8dbb06a1e3713bfbf86f761c4d243df542e6c4122dde630",
+          "bytes": 4507
+        },
+        {
+          "path": "src/nio/crypto/__init__.py",
+          "kind": "source",
+          "role": "upstream_package_context",
+          "url": "https://raw.githubusercontent.com/matrix-nio/matrix-nio/331c93ed3e9ca86e7444b4dfdf05086654842ace/src/nio/crypto/__init__.py",
+          "sha256": "e4b5c55b98f785257a609d09799ef57fae8a9f76d10a2315b492242d8e0d7671",
+          "bytes": 1226
+        }
+      ],
+      "license_notes": "Repository license documents contain ISC and Apache text; selected Python files carry Apache-2.0 headers."
+    },
+    {
+      "id": "pyaescrypt",
+      "repository": "https://github.com/marcobellaccini/pyAesCrypt",
+      "revision": "13a188f8799306ad9034167bf0bc0489319db274",
+      "split": "development",
+      "license_expression": "Apache-2.0",
+      "resources": [
+        {
+          "path": "LICENSE",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/marcobellaccini/pyAesCrypt/13a188f8799306ad9034167bf0bc0489319db274/LICENSE",
+          "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+          "bytes": 11357
+        },
+        {
+          "path": "pyAesCrypt/crypto.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/marcobellaccini/pyAesCrypt/13a188f8799306ad9034167bf0bc0489319db274/pyAesCrypt/crypto.py",
+          "sha256": "a6e0140577c4163e7db480188d55d600563c6ac86a55ed665a6447bf64eaf0c6",
+          "bytes": 14361
+        },
+        {
+          "path": "pyAesCrypt/__init__.py",
+          "kind": "source",
+          "role": "upstream_package_context",
+          "url": "https://raw.githubusercontent.com/marcobellaccini/pyAesCrypt/13a188f8799306ad9034167bf0bc0489319db274/pyAesCrypt/__init__.py",
+          "sha256": "dedad9725886f3b9e389a0a0cce5c5a92407cdcc9245fe1892f3fc9200d41822",
+          "bytes": 75
+        }
+      ]
+    },
+    {
+      "id": "secretstorage",
+      "repository": "https://github.com/mitya57/secretstorage",
+      "revision": "ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca",
+      "split": "development",
+      "license_expression": "BSD-3-Clause",
+      "resources": [
+        {
+          "path": "LICENSE",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/mitya57/secretstorage/ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca/LICENSE",
+          "sha256": "e700357592bb93704cb040ce4a6663a85292716a4041b6a267f598f21658466f",
+          "bytes": 1504
+        },
+        {
+          "path": "secretstorage/util.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/mitya57/secretstorage/ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca/secretstorage/util.py",
+          "sha256": "27fb5961725356fef911216ebca62396d89d36bb7b7db4418703340b4f2a6cb8",
+          "bytes": 7487
+        },
+        {
+          "path": "secretstorage/item.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/mitya57/secretstorage/ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca/secretstorage/item.py",
+          "sha256": "6fb16519c5849830b5cdf10288ce79ac9d707b687af3836c55991652657fcc37",
+          "bytes": 6150
+        },
+        {
+          "path": "secretstorage/dhcrypto.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/mitya57/secretstorage/ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca/secretstorage/dhcrypto.py",
+          "sha256": "55d4dbfabc7025c3a5b16153e1ad2fac5b9d0cc76181ab13483e2a4ebddb1e7f",
+          "bytes": 2274
+        },
+        {
+          "path": "secretstorage/__init__.py",
+          "kind": "source",
+          "role": "upstream_package_context",
+          "url": "https://raw.githubusercontent.com/mitya57/secretstorage/ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca/secretstorage/__init__.py",
+          "sha256": "fd8df8728da2f46fb49637c351913609d2cc61ad4757c8d045ce97b6b7fe7444",
+          "bytes": 3402
+        }
+      ]
+    },
+    {
+      "id": "ansible",
+      "repository": "https://github.com/ansible/ansible",
+      "revision": "5186cff137018276877e2e6c24e669ec46098d2a",
+      "split": "development",
+      "license_expression": "GPL-3.0-or-later",
+      "resources": [
+        {
+          "path": "COPYING",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/ansible/ansible/5186cff137018276877e2e6c24e669ec46098d2a/COPYING",
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "bytes": 35149
+        },
+        {
+          "path": "lib/ansible/parsing/vault/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/ansible/ansible/5186cff137018276877e2e6c24e669ec46098d2a/lib/ansible/parsing/vault/__init__.py",
+          "sha256": "22f1f7597eaa617b250c8717f679734b801b29ef25033f4225620f32797bf849",
+          "bytes": 60193
+        }
+      ]
+    }
+  ],
+  "package_context_note": "Original __init__.py files from the same commits were added after the external scanner indexed only package roots. All methods receive the same expanded source tree. No origin labels or candidate outcomes were used to select them."
+}

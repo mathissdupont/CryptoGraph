@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import os
 import platform
 import subprocess
 import sys
@@ -16,6 +17,8 @@ from cryptograph.cpg_loader import CpgLoadError, load_graph
 from cryptograph.cpg_visualizer import write_graph_json
 from cryptograph.crypto_matcher_v2 import find_crypto_calls
 from cryptograph.key_origin import MODEL, analyze_key_origins, audit_claim_structure
+from cryptograph.research_baselines import direct_expression_claim
+from cryptograph.dfg_probe import probe_key_paths
 from cryptograph.utils import load_json, project_path, write_json
 
 
@@ -35,13 +38,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--backend", choices=["ast-lite", "fraunhofer-strict"], required=True)
     parser.add_argument("--out-dir", type=Path, required=True)
-    parser.add_argument("--policy", choices=["existing", "evidence", "both"], default="both")
+    parser.add_argument("--policy", choices=["existing", "evidence", "both", "direct"], default="both")
     parser.add_argument("--context-evidence", choices=["graph", "none"], default="graph",
                         help="Disable graph witnesses for a source-only ablation of the same evidence policy.")
     parser.add_argument("--check-pilot", action="store_true", help="Require one source-matched, structurally checked evidence claim per declared development site.")
+    parser.add_argument("--dfg-probe", action="store_true", help="Record bounded DFG dependency paths separately from origin inference.")
     args = parser.parse_args()
     if args.check_pilot and args.policy == "existing":
-        parser.error("--check-pilot requires evidence-policy claims; use --policy evidence or both.")
+        parser.error("--check-pilot requires key-origin claims; use --policy evidence, both or direct.")
     out = args.out_dir.resolve()
     if out.exists() and (not out.is_dir() or any(out.iterdir())):
         parser.error(f"Use a new or empty output directory: {out}")
@@ -62,6 +66,8 @@ def main() -> int:
         *ROOT.joinpath("src", "cryptograph").glob("*.py"),
         *[ROOT / "scripts" / name for name in ("research-pilot.py", "score-key-origin.py", "run-key-origin-matrix.py")],
         ROOT / "pyproject.toml",
+        ROOT / 'tools/fraunhofer-exporter/src/main/kotlin/io/cryptograph/exporter/Main.kt',
+        ROOT / 'tools/fraunhofer-exporter/build.gradle.kts',
     ])
     dirty = git_value("status", "--porcelain", "--untracked-files=normal")
     record = {
@@ -80,6 +86,8 @@ def main() -> int:
         "inputs_sha256": {path.relative_to(ROOT).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest() for path in inputs},
         "status": "started",
     }
+    exporter = Path(os.environ.get('CRYPTOGRAPH_FRAUNHOFER_EXPORTER', ''))
+    record['exporter_sha256'] = hashlib.sha256(exporter.read_bytes()).hexdigest() if exporter.is_file() else None
     write_json(out / "run.json", record)
     try:
         graph = load_graph(source, args.backend)
@@ -94,10 +102,14 @@ def main() -> int:
     write_json(out / "cbom.json", cbom)
     write_graph_json(graph, out / "graph.json")
     claims_by_file = {}
-    claim_graph = graph if args.context_evidence == "graph" else None
+    claim_graph = graph if args.context_evidence == "graph" and args.policy != "direct" else None
     if args.policy != "existing":
         for path in sorted(source.glob("*.py")):
-            claims_by_file[path.name] = analyze_key_origins(path, claim_graph)
+            if args.policy == "direct":
+                claims_by_file[path.name] = [claim for entry in sites.values() if entry["target"]["file"] == path.name
+                                             if (claim := direct_expression_claim(path, entry)) is not None]
+            else:
+                claims_by_file[path.name] = analyze_key_origins(path, claim_graph)
         write_json(out / "key-origin-claims.json", {
             "analysis_model": MODEL,
             "claims": [claim.model_dump() for claims in claims_by_file.values() for claim in claims],
@@ -130,6 +142,9 @@ def main() -> int:
         "analysis_model": MODEL, "cases": observations,
         "context_evidence": args.context_evidence,
     })
+    if args.dfg_probe:
+        probes = [probe_key_paths(source / Path(entry['source']).name, entry, graph) for entry in sites.values()]
+        write_json(out / 'dfg-probes.json', {'scope': 'Bounded exported paths, not ultimate key-origin inference.', 'cases': probes})
     checks = []
     if args.check_pilot:
         for observation in observations:
@@ -144,7 +159,7 @@ def main() -> int:
         write_json(out / "run.json", record)
         print("; ".join(checks), file=sys.stderr)
         return 3
-    record.update(status="completed", actual_backend=graph.backend, nodes=len(graph.nodes), edges=len(graph.edges))
+    record.update(status="completed", actual_backend=graph.backend, nodes=len(graph.nodes), edges=len(graph.edges), export_metadata=graph.export_metadata)
     write_json(out / "run.json", record)
     for observation in observations:
         values = [item["key_source"] for item in observation["observed"]]

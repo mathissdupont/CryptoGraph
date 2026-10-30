@@ -1,0 +1,66 @@
+"""Prepare source/contract-only review materials, withholding tool outputs/proposals."""
+import argparse
+import shutil
+from pathlib import Path
+
+from cryptograph.research_corpus import materialize_corpus
+from cryptograph.utils import load_json, write_json
+
+ROOT = Path(__file__).resolve().parents[1]
+INSTRUCTIONS = """# Kaynak kodu inceleme paketi
+
+Bu paket araç sonuçlarını ve önerilen etiketleri içermez. Kaynak dosyalar
+değiştirilmeden, lisansları ve sabit sürüm bilgileriyle verilmiştir. Kaynak kodu
+çalıştırmayın; yalnız okuyun. Her aday çağrının gerçekten belirtilen kriptografik
+API'ye bağlandığını ve doğru anahtar argümanını gösterdiğini önce kontrol edin.
+
+`annotations.json` içindeki her kayıt için kaynak konumunu inceleyin. Anahtarın
+bilinen kaynak kategorilerini, olası alternatifleri, kapsam sınırını ve belirsiz
+kalan noktaları `CONTRACT.md` tanımlarına göre belirleyin. Bir parametre, anahtarın
+nihai kökenini tek başına açıklamaz. Rastgele bir salt'a bağımlılık da anahtarın
+doğrudan rastgele üretilmiş olduğunu kanıtlamaz. Desteklenmeyen türetme veya
+modüller arası ilişki için kesin kaynak uydurmayın; belirsizliği ve nedeni kaydedin.
+
+Kimliğiniz için sabit bir takma ad kullanabilirsiniz. İncelemeyi gerçekten
+tamamladıktan sonra uygun kayıtları doldurun. Reddedilen API adaylarını ve
+anlaşmazlıkları silmeyin; nedenleriyle ayrı kaydedin. Bu ilk kayıtların ardından
+diğer etiketlerle karşılaştırma ve gerekirse uzlaştırma yapılabilir.
+
+Proje yazarı olarak kendi kontrolünüzü yaparsanız bunu yazar incelemesi olarak
+kaydedin; bağımsız ikinci kişi kontrolü diye adlandırmayın. Araç çıktısına bakarak
+etiket oluşturmak bağımsız kaynak incelemesi değildir. İnceleme tamamlanmadan
+`approved` yazmayın. Bu paket herhangi bir kişiye otomatik olarak gönderilmez.
+
+İkinci kişi kontrolünü kaydederken `independent_review` içine `candidate_verified`
+alanını yalnız API kimliği ve anahtar konumu doğrulandıysa `true` olarak ekleyin.
+`reviewer_role: "independent"` yalnız gerçekten bağımsız inceleme için uygundur.
+Kimlik/doğruluk/bağımsızlık iddiaları yazılım tarafından kanıtlanmaz.
+"""
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--manifest', type=Path, required=True)
+    parser.add_argument('--annotations', type=Path, required=True)
+    parser.add_argument('--source-root', type=Path, required=True)
+    parser.add_argument('--out-dir', type=Path, required=True)
+    args = parser.parse_args()
+    if args.out_dir.exists():
+        parser.error('Use a fresh review directory.')
+    manifest, annotations = load_json(args.manifest), load_json(args.annotations)
+    record = materialize_corpus(manifest, args.source_root)
+    args.out_dir.mkdir(parents=True)
+    for resource in record['resources']:
+        destination = args.out_dir / 'sources' / resource['path']
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(args.source_root / resource['path'], destination)
+    write_json(args.out_dir / 'annotations.json', annotations)
+    write_json(args.out_dir / 'provenance.json', manifest)
+    shutil.copyfile(ROOT / 'research/python-key-origin/CONTRACT.md', args.out_dir/'CONTRACT.md')
+    shutil.copyfile(ROOT / 'research/python-key-origin/claim.schema.json', args.out_dir/'claim.schema.json')
+    (args.out_dir/'README.md').write_text(INSTRUCTIONS, encoding='utf-8')
+    print(f'Prepared source-only review materials in {args.out_dir}; no messages were sent.')
+
+
+if __name__ == '__main__':
+    main()

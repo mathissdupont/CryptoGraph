@@ -34,6 +34,7 @@ data class NormalizedGraph(
     val root: String,
     val nodes: List<GraphNode>,
     val edges: List<GraphEdge> = emptyList(),
+    val export_metadata: Map<String, Any?> = emptyMap(),
 )
 
 fun main(args: Array<String>) {
@@ -128,7 +129,41 @@ private fun buildFraunhoferCpgGraph(
     calls.forEach { call -> addCallSubgraph(call, nodes, edges) }
     addCallGraphEdges(calls, functions, nodes, edges)
 
-    return NormalizedGraph("fraunhofer-cpg", root.absolutePathString(), nodes.values.toList(), edges.toList())
+    val dfgDepth = (System.getenv("CRYPTOGRAPH_DFG_DEPTH")?.toIntOrNull() ?: 0).coerceIn(0, 32)
+    val truncated = if (dfgDepth > 0) addBackwardDfgClosure(calls, nodes, edges, dfgDepth) else false
+
+    return NormalizedGraph("fraunhofer-cpg", root.absolutePathString(), nodes.values.toList(), edges.toList(),
+        mapOf("cpg_version" to "9.0.2", "dfg_backward_depth" to dfgDepth,
+            "dfg_node_limit" to 10000, "dfg_truncated" to truncated,
+            "infer_dfg_for_unresolved_calls" to true))
+}
+
+private fun addBackwardDfgClosure(
+    calls: List<CallExpression>, nodes: LinkedHashMap<String, GraphNode>,
+    edges: LinkedHashSet<GraphEdge>, depth: Int,
+): Boolean {
+    val queue = ArrayDeque<Pair<Node, Int>>()
+    calls.flatMap { it.arguments }.forEach { queue.add(it to 0) }
+    val seen = mutableSetOf<String>()
+    var truncated = false
+    while (queue.isNotEmpty()) {
+        val (current, distance) = queue.removeFirst()
+        val currentId = normalizedNodeId(current)
+        if (!seen.add(currentId)) continue
+        if (nodes.size >= 10000 || edges.size >= 50000) { truncated = true; break }
+        nodes.putIfAbsent(currentId, current.toGenericGraphNode("dfg"))
+        if (distance >= depth) {
+            if (current.prevDFG.any { normalizedNodeId(it) !in seen }) truncated = true
+            continue
+        }
+        current.prevDFG.forEach { previous ->
+            val previousId = normalizedNodeId(previous)
+            nodes.putIfAbsent(previousId, previous.toGenericGraphNode("dfg"))
+            edges.add(GraphEdge(previousId, currentId, "DFG"))
+            queue.add(previous to distance + 1)
+        }
+    }
+    return truncated
 }
 
 private fun languageNamesFor(files: List<java.nio.file.Path>): List<String> {
@@ -165,7 +200,9 @@ private fun addCallSubgraph(
     edges: LinkedHashSet<GraphEdge>,
 ) {
     val callNode = call.toCallGraphNode()
-    nodes.putIfAbsent(callNode.id, callNode)
+    // Outer calls can first insert a nested CallExpression as an argument.
+    // Preserve the authoritative call record when that expression is visited.
+    nodes[callNode.id] = callNode
 
     val function = nearestFunction(call)
     if (function != null) {
@@ -274,6 +311,7 @@ private fun CallExpression.toCallGraphNode(): GraphNode {
                 ?: this.callee?.code ?: this.callee?.name?.toString()),
             "cpg_callee" to (this.callee?.code ?: this.callee?.name?.toString()),
             "raw_code" to this.code,
+            "source_region" to sourceRegion(this),
             "invokes" to this.invokes.map { it.name.toString() },
             "prev_dfg" to this.prevDFG.map { it.name.toString() },
             "next_dfg" to this.nextDFG.map { it.name.toString() },
@@ -294,6 +332,7 @@ private fun Node.toGenericGraphNode(kind: String): GraphNode {
         function = function,
         properties = mapOf(
             "code" to this.code,
+            "source_region" to sourceRegion(this),
             "cpg_type" to this::class.simpleName,
             "argument_index" to this.argumentIndex.takeIf { it >= 0 },
             "prev_dfg" to this.prevDFG.map { it.name.toString() },
@@ -303,6 +342,13 @@ private fun Node.toGenericGraphNode(kind: String): GraphNode {
         ),
     )
 }
+
+private fun sourceRegion(node: Node): Map<String, Int?> = mapOf(
+    "start_line" to node.location?.region?.startLine,
+    "start_column" to node.location?.region?.startColumn,
+    "end_line" to node.location?.region?.endLine,
+    "end_column" to node.location?.region?.endColumn,
+)
 
 private fun normalizedNodeId(node: Node): String {
     val stablePart = listOfNotNull(

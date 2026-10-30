@@ -15,6 +15,7 @@ Start with the [project README](../README.md). The current reading path is:
 11. [Key-origin contract and review workflow](../research/python-key-origin/CONTRACT.md): implemented subset, evidence checks and review-gated diagnostics.
 12. [Development checkpoint](research/DEVELOPMENT-2026-10-27.md): observed backend differences, checks and remaining research work.
 13. [Expanded development experiment](research/EXPANDED-2026-10-27.md): 24 common sites, source-only/AST/CPG conditions, provisional checks and an external-tool feasibility run.
+14. [Current project and DFG study](research/PROJECT-STUDY-2026-10-27.md): 27 designed cases, pinned real-source slices, native CBOMkit controls and reserved evaluation snapshots.
 
 ## Historical notes
 

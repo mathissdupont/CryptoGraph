@@ -296,7 +296,8 @@ class _Analyzer:
                         self.expr(node, state, caller, capture)
                 for node in ast.walk(statement):
                     if isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del)):
-                        state.env[node.id] = self.unknown(statement, "unsupported_write")
+                        boundary = "local_assignment" if isinstance(node.ctx, ast.Store) else "expression"
+                        state.env[node.id] = self.unknown(statement, "unsupported_write", boundary)
         return state, returns
 
     def expr(self, node: ast.AST, state: State, caller: str | None, capture: bool) -> Value:

@@ -4,7 +4,7 @@
 
 The first study targets **Python** and **key-material origin claims** at
 cryptographic call sites. Candidate library scope is PyCryptodome and
-`cryptography`; the current feasibility probes use PyCryptodome AES construction.
+`cryptography`; the current feasibility probes use AES/AESGCM construction in both libraries.
 The initial runtime is Python 3.12 in Docker. AST-lite and the bundled Fraunhofer
 Python frontend are analysis conditions, not assumed equivalent implementations.
 
@@ -102,10 +102,13 @@ CALLS witnesses, not DFG value recovery. AST-derived graphs can also authorize
 same-file wrapper expansion. Four development cells are observable, but a complete
 causal ablation remains pending: legacy strings lack the new modality/set
 contract, and target-binding differences need to be accounted for. The expanded
-runner freezes 24 common candidate source spans and adds a source-only condition
+runner freezes 27 common candidate source spans and adds a source-only condition
 that withholds CALLS witnesses. This measures available CALLS in this interpreter,
-not the value of full DFG analysis. Add a literal/direct-call reference before claiming
-a controlled held-out comparison. The old and v2 matchers are not valid A/B
+not the value of full DFG analysis. A restricted direct-expression reference now
+provides an additional no-propagation condition. Separately, opt-in DFG predecessor
+expansion and directed path probes test exported dependency evidence without
+promoting it to ultimate-origin claims. These remain development conditions,
+rather than a controlled held-out comparison. The old and v2 matchers are not valid A/B
 experimental conditions by themselves.
 
 External comparators are screened on overlapping tasks and APIs: CBOMkit for
@@ -117,7 +120,7 @@ as inventing origins. Run failures remain visible and are not successful abstent
 
 ## Corpus and annotation
 
-The 24 committed probes are development cases, authored to inspect failure
+The 27 committed probes are development cases, authored to inspect failure
 mechanisms. Their observations are not independent ground truth or an accuracy
 estimate. Observations on the original eight are preserved separately. The
 expanded experiment includes pyca constructors, configuration sources, partial
@@ -135,9 +138,16 @@ origin and pairs where one dependency change must alter the answer. Validate
 transformation preconditions; a renamed external API is not automatically
 semantics preserving.
 
+Four pinned project slices now provide 12 nominal candidates in seven complete
+implementation files, plus three package-context files supplied consistently to
+all tools. They remain development data with pending eligibility and origin
+review. Two other project snapshots are reserved without running origin analyzers;
+their nominal eligibility population is insufficient and requires review. See
+[the current checkpoint](research/PROJECT-STUDY-2026-10-27.md).
+
 Begin with a manageable manually reviewed labeling pilot, then set corpus size
-and sampling policy using label cost and error diversity. Add pinned real-project
-excerpts on shared APIs. Record provenance and reuse terms. Obtain independent
+and sampling policy using label cost and error diversity. The pinned project
+slices now record provenance and reuse terms. Obtain independent
 annotation/review, retain disagreements and adjudication, and allow unknowns.
 Never generate reference labels from analyzer output or model assertions alone.
 
@@ -183,8 +193,14 @@ a fair comparison, findings reduce to simple bugs unique to CryptoGraph, or
 evidence gates only suppress nearly all output. Do not turn this scoping review
 into a novelty or publishability claim.
 
-The full Docker runtime and real Python frontend now run on the 24 probes.
+The full Docker runtime and real Python frontend now run on the 27 probes.
 That establishes feasibility, not complete graph semantics or general accuracy.
 The earlier [validation snapshot](VALIDATION.md) records implementation checks;
 the pilot records the later Python feasibility observation. CycloneDX conformance
 and actual LLM integration remain separate unfinished work.
+
+The final development reproduction was completed on 30 October 2026. Its
+[study report](research/PROJECT-STUDY-2026-10-27.md) answers the questions only
+within this development scope. The committed method/candidate snapshot is not
+a preregistration or a completed held-out evaluation. Human review fields remain
+pending; running a regression suite does not fill them.

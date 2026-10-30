@@ -1,0 +1,63 @@
+{
+  "schema_version": "0.1",
+  "frozen_on": "2026-10-27",
+  "status": "reserved_not_analyzed_not_reviewed",
+  "sampling": "Two additional projects reserved before analyzer execution; a convenience sample, not a representative benchmark.",
+  "projects": [
+    {
+      "id": "s3ql",
+      "repository": "https://github.com/s3ql/s3ql",
+      "revision": "a56e621e7198d98cada3721df9973a50de586039",
+      "split": "evaluation_reserved",
+      "analysis_status": "reserved_not_analyzed",
+      "license_classification_status": "pending_file_header_and_reuse_review",
+      "resources": [
+        {
+          "path": "LICENSE",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/s3ql/s3ql/a56e621e7198d98cada3721df9973a50de586039/LICENSE",
+          "sha256": "c1bd13626953119c5a2d7547942804bc212c96c8e9f0b6ee38667d862263f672",
+          "bytes": 35654
+        },
+        {
+          "path": "src/s3ql/backends/comprenc.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/s3ql/s3ql/a56e621e7198d98cada3721df9973a50de586039/src/s3ql/backends/comprenc.py",
+          "sha256": "7a97a4c964e885dee0feb69b371fadd6df596e743aa3a2cfed193f72be2b7375",
+          "bytes": 23081
+        }
+      ]
+    },
+    {
+      "id": "tahoe_lafs",
+      "repository": "https://github.com/tahoe-lafs/tahoe-lafs",
+      "revision": "f002fd0d27d9a3da5c0da162b10725838353bd63",
+      "split": "evaluation_reserved",
+      "analysis_status": "reserved_not_analyzed",
+      "license_classification_status": "pending_file_header_and_reuse_review",
+      "resources": [
+        {
+          "path": "COPYING.GPL",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/tahoe-lafs/tahoe-lafs/f002fd0d27d9a3da5c0da162b10725838353bd63/COPYING.GPL",
+          "sha256": "8ad2ee495cac08584674d8ec175538eb8baff5e968ed9df175e8c4d13cee35bc",
+          "bytes": 24277
+        },
+        {
+          "path": "COPYING.TGPPL.rst",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/tahoe-lafs/tahoe-lafs/f002fd0d27d9a3da5c0da162b10725838353bd63/COPYING.TGPPL.rst",
+          "sha256": "efa03c9119c4f4dd9692780dee315fa92ae9e78c689ec76a42b97602f1542631",
+          "bytes": 17300
+        },
+        {
+          "path": "src/allmydata/crypto/aes.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/tahoe-lafs/tahoe-lafs/f002fd0d27d9a3da5c0da162b10725838353bd63/src/allmydata/crypto/aes.py",
+          "sha256": "ef280ae953e0af64ee693f3f4c3dd33279703b3683fc1e23eb5fdb39c538f86e",
+          "bytes": 4550
+        }
+      ]
+    }
+  ]
+}

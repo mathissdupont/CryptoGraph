@@ -521,6 +521,70 @@
         "end_column": 22
       },
       "target_api": "cryptography.hazmat.primitives.ciphers.aead.AESGCM"
+    },
+    {
+      "case_id": "kdf_random_salt",
+      "source_sha256": "b349ac6221f49df02716eaf7539d502811ba1788da9e314687f7b7930904f2b8",
+      "target": {
+        "file": "kdf_random_salt.py",
+        "line": 11,
+        "column": 11,
+        "end_line": 11,
+        "end_column": 22
+      },
+      "target_api": "cryptography.hazmat.primitives.ciphers.aead.AESGCM",
+      "proposed_reference": {
+        "status": "abstained",
+        "origins": [],
+        "origin_set_complete": false,
+        "modality": "unknown",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The key is produced by an unmodeled password KDF. Dependence on a random salt does not make its bytes a direct CSPRNG API result."
+    },
+    {
+      "case_id": "unrelated_random",
+      "source_sha256": "9a3c95432633e3540eee43d051a86eb9325b03834c86fbb3be0cbd679856609c",
+      "target": {
+        "file": "unrelated_random.py",
+        "line": 8,
+        "column": 11,
+        "end_line": 8,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The unused random value does not reach the key assignment; the key is a byte literal."
+    },
+    {
+      "case_id": "pyca_nested_constructor",
+      "source_sha256": "b00c5e2d4a769ea92b110d10b9ff59581c441b71a100b62eb446f97969a36450",
+      "target": {
+        "file": "pyca_nested_constructor.py",
+        "line": 8,
+        "column": 18,
+        "end_line": 8,
+        "end_column": 37
+      },
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The nested AES constructor receives the local os.urandom-derived key before the outer Cipher call."
     }
   ]
 }

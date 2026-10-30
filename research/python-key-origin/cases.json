@@ -146,6 +146,24 @@
       "file": "pyca_parameter.py",
       "target_api": "AESGCM",
       "review_question": "No caller context determines the ultimate origin of the key parameter."
+    },
+    {
+      "id": "kdf_random_salt",
+      "file": "kdf_random_salt.py",
+      "target_api": "AESGCM",
+      "review_question": "The key is produced by an unmodeled password KDF. Dependence on a random salt does not make its bytes a direct CSPRNG API result."
+    },
+    {
+      "id": "unrelated_random",
+      "file": "unrelated_random.py",
+      "target_api": "AES.new",
+      "review_question": "The unused random value does not reach the key assignment; the key is a byte literal."
+    },
+    {
+      "id": "pyca_nested_constructor",
+      "file": "pyca_nested_constructor.py",
+      "target_api": "algorithms.AES",
+      "review_question": "The nested AES constructor receives the local os.urandom-derived key before the outer Cipher call."
     }
   ]
 }

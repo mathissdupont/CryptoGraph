@@ -11,9 +11,10 @@ from cryptograph.utils import load_json, write_json
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CELLS = (("source_only", "ast-lite", "none"),
-         ("ast_calls", "ast-lite", "graph"),
-         ("cpg_calls", "fraunhofer-strict", "graph"))
+CELLS = (("direct_expression", "ast-lite", "none", "direct"),
+         ("source_only", "ast-lite", "none", "both"),
+         ("ast_calls", "ast-lite", "graph", "both"),
+         ("cpg_calls", "fraunhofer-strict", "graph", "both"))
 
 
 def main():
@@ -21,6 +22,7 @@ def main():
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--provisional-proposals", type=Path,
                         help="Opt in to development agreement using explicitly unreviewed proposals.")
+    parser.add_argument('--dfg-probe', action='store_true', help='Record separate DFG path observations in the CPG cell.')
     args = parser.parse_args()
     out = args.out_dir.resolve()
     if out.exists():
@@ -33,10 +35,12 @@ def main():
     source_snapshots = []
     candidate_snapshots = []
     reference_snapshots = []
-    for name, backend, context in CELLS:
+    for name, backend, context, policy in CELLS:
         cell = out / name
         command = [sys.executable, str(ROOT / "scripts/research-pilot.py"), "--backend", backend,
-                   "--context-evidence", context, "--policy", "both", "--check-pilot", "--out-dir", str(cell)]
+                   "--context-evidence", context, "--policy", policy, "--check-pilot", "--out-dir", str(cell)]
+        if args.dfg_probe and backend == 'fraunhofer-strict':
+            command.append('--dfg-probe')
         with (out / (name + ".log")).open("w", encoding="utf-8") as log:
             run = subprocess.run(command, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
         if run.returncode:
@@ -49,7 +53,8 @@ def main():
         source_snapshots.append(record["inputs_sha256"])
         candidate_snapshots.append({entry["case_id"]: entry["eligible_target"] for entry in observations["cases"]})
         claims = [item["claim"] for entry in observations["cases"] for item in entry["evidence_policy"]]
-        details = {"requested_backend": backend, "actual_backend": record["actual_backend"], "context_evidence": context,
+        details = {"requested_backend": backend, "actual_backend": record["actual_backend"], "context_evidence": context, "policy": policy,
+                   "export_metadata": record['export_metadata'], "exporter_sha256": record['exporter_sha256'],
                    "eligible_sites": len(observations["cases"]),
                    "resolved": sum(claim["status"] == "resolved" for claim in claims),
                    "partial": sum(claim["status"] == "partial" for claim in claims),

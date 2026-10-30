@@ -1,6 +1,6 @@
 # Python key-origin feasibility pilot
 
-These 24 small programs probe what CryptoGraph says about the origin of an
+These 27 small programs probe what CryptoGraph says about the origin of an
 AES key across PyCryptodome and pyca/cryptography. They were authored during
 research scoping and development on 27 October 2026. They are
 **not independently annotated ground truth, a held-out benchmark, or evidence of
@@ -97,47 +97,60 @@ review record; explicitly provisional development agreement is available separat
 Source fixtures use fixed LF line endings to keep their
 review fingerprints stable across operating systems.
 
-## Matched 24-case development experiment
+## Current matched 27-case development experiment
 
-Run all three bounded-policy conditions in the full Python/JEP Docker runtime:
+Run the direct-expression reference and three bounded-policy conditions in the
+full Python/JEP Docker runtime:
 
 ```bash
 docker compose build cryptograph
-docker compose run --rm --entrypoint python cryptograph scripts/run-key-origin-matrix.py --out-dir /results/key-origin-matrix --provisional-proposals research/python-key-origin/review-proposals.json
+docker compose run --rm -e CRYPTOGRAPH_DFG_DEPTH=12 --entrypoint python cryptograph scripts/run-key-origin-matrix.py --dfg-probe --out-dir /results/key-origin-matrix --provisional-proposals research/python-key-origin/review-proposals.json
 ```
 
 Use a fresh output directory. Omit `--provisional-proposals` to retain raw
 observations without comparing unreviewed labels. The runner checks identical
 source/config/code hashes, declared candidate spans and proposal fingerprints
-across cells. All cells use the same bounded source interpreter. The source-only
+across cells. The three context conditions use the same bounded source interpreter;
+the direct-expression condition uses the restricted reference implementation. The source-only
 cell withholds graph witnesses; AST and CPG cells can authorize same-file calls.
 The legacy CBOM heuristic is recorded alongside these cells, with its different
 output contract preserved.
 
-| Bounded-policy context | Complete source sets | Partial sets | Abstentions | Claims using CALLS |
+| Condition | Complete source sets | Partial sets | Abstentions | Claims using CALLS |
 | --- | ---: | ---: | ---: | ---: |
-| Source only | 13 | 1 | 10 | 0 |
-| AST-derived CALLS | 17 | 1 | 6 | 4 |
-| Fraunhofer CALLS | 15 | 1 | 8 | 2 |
+| Direct expression | 2 | 0 | 25 | 0 |
+| Source only | 15 | 1 | 11 | 0 |
+| AST-derived CALLS | 19 | 1 | 7 | 4 |
+| Fraunhofer CALLS | 17 | 1 | 9 | 2 |
 
-All 24 declared sites produced one structurally checked claim in each condition.
-The legacy matcher found 23 sites and missed the aliased AESGCM constructor.
+All 27 declared sites produced one structurally checked claim in each condition.
+The legacy matcher missed the aliased AESGCM constructor.
 This difference is retained as detection coverage, not an abstention. The CPG
 condition rejected wrapper witnesses in `misleading_helper` and
 `wrapper_actual_parameter` that the AST condition could accept.
 
 Resolved sets did not disagree with the unreviewed assistant proposals in this
-run. This is **development agreement, not measured accuracy**. One boundary
-disagreement remains: `unsupported_loop` has proposed `local_assignment` while
-the interpreter emits `expression` after unsupported writes. It is recorded
-without changing the proposal to fit the output. Partial-set semantic error
-measurement remains to be designed; partial claims are not counted as complete.
+run. This is **development agreement, not measured accuracy**. The previous
+`unsupported_loop` boundary mismatch was fixed by retaining the assignment
+boundary while keeping the ultimate source unresolved; its proposal was not
+changed. Partial assertions now have a separate, completeness-aware comparison;
+they are not counted as complete answers.
+
+The three added controls probe an unrelated random value, a random salt used by
+a password KDF and a nested AES constructor. A DFG path from the salt RNG to the
+KDF key was exported; it is not a direct-RNG key-origin proof. An unrelated RNG
+had no exported path to the literal key in its control. Path observations remain
+separate from source-origin inference. The original 24-case record is preserved
+in [the earlier checkpoint](../../docs/research/EXPANDED-2026-10-27.md).
 
 The optional [PQCensus observation adapter](../../scripts/observe-pqcensus.py)
 pins a source revision, retains native outputs and checks positive controls. Its
 inspected revision did not detect these AES constructors and has no equivalent
 ultimate key-origin contract. This is not a suitable origin-accuracy comparator;
 see [the expanded checkpoint](../../docs/research/EXPANDED-2026-10-27.md).
+The current [project study](../../docs/research/PROJECT-STUDY-2026-10-27.md)
+adds pinned real files, a native CBOMkit inventory reproduction, reserved project
+snapshots and source-only review packets.
 
 ## Study boundary
 

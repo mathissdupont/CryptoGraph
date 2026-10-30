@@ -20,6 +20,7 @@ core.*
 results/
 /result.json
 tools/fraunhofer-exporter/bin/
+tools/fraunhofer-exporter/.kotlin/
 .env
 .env.*
 !.env.example

@@ -69,7 +69,7 @@ the added value of DFG recovery.
 
 ## Independent review and scoring
 
-No independent review is recorded. All 24 cases are development data.
+No independent review is recorded. All 27 designed cases are development data.
 
 - `review-template.json` holds source hashes, spans, families and empty review slots.
 - `review-proposals.json` holds separate assistant-generated source-inspection
@@ -100,18 +100,47 @@ API names. It refuses non-development splits, never fills review slots and
 reports proposal disagreement instead of semantic accuracy. A source-inspection
 proposal can itself be wrong. Leaving the flag out retains the review gate.
 
-`scripts/run-key-origin-matrix.py` runs source-only, AST CALLS and CPG CALLS cells
+`scripts/run-key-origin-matrix.py` runs direct-expression, source-only, AST CALLS and CPG CALLS cells
 and verifies identical candidate and input snapshots. The source-only condition
 withholds the graph from the interpreter; its legacy CBOM still uses AST context
-and is not a separate legacy baseline. No DFG benefit is tested by these cells.
+and is not a separate legacy baseline. The direct-expression reference verifies
+nominal imports and inspects the immediate key expression, without assignment
+propagation or helper expansion. Its assumptions are retained in each claim.
+
+The optional `--dfg-probe` records separate bounded DFG dependency paths. Set
+`CRYPTOGRAPH_DFG_DEPTH=12` for the backward exporter closure. These paths do not
+change key-origin claims, prove feasible execution or resolve ultimate origins.
+The exporter records depth, truncation and unresolved-call inference. Raw CPG
+columns are retained, while probes require unique source-code/file/line anchors
+and an explicit key-argument edge. Ambiguous anchors remain inconclusive.
 
 Reviewed diagnostics separate splits, eligible sites, resolved/partial/abstained
 and missing outcomes, invalid contracts, resolved coverage, semantic origin-set
 and modality error among resolved claims, boundary errors and structural errors.
 Source snapshots must match; duplicate operations and family leakage across
 splits are rejected. Structural checks are recomputed using the graph artifact.
+Real-project outputs include per-condition observations and a per-project graph
+index; witnesses are checked against the corresponding project graph. Use
+`--source-root` when downloaded sources live outside the annotation directory.
+Failed scans, missing detections and explicit abstentions have separate counters.
+Candidate inventories require recorded candidate verification and an independently
+declared reviewer role before reviewed scoring. Explicit author/model review is
+not accepted as independent review.
 
-Partial-set semantic scoring and finer-grained evidence sufficiency still need
-evaluation design. An always-abstain output has zero coverage and a `null` error
+Evaluation contract `key-origin-diagnostics-v0.3` judges resolved source-set and
+modality assertions only against complete reference sets. Incomplete references
+produce a separate resolution-mismatch record and an unjudgeable semantic result,
+not an automatic error or a correct answer. Error-rate denominators contain only
+judgeable resolved claims; coverage still includes all eligible sites.
+
+For partial claims, asserted categories are checked for membership only when the
+reference set is complete. A subset is compatible, not a fully resolved answer.
+An incomplete reference cannot establish that an additional category is false;
+such comparisons remain unjudgeable. Partial counts, judgeable counts and their
+error rate remain separate from resolved coverage/error. Provisional mode uses
+proposal-disagreement names for the same mechanics. Finer evidence sufficiency,
+path feasibility and completeness validation still require research.
+
+An always-abstain output has zero coverage and a `null` error
 rate. Reviewed development diagnostics are not held-out results, statistical
 guarantees, proof of generalization or a research contribution by themselves.
