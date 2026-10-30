@@ -18,6 +18,7 @@ Start with the [project README](../README.md). The current reading path is:
 14. [Current project and DFG study](research/PROJECT-STUDY-2026-10-27.md): 27 designed cases, pinned real-source slices, native CBOMkit controls and reserved evaluation snapshots.
 15. [Expanded source population](../research/python-key-origin/expanded-2026-10-30/README.md): predeclared projects, 19 development/33 reserved nominal sites and pending review.
 16. [First human source review, Turkish](research/USER-REVIEW-TR.md): four-case author training and the independent-review workflow.
+17. [Method integrity audit](research/METHOD-AUDIT-2026-10-30.md): source semantics, failure isolation, review auditing and remaining publication gates.
 
 ## Historical notes
 

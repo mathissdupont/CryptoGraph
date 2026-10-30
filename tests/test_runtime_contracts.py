@@ -72,6 +72,69 @@ def test_strict_mode_rejects_legacy_exporter_boundary_fallback(tmp_path: Path, m
         load_graph(source, "fraunhofer-strict")
 
 
+@pytest.mark.parametrize('backend',['fraunhofer','fraunhofer-strict'])
+def test_exporter_timeout_is_reported_and_preserves_partial_logs(tmp_path, monkeypatch, backend):
+    source=tmp_path/'example.py';source.write_text('import hashlib\nhashlib.md5(b"x")\n',encoding='utf-8')
+    exporter=tmp_path/'exporter.jar';exporter.touch()
+    monkeypatch.setenv('CRYPTOGRAPH_FRAUNHOFER_EXPORTER',str(exporter))
+    monkeypatch.setenv('CRYPTOGRAPH_EXPORTER_TIMEOUT_SECONDS','180')
+    monkeypatch.delenv('CRYPTOGRAPH_EXPORTER_LOG_DIR',raising=False)
+    captured={}
+    def timeout(command,**kwargs):
+        captured['path']=Path(command[command.index('--output')+1])
+        assert kwargs['timeout']==180
+        raise subprocess.TimeoutExpired(command,180,output=b'partial stdout',stderr=b'partial stderr')
+    monkeypatch.setattr('cryptograph.cpg_loader.subprocess.run',timeout)
+    if backend=='fraunhofer-strict':
+        with pytest.raises(CpgLoadError,match='timed out'):
+            load_graph(source,backend)
+    else:
+        assert load_graph(source,backend).backend=='fraunhofer-failed:ast-lite'
+    log=captured['path'].with_suffix('.exporter.log')
+    assert 'partial stdout' in log.read_text(encoding='utf-8')
+    assert 'partial stderr' in log.read_text(encoding='utf-8')
+    assert not captured['path'].exists()
+
+
+@pytest.mark.parametrize('value',['0','-1','nan','inf','3601','invalid'])
+def test_invalid_exporter_timeout_does_not_launch_java(tmp_path, monkeypatch, value):
+    source=tmp_path/'example.py';source.write_text('pass\n')
+    exporter=tmp_path/'exporter.jar';exporter.touch()
+    monkeypatch.setenv('CRYPTOGRAPH_FRAUNHOFER_EXPORTER',str(exporter))
+    monkeypatch.setenv('CRYPTOGRAPH_EXPORTER_TIMEOUT_SECONDS',value)
+    monkeypatch.setattr('cryptograph.cpg_loader.subprocess.run',lambda *a,**k:pytest.fail('Java must not be launched'))
+    with pytest.raises(CpgLoadError,match='finite number'):
+        load_graph(source,'fraunhofer-strict')
+
+
+def test_strict_exporter_cannot_silently_report_an_ast_backend(tmp_path,monkeypatch):
+    source=tmp_path/'example.py';source.write_text('pass\n')
+    exporter=tmp_path/'exporter.jar';exporter.touch()
+    monkeypatch.setenv('CRYPTOGRAPH_FRAUNHOFER_EXPORTER',str(exporter))
+    def export(command,**kwargs):
+        destination=Path(command[command.index('--output')+1])
+        destination.write_text(NormalizedGraph(backend='ast-lite',root=str(source)).model_dump_json(),encoding='utf-8')
+        return subprocess.CompletedProcess(command,0,stdout='',stderr='')
+    monkeypatch.setattr('cryptograph.cpg_loader.subprocess.run',export)
+    with pytest.raises(CpgLoadError,match='rejected exporter backend: ast-lite'):
+        load_graph(source,'fraunhofer-strict')
+
+
+def test_exporter_logs_can_be_preserved_in_a_result_directory(tmp_path,monkeypatch):
+    source=tmp_path/'example.py';source.write_text('pass\n')
+    exporter=tmp_path/'exporter.jar';exporter.touch();logs=tmp_path/'retained-logs'
+    monkeypatch.setenv('CRYPTOGRAPH_FRAUNHOFER_EXPORTER',str(exporter))
+    monkeypatch.setenv('CRYPTOGRAPH_EXPORTER_LOG_DIR',str(logs))
+    def export(command,**kwargs):
+        destination=Path(command[command.index('--output')+1])
+        destination.write_text(NormalizedGraph(backend='fraunhofer-cpg',root=str(source)).model_dump_json(),encoding='utf-8')
+        return subprocess.CompletedProcess(command,0,stdout='synthetic retained diagnostic',stderr='')
+    monkeypatch.setattr('cryptograph.cpg_loader.subprocess.run',export)
+    load_graph(source,'fraunhofer-strict')
+    log,=logs.glob('*.exporter.log')
+    assert 'synthetic retained diagnostic' in log.read_text(encoding='utf-8')
+
+
 @pytest.mark.parametrize("backend", ["fraunhofer", "fraunhofer-strict"])
 def test_empty_cpp_export_respects_fallback_policy(tmp_path: Path, monkeypatch, backend: str) -> None:
     source = tmp_path / "example.cpp"

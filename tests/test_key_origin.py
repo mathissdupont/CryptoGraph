@@ -59,6 +59,56 @@ def test_unsupported_loop_keeps_assignment_boundary_without_resolving_origin(tmp
     assert "unsupported_write" in claims[0].unresolved_reasons
 
 
+def test_raising_branch_does_not_supply_an_origin_to_normal_continuation(tmp_path):
+    _, claims = inspect(tmp_path,
+        'def f(flag):\n    key = b"fixed"\n    if flag:\n        key = os.urandom(16)\n        raise RuntimeError("stop")\n    return AES.new(key, AES.MODE_ECB)\n')
+    assert claims[0].origins == ['literal'] and claims[0].status == 'resolved'
+
+
+def test_target_after_unconditional_raise_is_not_observed(tmp_path):
+    _, claims = inspect(tmp_path,
+        'def f():\n    raise RuntimeError("stop")\n    return AES.new(os.urandom(16), AES.MODE_ECB)\n')
+    assert claims == []
+
+
+def test_failed_module_initialization_does_not_create_function_entry_claims(tmp_path):
+    _, claims = inspect(tmp_path,
+        'raise RuntimeError("module does not initialize")\ndef f():\n    return AES.new(os.urandom(16), AES.MODE_ECB)\n')
+    assert claims == []
+
+
+def test_try_finally_remains_an_effect_boundary(tmp_path):
+    _, claims = inspect(tmp_path,
+        'def f():\n    try:\n        raise RuntimeError("stop")\n    finally:\n        AES.new(os.urandom(16), AES.MODE_ECB)\n')
+    assert claims and all(claim.status == 'abstained' for claim in claims)
+
+
+def test_always_raising_wrapper_does_not_authorize_a_later_resolved_claim(tmp_path):
+    _, claims = inspect(tmp_path,
+        'def stop():\n    raise RuntimeError("stop")\ndef f():\n    stop()\n    return AES.new(os.urandom(16), AES.MODE_ECB)\n')
+    assert claims[0].status == 'abstained'
+    assert 'no_normal_wrapper_return' in claims[0].unresolved_reasons
+
+
+@pytest.mark.parametrize('deferred', [True, False])
+def test_postponed_annotations_do_not_execute_as_definition_effects(tmp_path, deferred):
+    path = tmp_path/'annotations.py'
+    source = ('from __future__ import annotations\n' if deferred else '') + PREFIX
+    source += 'def other(value: mutate()):\n    pass\ndef f():\n    key = os.urandom(16)\n    return AES.new(key, AES.MODE_ECB)\n'
+    path.write_text(source,encoding='utf-8')
+    claim, = analyze_key_origins(path)
+    assert claim.status == ('resolved' if deferred else 'abstained')
+    assert not audit_claim_structure(claim,path)
+
+
+def test_postponed_annotations_do_not_suppress_default_value_effects(tmp_path):
+    path = tmp_path/'default.py'
+    path.write_text('from __future__ import annotations\n'+PREFIX+
+        'def other(value=mutate()):\n    pass\ndef f():\n    return AES.new(os.urandom(16), AES.MODE_ECB)\n',encoding='utf-8')
+    claim, = analyze_key_origins(path)
+    assert claim.status == 'abstained' and 'unsupported_definition_effect' in claim.unresolved_reasons
+
+
 def test_import_alias_preserves_api_identity(tmp_path):
     _, claims = inspect(tmp_path, 'from os import urandom as rng\ndef f():\n    return AES.new(rng(16), AES.MODE_ECB)\n')
     assert claims[0].origins == ["csprng_api"]

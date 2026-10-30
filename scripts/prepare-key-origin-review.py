@@ -5,6 +5,7 @@ import shutil
 from pathlib import Path
 
 from cryptograph.research_corpus import materialize_corpus
+from cryptograph.research_review import require_blank_review_population
 from cryptograph.utils import load_json, write_json
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,6 +54,10 @@ def main():
     if not args.manifest and not args.designed:
         parser.error('--manifest is required for project sources')
     annotations = load_json(args.annotations)
+    try:
+        require_blank_review_population(annotations)
+    except ValueError as exc:
+        parser.error(str(exc))
     if args.case_id:
         if any(entry['split']!='development' for entry in annotations['cases']):
             parser.error('Training subsets must not silently select reserved evaluation cases')

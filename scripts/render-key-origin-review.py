@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from cryptograph.utils import load_json
+from cryptograph.research_review import require_blank_review_population
 
 
 PAGE = r'''<!doctype html><html lang="tr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -42,10 +43,15 @@ document.getElementById('save').onclick=()=>{
 };
 document.getElementById('restore').onchange=async event=>{
  try{const data=JSON.parse(await event.target.files[0].text());
- boxes.forEach(box=>{const original=packet.cases.find(x=>x.case_id===box.dataset.case),entry=data.cases.find(x=>x.case_id===box.dataset.case);if(!entry||entry.source_sha256!==original.source_sha256||JSON.stringify(entry.target)!==JSON.stringify(original.target))throw Error('Kaynak/sürüm uyuşmuyor');
- const review=entry[role==='project_author'?'author_review':'independent_review'];if(!review)return;
+ if(data.analysis_model!==packet.analysis_model||data.review_form_role!==role||data.cases.length!==packet.cases.length||new Set(data.cases.map(x=>x.case_id)).size!==packet.cases.length)throw Error('İnceleme rolü veya aday kümesi uyuşmuyor');
+ const restored=boxes.map(box=>{const original=packet.cases.find(x=>x.case_id===box.dataset.case),entry=data.cases.find(x=>x.case_id===box.dataset.case);
+ if(!entry||entry.source!==original.source||entry.source_sha256!==original.source_sha256||entry.target_api!==original.target_api||entry.split!==original.split||['file','line','column','end_line','end_column'].some(key=>entry.target[key]!==original.target[key]))throw Error('Kaynak/sürüm/API uyuşmuyor');
+ const review=entry[role==='project_author'?'author_review':'independent_review'];if(!review||review.reviewer_role!==role)throw Error('Kayıt rolü uyuşmuyor');return {box,review};});
+ if(new Set(restored.map(x=>x.review.reviewer).filter(Boolean)).size>1)throw Error('Bu form tek inceleyici içindir; farklı kişilerin kayıtlarını birleştirmeyin');
+ restored.forEach(({box,review})=>{
  document.getElementById('reviewer').value=review.reviewer||'';box.querySelector('[name="decision"]').value=review.candidate_decision||'pending';box.querySelector('[name="rationale"]').value=review.candidate_rationale||review.notes||'';
- box.querySelector('[name="confirmed"]').checked=review.status==='approved';const ref=review.reviewed_reference;if(ref){box.querySelector('[name="boundary"]').value=ref.immediate_boundary;box.querySelector('[name="complete"]').value=ref.origin_set_complete?'yes':'no';box.querySelectorAll('[name="origin"]').forEach(x=>x.checked=ref.origins.includes(x.value));}});
+ box.querySelector('[name="confirmed"]').checked=review.status==='approved';const ref=review.reviewed_reference;
+ box.querySelector('[name="boundary"]').value=ref?ref.immediate_boundary:'';box.querySelector('[name="complete"]').value=ref?(ref.origin_set_complete?'yes':'no'):'';box.querySelectorAll('[name="origin"]').forEach(x=>x.checked=!!ref&&ref.origins.includes(x.value));});
  document.getElementById('status').textContent='Taslak yüklendi.';
  }catch(error){document.getElementById('status').textContent='Taslak yüklenemedi: '+error.message;}
 };
@@ -61,6 +67,10 @@ def main():
     if output.exists():
         parser.error('Use a fresh source-only bundle')
     packet=load_json(args.bundle/'annotations.json')
+    try:
+        require_blank_review_population(packet)
+    except ValueError as exc:
+        parser.error(str(exc))
     sections=[]
     for index,entry in enumerate(packet['cases']):
         path=(args.bundle/'sources'/entry['source']).resolve()

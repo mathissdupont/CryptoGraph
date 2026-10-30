@@ -189,3 +189,41 @@ review and exact reserved manifest. It refuses pending reviews without creating
 an output directory or loading source graphs. This path is implemented for later
 use; it has not been run on the reserved origins. Reviewed output still requires
 separate scoring with the same source packet and actual graph artifacts.
+
+## Source semantics and failure isolation, second method snapshot
+
+Normal-flow handling now stops at `raise`; a raised branch cannot supply values
+to a later normal continuation. An always-raising expanded wrapper leaves an
+explicit unresolved boundary. General exception handlers/finally are still
+unsupported. Explicit postponed annotations are not treated as eager definition
+effects; parameter defaults and decorators remain effect boundaries. These
+corrections follow Python's [raise semantics](https://docs.python.org/3.12/reference/simple_stmts.html#the-raise-statement)
+and [postponed-annotation feature](https://docs.python.org/3.12/library/__future__.html).
+They are regression-covered implementation changes, not independently validated
+research gains or a full Python semantics model.
+
+Candidate files/projects, raw hashes, supported APIs, split identities and exact
+AST call spans are checked against the acquired manifest before graph analysis.
+Nominal binding eligibility still needs human review. Externally located human
+annotation files have separate input fingerprints rather than failing because
+they are outside the checkout.
+
+CPG failure produces failed graph-context rows while preserving completed direct
+and source-only observations. A failed optional DFG probe preserves origin
+observations and is reported separately. The overall run still fails; incomplete
+runs cannot be captured as completed comparative checkpoints.
+
+JVM export defaults to a 180-second timeout. Configure a finite positive value
+up to 3,600 seconds with `CRYPTOGRAPH_EXPORTER_TIMEOUT_SECONDS`. Strict mode
+rejects an AST backend masquerading as a successful Fraunhofer export. Research
+runs preserve stdout/stderr under each project's `exporter-logs/` directory,
+including partial timeout output; ordinary callers can configure
+`CRYPTOGRAPH_EXPORTER_LOG_DIR` explicitly. These are analysis integrity controls,
+not evidence of graph or origin soundness.
+
+Fresh source-only review bundles refuse existing labels, reviewer notes and
+predictions. Restoring a draft validates all identities/API/model/role records
+before changing any form fields. Reviewer audit and agreement reports are
+available through `scripts/audit-key-origin-reviews.py`; they do not edit source
+packets, score the analyzer or approve/adjudicate labels. Shared reviewer IDs are
+flagged instead of being presented as independent confirmation.

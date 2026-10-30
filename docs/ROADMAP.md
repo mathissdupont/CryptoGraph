@@ -11,7 +11,8 @@ backend identity, failures, input revision and configuration hashes. Validate th
 bundled exporter on hand-checked inputs and preserve graphs/logs. General semantic
 validation remains outstanding. The Java smoke check is recorded in
 [the validation snapshot](VALIDATION.md), and the real Python path now runs the
-[eight-case feasibility pilot](../research/python-key-origin/README.md).
+[27-case designed matrix](../research/python-key-origin/README.md) and
+[expanded development source study](../research/python-key-origin/expanded-2026-10-30/README.md).
 The lightweight demo is documented in
 [REPRODUCIBILITY.md](REPRODUCIBILITY.md).
 
@@ -22,14 +23,24 @@ unresolved reasons. Include negative examples, aliases, wrappers, reassignment a
 cross-function flow. Record provenance, disagreements and permitted reuse.
 Split by project rather than repeated code fragments.
 
+Pinned populations, source-only forms and human-review auditing are implemented.
+The current split has 19 development and 33 reserved nominal candidates. Their
+eligibility and origin labels still need actual independent review; the reserved
+count is not a statistical power calculation.
+
 ## 3. Controlled comparison
 
 A bounded development comparison now records AST/CPG context with both policies;
 its new policy consumes source syntax and CALLS witnesses. Establish a common
-candidate population, fuller context ablations and a direct-call reference. Use
+candidate population and fuller context ablations. A restricted direct-expression
+reference and a review-gated always-abstain reference are implemented. Use
 identical inputs and account for failed/unparsed
 programs. Report detection separately from
 context accuracy, abstention, unsupported claims and fallback/coverage rates.
+
+The [method integrity audit](research/METHOD-AUDIT-2026-10-30.md) records later
+source-semantics and failure-isolation checks. Useful complete origin coverage on
+real development data is still missing; refine that method before a held-out run.
 
 ## 4. Held-out evidence-policy evaluation
 

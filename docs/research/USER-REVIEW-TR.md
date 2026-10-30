@@ -62,3 +62,24 @@ salt bağımlılığı, doğrudan rastgele anahtar kaynağıyla aynı şey deği
 
 Bu arada tekrar çalıştırma, testler, sürüm/parmak izi kayıtları ve değerlendirme
 araçlarının teknik bakımını araştırma deposunda sürdürebiliriz.
+
+## Notları teslim ettikten sonra yapılacak kontrol
+
+`audit-key-origin-reviews.py` aracı, indirdiğin dosyanın kaynak/sürüm/API
+kimliklerini, rolünü, tamamlanma durumunu ve etiket sözleşmesini kontrol eder.
+Dosyanın nerede olduğunu belirttiğinde bu teknik kontrolü ben çalıştırabilirim.
+Yazar kaydı bağımsız kayıt yerine geçmez; aynı kişi kimliğiyle gelen iki kayıt
+bağımsız doğrulama sayılmaz. Araç insan kimliğini veya kaynak yorumunun doğru
+olduğunu kanıtlamaz.
+
+İki kişinin kayıtları karşılaştırıldığında uygunluk, kaynak kümesi ve yakın kaynak
+anlaşmazlıkları ayrı listelenir. Kayıtlar korunur; insan gerekçesi olmadan bir
+cevap seçilmez ve kaynak şablonuna `approved` yazılmaz. İlk dört örneğin dosyasını
+yalnız kendi eğitim paketiyle karşılaştıracağız; ayrı proje/split kayıtlarıyla
+karıştırmayacağız.
+
+Örnek kullanım (çıktı için yeni dosya adı kullanılır):
+
+```powershell
+python scripts/audit-key-origin-reviews.py --annotations output/research-author-start/annotations.json --source-root output/research-author-start/sources --review output/project_author-review.json --output output/author-review-audit.json
+```

@@ -60,7 +60,8 @@ origin was recovered. The zero-primary-candidate library project remains in the
 population rather than being dropped. These outputs expose insufficient current
 real-source coverage; adding repositories has not by itself fixed the analyzer.
 
-See the [development machine record](development-observations.json) for per-site
+See the [current development machine record](development-observations-method2.json)
+and [previous record](development-observations.json) for per-site
 reasons, actual backends, source/code hashes and raw-artifact fingerprints.
 Raw graph IDs and environment-specific paths may vary between executions; hashes
 identify the retained artifacts rather than promise byte-identical graphs.
@@ -94,5 +95,9 @@ Diagnostic contract v0.4 retains rejected candidates with reasons outside origin
 denominators and provides a gated always-abstain reference. The active method
 snapshot is [evaluation-freeze.json](../evaluation-freeze.json). The older
 snapshot is preserved as [evaluation-freeze-v1.json](../evaluation-freeze-v1.json).
+The first expanded-population snapshot is preserved as
+[evaluation-freeze-v2.json](../evaluation-freeze-v2.json). The
+[method integrity audit](../../../docs/research/METHOD-AUDIT-2026-10-30.md)
+describes later source semantics, failure isolation and human-review checks.
 This is a method snapshot after development, not a preregistration or completed
 human review. The reserved population has not been used to tune origin behavior.

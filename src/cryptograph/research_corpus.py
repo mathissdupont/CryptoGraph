@@ -7,6 +7,8 @@ import re
 from pathlib import Path, PurePosixPath
 from urllib.parse import quote
 
+from cryptograph.key_origin import Span, TARGETS
+
 
 def corpus_resources(manifest: dict):
     projects = set()
@@ -56,3 +58,45 @@ def materialize_corpus(manifest: dict, root: Path, fetch=None) -> dict:
             path.write_bytes(raw)
         records.append({'project': project['id'], 'path': relative.as_posix(), 'sha256': resource['sha256'], 'origin': origin})
     return {'status': 'verified', 'target_execution': False, 'resources': records}
+
+
+def validate_candidate_inventory(manifest: dict, packet: dict, root: Path | None = None):
+    """Validate source/site identities, never claim that nominal APIs are true.
+
+    Human candidate rejection stays possible. This checks that every proposed
+    site is one call in the acquired, fingerprinted population before graph or
+    origin analysis, including when annotation JSON comes from another directory.
+    """
+    resources = {relative.as_posix(): resource for _, resource, relative in corpus_resources(manifest)
+                 if resource['kind'] == 'source'}
+    projects = {project['id']: project for project in manifest['projects']}
+    ids, sites, positions = set(), set(), {}
+    for entry in packet['cases']:
+        source = entry['source']
+        if source not in resources or entry['project'] not in projects or not source.startswith(entry['project']+'/'):
+            raise ValueError('Candidate source/project is outside the pinned source population')
+        if entry['source_sha256'] != resources[source]['sha256']:
+            raise ValueError('Candidate and manifest source fingerprints differ')
+        span = Span.model_validate(entry['target'])
+        if span.file != PurePosixPath(source).name or entry['target_api'] not in TARGETS:
+            raise ValueError('Candidate file/API identity is outside the declared contract')
+        site = (source,span.line,span.column,span.end_line,span.end_column)
+        if entry['case_id'] in ids or site in sites:
+            raise ValueError('Duplicate candidate identity or source operation')
+        ids.add(entry['case_id']);sites.add(site)
+        if entry['split'] != projects[entry['project']].get('split','development'):
+            raise ValueError('Candidate and project split differ')
+        if root is not None:
+            path = (root/source).resolve()
+            if not path.is_relative_to(root.resolve()):
+                raise ValueError('Candidate source escaped the acquisition root')
+            if source not in positions:
+                raw = path.read_bytes()
+                if hashlib.sha256(raw).hexdigest() != entry['source_sha256']:
+                    raise ValueError('Candidate source bytes changed since acquisition')
+                tree = ast.parse(raw.decode('utf-8-sig'))
+                positions[source] = {(node.lineno,node.col_offset,node.end_lineno,node.end_col_offset)
+                                     for node in ast.walk(tree) if isinstance(node,ast.Call)}
+            if site[1:] not in positions[source]:
+                raise ValueError('Candidate span is not an acquired source call')
+    return {'candidate_sites': len(ids), 'binding_verification': 'not_performed'}

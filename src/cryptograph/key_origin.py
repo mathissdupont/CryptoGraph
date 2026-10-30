@@ -136,6 +136,11 @@ class _Analyzer:
         self.source = raw.decode("utf-8-sig")
         self.digest = hashlib.sha256(raw).hexdigest()
         self.tree = ast.parse(self.source, filename=str(path))
+        self.postponed_annotations = any(
+            isinstance(node, ast.ImportFrom) and node.module == '__future__'
+            and any(alias.name == 'annotations' for alias in node.names)
+            for node in self.tree.body
+        )
         self.graph = graph
         self.steps: dict[str, EvidenceStep] = {}
         self.targets: dict[tuple[int, int], tuple[ast.Call, str, list[Value]]] = {}
@@ -180,7 +185,10 @@ class _Analyzer:
 
     def analyze(self) -> list[KeyOriginClaim]:
         state, _ = self.block(self.tree.body, self.module.copy(), None, capture=True)
-        self.module = state or self.module
+        if state is None:
+            # No normal module initialization reaches the function-entry model.
+            return [self.claim(*value) for _, value in sorted(self.targets.items())]
+        self.module = state
         for function in self.functions.values():
             if function.decorator_list:
                 continue
@@ -241,14 +249,14 @@ class _Analyzer:
                 annotations = [statement.returns, *[argument.annotation for argument in [*statement.args.posonlyargs, *statement.args.args, *statement.args.kwonlyargs]]]
                 if statement.decorator_list or any(not isinstance(value, ast.Constant) for value in defaults):
                     state.blockers.add("unsupported_definition_effect")
-                if any(value is not None and not isinstance(value, (ast.Name, ast.Constant)) for value in annotations):
+                if not self.postponed_annotations and any(value is not None and not isinstance(value, (ast.Name, ast.Constant)) for value in annotations):
                     state.blockers.add("unsupported_definition_annotation")
                 if caller is None and not statement.decorator_list:
                     state.env[statement.name] = Value(symbol=f"local:{statement.name}", evidence=self.step(statement, "function_binding", statement.name))
                 else:
                     state.env[statement.name] = self.unknown(statement, "unsupported_function_binding")
             elif isinstance(statement, (ast.Assign, ast.AnnAssign)):
-                if isinstance(statement, ast.AnnAssign) and caller is None and not isinstance(statement.annotation, (ast.Name, ast.Constant)):
+                if isinstance(statement, ast.AnnAssign) and caller is None and not self.postponed_annotations and not isinstance(statement.annotation, (ast.Name, ast.Constant)):
                     state.blockers.add("unsupported_module_annotation")
                 value = self.expr(statement.value, state, caller, capture) if statement.value else self.unknown(statement, "annotation_without_value")
                 targets = statement.targets if isinstance(statement, ast.Assign) else [statement.target]
@@ -282,6 +290,15 @@ class _Analyzer:
                 if state.blockers:
                     value = Value(evidence=value.evidence, reasons=value.reasons | frozenset(state.blockers), boundary=value.boundary)
                 returns.append(value)
+                return None, returns
+            elif isinstance(statement, ast.Raise):
+                # Exception construction can have effects, but this branch has
+                # no normal continuation. A surrounding try/finally remains an
+                # unsupported effect boundary, rather than a solved exception CFG.
+                if statement.exc is not None:
+                    self.expr(statement.exc, state, caller, capture)
+                if statement.cause is not None:
+                    self.expr(statement.cause, state, caller, capture)
                 return None, returns
             elif isinstance(statement, ast.Expr):
                 self.expr(statement.value, state, caller, capture)
@@ -421,6 +438,9 @@ class _Analyzer:
         self.active.pop()
         if continuation is not None:
             values.append(self.unknown(function, "implicit_none_return"))
+        if not values:
+            state.blockers.add('no_normal_wrapper_return')
+            return self.unknown(call,'no_normal_wrapper_return','return_value',edge_evidence)
         value = self.combine(call, values, "wrapper_return")
         state.blockers.update(reason for reason in value.reasons if reason.startswith(("unmodeled", "unexpanded", "unsupported", "explicit_", "call_expansion")))
         return Value(value.origins, value.complete, evidence=self.step(call, "wrapper_binding", name, value.evidence + edge_evidence), reasons=value.reasons, boundary="return_value")
