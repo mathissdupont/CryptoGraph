@@ -5,6 +5,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from cryptograph.research_freeze import candidate_fingerprint, check_freeze
+from cryptograph.key_origin import MODEL
 from cryptograph.utils import load_json, write_json
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +21,8 @@ def main():
     if args.output.exists():
         parser.error('Use a new freeze path; preserve previous snapshots.')
     packet = load_json(args.annotations)
+    if packet.get('analysis_model')!=MODEL:
+        parser.error('Cannot freeze candidate annotations for a different analysis model.')
     development = load_json(args.development_manifest)
     reserved = load_json(args.reserved_manifest)
     if {project['repository'] for project in development['projects']} & {project['repository'] for project in reserved['projects']}:
@@ -39,6 +42,7 @@ def main():
                    ROOT/'research/python-key-origin/repository-selection-2026-10-30.json'])
     record = {
         'status': 'methods_and_reserved_candidate_snapshot_only',
+        'analysis_model': MODEL,
         'generated_at': datetime.now(UTC).isoformat(),
         'scope': 'Snapshot after development experiments and nominal reserved indexing; not a preregistration, reviewed test set or completed evaluation.',
         'reserved_origin_analysis_executed': False,

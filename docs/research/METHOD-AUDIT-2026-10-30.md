@@ -1,5 +1,9 @@
 # Method integrity audit — 30 October 2026
 
+Historical v0.1 checkpoint. The later
+[v0.2 coverage fixes](COVERAGE-FIXES-2026-10-30.md) supersede the coverage counts
+below while preserving these observations and their original method snapshot.
+
 This extends the [expanded source study](../../research/python-key-origin/expanded-2026-10-30/README.md).
 The prior population, observations and method snapshots are preserved. No
 reserved origin analyzer or independently reviewed accuracy measurement ran.

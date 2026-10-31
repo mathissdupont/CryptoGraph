@@ -5,6 +5,7 @@ import shutil
 from pathlib import Path
 
 from cryptograph.research_corpus import materialize_corpus
+from cryptograph.key_origin import MODEL
 from cryptograph.research_review import require_blank_review_population
 from cryptograph.utils import load_json, write_json
 
@@ -54,6 +55,8 @@ def main():
     if not args.manifest and not args.designed:
         parser.error('--manifest is required for project sources')
     annotations = load_json(args.annotations)
+    if annotations.get('analysis_model')!=MODEL:
+        parser.error('Use the matching historical tool/contract for an earlier analysis model; no review is migrated automatically.')
     try:
         require_blank_review_population(annotations)
     except ValueError as exc:

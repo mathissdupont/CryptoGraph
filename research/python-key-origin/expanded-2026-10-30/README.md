@@ -54,14 +54,18 @@ and CPG: each candidate file, with the acquired project source root for
 invented. All acquired source files remain available for human review. This scope
 is explicit and differs from the earlier project-slice graph condition.
 
-Source-only, direct-expression, AST and CPG origin conditions retain 17 explicit
-abstentions and two missing bindings at the 19 development sites. No complete
-origin was recovered. The zero-primary-candidate library project remains in the
-population rather than being dropped. These outputs expose insufficient current
-real-source coverage; adding repositories has not by itself fixed the analyzer.
+Under model v0.2, source-only, AST and CPG origin conditions each retain **one
+complete origin, 18 abstentions and zero missing bindings** at the same 19
+development sites. The direct-expression reference remains at 17 abstentions
+and two missing bindings. The source change recovers Ansible's two conditional
+API imports and pyAesCrypt's independent `intKey = urandom(32)` assignment;
+password-derived keys remain unresolved. This is conditional model coverage,
+not reviewed semantic accuracy. The zero-primary-candidate library project
+remains in the population rather than being dropped.
 
-See the [current development machine record](development-observations-method2.json)
-and [previous record](development-observations.json) for per-site
+See the [current development machine record](development-observations-model-v2.json),
+[last v0.1 record](development-observations-method2.json)
+and [first record](development-observations.json) for per-site
 reasons, actual backends, source/code hashes and raw-artifact fingerprints.
 Raw graph IDs and environment-specific paths may vary between executions; hashes
 identify the retained artifacts rather than promise byte-identical graphs.
@@ -70,7 +74,7 @@ The current bounded policy's global effect barriers, unsupported control,
 definitions and parameter/object-field boundaries still limit practical coverage.
 They must be refined on development data with regression controls. Do not remove
 them just to obtain more resolved answers, or tune on reserved origin outputs.
-Meaningful development coverage and reliable labels remain prerequisites for the
+Broader useful development coverage and reliable labels remain prerequisites for the
 proposed comparative paper. This artifact does not claim that those are solved.
 
 ## Reproduce and review
@@ -97,6 +101,9 @@ snapshot is [evaluation-freeze.json](../evaluation-freeze.json). The older
 snapshot is preserved as [evaluation-freeze-v1.json](../evaluation-freeze-v1.json).
 The first expanded-population snapshot is preserved as
 [evaluation-freeze-v2.json](../evaluation-freeze-v2.json). The
+[last v0.1 snapshot](../evaluation-freeze-v3.json) and
+[coverage fixes](../../../docs/research/COVERAGE-FIXES-2026-10-30.md) preserve
+the model transition. The
 [method integrity audit](../../../docs/research/METHOD-AUDIT-2026-10-30.md)
 describes later source semantics, failure isolation and human-review checks.
 This is a method snapshot after development, not a preregistration or completed

@@ -23,6 +23,7 @@ def main():
     packet=load_json(args.dataset/'development-review-template.json')
     expected={entry['case_id'] for entry in packet['cases']}
     report={'kind':'expanded_unreviewed_development_observations','generated_at':datetime.now(UTC).isoformat(),
+            'analysis_model':packet['analysis_model'],
             'scope':'Descriptive development output, not semantic accuracy, a generalization estimate or a completed comparative paper.',
             'population':load_json(args.dataset/'population.json'),
             'independent_review':'pending','reviewed_accuracy':None,'reserved_origin_analysis_executed':False,
@@ -46,6 +47,8 @@ def main():
                     summaries=[]
                     for item in result['claims']:
                         claim=item['claim']
+                        if claim['analysis_model']!=packet['analysis_model']:
+                            parser.error('Observation and candidate semantic models differ')
                         summaries.append({field:claim[field] for field in ('status','origins','origin_set_complete','modality','immediate_boundary','unresolved_reasons','graph_features_used')}
                                          | {'structural_errors':item['structural_errors']})
                         if condition=='source_only':

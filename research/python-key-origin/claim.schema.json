@@ -117,8 +117,8 @@
       "type": "string"
     },
     "analysis_model": {
-      "const": "python-key-origin-subset-v0.1",
-      "default": "python-key-origin-subset-v0.1",
+      "const": "python-key-origin-subset-v0.2",
+      "default": "python-key-origin-subset-v0.2",
       "title": "Analysis Model",
       "type": "string"
     },

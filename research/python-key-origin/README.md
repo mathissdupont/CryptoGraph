@@ -158,6 +158,13 @@ snapshots and source-only review packets.
 
 ## Study boundary
 
+The active interpreter is model v0.2. Its
+[real-source coverage checkpoint](../../docs/research/COVERAGE-FIXES-2026-10-30.md)
+recovers two conditional API bindings and one independent RNG key under explicit
+binding-effect assumptions. The designed 27-case counts above remain unchanged.
+Historical v0.1 packets and observations are preserved separately; no human
+reference was automatically migrated.
+
 Do not compute a publication accuracy number from these cases. Before evaluation,
 define the meaning of an origin claim, annotate source sets and uncertainty,
 obtain independent review, freeze development/test splits and compare appropriate

@@ -1,0 +1,590 @@
+{
+  "analysis_model": "python-key-origin-subset-v0.1",
+  "status": "assistant_source_inspection_proposals_not_independent_ground_truth",
+  "cases": [
+    {
+      "case_id": "direct_random",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The reaching assignment is an imported os.urandom call.",
+      "source_sha256": "38c86c382e933f7869f004f6954bf571510048ec93d949c3bcb293eff20cd6a5",
+      "target": {
+        "file": "direct_random.py",
+        "line": 6,
+        "column": 11,
+        "end_line": 6,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "misleading_helper",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The same-file helper returns a byte literal repeated by the supplied constant length; its name supplies no randomness.",
+      "source_sha256": "2281e3eb973a9b2141dd360eddd2a73ac18f8f7ed972632cad78e0d84e7e3fb1",
+      "target": {
+        "file": "misleading_helper.py",
+        "line": 9,
+        "column": 11,
+        "end_line": 9,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "assignment_after_sink",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "Only the literal assignment precedes the target; the later random assignment cannot reach the earlier call.",
+      "source_sha256": "482c76e6a89d83f548d8bc5d2e56c1a5196585d4d80b9390cf749e15882d8de8",
+      "target": {
+        "file": "assignment_after_sink.py",
+        "line": 6,
+        "column": 13,
+        "end_line": 6,
+        "end_column": 39
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "mixed_branch",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "may",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The boolean parameter selects one of two source categories. Both must remain possible under this model.",
+      "source_sha256": "a22ca7afb07e3c178e6130e6326d0e128dc9b38a2d73844d1fcfdd6ab8b7c52c",
+      "target": {
+        "file": "mixed_branch.py",
+        "line": 9,
+        "column": 11,
+        "end_line": 9,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "parameter_boundary",
+      "proposed_reference": {
+        "status": "abstained",
+        "origins": [],
+        "origin_set_complete": false,
+        "modality": "unknown",
+        "immediate_boundary": "parameter"
+      },
+      "source_inspection_rationale": "The immediate parameter is known, but no caller context determines its ultimate origin.",
+      "source_sha256": "0e93f87b951e44041b171414b7f5c66c1a06706eb070c44e608eaf833426ee88",
+      "target": {
+        "file": "parameter_boundary.py",
+        "line": 5,
+        "column": 11,
+        "end_line": 5,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "aliased_random",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The import binds rnd to os.urandom before its use.",
+      "source_sha256": "9dc1b57d5a44ff376eea4122961477169def199ee117bf0f2d4e9b8b03014afe",
+      "target": {
+        "file": "aliased_random.py",
+        "line": 6,
+        "column": 11,
+        "end_line": 6,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "literal_final_assignment",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The final assignment before the target replaces the random-derived value with a literal.",
+      "source_sha256": "af7cd29ce5ab6a6171196901e51eb613d0167eb0816dc1a63b06eb428d574267",
+      "target": {
+        "file": "literal_final_assignment.py",
+        "line": 7,
+        "column": 11,
+        "end_line": 7,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "wrapper_random",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The same-file helper returns os.urandom(16), fixing the upstream category under the intended standard-library API contract.",
+      "source_sha256": "691e02b440b1c7fcb2d60d800083cf352cbdb91611e102ea3eed60dc42da181b",
+      "target": {
+        "file": "wrapper_random.py",
+        "line": 9,
+        "column": 11,
+        "end_line": 9,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "pyca_literal",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The local key is the preceding byte literal.",
+      "source_sha256": "2a9d69c9a509c397bb0b3ad70b478c5051e0b86888a0037da4a489de29d4d904",
+      "target": {
+        "file": "pyca_literal.py",
+        "line": 6,
+        "column": 11,
+        "end_line": 6,
+        "end_column": 30
+      },
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES"
+    },
+    {
+      "case_id": "pyca_secrets",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The key comes from the nominal secrets.token_bytes binding.",
+      "source_sha256": "04d3d39d9d24bc1f1342293d8515eeb86ab884644ba7be129a9e476094539c3d",
+      "target": {
+        "file": "pyca_secrets.py",
+        "line": 7,
+        "column": 11,
+        "end_line": 7,
+        "end_column": 30
+      },
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES"
+    },
+    {
+      "case_id": "pyca_environment",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "external_configuration"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "Environment contents are encoded, without determining their deployment origin or entropy.",
+      "source_sha256": "158aff433794b2eaa88b9c88b967b388c1d6356dc2d7f541085b500abf18932c",
+      "target": {
+        "file": "pyca_environment.py",
+        "line": 7,
+        "column": 11,
+        "end_line": 7,
+        "end_column": 22
+      },
+      "target_api": "cryptography.hazmat.primitives.ciphers.aead.AESGCM"
+    },
+    {
+      "case_id": "environment_default",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "external_configuration",
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "may",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The environment read can use the literal default; both categories remain possible.",
+      "source_sha256": "bb33ec2c7b0f2db974fc66391cab319e0bc22f00101004a17d74473883b812df",
+      "target": {
+        "file": "environment_default.py",
+        "line": 7,
+        "column": 11,
+        "end_line": 7,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "partial_parameter",
+      "proposed_reference": {
+        "status": "partial",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": false,
+        "modality": "may",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "One branch is random-derived; the supplied parameter leaves the other origin unknown.",
+      "source_sha256": "a0086d689d5730cd8956557bffa2975c5052540f80393ffe2f0035a2d568cc8e",
+      "target": {
+        "file": "partial_parameter.py",
+        "line": 7,
+        "column": 11,
+        "end_line": 7,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "conditional_sources",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "may",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The unknown boolean chooses random bytes or a byte literal.",
+      "source_sha256": "b94b9f5efb8f6e84bb813dceef8f501a552321d88d8e7feced611aac133fa7b0",
+      "target": {
+        "file": "conditional_sources.py",
+        "line": 7,
+        "column": 11,
+        "end_line": 7,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "keyword_key",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "return_value"
+      },
+      "source_inspection_rationale": "The explicit key keyword is the os.urandom result.",
+      "source_sha256": "6800bb819fc265da8d7ec251cecacdb58aed6d87bbd6253d3c8a5ad59b5bfb82",
+      "target": {
+        "file": "keyword_key.py",
+        "line": 6,
+        "column": 11,
+        "end_line": 6,
+        "end_column": 57
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "constructor_alias",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "return_value"
+      },
+      "source_inspection_rationale": "The GCM import alias identifies AESGCM and consumes the direct random result.",
+      "source_sha256": "98028bdbdc2b3a5708649d8e29e06322f1425f76767a87cc8faaa672b6507371",
+      "target": {
+        "file": "constructor_alias.py",
+        "line": 6,
+        "column": 11,
+        "end_line": 6,
+        "end_column": 30
+      },
+      "target_api": "cryptography.hazmat.primitives.ciphers.aead.AESGCM"
+    },
+    {
+      "case_id": "rng_function_alias",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The local rng name is assigned the os.urandom function before use.",
+      "source_sha256": "21d4a5d39d8dbc04ef78675cbbb036fb43309d48fd8adddcf13ff38428a1fa5a",
+      "target": {
+        "file": "rng_function_alias.py",
+        "line": 8,
+        "column": 11,
+        "end_line": 8,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "unsupported_loop",
+      "proposed_reference": {
+        "status": "abstained",
+        "origins": [],
+        "origin_set_complete": false,
+        "modality": "unknown",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The declared interpreter subset does not analyze general loops; the reference requests an explicit unknown rather than a complete set.",
+      "source_sha256": "d742258be43d0b9b3f508ead08eadeb2040eabb012c371a386732d119ed84d12",
+      "target": {
+        "file": "unsupported_loop.py",
+        "line": 9,
+        "column": 11,
+        "end_line": 9,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "external_factory",
+      "proposed_reference": {
+        "status": "abstained",
+        "origins": [],
+        "origin_set_complete": false,
+        "modality": "unknown",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The imported factory has no body in this corpus; an upstream origin cannot be established.",
+      "source_sha256": "e602feda2e62e5d0b216f3684a467adb38590cd1019fcc8c121e3a585961c079",
+      "target": {
+        "file": "external_factory.py",
+        "line": 7,
+        "column": 11,
+        "end_line": 7,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "shadowed_rng_module",
+      "proposed_reference": {
+        "status": "abstained",
+        "origins": [],
+        "origin_set_complete": false,
+        "modality": "unknown",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The os parameter is not a verified standard-library import.",
+      "source_sha256": "c57647ec577f977ebc1c7949de2955b59831db5a988e064e6214d0b61071b1f4",
+      "target": {
+        "file": "shadowed_rng_module.py",
+        "line": 6,
+        "column": 11,
+        "end_line": 6,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "wrapper_actual_parameter",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The same-file identity helper returns its random-derived actual argument; source inspection does not require a graph witness.",
+      "source_sha256": "0aff507cdfbc664027b59158173d9a1c78de652366187adebc03753997a3380c",
+      "target": {
+        "file": "wrapper_actual_parameter.py",
+        "line": 11,
+        "column": 11,
+        "end_line": 11,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "wrapper_early_return",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "may",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The helper can return either random bytes or a literal depending on its boolean parameter.",
+      "source_sha256": "cd14f8627afd8925df195e3cb8f1e6be10425ba22056fe4734133f8613ca297a",
+      "target": {
+        "file": "wrapper_early_return.py",
+        "line": 13,
+        "column": 11,
+        "end_line": 13,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "dynamic_keywords",
+      "proposed_reference": {
+        "status": "abstained",
+        "origins": [],
+        "origin_set_complete": false,
+        "modality": "unknown",
+        "immediate_boundary": "expression"
+      },
+      "source_inspection_rationale": "The mapping argument does not expose a statically bound key value.",
+      "source_sha256": "e34601f7cd46805218164358c07c72e37d7f13684ebe09c7d5a9fb96ae17a9a0",
+      "target": {
+        "file": "dynamic_keywords.py",
+        "line": 5,
+        "column": 11,
+        "end_line": 5,
+        "end_column": 29
+      },
+      "target_api": "Crypto.Cipher.AES.new"
+    },
+    {
+      "case_id": "pyca_parameter",
+      "proposed_reference": {
+        "status": "abstained",
+        "origins": [],
+        "origin_set_complete": false,
+        "modality": "unknown",
+        "immediate_boundary": "parameter"
+      },
+      "source_inspection_rationale": "No caller context determines the ultimate origin of the key parameter.",
+      "source_sha256": "f632b3e6703c2e20563c7c8c9179d7da29d6516db8bee65affaa4ae8f6a72f94",
+      "target": {
+        "file": "pyca_parameter.py",
+        "line": 5,
+        "column": 11,
+        "end_line": 5,
+        "end_column": 22
+      },
+      "target_api": "cryptography.hazmat.primitives.ciphers.aead.AESGCM"
+    },
+    {
+      "case_id": "kdf_random_salt",
+      "source_sha256": "b349ac6221f49df02716eaf7539d502811ba1788da9e314687f7b7930904f2b8",
+      "target": {
+        "file": "kdf_random_salt.py",
+        "line": 11,
+        "column": 11,
+        "end_line": 11,
+        "end_column": 22
+      },
+      "target_api": "cryptography.hazmat.primitives.ciphers.aead.AESGCM",
+      "proposed_reference": {
+        "status": "abstained",
+        "origins": [],
+        "origin_set_complete": false,
+        "modality": "unknown",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The key is produced by an unmodeled password KDF. Dependence on a random salt does not make its bytes a direct CSPRNG API result."
+    },
+    {
+      "case_id": "unrelated_random",
+      "source_sha256": "9a3c95432633e3540eee43d051a86eb9325b03834c86fbb3be0cbd679856609c",
+      "target": {
+        "file": "unrelated_random.py",
+        "line": 8,
+        "column": 11,
+        "end_line": 8,
+        "end_column": 37
+      },
+      "target_api": "Crypto.Cipher.AES.new",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The unused random value does not reach the key assignment; the key is a byte literal."
+    },
+    {
+      "case_id": "pyca_nested_constructor",
+      "source_sha256": "b00c5e2d4a769ea92b110d10b9ff59581c441b71a100b62eb446f97969a36450",
+      "target": {
+        "file": "pyca_nested_constructor.py",
+        "line": 8,
+        "column": 18,
+        "end_line": 8,
+        "end_column": 37
+      },
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "proposed_reference": {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "origin_set_complete": true,
+        "modality": "must",
+        "immediate_boundary": "local_assignment"
+      },
+      "source_inspection_rationale": "The nested AES constructor receives the local os.urandom-derived key before the outer Cipher call."
+    }
+  ]
+}

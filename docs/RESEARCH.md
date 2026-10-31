@@ -52,7 +52,7 @@ duplication must not increase the denominator. Each proposed claim record needs:
   dependency/actual-formal binding path used in the derivation;
 - unresolved reasons and relevant assumptions.
 
-The bounded v0.1 research implementation now supplies this contract separately;
+The bounded v0.2 research implementation now supplies this contract separately;
 see [the contract, limits and review workflow](../research/python-key-origin/CONTRACT.md).
 It initially supports literal, recognized CSPRNG API and environment categories;
 KDF provenance and general Python semantics are not implemented. The legacy

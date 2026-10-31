@@ -26,7 +26,7 @@ def require_blank_review_population(packet):
 
 
 def validate_review_sources(packet, source_root):
-    if packet.get('analysis_model') != MODEL:
+    if packet.get('analysis_model') not in {MODEL,'python-key-origin-subset-v0.1'}:
         raise ValueError('Review population uses a different analysis model')
     entries=packet['cases']
     if not entries or len({entry['case_id'] for entry in entries})!=len(entries):

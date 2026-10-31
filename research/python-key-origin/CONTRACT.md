@@ -1,4 +1,4 @@
-# Key-origin contract and review workflow v0.1
+# Key-origin contract and review workflow v0.2
 
 The bounded interpreter in `src/cryptograph/key_origin.py` parses source without
 importing or executing target code. Its records are separate research outputs;
@@ -8,6 +8,7 @@ normal CLI CBOM/risk behavior remains the existing baseline.
 
 | Field | Meaning |
 | --- | --- |
+| `analysis_model` | `python-key-origin-subset-v0.2`; older semantic models must not be mixed into a current score. Record format `schema_version` remains `0.1`. |
 | `operation_id`, `target` | A source call/key role with line and UTF-8 byte-column span. Two calls on one line remain distinct. This pilot uses unique file basenames. |
 | `source_sha256` | Hash of raw source bytes, including line endings. |
 | `immediate_boundary` | Literal, assignment, parameter, return value or expression, distinct from ultimate origin. |
@@ -39,11 +40,55 @@ are assumptions. External monkey patching, import hooks, concurrent mutation and
 feasible-path proofs are outside the model. May sets are abstract alternatives;
 path correlations are not solved.
 
-Unknown effects, explicit attribute writes, unsupported control and dynamic
-arguments cause conservative unknowns. Classes/methods, cross-module wrappers,
-general loops/try/match and decorated/defaulted wrapper expansion are unsupported.
+Unknown effects, explicit namespace/API mutation, unsupported control and dynamic
+arguments cause conservative unknowns. Cross-module value recovery, general
+loops/try/match and decorated wrapper expansion remain unsupported.
 These restrictions can substantially reduce coverage. Missing target support
 must be reported separately from an explicit abstention.
+
+### v0.2 binding and effect rules
+
+The model changed because additional assumptions support narrower effect
+barriers. Historical v0.1 observations are preserved; the change is not a
+validated accuracy improvement.
+
+- A limited `try/except` import join retains a unique nominal API when other
+  alternatives are genuinely unbound. This is conditional on successful lookup,
+  not a claim that import success or the target is reachable. Handler states
+  include partial try-body prefixes and exception-name cleanup. Conflicting
+  bound fallbacks remain ambiguous. General exception effects still force
+  ultimate-origin abstention; `else`/`finally` are not solved.
+- Plain class declarations do not execute method bodies at module initialization.
+  Bases, metaclass keywords, decorators, eager complex annotations and effectful
+  defaults remain barriers. Visible method targets receive an explicit
+  `unsupported_method_context` abstention; this is not method value-flow analysis.
+- Selected builtin operations (`len`, `bytes`, `str`, `range`, arithmetic and
+  comparisons) have binding-effect contracts **assuming plain builtin data**,
+  including recursively plain values when conversion/iteration inspects them.
+  Custom subclasses, overloaded operators, protocol callbacks, destructors and
+  arbitrary object behavior are outside these contracts. Parameters are not
+  runtime type-checked by this static experiment.
+- Source-visible helpers may receive a bounded no-caller-binding-mutation
+  summary without a CALLS witness. The summary checks source reaching bindings,
+  primitive local operations and selected nominal RNG/pyca Hash operations.
+  `Hash.update` changes its own hash context; that is distinct from changing
+  caller API/name bindings. Hash constructors, recognized hash algorithms,
+  backend construction and update/finalize behavior are **assumed API
+  contracts**, not a Python purity proof. Their documented interfaces are in
+  [pyca's hash documentation](https://cryptography.io/en/latest/hazmat/primitives/cryptographic-hashes/).
+  Global/nonlocal writes, unknown calls, object/subscript writes and unsupported
+  effects reject the summary. Recursion and expansion have finite limits.
+- These certificates retain source spans, import bindings and contract names.
+  A helper's unknown return remains unknown. A hash/KDF input derived from a
+  random salt does not become a `csprng_api` key. Return-origin expansion still
+  requires source binding plus a directed CALLS witness. A later independent
+  `os.urandom(32)` assignment can now resolve under the declared model.
+
+Claims assume module-initialization entry state, nominal unmodified libraries
+and no earlier unmodeled entry-point mutation/reflection. Ignoring ordinary
+`self` field writes while assessing unrelated class declarations does not ignore
+recognized API writes or explicit namespace mutation. These restrictions must
+be checked against human references before interpreting coverage as usefulness.
 
 The auditor checks raw source identity, AST spans, evidence closure/cycles,
 disconnected steps, local assignments after a target and graph witnesses against
@@ -70,6 +115,13 @@ the added value of DFG recovery.
 ## Independent review and scoring
 
 No independent review is recorded. All 27 designed cases are development data.
+
+Blank active packets and assistant proposals use v0.2. Their prior versions and
+schema are preserved in the repository's `research/python-key-origin/model-v1/`
+directory; no human review was
+automatically relabeled. Old downloaded forms can be source-audited against
+their original packet, but cannot be silently reused for v0.2 scoring. Newly
+prepared packets require the current model/contract pair.
 
 - `review-template.json` holds source hashes, spans, families and empty review slots.
 - `review-proposals.json` holds separate assistant-generated source-inspection

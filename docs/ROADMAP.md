@@ -39,8 +39,11 @@ programs. Report detection separately from
 context accuracy, abstention, unsupported claims and fallback/coverage rates.
 
 The [method integrity audit](research/METHOD-AUDIT-2026-10-30.md) records later
-source-semantics and failure-isolation checks. Useful complete origin coverage on
-real development data is still missing; refine that method before a held-out run.
+source-semantics and failure-isolation checks. The
+[v0.2 coverage fixes](research/COVERAGE-FIXES-2026-10-30.md) recover one complete
+origin and two missed API bindings at 19 development sites under explicit model
+assumptions. Eighteen origins remain unresolved; improve and source-review the
+method before a held-out run.
 
 ## 4. Held-out evidence-policy evaluation
 

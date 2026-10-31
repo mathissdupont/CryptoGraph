@@ -1,0 +1,282 @@
+{
+  "analysis_model": "python-key-origin-subset-v0.1",
+  "status": "candidate_inventory_not_ground_truth",
+  "cases": [
+    {
+      "case_id": "matrix_nio:src/nio/crypto/attachments.py:71:17",
+      "project": "matrix_nio",
+      "source": "matrix_nio/src/nio/crypto/attachments.py",
+      "source_sha256": "bf2a44c39dc1dc036418e70294dc5c5cb7bb9a9ed389b65f359c9ef389af7d0e",
+      "split": "development",
+      "scenario_family": "matrix_nio",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "attachments.py",
+        "line": 71,
+        "column": 17,
+        "end_line": 71,
+        "end_column": 61
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "matrix_nio:src/nio/crypto/attachments.py:123:13",
+      "project": "matrix_nio",
+      "source": "matrix_nio/src/nio/crypto/attachments.py",
+      "source_sha256": "bf2a44c39dc1dc036418e70294dc5c5cb7bb9a9ed389b65f359c9ef389af7d0e",
+      "split": "development",
+      "scenario_family": "matrix_nio",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "attachments.py",
+        "line": 123,
+        "column": 13,
+        "end_line": 123,
+        "end_column": 52
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "matrix_nio:src/nio/crypto/key_export.py:87:13",
+      "project": "matrix_nio",
+      "source": "matrix_nio/src/nio/crypto/key_export.py",
+      "source_sha256": "284813134f2c3b5bc8dbb06a1e3713bfbf86f761c4d243df542e6c4122dde630",
+      "split": "development",
+      "scenario_family": "matrix_nio",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "key_export.py",
+        "line": 87,
+        "column": 13,
+        "end_line": 87,
+        "end_column": 56
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "matrix_nio:src/nio/crypto/key_export.py:132:13",
+      "project": "matrix_nio",
+      "source": "matrix_nio/src/nio/crypto/key_export.py",
+      "source_sha256": "284813134f2c3b5bc8dbb06a1e3713bfbf86f761c4d243df542e6c4122dde630",
+      "split": "development",
+      "scenario_family": "matrix_nio",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "key_export.py",
+        "line": 132,
+        "column": 13,
+        "end_line": 132,
+        "end_column": 56
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyaescrypt:pyAesCrypt/crypto.py:137:21",
+      "project": "pyaescrypt",
+      "source": "pyaescrypt/pyAesCrypt/crypto.py",
+      "source_sha256": "a6e0140577c4163e7db480188d55d600563c6ac86a55ed665a6447bf64eaf0c6",
+      "split": "development",
+      "scenario_family": "pyaescrypt",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "crypto.py",
+        "line": 137,
+        "column": 21,
+        "end_line": 137,
+        "end_column": 43
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyaescrypt:pyAesCrypt/crypto.py:144:21",
+      "project": "pyaescrypt",
+      "source": "pyaescrypt/pyAesCrypt/crypto.py",
+      "source_sha256": "a6e0140577c4163e7db480188d55d600563c6ac86a55ed665a6447bf64eaf0c6",
+      "split": "development",
+      "scenario_family": "pyaescrypt",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "crypto.py",
+        "line": 144,
+        "column": 21,
+        "end_line": 144,
+        "end_column": 40
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyaescrypt:pyAesCrypt/crypto.py:359:21",
+      "project": "pyaescrypt",
+      "source": "pyaescrypt/pyAesCrypt/crypto.py",
+      "source_sha256": "a6e0140577c4163e7db480188d55d600563c6ac86a55ed665a6447bf64eaf0c6",
+      "split": "development",
+      "scenario_family": "pyaescrypt",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "crypto.py",
+        "line": 359,
+        "column": 21,
+        "end_line": 359,
+        "end_column": 40
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyaescrypt:pyAesCrypt/crypto.py:370:21",
+      "project": "pyaescrypt",
+      "source": "pyaescrypt/pyAesCrypt/crypto.py",
+      "source_sha256": "a6e0140577c4163e7db480188d55d600563c6ac86a55ed665a6447bf64eaf0c6",
+      "split": "development",
+      "scenario_family": "pyaescrypt",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "crypto.py",
+        "line": 370,
+        "column": 21,
+        "end_line": 370,
+        "end_column": 43
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "secretstorage:secretstorage/util.py:139:10",
+      "project": "secretstorage",
+      "source": "secretstorage/secretstorage/util.py",
+      "source_sha256": "27fb5961725356fef911216ebca62396d89d36bb7b7db4418703340b4f2a6cb8",
+      "split": "development",
+      "scenario_family": "secretstorage",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "util.py",
+        "line": 139,
+        "column": 10,
+        "end_line": 139,
+        "end_column": 41
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "secretstorage:secretstorage/item.py:115:14",
+      "project": "secretstorage",
+      "source": "secretstorage/secretstorage/item.py",
+      "source_sha256": "6fb16519c5849830b5cdf10288ce79ac9d707b687af3836c55991652657fcc37",
+      "split": "development",
+      "scenario_family": "secretstorage",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "item.py",
+        "line": 115,
+        "column": 14,
+        "end_line": 115,
+        "end_column": 50
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "ansible:lib/ansible/parsing/vault/__init__.py:1165:26",
+      "project": "ansible",
+      "source": "ansible/lib/ansible/parsing/vault/__init__.py",
+      "source_sha256": "22f1f7597eaa617b250c8717f679734b801b29ef25033f4225620f32797bf849",
+      "split": "development",
+      "scenario_family": "ansible",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "__init__.py",
+        "line": 1165,
+        "column": 26,
+        "end_line": 1165,
+        "end_column": 48
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "ansible:lib/ansible/parsing/vault/__init__.py:1223:26",
+      "project": "ansible",
+      "source": "ansible/lib/ansible/parsing/vault/__init__.py",
+      "source_sha256": "22f1f7597eaa617b250c8717f679734b801b29ef25033f4225620f32797bf849",
+      "split": "development",
+      "scenario_family": "ansible",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "__init__.py",
+        "line": 1223,
+        "column": 26,
+        "end_line": 1223,
+        "end_column": 48
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    }
+  ]
+}

@@ -19,6 +19,18 @@ def review_data(tmp_path):
     return tmp_path,population,submitted
 
 
+def test_historical_review_source_audit_keeps_its_model(review_data):
+    root,population,submitted=review_data
+    population['analysis_model']='python-key-origin-subset-v0.1'
+    submitted['analysis_model']='python-key-origin-subset-v0.1'
+    validate_review_sources(population,root)
+    assert audit_review(population,submitted)['completed']==1
+    assert submitted['analysis_model']=='python-key-origin-subset-v0.1'
+    submitted['analysis_model']='python-key-origin-subset-v0.2'
+    with pytest.raises(ValueError):
+        audit_review(population,submitted)
+
+
 def independent(submitted):
     result=copy.deepcopy(submitted);result['review_form_role']='independent'
     review=result['cases'][0].pop('author_review');review['reviewer_role']='independent';review['reviewer']='unit-fixture-independent'

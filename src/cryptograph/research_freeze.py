@@ -14,6 +14,8 @@ def candidate_fingerprint(packet):
 
 def check_freeze(freeze, packet, root: Path, require_review=True):
     root=root.resolve()
+    if freeze.get('analysis_model') is not None and packet.get('analysis_model')!=freeze['analysis_model']:
+        raise ValueError('Frozen method and annotation analysis models differ')
     for name,expected in freeze['method_inputs_sha256'].items():
         path=(root/name).resolve()
         if not path.is_relative_to(root) or hashlib.sha256(path.read_bytes().replace(b'\r\n',b'\n')).hexdigest()!=expected:

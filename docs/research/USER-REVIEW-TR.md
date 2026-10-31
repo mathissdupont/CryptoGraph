@@ -6,7 +6,7 @@ atamalardan geldiğini okuyup gerekçesiyle kaydetme işi.
 
 ## Senin ilk yapacağın iş
 
-1. `output/research-author-start/review.html` dosyasını tarayıcıda aç. İlk paket
+1. `output/research-author-start-v2/review.html` dosyasını tarayıcıda aç. İlk paket
    yalnızca dört küçük geliştirme örneği içeriyor; gerçek proje paketinden önce
    terimleri ve formu birlikte kontrol edeceğiz.
 2. Adını veya sabit bir takma adını yaz. Her örnekte sarıyla gösterilen çağrıyı,
@@ -44,13 +44,13 @@ salt bağımlılığı, doğrudan rastgele anahtar kaynağıyla aynı şey deği
 ## Sonraki adımlar
 
 - İlk dört kaydın alanlarını ve gerekçelerini birlikte kontrol ettikten sonra
-  `output/expanded-author-review/review.html` içindeki 19 gerçek geliştirme
+  `output/expanded-author-review-v2/review.html` içindeki 19 gerçek geliştirme
   adayını inceleyebiliriz. Bu notlar analiz kapsamındaki eksikleri geliştirmek
   içindir; bağımsız doğruluk sonucu olarak sunulmaz.
 - Kaynak kod okuyabilecek ikinci bir kişiyle bağımsız kontrol gerekir. Lisans
   öğrencisi, araştırma arkadaşı veya uygun bir danışman olabilir. Deneyimini ve
   önceki analiz sonuçlarını görüp görmediğini kaydedelim. Bu kişinin paketi
-  `output/expanded-independent-review/` altında, 33 ayrılmış adayla hazırdır.
+  `output/expanded-independent-review-v2/` altında, 33 ayrılmış adayla hazırdır.
   Paket hiçbir kişiye gönderilmedi. Kendi doldurduğun dosyayı bağımsız inceleme
   olarak yeniden adlandırmak uygun değildir.
 - Bağımsız kayıtlar gelince API uygunluğu, kaynak kategorileri ve anlaşmazlıkları
@@ -81,5 +81,5 @@ karıştırmayacağız.
 Örnek kullanım (çıktı için yeni dosya adı kullanılır):
 
 ```powershell
-python scripts/audit-key-origin-reviews.py --annotations output/research-author-start/annotations.json --source-root output/research-author-start/sources --review output/project_author-review.json --output output/author-review-audit.json
+python scripts/audit-key-origin-reviews.py --annotations output/research-author-start-v2/annotations.json --source-root output/research-author-start-v2/sources --review output/project_author-review.json --output output/author-review-audit.json
 ```

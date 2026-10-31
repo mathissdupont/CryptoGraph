@@ -16,9 +16,10 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from cryptograph.models import GraphEdge, NormalizedGraph
+from cryptograph.key_effects import PRIMITIVE_CALLS, binding_effect_summary, plain_class, safe_default
 
 
-MODEL = "python-key-origin-subset-v0.1"
+MODEL = "python-key-origin-subset-v0.2"
 TARGETS = {
     "Crypto.Cipher.AES.new", "Cryptodome.Cipher.AES.new",
     "cryptography.hazmat.primitives.ciphers.algorithms.AES",
@@ -31,6 +32,9 @@ ASSUMPTIONS = [
     "Recognized library APIs obey their documented source/return contracts.",
     "No external monkey patching, concurrent mutation or import hooks are modeled.",
     "A claim is conditional on the target call being reached and its inputs being valid.",
+    "Supported primitive guards/effect contracts use plain builtin inputs; custom special-method effects are outside this model.",
+    "Function entries use module-initialization state; prior unmodeled entry-point mutations and reflective namespace mutation are outside the model.",
+    "A unique imported binding with an unbound alternative denotes that API conditional on successful lookup and target execution.",
 ]
 
 
@@ -56,7 +60,7 @@ class EvidenceStep(BaseModel):
 class KeyOriginClaim(BaseModel):
     model_config = ConfigDict(extra="forbid")
     schema_version: Literal["0.1"] = "0.1"
-    analysis_model: Literal["python-key-origin-subset-v0.1"] = MODEL
+    analysis_model: Literal["python-key-origin-subset-v0.2"] = MODEL
     operation_id: str
     target_api: str
     target: Span
@@ -108,15 +112,17 @@ class Value:
     evidence: tuple[str, ...] = ()
     reasons: frozenset[str] = frozenset()
     boundary: str = "expression"
+    primitive: bool = False
 
 
 @dataclass
 class State:
     env: dict[str, Value]
     blockers: set[str] = field(default_factory=set)
+    effects: tuple[str, ...] = ()
 
     def copy(self):
-        return State(dict(self.env), set(self.blockers))
+        return State(dict(self.env), set(self.blockers), self.effects)
 
 
 def analyze_key_origins(path: Path, graph: NormalizedGraph | None = None) -> list[KeyOriginClaim]:
@@ -145,14 +151,31 @@ class _Analyzer:
         self.steps: dict[str, EvidenceStep] = {}
         self.targets: dict[tuple[int, int], tuple[ast.Call, str, list[Value]]] = {}
         self.functions = {node.name: node for node in self.tree.body if isinstance(node, ast.FunctionDef)}
-        self.module = State({name: Value(symbol=f"builtin:{name}") for name in ("bytes", "str")})
+        self.class_functions = {f'{node.name}.{member.name}':member for node in self.tree.body if isinstance(node,ast.ClassDef)
+                                for member in node.body if isinstance(member,ast.FunctionDef)}
+        self.function_definitions = dict(self.functions,**self.class_functions)
+        self.module = State({name: Value(symbol=f"builtin:{name}") for name in ("bytes", "str", "len", "range")})
         self.active: list[str] = []
-        # Explicit attribute writes can invalidate imported APIs, even if they
-        # occur in a function. This conservative check is intentionally broad.
+        harmless=set()
+        critical={'urandom','token_bytes','AES','AESGCM','new','getenv','environ','get','Hash','update','finalize','default_backend','SHA256'}
+        for cls in self.tree.body:
+            if not isinstance(cls,ast.ClassDef) or not plain_class(cls,self.postponed_annotations):continue
+            if any(isinstance(member,ast.FunctionDef) and member.name in {'__setattr__','__getattribute__','__getattr__'} for member in cls.body):continue
+            for member in cls.body:
+                if not isinstance(member,ast.FunctionDef) or not member.args.args:continue
+                receiver=member.args.args[0].arg
+                for node in ast.walk(member):
+                    if isinstance(node,ast.Attribute) and isinstance(node.value,ast.Name) and node.value.id==receiver and node.attr not in critical:
+                        harmless.add(id(node))
         self.attribute_mutation = any(
             isinstance(node, ast.Attribute) and isinstance(node.ctx, (ast.Store, ast.Del))
+            and id(node) not in harmless
             for node in ast.walk(self.tree)
         )
+        self.namespace_mutation = any(isinstance(node,(ast.Global,ast.Nonlocal)) or
+            isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id in {'exec','eval','globals','locals','vars','setattr','delattr','__import__'} or
+            isinstance(node,ast.Attribute) and node.attr in {'__dict__','__globals__','f_globals','f_locals','_getframe','currentframe'}
+            for node in ast.walk(self.tree))
 
     def span(self, node: ast.AST) -> Span:
         return Span(file=self.path.name, line=node.lineno, column=node.col_offset,
@@ -173,33 +196,42 @@ class _Analyzer:
         if not values:
             return self.unknown(node, "no_reaching_value")
         symbols = {value.symbol for value in values}
+        nonempty={value.symbol for value in values if value.symbol is not None}
+        conditional = len(nonempty)==1 and all(value.symbol is not None or not value.origins and value.reasons in {frozenset({'unbound_branch'}),frozenset({'unbound_local'})} for value in values)
         boundaries = {value.boundary for value in values}
         return Value(
             origins=frozenset().union(*(value.origins for value in values)),
             complete=all(value.complete for value in values),
-            symbol=next(iter(symbols)) if len(symbols) == 1 else None,
+            symbol=next(iter(symbols)) if len(symbols) == 1 else next(iter(nonempty)) if conditional else None,
             evidence=self.step(node, kind, "merge alternatives", [item for value in values for item in value.evidence]),
-            reasons=frozenset().union(*(value.reasons for value in values)),
+            reasons=frozenset().union(*(value.reasons for value in values)) | (frozenset({'ambiguous_binding'}) if len(nonempty)>1 else frozenset()),
             boundary=next(iter(boundaries)) if len(boundaries) == 1 else "expression",
+            primitive=all(value.primitive for value in values),
         )
 
     def analyze(self) -> list[KeyOriginClaim]:
+        if self.attribute_mutation:self.module.blockers.add('explicit_attribute_mutation')
+        if self.namespace_mutation:self.module.blockers.add('explicit_namespace_mutation')
         state, _ = self.block(self.tree.body, self.module.copy(), None, capture=True)
         if state is None:
             # No normal module initialization reaches the function-entry model.
             return [self.claim(*value) for _, value in sorted(self.targets.items())]
         self.module = state
-        for function in self.functions.values():
-            if function.decorator_list:
+        for name,function in self.function_definitions.items():
+            method=name in self.class_functions
+            if function.decorator_list and not method:
                 continue
             env = self.local_env(function, self.module.env)
             for argument in [*function.args.posonlyargs, *function.args.args, *function.args.kwonlyargs]:
-                env[argument.arg] = self.unknown(argument, "parameter_boundary", "parameter")
+                value=self.unknown(argument, "parameter_boundary", "parameter")
+                env[argument.arg] = Value(evidence=value.evidence,reasons=value.reasons,boundary='parameter',primitive=True)
             blockers = set(self.module.blockers)
             if self.attribute_mutation:
                 blockers.add("explicit_attribute_mutation")
-            self.active = [function.name]
-            self.block(function.body, State(env, blockers), function.name, capture=True)
+            if self.namespace_mutation:blockers.add('explicit_namespace_mutation')
+            if method:blockers.add('unsupported_method_context')
+            self.active = [name]
+            self.block(function.body, State(env, blockers,self.module.effects), name, capture=True)
         return [self.claim(*value) for _, value in sorted(self.targets.items())]
 
     def local_env(self, function: ast.FunctionDef, globals_: dict[str, Value]) -> dict[str, Value]:
@@ -246,8 +278,10 @@ class _Analyzer:
                     state.env[name] = Value(symbol=symbol, evidence=self.step(statement, "import_binding", f"{name}={symbol}"))
             elif isinstance(statement, ast.FunctionDef):
                 defaults = [*statement.args.defaults, *[value for value in statement.args.kw_defaults if value is not None]]
-                annotations = [statement.returns, *[argument.annotation for argument in [*statement.args.posonlyargs, *statement.args.args, *statement.args.kwonlyargs]]]
-                if statement.decorator_list or any(not isinstance(value, ast.Constant) for value in defaults):
+                parameters=[*statement.args.posonlyargs,*statement.args.args,*statement.args.kwonlyargs]
+                parameters.extend(arg for arg in (statement.args.vararg,statement.args.kwarg) if arg is not None)
+                annotations = [statement.returns, *[argument.annotation for argument in parameters]]
+                if statement.decorator_list or any(not safe_default(value) for value in defaults):
                     state.blockers.add("unsupported_definition_effect")
                 if not self.postponed_annotations and any(value is not None and not isinstance(value, (ast.Name, ast.Constant)) for value in annotations):
                     state.blockers.add("unsupported_definition_annotation")
@@ -255,6 +289,15 @@ class _Analyzer:
                     state.env[statement.name] = Value(symbol=f"local:{statement.name}", evidence=self.step(statement, "function_binding", statement.name))
                 else:
                     state.env[statement.name] = self.unknown(statement, "unsupported_function_binding")
+            elif isinstance(statement,ast.ClassDef):
+                harmless=plain_class(statement,self.postponed_annotations)
+                if not harmless:
+                    state.blockers.add('unsupported_statement:ClassDef')
+                    body_state,_=self.block(statement.body,state.copy(),f'class:{statement.name}',capture)
+                    if body_state is not None:state.blockers.update(body_state.blockers)
+                else:
+                    state.effects+=self.step(statement,'class_definition_effect','Plain class declaration; method bodies are not module-initialization effects.')
+                state.env[statement.name]=Value(symbol='class:'+statement.name,evidence=self.step(statement,'class_binding',statement.name))
             elif isinstance(statement, (ast.Assign, ast.AnnAssign)):
                 if isinstance(statement, ast.AnnAssign) and caller is None and not self.postponed_annotations and not isinstance(statement.annotation, (ast.Name, ast.Constant)):
                     state.blockers.add("unsupported_module_annotation")
@@ -263,7 +306,7 @@ class _Analyzer:
                 for target in targets:
                     if isinstance(target, ast.Name):
                         state.env[target.id] = Value(value.origins, value.complete, value.symbol,
-                            self.step(statement, "assignment", target.id, value.evidence), value.reasons, "local_assignment")
+                            self.step(statement, "assignment", target.id, value.evidence), value.reasons, "local_assignment",value.primitive)
                     else:
                         state.blockers.add("unsupported_assignment_target")
                         for node in ast.walk(target):
@@ -284,7 +327,35 @@ class _Analyzer:
                     return None, returns
                 names = set().union(*(set(item.env) for item in continuations))
                 state = State({name: self.combine(statement, [item.env.get(name) or self.unknown(statement, "unbound_branch") for item in continuations]) for name in names},
-                              set().union(*(item.blockers for item in continuations)))
+                              set().union(*(item.blockers for item in continuations)),
+                              tuple(sorted({identifier for item in continuations for identifier in item.effects})))
+            elif isinstance(statement,ast.Try) and not statement.finalbody and not statement.orelse:
+                # Prefix states overapproximate where an exception can occur;
+                # handler bindings cannot be assumed to start before the try.
+                state.blockers.add('unsupported_exception_flow')
+                prefixes=[state.copy()];normal=state.copy();normal_returns=[]
+                for part in statement.body:
+                    if normal is None:break
+                    normal,produced=self.block([part],normal,caller,capture)
+                    normal_returns.extend(produced)
+                    if normal is not None:prefixes.append(normal.copy())
+                names=set().union(*(set(item.env) for item in prefixes))
+                exceptional=State({name:self.combine(statement,[item.env.get(name) or self.unknown(statement,'unbound_branch') for item in prefixes]) for name in names},
+                    set().union(*(item.blockers for item in prefixes)),tuple(sorted({identifier for item in prefixes for identifier in item.effects})))
+                continuations=[normal] if normal is not None else []
+                returns.extend(normal_returns)
+                for handler in statement.handlers:
+                    branch=exceptional.copy()
+                    if handler.name:branch.env[handler.name]=self.unknown(handler,'exception_parameter')
+                    continuation,produced=self.block(handler.body,branch,caller,capture)
+                    returns.extend(produced)
+                    if continuation is not None:
+                        if handler.name:continuation.env[handler.name]=self.unknown(handler,'unbound_branch')
+                        continuations.append(continuation)
+                if not continuations:return None,returns
+                names=set().union(*(set(item.env) for item in continuations))
+                state=State({name:self.combine(statement,[item.env.get(name) or self.unknown(statement,'unbound_branch') for item in continuations]) for name in names},
+                    set().union(*(item.blockers for item in continuations)),tuple(sorted({identifier for item in continuations for identifier in item.effects})))
             elif isinstance(statement, ast.Return):
                 value = self.expr(statement.value, state, caller, capture) if statement.value else self.unknown(statement, "empty_return")
                 if state.blockers:
@@ -319,11 +390,11 @@ class _Analyzer:
 
     def expr(self, node: ast.AST, state: State, caller: str | None, capture: bool) -> Value:
         if isinstance(node, ast.Constant):
-            return Value(frozenset({"literal"}), True, evidence=self.step(node, "literal", type(node.value).__name__), boundary="literal")
+            return Value(frozenset({"literal"}), True, evidence=self.step(node, "literal", type(node.value).__name__), boundary="literal",primitive=True)
         if isinstance(node, ast.Name):
             value = state.env.get(node.id) or self.unknown(node, "unresolved_name")
             return Value(value.origins, value.complete, value.symbol,
-                         self.step(node, "name_read", node.id, value.evidence), value.reasons, value.boundary)
+                         self.step(node, "name_read", node.id, value.evidence), value.reasons, value.boundary,value.primitive)
         if isinstance(node, ast.Attribute):
             base = self.expr(node.value, state, caller, capture)
             if base.symbol:
@@ -332,13 +403,26 @@ class _Analyzer:
                 return Value(base.origins, True, symbol=f"representation:{node.attr}", evidence=base.evidence)
             state.blockers.add("unsupported_attribute_effect")
             return self.unknown(node, "unresolved_attribute", "object_field", base.evidence)
-        if isinstance(node, ast.BinOp) and isinstance(node.op, (ast.Add, ast.Mult)):
+        if isinstance(node, ast.BinOp):
             left = self.expr(node.left, state, caller, capture)
             right = self.expr(node.right, state, caller, capture)
-            if left.origins == right.origins == frozenset({"literal"}) and left.complete and right.complete:
-                return Value(frozenset({"literal"}), True, evidence=self.step(node, "literal_composition", type(node.op).__name__, left.evidence + right.evidence))
+            if isinstance(node.op,(ast.Add,ast.Mult)) and left.origins == right.origins == frozenset({"literal"}) and left.complete and right.complete:
+                return Value(frozenset({"literal"}), True, evidence=self.step(node, "literal_composition", type(node.op).__name__, left.evidence + right.evidence),primitive=True)
+            if left.primitive and right.primitive:
+                evidence=self.step(node,'primitive_guard_contract',type(node.op).__name__,left.evidence+right.evidence)
+                state.effects+=evidence
+                return Value(evidence=evidence,reasons=frozenset({'unresolved_primitive_expression'}),primitive=True)
             state.blockers.add("unsupported_composition")
             return self.unknown(node, "unsupported_composition", parents=left.evidence + right.evidence)
+        if isinstance(node,(ast.Compare,ast.UnaryOp,ast.BoolOp)):
+            operands=([node.left,*node.comparators] if isinstance(node,ast.Compare) else [node.operand] if isinstance(node,ast.UnaryOp) else node.values)
+            values=[self.expr(value,state,caller,capture) for value in operands]
+            if all(value.primitive for value in values):
+                evidence=self.step(node,'primitive_guard_contract',type(node).__name__,[parent for value in values for parent in value.evidence])
+                state.effects+=evidence
+                return Value(evidence=evidence,reasons=frozenset({'unresolved_primitive_expression'}),primitive=True)
+            state.blockers.add('unsupported_primitive_operand')
+            return self.unknown(node,'unsupported_primitive_operand')
         if isinstance(node, ast.IfExp):
             self.expr(node.test, state, caller, capture)
             if isinstance(node.test, ast.Constant) and isinstance(node.test.value, bool):
@@ -346,6 +430,7 @@ class _Analyzer:
             states = [state.copy(), state.copy()]
             values = [self.expr(node.body, states[0], caller, capture), self.expr(node.orelse, states[1], caller, capture)]
             state.blockers.update(set().union(*(item.blockers for item in states)))
+            state.effects=tuple(sorted(set().union(*(set(item.effects) for item in states))))
             return self.combine(node, values)
         if isinstance(node, ast.Subscript):
             base = self.expr(node.value, state, caller, capture)
@@ -367,7 +452,7 @@ class _Analyzer:
                     key = self.unknown(node, "duplicate_key_argument")
                 if state.blockers:
                     key = Value(evidence=key.evidence, reasons=key.reasons | frozenset(state.blockers), boundary=key.boundary)
-                key = Value(key.origins, key.complete, evidence=self.step(node, "key_argument", callee.symbol, callee.evidence + key.evidence), reasons=key.reasons, boundary=key.boundary)
+                key = Value(key.origins, key.complete, evidence=self.step(node, "key_argument", callee.symbol, callee.evidence + key.evidence + state.effects), reasons=key.reasons, boundary=key.boundary)
                 if capture:
                     site = (node.lineno, node.col_offset)
                     self.targets.setdefault(site, (node, callee.symbol, []))[2].append(key)
@@ -375,7 +460,11 @@ class _Analyzer:
             if callee.symbol in RANDOM_APIS:
                 if state.blockers:
                     return Value(evidence=callee.evidence, reasons=frozenset(state.blockers), boundary="return_value")
-                return Value(frozenset({"csprng_api"}), True, evidence=self.step(node, "api_contract", callee.symbol, callee.evidence), boundary="return_value")
+                return Value(frozenset({"csprng_api"}), True, evidence=self.step(node, "api_contract", callee.symbol, callee.evidence), boundary="return_value",primitive=True)
+            if callee.symbol in PRIMITIVE_CALLS and all(value.primitive for value in [*positional,*keywords.values()]):
+                evidence=self.step(node,'primitive_guard_contract',callee.symbol,callee.evidence+tuple(parent for value in [*positional,*keywords.values()] for parent in value.evidence))
+                state.effects+=evidence
+                return Value(evidence=evidence,reasons=frozenset({'unresolved_builtin_result'}),boundary='return_value',primitive=True)
             if callee.symbol in {"os.getenv", "os.environ.get"}:
                 configuration = Value(frozenset({"external_configuration"}), True, evidence=self.step(node, "configuration_read", callee.symbol, callee.evidence), boundary="return_value")
                 default = positional[1] if len(positional) > 1 else keywords.get("default")
@@ -394,23 +483,28 @@ class _Analyzer:
         return self.unknown(node, reason)
 
     def call_edge(self, caller: str | None, target: ast.FunctionDef):
-        if self.graph is None or caller not in self.functions:
+        if self.graph is None or caller not in self.function_definitions:
             return None
-        caller_definition = self.functions[caller]
+        caller_definition = self.function_definitions[caller]
         def same_file(node):
             value = Path(node.file)
             return value == self.path or (not value.is_absolute() and value.as_posix() == self.path.name)
         sources = {node.id for node in self.graph.nodes if node.kind == "function" and same_file(node)
-                   and node.line == caller_definition.lineno and (node.name or "").split(".")[-1] == caller}
+                   and node.line == caller_definition.lineno and (node.name or "").split(".")[-1] == caller_definition.name}
         targets = {node.id for node in self.graph.nodes if node.kind == "function" and same_file(node)
                    and node.line == target.lineno and (node.name or "").split(".")[-1] == target.name}
         return next((edge for edge in self.graph.edges if edge.kind == "CALLS" and edge.source in sources and edge.target in targets), None)
 
     def helper(self, call, name, positional, keywords, state, caller, callee):
-        function = self.functions.get(name)
+        function = self.bound_function(name,callee)
         edge = self.call_edge(caller, function) if function else None
+        summary_bindings={key:(value.symbol if not value.symbol or not value.symbol.startswith('local:') or self.bound_function(value.symbol[6:],value) is not None else None) for key,value in self.module.env.items()}
+        summary=binding_effect_summary(function,summary_bindings,self.functions) if function is not None else None
+        if summary is not None:
+            bindings=tuple(parent for value in self.module.env.values() if value.symbol and any(contract==value.symbol or contract.startswith(value.symbol+'.') for contract in summary) for parent in value.evidence)
+            state.effects+=self.step(function,'binding_effect_summary','No modeled caller-binding mutations; contracts='+','.join(summary),callee.evidence+bindings)
         if function is None or function.decorator_list or edge is None:
-            state.blockers.add("unexpanded_call_effect")
+            if summary is None:state.blockers.add("unexpanded_call_effect")
             return self.unknown(call, "wrapper_binding_or_call_edge_unavailable", "return_value", callee.evidence)
         if name in self.active or len(self.active) >= 4:
             state.blockers.add("call_expansion_limit")
@@ -432,9 +526,9 @@ class _Analyzer:
                 state.blockers.add("missing_wrapper_argument")
                 return self.unknown(call, "missing_wrapper_argument", "return_value")
             env[parameter.arg] = Value(value.origins, value.complete, value.symbol,
-                self.step(call, "actual_formal_binding", parameter.arg, value.evidence + edge_evidence), value.reasons, "parameter")
+                self.step(call, "actual_formal_binding", parameter.arg, value.evidence + edge_evidence), value.reasons, "parameter",value.primitive)
         self.active.append(name)
-        continuation, values = self.block(function.body, State(env, set(state.blockers)), name, capture=False)
+        continuation, values = self.block(function.body, State(env, set(state.blockers),state.effects), name, capture=False)
         self.active.pop()
         if continuation is not None:
             values.append(self.unknown(function, "implicit_none_return"))
@@ -442,8 +536,21 @@ class _Analyzer:
             state.blockers.add('no_normal_wrapper_return')
             return self.unknown(call,'no_normal_wrapper_return','return_value',edge_evidence)
         value = self.combine(call, values, "wrapper_return")
-        state.blockers.update(reason for reason in value.reasons if reason.startswith(("unmodeled", "unexpanded", "unsupported", "explicit_", "call_expansion")))
+        if summary is None:
+            state.blockers.update(reason for reason in value.reasons if reason.startswith(("unmodeled", "unexpanded", "unsupported", "explicit_", "call_expansion")))
         return Value(value.origins, value.complete, evidence=self.step(call, "wrapper_binding", name, value.evidence + edge_evidence), reasons=value.reasons, boundary="return_value")
+
+    def bound_function(self,name,value):
+        function=self.functions.get(name)
+        if function is None:return None
+        pending=list(value.evidence);seen=set();bindings=[]
+        while pending:
+            identifier=pending.pop()
+            if identifier in seen:continue
+            seen.add(identifier);step=self.steps[identifier]
+            if step.kind=='function_binding' and step.detail==name:bindings.append(step.span)
+            pending.extend(step.parents)
+        return function if bindings and all(span==self.span(function) for span in bindings) else None
 
     def claim(self, node: ast.Call, api: str, values: list[Value]) -> KeyOriginClaim:
         value = self.combine(node, values, "origin_claim")

@@ -22,6 +22,14 @@ def test_frozen_snapshot_can_be_checked_without_claiming_review(frozen):
         check_freeze(record,packet,root)
 
 
+def test_frozen_model_mismatch_is_not_a_review_update(frozen):
+    root,record,packet=frozen
+    record['analysis_model']='python-key-origin-subset-v0.1'
+    packet['analysis_model']='python-key-origin-subset-v0.2'
+    with pytest.raises(ValueError,match='models differ'):
+        check_freeze(record,packet,root,False)
+
+
 def test_method_changes_require_a_new_snapshot(frozen):
     root,record,packet=frozen
     (root/'method.py').write_bytes(b'# changed\n')

@@ -15,7 +15,7 @@ from pathlib import Path
 
 from cryptograph.cpg_loader import CpgLoadError, load_graph
 from cryptograph.cpg_visualizer import write_graph_json
-from cryptograph.key_origin import analyze_key_origins, audit_claim_structure
+from cryptograph.key_origin import MODEL, analyze_key_origins, audit_claim_structure
 from cryptograph.research_baselines import direct_expression_claim
 from cryptograph.research_corpus import materialize_corpus, validate_candidate_inventory
 from cryptograph.utils import load_json, write_json
@@ -76,6 +76,8 @@ def main():
     definition = args.manifest.resolve()
     packet_path = args.annotations.resolve()
     manifest, packet = load_json(definition), load_json(packet_path)
+    if packet.get('analysis_model') != MODEL:
+        parser.exit(3,'Candidate population and current analysis model differ; use the matching method snapshot.\n')
     if args.phase == 'development':
         if any(entry['split'] != 'development' for entry in packet['cases']) or any(project.get('split', 'development') != 'development' for project in manifest['projects']):
             parser.error('This development runner refuses reserved/evaluation projects and annotations.')

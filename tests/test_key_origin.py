@@ -239,3 +239,77 @@ def test_audit_flags_a_forged_post_target_assignment(tmp_path):
         span=Span(file=source.name, line=node.lineno, column=node.col_offset, end_line=node.end_lineno, end_column=node.end_col_offset))
     forged = claims[0].model_copy(update={"evidence": [*claims[0].evidence, step]})
     assert "local_assignment_after_target" in audit_claim_structure(forged, source)
+
+
+def test_conditional_import_retains_target_without_claiming_key_origin(tmp_path):
+    path=tmp_path/'conditional.py'
+    path.write_text('try:\n    from Crypto.Cipher import AES\nexcept ImportError:\n    pass\n'
+                    'def f(key):\n    return AES.new(key, AES.MODE_ECB)\n',encoding='utf-8')
+    claim,=analyze_key_origins(path)
+    assert claim.status=='abstained' and claim.immediate_boundary=='parameter'
+    assert 'unsupported_exception_flow' in claim.unresolved_reasons
+    assert not audit_claim_structure(claim,path)
+
+
+@pytest.mark.parametrize('setup',[
+    'try:\n    from Crypto.Cipher import AES\nexcept ImportError:\n    from replacement import AES\n',
+    'try:\n    from replacement import AES\n    from Crypto.Cipher import AES\nexcept ImportError:\n    pass\n',
+    'from replacement import AES\ntry:\n    unknown()\n    from Crypto.Cipher import AES\nexcept ImportError:\n    pass\n',
+])
+def test_conditional_import_never_selects_crypto_over_a_bound_fallback(tmp_path,setup):
+    path=tmp_path/'ambiguous.py'
+    path.write_text(setup+'def f(key):\n    return AES.new(key, 1)\n',encoding='utf-8')
+    assert analyze_key_origins(path)==[]
+
+
+def test_exception_alias_cleanup_preserves_only_successful_lookup(tmp_path):
+    path=tmp_path/'exception_name.py'
+    path.write_text('from replacement import AES\ntry:\n    from Crypto.Cipher import AES\n'
+        'except ImportError as AES:\n    pass\ndef f(key):\n    return AES.new(key, 1)\n',encoding='utf-8')
+    claim,=analyze_key_origins(path)
+    assert claim.status=='abstained' and claim.immediate_boundary=='parameter'
+
+
+@pytest.mark.parametrize('graph',[True,False])
+def test_hash_helper_effect_summary_does_not_infer_its_return_origin(tmp_path,graph):
+    path,claims=inspect(tmp_path,
+        'from cryptography.hazmat.primitives import hashes\n'
+        'from cryptography.hazmat.backends import default_backend\n'
+        'SIZE=32\ndef stretch(password,salt):\n    digest=salt+(16*b"\\x00")\n'
+        '    for i in range(8):\n        h=hashes.Hash(hashes.SHA256(),backend=default_backend())\n'
+        '        h.update(digest)\n        h.update(bytes(password,"utf_16_le"))\n        digest=h.finalize()\n'
+        '    return digest\ndef f(password,size=SIZE):\n    if size % 16 != 0:\n        raise ValueError("size")\n'
+        '    if len(password)>1024:\n        raise ValueError("length")\n'
+        '    derived=stretch(password,os.urandom(16))\n    key=os.urandom(32)\n'
+        '    a=AES.new(key,1)\n    b=AES.new(derived,1)\n'
+        'class Unrelated:\n    def __init__(self,fileobj):\n        self.fileobj=fileobj\n        self.closed=False\n',graph=graph)
+    assert [claim.status for claim in claims]==['resolved','abstained']
+    assert claims[0].origins==['csprng_api'] and claims[1].origins==[]
+    assert any(step.kind=='binding_effect_summary' for step in claims[0].evidence)
+    assert any(step.kind=='import_binding' and 'hashes' in step.detail for step in claims[0].evidence)
+    assert not audit_claim_structure(claims[0],path)
+
+
+@pytest.mark.parametrize('body',[
+    'def helper():\n    unknown_mutator()\n    return b"value"\ndef f():\n    helper()\n    return AES.new(os.urandom(16),1)\n',
+    'def helper():\n    unknown_mutator()\nold=helper\ndef helper():\n    return b"value"\ndef f():\n    old()\n    return AES.new(os.urandom(16),1)\n',
+    'def helper():\n    unknown_mutator()\nhelper()\ndef helper():\n    return b"value"\ncipher=AES.new(os.urandom(16),1)\n',
+    'def helper():\n    unknown_mutator()\nold=helper\ndef helper():\n    return b"value"\ndef outer():\n    old()\ndef f():\n    outer()\n    return AES.new(os.urandom(16),1)\n',
+    'class Patch:\n    def change(self):\n        self.urandom=lambda n:b"x"*n\ndef f():\n    return AES.new(os.urandom(16),1)\n',
+    'class SideEffect(value=mutate()):\n    pass\ndef f():\n    return AES.new(os.urandom(16),1)\n',
+    'class SideEffect:\n    def method(self,*args: mutate()):\n        pass\ndef f():\n    return AES.new(os.urandom(16),1)\n',
+    'def other(**kwargs: mutate()):\n    pass\ndef f():\n    return AES.new(os.urandom(16),1)\n',
+])
+def test_effect_contract_rejects_unknown_mutations_and_stale_function_bindings(tmp_path,body):
+    _,claims=inspect(tmp_path,body,graph=False)
+    assert len(claims)==1 and claims[0].status=='abstained'
+
+
+def test_conditional_expression_retains_helper_effect_certificate(tmp_path):
+    path,claims=inspect(tmp_path,
+        'def helper():\n    return b"unrelated"\ndef f(flag):\n'
+        '    unused=helper() if flag else None\n    return AES.new(os.urandom(16),1)\n',graph=False)
+    claim,=claims
+    assert claim.status=='resolved' and claim.origins==['csprng_api']
+    assert any(step.kind=='binding_effect_summary' for step in claim.evidence)
+    assert not audit_claim_structure(claim,path)

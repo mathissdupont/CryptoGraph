@@ -1,5 +1,5 @@
 {
-  "analysis_model": "python-key-origin-subset-v0.1",
+  "analysis_model": "python-key-origin-subset-v0.2",
   "review_independence": "Must be supplied by a reviewer; the software cannot establish independence.",
   "cases": [
     {
