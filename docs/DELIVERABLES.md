@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # CryptoGraph Multi-Language & Web UI - Complete Deliverables
 
 **Date**: April 27, 2026  

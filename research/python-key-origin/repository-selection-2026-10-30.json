@@ -1,0 +1,19 @@
+{
+  "status": "prospective_convenience_project_selection_before_new_origin_runs",
+  "scope": "Python AES/AESGCM nominal call sites; whole non-test source roots. This list is not a random sample of Python projects or a preregistration.",
+  "selection_policy": "Production Python source roots are fixed here. Exclude test/tests/SelfTest/testing/docs/doc/examples/example/benchmarks/benchmark/vendor/vendored/_vendor path components and test_*.py/*_test.py files. Keep zero-candidate projects, parse failures and indirect API references in the screening record. No target program is imported or executed.",
+  "projects": [
+    {"id":"paramiko","repository":"https://github.com/paramiko/paramiko","revision":"0e9ccb91e0f9a68f2587233d523ad7fe46e730fe","source_roots":["paramiko/"],"split":"development","reason":"SSH implementation; API indirection may expose selector and origin-analysis limits."},
+    {"id":"pycryptodome","repository":"https://github.com/legrandin/pycryptodome","revision":"185a000ee0ba845383460e93448375cba03e1be8","source_roots":["lib/Crypto/"],"split":"development","reason":"Library implementation calibration; kept separate from application generalization."},
+    {"id":"cryptography","repository":"https://github.com/pyca/cryptography","revision":"2b904daeec4c080fe021e963aa7203b91ea4c8c0","source_roots":["src/cryptography/"],"split":"development","reason":"Library implementation calibration, including wrapper construction; not an independent external detector."},
+    {"id":"barbican","repository":"https://github.com/openstack/barbican","revision":"d4ac40fd339c0ee3e213b264d6d5604309cdf832","source_roots":["barbican/"],"split":"evaluation_reserved","reason":"Key-management service; reserved candidates only until source review."},
+    {"id":"pypdf","repository":"https://github.com/py-pdf/pypdf","revision":"7f0fb27944b994e2aec53d00457f038ab5312c57","source_roots":["pypdf/"],"split":"evaluation_reserved","reason":"Document encryption implementation; reserved candidates only."},
+    {"id":"pyload","repository":"https://github.com/pyload/pyload","revision":"7f3567bb81fcd2c010bb35564dd53d3c6df7209a","source_roots":["src/pyload/"],"split":"evaluation_reserved","reason":"Application/plugin code; retain empty or unsupported populations explicitly."},
+    {"id":"oscrypto","repository":"https://github.com/wbond/oscrypto","revision":"76bfdcb7285d856c44f8d0fbafe0ecca1c6d2f8b","source_roots":["oscrypto/"],"split":"evaluation_reserved","reason":"Native crypto wrapper; retain lack of supported AES endpoint as a scope finding."},
+    {"id":"jwcrypto","repository":"https://github.com/latchset/jwcrypto","revision":"053108a0589428d106f76def61480db4b308513d","source_roots":["jwcrypto/"],"split":"evaluation_reserved","reason":"JOSE/JWE implementation; reserved candidates only."}
+  ],
+  "excluded_projects": [
+    {"repository":"https://github.com/trinodb/trino","revision":"7b9b182c722587d200f191480849bbef8b2bd151","reason":"User-suggested large repository, predominantly Java. Outside this Python key-origin study; no Python/Java origin scores are pooled.","evidence":"https://github.com/trinodb/trino/blob/7b9b182c722587d200f191480849bbef8b2bd151/README.md"},
+    {"repository":"https://github.com/python-jose/python-jose","reason":"Public repository/HEAD lookup returned HTTP 404 during selection; not silently replaced in the sample."}
+  ]
+}

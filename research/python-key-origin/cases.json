@@ -1,0 +1,169 @@
+{
+  "annotation_status": "provisional_author_designed_not_independently_reviewed",
+  "purpose": "Feasibility probes for source-origin claims; not a held-out evaluation corpus.",
+  "semantic_boundary": "Source programs are parsed and not executed. No security conclusion follows from the use of AES.MODE_ECB in these intentionally insecure fixtures.",
+  "cases": [
+    {
+      "id": "direct_random",
+      "file": "direct_random.py",
+      "target_api": "AES.new",
+      "review_question": "Positive control: does an unshadowed os.urandom assignment reach the AES argument?"
+    },
+    {
+      "id": "misleading_helper",
+      "file": "misleading_helper.py",
+      "target_api": "AES.new",
+      "review_question": "Does the name fake_urandom incorrectly imply randomness despite its constant-returning body?"
+    },
+    {
+      "id": "assignment_after_sink",
+      "file": "assignment_after_sink.py",
+      "target_api": "AES.new",
+      "review_question": "Does an assignment after the AES call incorrectly overwrite the origin at the call?"
+    },
+    {
+      "id": "mixed_branch",
+      "file": "mixed_branch.py",
+      "target_api": "AES.new",
+      "review_question": "Can the output express both possible sources, without implying one definite runtime origin?"
+    },
+    {
+      "id": "parameter_boundary",
+      "file": "parameter_boundary.py",
+      "target_api": "AES.new",
+      "review_question": "Can a parameter boundary be reported without claiming an ultimate upstream origin?"
+    },
+    {
+      "id": "aliased_random",
+      "file": "aliased_random.py",
+      "target_api": "AES.new",
+      "review_question": "Can a renamed import retain the os.urandom source identity, or explicitly remain unresolved?"
+    },
+    {
+      "id": "literal_final_assignment",
+      "file": "literal_final_assignment.py",
+      "target_api": "AES.new",
+      "review_question": "Positive control: does the final pre-call literal assignment replace the earlier random assignment?"
+    },
+    {
+      "id": "wrapper_random",
+      "file": "wrapper_random.py",
+      "target_api": "AES.new",
+      "review_question": "Does the analysis distinguish a return-value boundary from a traced CSPRNG origin?"
+    },
+    {
+      "id": "pyca_literal",
+      "file": "pyca_literal.py",
+      "target_api": "algorithms.AES",
+      "review_question": "The local key is the preceding byte literal."
+    },
+    {
+      "id": "pyca_secrets",
+      "file": "pyca_secrets.py",
+      "target_api": "algorithms.AES",
+      "review_question": "The key comes from the nominal secrets.token_bytes binding."
+    },
+    {
+      "id": "pyca_environment",
+      "file": "pyca_environment.py",
+      "target_api": "AESGCM",
+      "review_question": "Environment contents are encoded, without determining their deployment origin or entropy."
+    },
+    {
+      "id": "environment_default",
+      "file": "environment_default.py",
+      "target_api": "AES.new",
+      "review_question": "The environment read can use the literal default; both categories remain possible."
+    },
+    {
+      "id": "partial_parameter",
+      "file": "partial_parameter.py",
+      "target_api": "AES.new",
+      "review_question": "One branch is random-derived; the supplied parameter leaves the other origin unknown."
+    },
+    {
+      "id": "conditional_sources",
+      "file": "conditional_sources.py",
+      "target_api": "AES.new",
+      "review_question": "The unknown boolean chooses random bytes or a byte literal."
+    },
+    {
+      "id": "keyword_key",
+      "file": "keyword_key.py",
+      "target_api": "AES.new",
+      "review_question": "The explicit key keyword is the os.urandom result."
+    },
+    {
+      "id": "constructor_alias",
+      "file": "constructor_alias.py",
+      "target_api": "GCM",
+      "review_question": "The GCM import alias identifies AESGCM and consumes the direct random result."
+    },
+    {
+      "id": "rng_function_alias",
+      "file": "rng_function_alias.py",
+      "target_api": "AES.new",
+      "review_question": "The local rng name is assigned the os.urandom function before use."
+    },
+    {
+      "id": "unsupported_loop",
+      "file": "unsupported_loop.py",
+      "target_api": "AES.new",
+      "review_question": "The declared interpreter subset does not analyze general loops; the reference requests an explicit unknown rather than a complete set."
+    },
+    {
+      "id": "external_factory",
+      "file": "external_factory.py",
+      "target_api": "AES.new",
+      "review_question": "The imported factory has no body in this corpus; an upstream origin cannot be established."
+    },
+    {
+      "id": "shadowed_rng_module",
+      "file": "shadowed_rng_module.py",
+      "target_api": "AES.new",
+      "review_question": "The os parameter is not a verified standard-library import."
+    },
+    {
+      "id": "wrapper_actual_parameter",
+      "file": "wrapper_actual_parameter.py",
+      "target_api": "AES.new",
+      "review_question": "The same-file identity helper returns its random-derived actual argument; source inspection does not require a graph witness."
+    },
+    {
+      "id": "wrapper_early_return",
+      "file": "wrapper_early_return.py",
+      "target_api": "AES.new",
+      "review_question": "The helper can return either random bytes or a literal depending on its boolean parameter."
+    },
+    {
+      "id": "dynamic_keywords",
+      "file": "dynamic_keywords.py",
+      "target_api": "AES.new",
+      "review_question": "The mapping argument does not expose a statically bound key value."
+    },
+    {
+      "id": "pyca_parameter",
+      "file": "pyca_parameter.py",
+      "target_api": "AESGCM",
+      "review_question": "No caller context determines the ultimate origin of the key parameter."
+    },
+    {
+      "id": "kdf_random_salt",
+      "file": "kdf_random_salt.py",
+      "target_api": "AESGCM",
+      "review_question": "The key is produced by an unmodeled password KDF. Dependence on a random salt does not make its bytes a direct CSPRNG API result."
+    },
+    {
+      "id": "unrelated_random",
+      "file": "unrelated_random.py",
+      "target_api": "AES.new",
+      "review_question": "The unused random value does not reach the key assignment; the key is a byte literal."
+    },
+    {
+      "id": "pyca_nested_constructor",
+      "file": "pyca_nested_constructor.py",
+      "target_api": "algorithms.AES",
+      "review_question": "The nested AES constructor receives the local os.urandom-derived key before the outer Cipher call."
+    }
+  ]
+}

@@ -13,3 +13,9 @@ dist/
 tools/fraunhofer-exporter/build/
 hs_err_pid*.log
 core.*
+results/
+result.json
+tools/fraunhofer-exporter/bin/
+.env
+.env.*
+.vscode/

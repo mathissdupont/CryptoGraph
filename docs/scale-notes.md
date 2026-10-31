@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # Scale Notes
 
 CryptoGraph is intended to grow toward multi-million-line repositories.

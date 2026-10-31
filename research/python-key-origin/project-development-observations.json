@@ -1,0 +1,5035 @@
+{
+  "kind": "unreviewed_development_feasibility_checkpoint",
+  "generated_at": "2026-10-30T16:52:52.993039+00:00",
+  "scope": "Designed programs and convenience project slices; no independent accuracy, held-out, generalization or novelty conclusion.",
+  "independent_review": "pending",
+  "reviewed_accuracy": null,
+  "runtime_image_id": "sha256:bcf7ad5c84f0de90ae26f95fe666c84893229f7dc80812c46a900e03a839e748",
+  "runtime_note": "Existing image with the current checkout mounted read only and its exporter overridden by the recorded JAR.",
+  "exporter_sha256": "d8f2e7c2c0f6bf2a6628a497d49c77ae1828bff7041563e8b83f290a1ff3e486",
+  "matrix": {
+    "status": "completed",
+    "scope": "Development observations only; no independent accuracy or CPG superiority claim.",
+    "provisional_reference_checks": true,
+    "cells": {
+      "direct_expression": {
+        "requested_backend": "ast-lite",
+        "actual_backend": "ast-lite",
+        "context_evidence": "none",
+        "policy": "direct",
+        "export_metadata": {},
+        "exporter_sha256": "d8f2e7c2c0f6bf2a6628a497d49c77ae1828bff7041563e8b83f290a1ff3e486",
+        "eligible_sites": 27,
+        "resolved": 2,
+        "partial": 0,
+        "abstained": 25,
+        "claims_using_calls": 0,
+        "legacy_sites_with_exactly_one_match": 26,
+        "legacy_sites_without_match": 1,
+        "legacy_sites_with_multiple_matches": 0,
+        "provisional_agreement": {
+          "eligible_sites": 27,
+          "resolved": 2,
+          "partial": 0,
+          "abstained": 25,
+          "missing_or_ambiguous": 0,
+          "invalid_contracts": 0,
+          "failed_scans": 0,
+          "resolved_coverage": 0.07407407407407407,
+          "resolved_with_incomplete_reference": 0,
+          "claims_with_structural_errors": 0,
+          "proposed_reference_disagreements_among_resolved": 0,
+          "proposed_reference_disagreement_rate_among_resolved": 0.0,
+          "proposed_boundary_disagreements": 0,
+          "resolved_assertions_judgeable_against_proposal": 2,
+          "partial_assertions_judgeable_against_proposal": 0,
+          "partial_assertion_proposal_disagreements": 0,
+          "partial_assertion_proposal_disagreement_rate": null
+        },
+        "provisional_inputs_sha256": {
+          "annotations": "1a57b1cc46e80d874bbe68542d185446c4277a3e185903b113ed4da96a0809f6",
+          "observations": "1ac9dd64ea78aeb76115049f1d7cb4e434e315ae198551f17f90d6dfd4840e4a",
+          "graph": "6b8bc85a299134b08dd29e1470eba171523ce9402abfa7bc81f55a78973d3a23",
+          "provisional_proposals": "0fb67c9c7a200b57d8bbd55ddf25142331479ebb7d1ac8ee9e44f66f68f05174"
+        }
+      },
+      "source_only": {
+        "requested_backend": "ast-lite",
+        "actual_backend": "ast-lite",
+        "context_evidence": "none",
+        "policy": "both",
+        "export_metadata": {},
+        "exporter_sha256": "d8f2e7c2c0f6bf2a6628a497d49c77ae1828bff7041563e8b83f290a1ff3e486",
+        "eligible_sites": 27,
+        "resolved": 15,
+        "partial": 1,
+        "abstained": 11,
+        "claims_using_calls": 0,
+        "legacy_sites_with_exactly_one_match": 26,
+        "legacy_sites_without_match": 1,
+        "legacy_sites_with_multiple_matches": 0,
+        "provisional_agreement": {
+          "eligible_sites": 27,
+          "resolved": 15,
+          "partial": 1,
+          "abstained": 11,
+          "missing_or_ambiguous": 0,
+          "invalid_contracts": 0,
+          "failed_scans": 0,
+          "resolved_coverage": 0.5555555555555556,
+          "resolved_with_incomplete_reference": 0,
+          "claims_with_structural_errors": 0,
+          "proposed_reference_disagreements_among_resolved": 0,
+          "proposed_reference_disagreement_rate_among_resolved": 0.0,
+          "proposed_boundary_disagreements": 0,
+          "resolved_assertions_judgeable_against_proposal": 15,
+          "partial_assertions_judgeable_against_proposal": 0,
+          "partial_assertion_proposal_disagreements": 0,
+          "partial_assertion_proposal_disagreement_rate": null
+        },
+        "provisional_inputs_sha256": {
+          "annotations": "1a57b1cc46e80d874bbe68542d185446c4277a3e185903b113ed4da96a0809f6",
+          "observations": "7ee8e130e24a5e99aa3e8727707eea33dcc1704cadd5cb28f536ed1d78763553",
+          "graph": "6b8bc85a299134b08dd29e1470eba171523ce9402abfa7bc81f55a78973d3a23",
+          "provisional_proposals": "0fb67c9c7a200b57d8bbd55ddf25142331479ebb7d1ac8ee9e44f66f68f05174"
+        }
+      },
+      "ast_calls": {
+        "requested_backend": "ast-lite",
+        "actual_backend": "ast-lite",
+        "context_evidence": "graph",
+        "policy": "both",
+        "export_metadata": {},
+        "exporter_sha256": "d8f2e7c2c0f6bf2a6628a497d49c77ae1828bff7041563e8b83f290a1ff3e486",
+        "eligible_sites": 27,
+        "resolved": 19,
+        "partial": 1,
+        "abstained": 7,
+        "claims_using_calls": 4,
+        "legacy_sites_with_exactly_one_match": 26,
+        "legacy_sites_without_match": 1,
+        "legacy_sites_with_multiple_matches": 0,
+        "provisional_agreement": {
+          "eligible_sites": 27,
+          "resolved": 19,
+          "partial": 1,
+          "abstained": 7,
+          "missing_or_ambiguous": 0,
+          "invalid_contracts": 0,
+          "failed_scans": 0,
+          "resolved_coverage": 0.7037037037037037,
+          "resolved_with_incomplete_reference": 0,
+          "claims_with_structural_errors": 0,
+          "proposed_reference_disagreements_among_resolved": 0,
+          "proposed_reference_disagreement_rate_among_resolved": 0.0,
+          "proposed_boundary_disagreements": 0,
+          "resolved_assertions_judgeable_against_proposal": 19,
+          "partial_assertions_judgeable_against_proposal": 0,
+          "partial_assertion_proposal_disagreements": 0,
+          "partial_assertion_proposal_disagreement_rate": null
+        },
+        "provisional_inputs_sha256": {
+          "annotations": "1a57b1cc46e80d874bbe68542d185446c4277a3e185903b113ed4da96a0809f6",
+          "observations": "374f1c673eb8d6e537a4b1562292c318a1cdb941e0aa50d9d79eb3945c3e3420",
+          "graph": "6b8bc85a299134b08dd29e1470eba171523ce9402abfa7bc81f55a78973d3a23",
+          "provisional_proposals": "0fb67c9c7a200b57d8bbd55ddf25142331479ebb7d1ac8ee9e44f66f68f05174"
+        }
+      },
+      "cpg_calls": {
+        "requested_backend": "fraunhofer-strict",
+        "actual_backend": "fraunhofer-cpg",
+        "context_evidence": "graph",
+        "policy": "both",
+        "export_metadata": {
+          "cpg_version": "9.0.2",
+          "dfg_backward_depth": 12,
+          "dfg_node_limit": 10000,
+          "dfg_truncated": false,
+          "infer_dfg_for_unresolved_calls": true
+        },
+        "exporter_sha256": "d8f2e7c2c0f6bf2a6628a497d49c77ae1828bff7041563e8b83f290a1ff3e486",
+        "eligible_sites": 27,
+        "resolved": 17,
+        "partial": 1,
+        "abstained": 9,
+        "claims_using_calls": 2,
+        "legacy_sites_with_exactly_one_match": 26,
+        "legacy_sites_without_match": 1,
+        "legacy_sites_with_multiple_matches": 0,
+        "provisional_agreement": {
+          "eligible_sites": 27,
+          "resolved": 17,
+          "partial": 1,
+          "abstained": 9,
+          "missing_or_ambiguous": 0,
+          "invalid_contracts": 0,
+          "failed_scans": 0,
+          "resolved_coverage": 0.6296296296296297,
+          "resolved_with_incomplete_reference": 0,
+          "claims_with_structural_errors": 0,
+          "proposed_reference_disagreements_among_resolved": 0,
+          "proposed_reference_disagreement_rate_among_resolved": 0.0,
+          "proposed_boundary_disagreements": 0,
+          "resolved_assertions_judgeable_against_proposal": 17,
+          "partial_assertions_judgeable_against_proposal": 0,
+          "partial_assertion_proposal_disagreements": 0,
+          "partial_assertion_proposal_disagreement_rate": null
+        },
+        "provisional_inputs_sha256": {
+          "annotations": "1a57b1cc46e80d874bbe68542d185446c4277a3e185903b113ed4da96a0809f6",
+          "observations": "797902ce77418b63db672d97da0693a9f3a5c834a5c7d3b2720063f47b6ecf9f",
+          "graph": "262e72954774e5638737e961efc32319e8485ba3dc42d0110d0878b49af2d4b5",
+          "provisional_proposals": "0fb67c9c7a200b57d8bbd55ddf25142331479ebb7d1ac8ee9e44f66f68f05174"
+        }
+      }
+    },
+    "matched_input_hashes": true,
+    "matched_candidate_sites": true,
+    "matched_provisional_reference_snapshots": true,
+    "matrix_script_sha256": "82de0f3367b6de41d42b8fad3b279c737e3f639c5ed9d6b5d98f45fd0b94524c",
+    "inputs_sha256": {
+      "config/api_mappings.json": "80f3ea5fc1a08f1689c9ef8b396393180c05ffcdb9a4e2d062ab3db5c07dda8c",
+      "config/rules_v2.json": "e9456ad2922a884e42f4d3b2e73b1ba44d8f882f242abe51b93b6e8dc740c1b1",
+      "config/source_sinks.json": "e1978e75c2310f2975c1d82c50426e95de1ab77d0fef5cf4b4cae6d967d92a01",
+      "pyproject.toml": "5045fe99610de9f242e3aa09a27b92619c6bcc337dc19918b02c67e8c77a6a7e",
+      "research/python-key-origin/cases/aliased_random.py": "9dc1b57d5a44ff376eea4122961477169def199ee117bf0f2d4e9b8b03014afe",
+      "research/python-key-origin/cases/assignment_after_sink.py": "482c76e6a89d83f548d8bc5d2e56c1a5196585d4d80b9390cf749e15882d8de8",
+      "research/python-key-origin/cases/conditional_sources.py": "b94b9f5efb8f6e84bb813dceef8f501a552321d88d8e7feced611aac133fa7b0",
+      "research/python-key-origin/cases/constructor_alias.py": "98028bdbdc2b3a5708649d8e29e06322f1425f76767a87cc8faaa672b6507371",
+      "research/python-key-origin/cases/direct_random.py": "38c86c382e933f7869f004f6954bf571510048ec93d949c3bcb293eff20cd6a5",
+      "research/python-key-origin/cases/dynamic_keywords.py": "e34601f7cd46805218164358c07c72e37d7f13684ebe09c7d5a9fb96ae17a9a0",
+      "research/python-key-origin/cases/environment_default.py": "bb33ec2c7b0f2db974fc66391cab319e0bc22f00101004a17d74473883b812df",
+      "research/python-key-origin/cases/external_factory.py": "e602feda2e62e5d0b216f3684a467adb38590cd1019fcc8c121e3a585961c079",
+      "research/python-key-origin/cases/kdf_random_salt.py": "b349ac6221f49df02716eaf7539d502811ba1788da9e314687f7b7930904f2b8",
+      "research/python-key-origin/cases/keyword_key.py": "6800bb819fc265da8d7ec251cecacdb58aed6d87bbd6253d3c8a5ad59b5bfb82",
+      "research/python-key-origin/cases/literal_final_assignment.py": "af7cd29ce5ab6a6171196901e51eb613d0167eb0816dc1a63b06eb428d574267",
+      "research/python-key-origin/cases/misleading_helper.py": "2281e3eb973a9b2141dd360eddd2a73ac18f8f7ed972632cad78e0d84e7e3fb1",
+      "research/python-key-origin/cases/mixed_branch.py": "a22ca7afb07e3c178e6130e6326d0e128dc9b38a2d73844d1fcfdd6ab8b7c52c",
+      "research/python-key-origin/cases/parameter_boundary.py": "0e93f87b951e44041b171414b7f5c66c1a06706eb070c44e608eaf833426ee88",
+      "research/python-key-origin/cases/partial_parameter.py": "a0086d689d5730cd8956557bffa2975c5052540f80393ffe2f0035a2d568cc8e",
+      "research/python-key-origin/cases/pyca_environment.py": "158aff433794b2eaa88b9c88b967b388c1d6356dc2d7f541085b500abf18932c",
+      "research/python-key-origin/cases/pyca_literal.py": "2a9d69c9a509c397bb0b3ad70b478c5051e0b86888a0037da4a489de29d4d904",
+      "research/python-key-origin/cases/pyca_nested_constructor.py": "b00c5e2d4a769ea92b110d10b9ff59581c441b71a100b62eb446f97969a36450",
+      "research/python-key-origin/cases/pyca_parameter.py": "f632b3e6703c2e20563c7c8c9179d7da29d6516db8bee65affaa4ae8f6a72f94",
+      "research/python-key-origin/cases/pyca_secrets.py": "04d3d39d9d24bc1f1342293d8515eeb86ab884644ba7be129a9e476094539c3d",
+      "research/python-key-origin/cases/rng_function_alias.py": "21d4a5d39d8dbc04ef78675cbbb036fb43309d48fd8adddcf13ff38428a1fa5a",
+      "research/python-key-origin/cases/shadowed_rng_module.py": "c57647ec577f977ebc1c7949de2955b59831db5a988e064e6214d0b61071b1f4",
+      "research/python-key-origin/cases/unrelated_random.py": "9a3c95432633e3540eee43d051a86eb9325b03834c86fbb3be0cbd679856609c",
+      "research/python-key-origin/cases/unsupported_loop.py": "d742258be43d0b9b3f508ead08eadeb2040eabb012c371a386732d119ed84d12",
+      "research/python-key-origin/cases/wrapper_actual_parameter.py": "0aff507cdfbc664027b59158173d9a1c78de652366187adebc03753997a3380c",
+      "research/python-key-origin/cases/wrapper_early_return.py": "cd14f8627afd8925df195e3cb8f1e6be10425ba22056fe4734133f8613ca297a",
+      "research/python-key-origin/cases/wrapper_random.py": "691e02b440b1c7fcb2d60d800083cf352cbdb91611e102ea3eed60dc42da181b",
+      "research/python-key-origin/cases.json": "7a20a427ca3114056f7ac8dc9fb78cf26d5bbf6a533d3628b46fdd60aa405d59",
+      "research/python-key-origin/review-template.json": "1a57b1cc46e80d874bbe68542d185446c4277a3e185903b113ed4da96a0809f6",
+      "scripts/research-pilot.py": "eba10e7cc4866af0414227ac801fb8d1a797472e3442fdde498feb7bf6fbcea4",
+      "scripts/run-key-origin-matrix.py": "82de0f3367b6de41d42b8fad3b279c737e3f639c5ed9d6b5d98f45fd0b94524c",
+      "scripts/score-key-origin.py": "51718a97cc12f76683669711ca2e4fcdd9788c1a11f4cf04f267e580576c1a84",
+      "src/cryptograph/__init__.py": "539b171a2a43d894cb18f5a4913113419e097d5efe55be4b7ee01893b3b507e6",
+      "src/cryptograph/algorithm_normalizer.py": "429727e1e1a16209ce2b7d8e3923a8bc197856d62b7b6e2cc7cd1ad5cae25efd",
+      "src/cryptograph/api_mappings.py": "f31e49cebd49cccf532be09ca0abb30591d24c6ce3e21f71bfa55fe3ae76af03",
+      "src/cryptograph/asset_classifier.py": "2b167095fcd9e186d4e6904f65d914b8727db05447a972e825bcf57a4e409c3b",
+      "src/cryptograph/ast_lite.py": "17f08660feb91a28cb389826bc03a8279c108acb665e2133418a757a43142a47",
+      "src/cryptograph/c_cpp_lite.py": "5162f93d6c302768f189a1acedd3a79fdc700f55356ca8b493832903a7f4f621",
+      "src/cryptograph/cbom.py": "f8280785f6b8e86ea6b011a83be44ed059332a8d9ffe8af6e1b895fae3ebda61",
+      "src/cryptograph/cbom_builder.py": "933d9417a4f1283f36bc28c57657792b95c890ef2751649f05b441293e0da40b",
+      "src/cryptograph/cbom_builder_v2.py": "85255f386888cd46ebaa57ef9f662dbb679de7e621a1e636c89c40cf158eaadf",
+      "src/cryptograph/context_extractor.py": "477c47635f7743cd979d1cf9bd0a4f007e24ed0a12156dc1af28ce030dceb1d8",
+      "src/cryptograph/cpg_loader.py": "ce74133a235e68db9a1558606379fc535927648737e3ed8e5b98fa86ce818a09",
+      "src/cryptograph/cpg_visualizer.py": "0988bc95cf22bd702b61d69e99599b06149fe97bb31a73db8a9abe9d631752c8",
+      "src/cryptograph/crypto_matcher.py": "8ae20e11acedde525f9de12b07858d3b44b39a30bb9e62322606e37d87bba540",
+      "src/cryptograph/crypto_matcher_v2.py": "c18a9fbb71f70a0aecd585e8d96ab18768a88d411f91e8741ace8b207f1db1dd",
+      "src/cryptograph/cyclonedx_cbom.py": "57bc0f08763775962b3adf5612324f34fa6fe5834747c0df11f2354d5b30ff9e",
+      "src/cryptograph/dfg_probe.py": "3a46094643d3c64cc979b09b6b3c200742e72e26e5aaac2f97e1e7fcc19827ea",
+      "src/cryptograph/flow_analyzer.py": "bfbcbef5d8a728d52c079e0cc31e5641ec076568f36e3264a2eec180a445ffce",
+      "src/cryptograph/inference_explainer.py": "9a4a44ce81462d1446d859063c24cc13a5d8615e72c5ce3141bf967036d9fc3b",
+      "src/cryptograph/key_origin.py": "2c7f272bba0b1fc1e92185f722eb7486b39d44d6bde80157331a3e72c154479d",
+      "src/cryptograph/langdetect.py": "59b3086f057e603a23c45f8dff995ec055bec113717a37bd2cd85a7534b3b7a1",
+      "src/cryptograph/llm_labeling.py": "56b25642505dcd358bc7cf96f4ea005b63e359b562d63a11037660609910d64e",
+      "src/cryptograph/main.py": "d682479e64d61a136655f6195b36cff3a4349950c92bc7379c74aa0c158dcd39",
+      "src/cryptograph/manifest.py": "1dbb29bb30587bb73989d533f54461ada148ba0452a5edce256437a37e29a4e1",
+      "src/cryptograph/models.py": "947e24f6a79aab240b2fb8e441e11640b520e44d76f25b72484af17c99e62e84",
+      "src/cryptograph/orchestrator.py": "191788fef5eae3845f80832e02522670ea2bd877a4c95099dcd50d74c970859a",
+      "src/cryptograph/report_builder.py": "80d83155cb8af0b9e9c6e119904a01f3040e1bd5933c0d5c71505456c7b5d4e6",
+      "src/cryptograph/research_baselines.py": "94559379aa9f82c33e96bd8c667f3ef0fceaa14cee9f618a91040d7584d2e78c",
+      "src/cryptograph/research_corpus.py": "a117f3ad2cad2575d93a85254bd7add10aba3a2064808e285f7fcd436bfe8397",
+      "src/cryptograph/research_eval.py": "3f8e3387e4ee980c3577917ba0a45c364b9e9b7332c19014758380c6adb67007",
+      "src/cryptograph/research_freeze.py": "b8a578b25c2c651e99e4a4d22f55f63e03d2e662a4a7e5f1b51ca003b04a9a26",
+      "src/cryptograph/risk_engine.py": "a7ebb3fc5464078ece4c96d3edf1a35f1b5534a78d42a25db7f7e0b5585aba89",
+      "src/cryptograph/ruby_lite.py": "c2979c6c37ca3a3f03699c168b1b1c43ea4a3b7fce7f50085a06401cae89038e",
+      "src/cryptograph/rule_engine.py": "ffd1539923f22160e7a1b11a6bbc2bfe16bdd283573c68988c2bbd5e3f778f96",
+      "src/cryptograph/utils.py": "212cce4031fe61e81e178867c42195f0c274ee205a3a256ee1500b00a2764d47",
+      "tools/fraunhofer-exporter/build.gradle.kts": "a8d9258bfea127bb7697d792f9e158495be338d8a62c449f3582d8882f4c0b3d",
+      "tools/fraunhofer-exporter/src/main/kotlin/io/cryptograph/exporter/Main.kt": "9ad870ca1ede9fc1137a2df7f1ae144bd669bbf307dbfb8390bd844cce8cdbc1"
+    }
+  },
+  "matrix_cases": {
+    "direct_expression": [
+      {
+        "case_id": "direct_random",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "misleading_helper",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "assignment_after_sink",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "mixed_branch",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "parameter_boundary",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "parameter",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "aliased_random",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "literal_final_assignment",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_random",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_literal",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_secrets",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_environment",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "environment_default",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "partial_parameter",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "conditional_sources",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "keyword_key",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "return_value",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "constructor_alias",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "return_value",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "rng_function_alias",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "unsupported_loop",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "external_factory",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "shadowed_rng_module",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_actual_parameter",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_early_return",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "dynamic_keywords",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "expression",
+            "unresolved_reasons": [
+              "dynamic_or_duplicate_key_binding"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_parameter",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "parameter",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "kdf_random_salt",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "unrelated_random",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_nested_constructor",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "not_a_direct_supported_source_expression"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      }
+    ],
+    "source_only": [
+      {
+        "case_id": "direct_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "misleading_helper",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unexpanded_call_effect",
+              "wrapper_binding_or_call_edge_unavailable"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "assignment_after_sink",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "mixed_branch",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "parameter_boundary",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "parameter",
+            "unresolved_reasons": [
+              "parameter_boundary"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "aliased_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "literal_final_assignment",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_random",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unexpanded_call_effect",
+              "wrapper_binding_or_call_edge_unavailable"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_literal",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_secrets",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_environment",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "external_configuration"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "environment_default",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "external_configuration",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "partial_parameter",
+        "claims": [
+          {
+            "status": "partial",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": false,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "parameter_boundary"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "conditional_sources",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "keyword_key",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "return_value",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "constructor_alias",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "return_value",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "rng_function_alias",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "unsupported_loop",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unsupported_statement:While",
+              "unsupported_write"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "external_factory",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unmodeled_call_effect",
+              "unresolved_call"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "shadowed_rng_module",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unmodeled_call_effect",
+              "unresolved_call",
+              "unsupported_attribute_effect"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_actual_parameter",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unexpanded_call_effect",
+              "wrapper_binding_or_call_edge_unavailable"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_early_return",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unexpanded_call_effect",
+              "wrapper_binding_or_call_edge_unavailable"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "dynamic_keywords",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "expression",
+            "unresolved_reasons": [
+              "dynamic_argument_binding"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_parameter",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "parameter",
+            "unresolved_reasons": [
+              "parameter_boundary"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "kdf_random_salt",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unmodeled_call_effect",
+              "unresolved_call",
+              "unsupported_attribute_effect"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "unrelated_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_nested_constructor",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      }
+    ],
+    "ast_calls": [
+      {
+        "case_id": "direct_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "misleading_helper",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [
+              "CALLS"
+            ],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "assignment_after_sink",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "mixed_branch",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "parameter_boundary",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "parameter",
+            "unresolved_reasons": [
+              "parameter_boundary"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "aliased_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "literal_final_assignment",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [
+              "CALLS"
+            ],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_literal",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_secrets",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_environment",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "external_configuration"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "environment_default",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "external_configuration",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "partial_parameter",
+        "claims": [
+          {
+            "status": "partial",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": false,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "parameter_boundary"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "conditional_sources",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "keyword_key",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "return_value",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "constructor_alias",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "return_value",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "rng_function_alias",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "unsupported_loop",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unsupported_statement:While",
+              "unsupported_write"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "external_factory",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unmodeled_call_effect",
+              "unresolved_call"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "shadowed_rng_module",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unmodeled_call_effect",
+              "unresolved_call",
+              "unsupported_attribute_effect"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_actual_parameter",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [
+              "CALLS"
+            ],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_early_return",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [
+              "CALLS"
+            ],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "dynamic_keywords",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "expression",
+            "unresolved_reasons": [
+              "dynamic_argument_binding"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_parameter",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "parameter",
+            "unresolved_reasons": [
+              "parameter_boundary"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "kdf_random_salt",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unmodeled_call_effect",
+              "unresolved_call",
+              "unsupported_attribute_effect"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "unrelated_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_nested_constructor",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      }
+    ],
+    "cpg_calls": [
+      {
+        "case_id": "direct_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "misleading_helper",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unexpanded_call_effect",
+              "wrapper_binding_or_call_edge_unavailable"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "assignment_after_sink",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "mixed_branch",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "parameter_boundary",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "parameter",
+            "unresolved_reasons": [
+              "parameter_boundary"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "aliased_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "literal_final_assignment",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [
+              "CALLS"
+            ],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_literal",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_secrets",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_environment",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "external_configuration"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "environment_default",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "external_configuration",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "partial_parameter",
+        "claims": [
+          {
+            "status": "partial",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": false,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "parameter_boundary"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "conditional_sources",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "keyword_key",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "return_value",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "constructor_alias",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "return_value",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "rng_function_alias",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "unsupported_loop",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unsupported_statement:While",
+              "unsupported_write"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "external_factory",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unmodeled_call_effect",
+              "unresolved_call"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "shadowed_rng_module",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unmodeled_call_effect",
+              "unresolved_call",
+              "unsupported_attribute_effect"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_actual_parameter",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unexpanded_call_effect",
+              "wrapper_binding_or_call_edge_unavailable"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "wrapper_early_return",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api",
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "may",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [
+              "CALLS"
+            ],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "dynamic_keywords",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "expression",
+            "unresolved_reasons": [
+              "dynamic_argument_binding"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_parameter",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "parameter",
+            "unresolved_reasons": [
+              "parameter_boundary"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "kdf_random_salt",
+        "claims": [
+          {
+            "status": "abstained",
+            "origins": [],
+            "origin_set_complete": false,
+            "modality": "unknown",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [
+              "unmodeled_call_effect",
+              "unresolved_call",
+              "unsupported_attribute_effect"
+            ],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "unrelated_random",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "literal"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      },
+      {
+        "case_id": "pyca_nested_constructor",
+        "claims": [
+          {
+            "status": "resolved",
+            "origins": [
+              "csprng_api"
+            ],
+            "origin_set_complete": true,
+            "modality": "must",
+            "immediate_boundary": "local_assignment",
+            "unresolved_reasons": [],
+            "graph_features_used": [],
+            "structural_errors": []
+          }
+        ]
+      }
+    ]
+  },
+  "designed_dfg_observations": [
+    {
+      "case_id": "direct_random",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 5,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 2
+        }
+      ]
+    },
+    {
+      "case_id": "misleading_helper",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "literal",
+          "line": 5,
+          "column": 11,
+          "status": "missing_seed_anchor",
+          "path_edges": 0
+        }
+      ]
+    },
+    {
+      "case_id": "assignment_after_sink",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "literal",
+          "line": 5,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 2
+        },
+        {
+          "category": "nominal_csprng_api",
+          "line": 7,
+          "column": 10,
+          "status": "no_exported_path",
+          "path_edges": 0
+        }
+      ]
+    },
+    {
+      "case_id": "mixed_branch",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 6,
+          "column": 14,
+          "status": "exported_path",
+          "path_edges": 2
+        },
+        {
+          "category": "literal",
+          "line": 8,
+          "column": 14,
+          "status": "exported_path",
+          "path_edges": 2
+        }
+      ]
+    },
+    {
+      "case_id": "parameter_boundary",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": []
+    },
+    {
+      "case_id": "aliased_random",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 5,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 2
+        }
+      ]
+    },
+    {
+      "case_id": "literal_final_assignment",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 5,
+          "column": 10,
+          "status": "no_exported_path",
+          "path_edges": 0
+        },
+        {
+          "category": "literal",
+          "line": 6,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 2
+        }
+      ]
+    },
+    {
+      "case_id": "wrapper_random",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 5,
+          "column": 11,
+          "status": "exported_path",
+          "path_edges": 5
+        }
+      ]
+    },
+    {
+      "case_id": "pyca_literal",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "literal",
+          "line": 5,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 2
+        }
+      ]
+    },
+    {
+      "case_id": "pyca_secrets",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 6,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 2
+        }
+      ]
+    },
+    {
+      "case_id": "pyca_environment",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "literal",
+          "line": 6,
+          "column": 21,
+          "status": "missing_seed_anchor",
+          "path_edges": 0
+        }
+      ]
+    },
+    {
+      "case_id": "environment_default",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "literal",
+          "line": 6,
+          "column": 20,
+          "status": "exported_path",
+          "path_edges": 6
+        },
+        {
+          "category": "literal",
+          "line": 6,
+          "column": 44,
+          "status": "exported_path",
+          "path_edges": 6
+        }
+      ]
+    },
+    {
+      "case_id": "partial_parameter",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 6,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 3
+        }
+      ]
+    },
+    {
+      "case_id": "conditional_sources",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 6,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 3
+        },
+        {
+          "category": "literal",
+          "line": 6,
+          "column": 44,
+          "status": "exported_path",
+          "path_edges": 3
+        }
+      ]
+    },
+    {
+      "case_id": "keyword_key",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 6,
+          "column": 23,
+          "status": "same_node",
+          "path_edges": 0
+        }
+      ]
+    },
+    {
+      "case_id": "constructor_alias",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 6,
+          "column": 15,
+          "status": "same_node",
+          "path_edges": 0
+        }
+      ]
+    },
+    {
+      "case_id": "rng_function_alias",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": []
+    },
+    {
+      "case_id": "unsupported_loop",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "literal",
+          "line": 6,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 2
+        },
+        {
+          "category": "nominal_csprng_api",
+          "line": 8,
+          "column": 14,
+          "status": "exported_path",
+          "path_edges": 2
+        }
+      ]
+    },
+    {
+      "case_id": "external_factory",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": []
+    },
+    {
+      "case_id": "shadowed_rng_module",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": []
+    },
+    {
+      "case_id": "wrapper_actual_parameter",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 10,
+          "column": 23,
+          "status": "exported_path",
+          "path_edges": 5
+        }
+      ]
+    },
+    {
+      "case_id": "wrapper_early_return",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "literal",
+          "line": 8,
+          "column": 11,
+          "status": "exported_path",
+          "path_edges": 5
+        },
+        {
+          "category": "nominal_csprng_api",
+          "line": 7,
+          "column": 15,
+          "status": "exported_path",
+          "path_edges": 5
+        }
+      ]
+    },
+    {
+      "case_id": "dynamic_keywords",
+      "status": "dynamic_key_binding",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": []
+    },
+    {
+      "case_id": "pyca_parameter",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": []
+    },
+    {
+      "case_id": "kdf_random_salt",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 8,
+          "column": 11,
+          "status": "exported_path",
+          "path_edges": 10
+        }
+      ]
+    },
+    {
+      "case_id": "unrelated_random",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 6,
+          "column": 20,
+          "status": "no_exported_path",
+          "path_edges": 0
+        },
+        {
+          "category": "literal",
+          "line": 7,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 2
+        }
+      ]
+    },
+    {
+      "case_id": "pyca_nested_constructor",
+      "status": "observed",
+      "export_metadata": {
+        "cpg_version": "9.0.2",
+        "dfg_backward_depth": 12,
+        "dfg_node_limit": 10000,
+        "dfg_truncated": false,
+        "infer_dfg_for_unresolved_calls": true
+      },
+      "seeds": [
+        {
+          "category": "nominal_csprng_api",
+          "line": 6,
+          "column": 10,
+          "status": "exported_path",
+          "path_edges": 2
+        },
+        {
+          "category": "nominal_csprng_api",
+          "line": 7,
+          "column": 9,
+          "status": "no_exported_path",
+          "path_edges": 0
+        }
+      ]
+    }
+  ],
+  "project_observations": {
+    "ast": {
+      "run": {
+        "status": "completed",
+        "scope": "Convenience development sample; candidate matching is not reviewed detection recall or origin accuracy.",
+        "generated_at": "2026-10-30T16:51:32.718185+00:00",
+        "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "requested_backend": "ast-lite",
+        "dependencies": {
+          "cryptograph": "0.1.0",
+          "networkx": "3.7",
+          "pydantic": "2.13.4"
+        },
+        "exporter_sha256": null,
+        "inputs_sha256": {
+          "research/python-key-origin/project-corpus.json": "7c87b0cb9e40ff96b53d065555a6e546577d93d8b25d89316dd71420ad1aab9f",
+          "research/python-key-origin/project-review-template.json": "8a6c7b72e4292624a9c2d7439f2b538d77d023155fad718c2ae18dc6f6fdedbf",
+          "scripts/run-project-key-origin.py": "a0294aa3d117256786971ce5a2da967d781b48d2d0c05258a56b74915d8b6963",
+          "src/cryptograph/algorithm_normalizer.py": "429727e1e1a16209ce2b7d8e3923a8bc197856d62b7b6e2cc7cd1ad5cae25efd",
+          "src/cryptograph/api_mappings.py": "f31e49cebd49cccf532be09ca0abb30591d24c6ce3e21f71bfa55fe3ae76af03",
+          "src/cryptograph/asset_classifier.py": "2b167095fcd9e186d4e6904f65d914b8727db05447a972e825bcf57a4e409c3b",
+          "src/cryptograph/ast_lite.py": "17f08660feb91a28cb389826bc03a8279c108acb665e2133418a757a43142a47",
+          "src/cryptograph/cbom.py": "f8280785f6b8e86ea6b011a83be44ed059332a8d9ffe8af6e1b895fae3ebda61",
+          "src/cryptograph/cbom_builder.py": "933d9417a4f1283f36bc28c57657792b95c890ef2751649f05b441293e0da40b",
+          "src/cryptograph/cbom_builder_v2.py": "85255f386888cd46ebaa57ef9f662dbb679de7e621a1e636c89c40cf158eaadf",
+          "src/cryptograph/context_extractor.py": "477c47635f7743cd979d1cf9bd0a4f007e24ed0a12156dc1af28ce030dceb1d8",
+          "src/cryptograph/cpg_loader.py": "ce74133a235e68db9a1558606379fc535927648737e3ed8e5b98fa86ce818a09",
+          "src/cryptograph/cpg_visualizer.py": "0988bc95cf22bd702b61d69e99599b06149fe97bb31a73db8a9abe9d631752c8",
+          "src/cryptograph/crypto_matcher.py": "8ae20e11acedde525f9de12b07858d3b44b39a30bb9e62322606e37d87bba540",
+          "src/cryptograph/crypto_matcher_v2.py": "c18a9fbb71f70a0aecd585e8d96ab18768a88d411f91e8741ace8b207f1db1dd",
+          "src/cryptograph/cyclonedx_cbom.py": "57bc0f08763775962b3adf5612324f34fa6fe5834747c0df11f2354d5b30ff9e",
+          "src/cryptograph/c_cpp_lite.py": "5162f93d6c302768f189a1acedd3a79fdc700f55356ca8b493832903a7f4f621",
+          "src/cryptograph/dfg_probe.py": "3a46094643d3c64cc979b09b6b3c200742e72e26e5aaac2f97e1e7fcc19827ea",
+          "src/cryptograph/flow_analyzer.py": "bfbcbef5d8a728d52c079e0cc31e5641ec076568f36e3264a2eec180a445ffce",
+          "src/cryptograph/inference_explainer.py": "9a4a44ce81462d1446d859063c24cc13a5d8615e72c5ce3141bf967036d9fc3b",
+          "src/cryptograph/key_origin.py": "2c7f272bba0b1fc1e92185f722eb7486b39d44d6bde80157331a3e72c154479d",
+          "src/cryptograph/langdetect.py": "59b3086f057e603a23c45f8dff995ec055bec113717a37bd2cd85a7534b3b7a1",
+          "src/cryptograph/llm_labeling.py": "56b25642505dcd358bc7cf96f4ea005b63e359b562d63a11037660609910d64e",
+          "src/cryptograph/main.py": "d682479e64d61a136655f6195b36cff3a4349950c92bc7379c74aa0c158dcd39",
+          "src/cryptograph/manifest.py": "1dbb29bb30587bb73989d533f54461ada148ba0452a5edce256437a37e29a4e1",
+          "src/cryptograph/models.py": "947e24f6a79aab240b2fb8e441e11640b520e44d76f25b72484af17c99e62e84",
+          "src/cryptograph/orchestrator.py": "191788fef5eae3845f80832e02522670ea2bd877a4c95099dcd50d74c970859a",
+          "src/cryptograph/report_builder.py": "80d83155cb8af0b9e9c6e119904a01f3040e1bd5933c0d5c71505456c7b5d4e6",
+          "src/cryptograph/research_baselines.py": "94559379aa9f82c33e96bd8c667f3ef0fceaa14cee9f618a91040d7584d2e78c",
+          "src/cryptograph/research_corpus.py": "a117f3ad2cad2575d93a85254bd7add10aba3a2064808e285f7fcd436bfe8397",
+          "src/cryptograph/research_eval.py": "3f8e3387e4ee980c3577917ba0a45c364b9e9b7332c19014758380c6adb67007",
+          "src/cryptograph/research_freeze.py": "b8a578b25c2c651e99e4a4d22f55f63e03d2e662a4a7e5f1b51ca003b04a9a26",
+          "src/cryptograph/risk_engine.py": "a7ebb3fc5464078ece4c96d3edf1a35f1b5534a78d42a25db7f7e0b5585aba89",
+          "src/cryptograph/ruby_lite.py": "c2979c6c37ca3a3f03699c168b1b1c43ea4a3b7fce7f50085a06401cae89038e",
+          "src/cryptograph/rule_engine.py": "ffd1539923f22160e7a1b11a6bbc2bfe16bdd283573c68988c2bbd5e3f778f96",
+          "src/cryptograph/utils.py": "212cce4031fe61e81e178867c42195f0c274ee205a3a256ee1500b00a2764d47",
+          "src/cryptograph/__init__.py": "539b171a2a43d894cb18f5a4913113419e097d5efe55be4b7ee01893b3b507e6",
+          "config/api_mappings.csharp.json": "76a01524ca0496e4dbe2c701f47d75373914073b3cb8f58d81771dca9ad9425b",
+          "config/api_mappings.c_cpp.json": "c9bc18500939b7b6b2cfbfb9a8837519a7059038f60156a690272181f2d22aba",
+          "config/api_mappings.go.json": "916ae4e271f630248768693615c696ce35a3db18585563c10fa9ddadbefa728c",
+          "config/api_mappings.java.json": "094566963f62abc382e2cc3113c7a75f017ece9a03b87d7345b8441459b96e51",
+          "config/api_mappings.javascript.json": "0b11d1f50ec7bd26e7eccea6022da810a85fa3e4b0c53c5af51f885d6e57c546",
+          "config/api_mappings.json": "80f3ea5fc1a08f1689c9ef8b396393180c05ffcdb9a4e2d062ab3db5c07dda8c",
+          "config/api_mappings.kotlin.json": "33f0aa2ce2116c221e7df372168c5fe78518e3b5df70202a87fa7d436610dd7a",
+          "config/api_mappings.python.json": "59d6d25d73f3fec8c773b1a9a9fbd059f6efe14ed253b01cc7c6c27adc271fa8",
+          "config/api_mappings.ruby.json": "629320ef0ea28f800e13601b3a4162e5108643cae1a0fc13dd5d0ebeab0cb3e7",
+          "config/api_mappings.typescript.json": "2376f80f6d39a672a219e176f745d0d43c82e93e4f2f4f55ba4ed5b8093da86e",
+          "config/rules.json": "8abb5a599e77fbe720ac03abdf9cd2b968793baf27130483192bd07a2edd35b0",
+          "config/rules_v2.csharp.json": "4ec02e81ed7f44b5ead2bee438d483e20e770684f5a6e7045400a4557cbe2a6a",
+          "config/rules_v2.c_cpp.json": "b755fcf0d5f13542b958252cb48ee8514e39e6f444399523b9f6c80772affa83",
+          "config/rules_v2.go.json": "36a9f0c90e2047602a90b4edad70b8879e3fd299a906bba642879aeaeeb9de37",
+          "config/rules_v2.java.json": "288d0f2caa3ef7292e6a9da9ce90260558ab95a8bb92206d1ac4fdac109f990b",
+          "config/rules_v2.javascript.json": "e3c3b344cb9478c76f98f76fe1fa132f940c58f6a2c376eb65a33c61fbfae36a",
+          "config/rules_v2.json": "e9456ad2922a884e42f4d3b2e73b1ba44d8f882f242abe51b93b6e8dc740c1b1",
+          "config/rules_v2.kotlin.json": "41895907d83c3f264f0cf8ae04c6ad06dd8daee13dd0034d91d64b79f5c7f5d0",
+          "config/rules_v2.python.json": "bba7c6381b6742a0b24ba03dc826f912a467d580fa6d773043b340ed51bfacec",
+          "config/rules_v2.ruby.json": "705eb4738dcf6379063d8c16a6641e0f93f2ce139f85c42c0b4f1385c75e22a7",
+          "config/rules_v2.typescript.json": "38b7ff6e47699c8f3a76f2218d4c93ca33a749d18452a240f7568c5c6c4a7fec",
+          "config/source_sinks.json": "e1978e75c2310f2975c1d82c50426e95de1ab77d0fef5cf4b4cae6d967d92a01",
+          "pyproject.toml": "5045fe99610de9f242e3aa09a27b92619c6bcc337dc19918b02c67e8c77a6a7e",
+          "tools/fraunhofer-exporter/src/main/kotlin/io/cryptograph/exporter/Main.kt": "9ad870ca1ede9fc1137a2df7f1ae144bd669bbf307dbfb8390bd844cce8cdbc1",
+          "tools/fraunhofer-exporter/build.gradle.kts": "a8d9258bfea127bb7697d792f9e158495be338d8a62c449f3582d8882f4c0b3d"
+        },
+        "projects": {
+          "matrix_nio": {
+            "status": "completed",
+            "actual_backend": "ast-lite",
+            "eligible_candidates": 4,
+            "conditions": {
+              "direct_expression": {
+                "abstained": 4
+              },
+              "source_only": {
+                "abstained": 4
+              },
+              "graph_context": {
+                "abstained": 4
+              }
+            },
+            "export_metadata": {}
+          },
+          "pyaescrypt": {
+            "status": "completed",
+            "actual_backend": "ast-lite",
+            "eligible_candidates": 4,
+            "conditions": {
+              "direct_expression": {
+                "abstained": 4
+              },
+              "source_only": {
+                "abstained": 4
+              },
+              "graph_context": {
+                "abstained": 4
+              }
+            },
+            "export_metadata": {}
+          },
+          "secretstorage": {
+            "status": "completed",
+            "actual_backend": "ast-lite",
+            "eligible_candidates": 2,
+            "conditions": {
+              "direct_expression": {
+                "abstained": 2
+              },
+              "source_only": {
+                "abstained": 2
+              },
+              "graph_context": {
+                "abstained": 2
+              }
+            },
+            "export_metadata": {}
+          },
+          "ansible": {
+            "status": "completed",
+            "actual_backend": "ast-lite",
+            "eligible_candidates": 2,
+            "conditions": {
+              "direct_expression": {
+                "missing": 2
+              },
+              "source_only": {
+                "missing": 2
+              },
+              "graph_context": {
+                "missing": 2
+              }
+            },
+            "export_metadata": {}
+          }
+        }
+      },
+      "totals": {
+        "direct_expression": {
+          "abstained": 10,
+          "missing": 2
+        },
+        "source_only": {
+          "abstained": 10,
+          "missing": 2
+        },
+        "graph_context": {
+          "abstained": 10,
+          "missing": 2
+        }
+      },
+      "cases": [
+        {
+          "case_id": "matrix_nio:src/nio/crypto/attachments.py:71:17",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "not_a_direct_supported_source_expression"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_import",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:Try",
+                    "unsupported_subscript_effect",
+                    "unsupported_write"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_import",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:Try",
+                    "unsupported_subscript_effect",
+                    "unsupported_write"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "matrix_nio:src/nio/crypto/attachments.py:123:13",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "not_a_direct_supported_source_expression"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unresolved_call",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_import"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unresolved_call",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_import"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "matrix_nio:src/nio/crypto/key_export.py:87:13",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "not_a_direct_supported_source_expression"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_expression:Slice",
+                    "unsupported_statement:AugAssign",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_expression:Slice",
+                    "unsupported_statement:AugAssign",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "matrix_nio:src/nio/crypto/key_export.py:132:13",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "not_a_direct_supported_source_expression"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_statement:Raise",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_statement:Raise",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "pyaescrypt:pyAesCrypt/crypto.py:137:21",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "pyaescrypt:pyAesCrypt/crypto.py:144:21",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "wrapper_binding_or_call_edge_unavailable"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "wrapper_binding_or_call_edge_unavailable"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "pyaescrypt:pyAesCrypt/crypto.py:359:21",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:While",
+                    "wrapper_binding_or_call_edge_unavailable"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:While",
+                    "wrapper_binding_or_call_edge_unavailable"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "pyaescrypt:pyAesCrypt/crypto.py:370:21",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:While",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:While",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "secretstorage:secretstorage/util.py:139:10",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "expression",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "object_field",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unmodeled_call_effect",
+                    "unresolved_attribute",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_expression:Tuple",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:Assert",
+                    "unsupported_statement:AugAssign",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "object_field",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unmodeled_call_effect",
+                    "unresolved_attribute",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_expression:Tuple",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:Assert",
+                    "unsupported_statement:AugAssign",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "secretstorage:secretstorage/item.py:115:14",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "expression",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "object_field",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unresolved_attribute",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_expression:List",
+                    "unsupported_statement:ClassDef"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "object_field",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unresolved_attribute",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_expression:List",
+                    "unsupported_statement:ClassDef"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "ansible:lib/ansible/parsing/vault/__init__.py:1165:26",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "missing",
+              "claims": []
+            },
+            "source_only": {
+              "outcome": "missing",
+              "claims": []
+            },
+            "graph_context": {
+              "outcome": "missing",
+              "claims": []
+            }
+          }
+        },
+        {
+          "case_id": "ansible:lib/ansible/parsing/vault/__init__.py:1223:26",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "missing",
+              "claims": []
+            },
+            "source_only": {
+              "outcome": "missing",
+              "claims": []
+            },
+            "graph_context": {
+              "outcome": "missing",
+              "claims": []
+            }
+          }
+        }
+      ]
+    },
+    "cpg": {
+      "run": {
+        "status": "completed",
+        "scope": "Convenience development sample; candidate matching is not reviewed detection recall or origin accuracy.",
+        "generated_at": "2026-10-30T16:51:34.411221+00:00",
+        "python": "3.12.16 (main, Oct 26 2026, 22:52:58) [GCC 12.2.0]",
+        "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+        "requested_backend": "fraunhofer-strict",
+        "dependencies": {
+          "cryptograph": "0.1.0",
+          "networkx": "3.7",
+          "pydantic": "2.14.1"
+        },
+        "exporter_sha256": "d8f2e7c2c0f6bf2a6628a497d49c77ae1828bff7041563e8b83f290a1ff3e486",
+        "inputs_sha256": {
+          "research/python-key-origin/project-corpus.json": "7c87b0cb9e40ff96b53d065555a6e546577d93d8b25d89316dd71420ad1aab9f",
+          "research/python-key-origin/project-review-template.json": "8a6c7b72e4292624a9c2d7439f2b538d77d023155fad718c2ae18dc6f6fdedbf",
+          "scripts/run-project-key-origin.py": "a0294aa3d117256786971ce5a2da967d781b48d2d0c05258a56b74915d8b6963",
+          "src/cryptograph/algorithm_normalizer.py": "429727e1e1a16209ce2b7d8e3923a8bc197856d62b7b6e2cc7cd1ad5cae25efd",
+          "src/cryptograph/api_mappings.py": "f31e49cebd49cccf532be09ca0abb30591d24c6ce3e21f71bfa55fe3ae76af03",
+          "src/cryptograph/asset_classifier.py": "2b167095fcd9e186d4e6904f65d914b8727db05447a972e825bcf57a4e409c3b",
+          "src/cryptograph/ast_lite.py": "17f08660feb91a28cb389826bc03a8279c108acb665e2133418a757a43142a47",
+          "src/cryptograph/cbom.py": "f8280785f6b8e86ea6b011a83be44ed059332a8d9ffe8af6e1b895fae3ebda61",
+          "src/cryptograph/cbom_builder.py": "933d9417a4f1283f36bc28c57657792b95c890ef2751649f05b441293e0da40b",
+          "src/cryptograph/cbom_builder_v2.py": "85255f386888cd46ebaa57ef9f662dbb679de7e621a1e636c89c40cf158eaadf",
+          "src/cryptograph/context_extractor.py": "477c47635f7743cd979d1cf9bd0a4f007e24ed0a12156dc1af28ce030dceb1d8",
+          "src/cryptograph/cpg_loader.py": "ce74133a235e68db9a1558606379fc535927648737e3ed8e5b98fa86ce818a09",
+          "src/cryptograph/cpg_visualizer.py": "0988bc95cf22bd702b61d69e99599b06149fe97bb31a73db8a9abe9d631752c8",
+          "src/cryptograph/crypto_matcher.py": "8ae20e11acedde525f9de12b07858d3b44b39a30bb9e62322606e37d87bba540",
+          "src/cryptograph/crypto_matcher_v2.py": "c18a9fbb71f70a0aecd585e8d96ab18768a88d411f91e8741ace8b207f1db1dd",
+          "src/cryptograph/cyclonedx_cbom.py": "57bc0f08763775962b3adf5612324f34fa6fe5834747c0df11f2354d5b30ff9e",
+          "src/cryptograph/c_cpp_lite.py": "5162f93d6c302768f189a1acedd3a79fdc700f55356ca8b493832903a7f4f621",
+          "src/cryptograph/dfg_probe.py": "3a46094643d3c64cc979b09b6b3c200742e72e26e5aaac2f97e1e7fcc19827ea",
+          "src/cryptograph/flow_analyzer.py": "bfbcbef5d8a728d52c079e0cc31e5641ec076568f36e3264a2eec180a445ffce",
+          "src/cryptograph/inference_explainer.py": "9a4a44ce81462d1446d859063c24cc13a5d8615e72c5ce3141bf967036d9fc3b",
+          "src/cryptograph/key_origin.py": "2c7f272bba0b1fc1e92185f722eb7486b39d44d6bde80157331a3e72c154479d",
+          "src/cryptograph/langdetect.py": "59b3086f057e603a23c45f8dff995ec055bec113717a37bd2cd85a7534b3b7a1",
+          "src/cryptograph/llm_labeling.py": "56b25642505dcd358bc7cf96f4ea005b63e359b562d63a11037660609910d64e",
+          "src/cryptograph/main.py": "d682479e64d61a136655f6195b36cff3a4349950c92bc7379c74aa0c158dcd39",
+          "src/cryptograph/manifest.py": "1dbb29bb30587bb73989d533f54461ada148ba0452a5edce256437a37e29a4e1",
+          "src/cryptograph/models.py": "947e24f6a79aab240b2fb8e441e11640b520e44d76f25b72484af17c99e62e84",
+          "src/cryptograph/orchestrator.py": "191788fef5eae3845f80832e02522670ea2bd877a4c95099dcd50d74c970859a",
+          "src/cryptograph/report_builder.py": "80d83155cb8af0b9e9c6e119904a01f3040e1bd5933c0d5c71505456c7b5d4e6",
+          "src/cryptograph/research_baselines.py": "94559379aa9f82c33e96bd8c667f3ef0fceaa14cee9f618a91040d7584d2e78c",
+          "src/cryptograph/research_corpus.py": "a117f3ad2cad2575d93a85254bd7add10aba3a2064808e285f7fcd436bfe8397",
+          "src/cryptograph/research_eval.py": "3f8e3387e4ee980c3577917ba0a45c364b9e9b7332c19014758380c6adb67007",
+          "src/cryptograph/research_freeze.py": "b8a578b25c2c651e99e4a4d22f55f63e03d2e662a4a7e5f1b51ca003b04a9a26",
+          "src/cryptograph/risk_engine.py": "a7ebb3fc5464078ece4c96d3edf1a35f1b5534a78d42a25db7f7e0b5585aba89",
+          "src/cryptograph/ruby_lite.py": "c2979c6c37ca3a3f03699c168b1b1c43ea4a3b7fce7f50085a06401cae89038e",
+          "src/cryptograph/rule_engine.py": "ffd1539923f22160e7a1b11a6bbc2bfe16bdd283573c68988c2bbd5e3f778f96",
+          "src/cryptograph/utils.py": "212cce4031fe61e81e178867c42195f0c274ee205a3a256ee1500b00a2764d47",
+          "src/cryptograph/__init__.py": "539b171a2a43d894cb18f5a4913113419e097d5efe55be4b7ee01893b3b507e6",
+          "config/api_mappings.csharp.json": "76a01524ca0496e4dbe2c701f47d75373914073b3cb8f58d81771dca9ad9425b",
+          "config/api_mappings.c_cpp.json": "c9bc18500939b7b6b2cfbfb9a8837519a7059038f60156a690272181f2d22aba",
+          "config/api_mappings.go.json": "916ae4e271f630248768693615c696ce35a3db18585563c10fa9ddadbefa728c",
+          "config/api_mappings.java.json": "094566963f62abc382e2cc3113c7a75f017ece9a03b87d7345b8441459b96e51",
+          "config/api_mappings.javascript.json": "0b11d1f50ec7bd26e7eccea6022da810a85fa3e4b0c53c5af51f885d6e57c546",
+          "config/api_mappings.json": "80f3ea5fc1a08f1689c9ef8b396393180c05ffcdb9a4e2d062ab3db5c07dda8c",
+          "config/api_mappings.kotlin.json": "33f0aa2ce2116c221e7df372168c5fe78518e3b5df70202a87fa7d436610dd7a",
+          "config/api_mappings.python.json": "59d6d25d73f3fec8c773b1a9a9fbd059f6efe14ed253b01cc7c6c27adc271fa8",
+          "config/api_mappings.ruby.json": "629320ef0ea28f800e13601b3a4162e5108643cae1a0fc13dd5d0ebeab0cb3e7",
+          "config/api_mappings.typescript.json": "2376f80f6d39a672a219e176f745d0d43c82e93e4f2f4f55ba4ed5b8093da86e",
+          "config/rules.json": "8abb5a599e77fbe720ac03abdf9cd2b968793baf27130483192bd07a2edd35b0",
+          "config/rules_v2.csharp.json": "4ec02e81ed7f44b5ead2bee438d483e20e770684f5a6e7045400a4557cbe2a6a",
+          "config/rules_v2.c_cpp.json": "b755fcf0d5f13542b958252cb48ee8514e39e6f444399523b9f6c80772affa83",
+          "config/rules_v2.go.json": "36a9f0c90e2047602a90b4edad70b8879e3fd299a906bba642879aeaeeb9de37",
+          "config/rules_v2.java.json": "288d0f2caa3ef7292e6a9da9ce90260558ab95a8bb92206d1ac4fdac109f990b",
+          "config/rules_v2.javascript.json": "e3c3b344cb9478c76f98f76fe1fa132f940c58f6a2c376eb65a33c61fbfae36a",
+          "config/rules_v2.json": "e9456ad2922a884e42f4d3b2e73b1ba44d8f882f242abe51b93b6e8dc740c1b1",
+          "config/rules_v2.kotlin.json": "41895907d83c3f264f0cf8ae04c6ad06dd8daee13dd0034d91d64b79f5c7f5d0",
+          "config/rules_v2.python.json": "bba7c6381b6742a0b24ba03dc826f912a467d580fa6d773043b340ed51bfacec",
+          "config/rules_v2.ruby.json": "705eb4738dcf6379063d8c16a6641e0f93f2ce139f85c42c0b4f1385c75e22a7",
+          "config/rules_v2.typescript.json": "38b7ff6e47699c8f3a76f2218d4c93ca33a749d18452a240f7568c5c6c4a7fec",
+          "config/source_sinks.json": "e1978e75c2310f2975c1d82c50426e95de1ab77d0fef5cf4b4cae6d967d92a01",
+          "pyproject.toml": "5045fe99610de9f242e3aa09a27b92619c6bcc337dc19918b02c67e8c77a6a7e",
+          "tools/fraunhofer-exporter/src/main/kotlin/io/cryptograph/exporter/Main.kt": "9ad870ca1ede9fc1137a2df7f1ae144bd669bbf307dbfb8390bd844cce8cdbc1",
+          "tools/fraunhofer-exporter/build.gradle.kts": "a8d9258bfea127bb7697d792f9e158495be338d8a62c449f3582d8882f4c0b3d"
+        },
+        "projects": {
+          "matrix_nio": {
+            "status": "completed",
+            "actual_backend": "fraunhofer-cpg",
+            "eligible_candidates": 4,
+            "conditions": {
+              "direct_expression": {
+                "abstained": 4
+              },
+              "source_only": {
+                "abstained": 4
+              },
+              "graph_context": {
+                "abstained": 4
+              }
+            },
+            "export_metadata": {
+              "cpg_version": "9.0.2",
+              "dfg_backward_depth": 12,
+              "dfg_node_limit": 10000,
+              "dfg_truncated": false,
+              "infer_dfg_for_unresolved_calls": true
+            }
+          },
+          "pyaescrypt": {
+            "status": "completed",
+            "actual_backend": "fraunhofer-cpg",
+            "eligible_candidates": 4,
+            "conditions": {
+              "direct_expression": {
+                "abstained": 4
+              },
+              "source_only": {
+                "abstained": 4
+              },
+              "graph_context": {
+                "abstained": 4
+              }
+            },
+            "export_metadata": {
+              "cpg_version": "9.0.2",
+              "dfg_backward_depth": 12,
+              "dfg_node_limit": 10000,
+              "dfg_truncated": false,
+              "infer_dfg_for_unresolved_calls": true
+            }
+          },
+          "secretstorage": {
+            "status": "completed",
+            "actual_backend": "fraunhofer-cpg",
+            "eligible_candidates": 2,
+            "conditions": {
+              "direct_expression": {
+                "abstained": 2
+              },
+              "source_only": {
+                "abstained": 2
+              },
+              "graph_context": {
+                "abstained": 2
+              }
+            },
+            "export_metadata": {
+              "cpg_version": "9.0.2",
+              "dfg_backward_depth": 12,
+              "dfg_node_limit": 10000,
+              "dfg_truncated": false,
+              "infer_dfg_for_unresolved_calls": true
+            }
+          },
+          "ansible": {
+            "status": "completed",
+            "actual_backend": "fraunhofer-cpg",
+            "eligible_candidates": 2,
+            "conditions": {
+              "direct_expression": {
+                "missing": 2
+              },
+              "source_only": {
+                "missing": 2
+              },
+              "graph_context": {
+                "missing": 2
+              }
+            },
+            "export_metadata": {
+              "cpg_version": "9.0.2",
+              "dfg_backward_depth": 12,
+              "dfg_node_limit": 10000,
+              "dfg_truncated": false,
+              "infer_dfg_for_unresolved_calls": true
+            }
+          }
+        }
+      },
+      "totals": {
+        "direct_expression": {
+          "abstained": 10,
+          "missing": 2
+        },
+        "source_only": {
+          "abstained": 10,
+          "missing": 2
+        },
+        "graph_context": {
+          "abstained": 10,
+          "missing": 2
+        }
+      },
+      "cases": [
+        {
+          "case_id": "matrix_nio:src/nio/crypto/attachments.py:71:17",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "not_a_direct_supported_source_expression"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_import",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:Try",
+                    "unsupported_subscript_effect",
+                    "unsupported_write"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_import",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:Try",
+                    "unsupported_subscript_effect",
+                    "unsupported_write"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "matrix_nio:src/nio/crypto/attachments.py:123:13",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "not_a_direct_supported_source_expression"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unresolved_call",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_import"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unresolved_call",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_import"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "matrix_nio:src/nio/crypto/key_export.py:87:13",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "not_a_direct_supported_source_expression"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_expression:Slice",
+                    "unsupported_statement:AugAssign",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_expression:Slice",
+                    "unsupported_statement:AugAssign",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "matrix_nio:src/nio/crypto/key_export.py:132:13",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "not_a_direct_supported_source_expression"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_statement:Raise",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_statement:Raise",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "pyaescrypt:pyAesCrypt/crypto.py:137:21",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "pyaescrypt:pyAesCrypt/crypto.py:144:21",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "wrapper_binding_or_call_edge_unavailable"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "wrapper_binding_or_call_edge_unavailable"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "pyaescrypt:pyAesCrypt/crypto.py:359:21",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:While",
+                    "wrapper_binding_or_call_edge_unavailable"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:While",
+                    "wrapper_binding_or_call_edge_unavailable"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "pyaescrypt:pyAesCrypt/crypto.py:370:21",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:While",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "local_assignment",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unexpanded_call_effect",
+                    "unmodeled_call_effect",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_definition_effect",
+                    "unsupported_expression:Compare",
+                    "unsupported_expression:Slice",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise",
+                    "unsupported_statement:While",
+                    "unsupported_subscript",
+                    "unsupported_subscript_effect"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "secretstorage:secretstorage/util.py:139:10",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "expression",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "object_field",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unmodeled_call_effect",
+                    "unresolved_attribute",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_expression:Tuple",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:Assert",
+                    "unsupported_statement:AugAssign",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "object_field",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation",
+                    "unmodeled_call_effect",
+                    "unresolved_attribute",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_definition_annotation",
+                    "unsupported_expression:BinOp",
+                    "unsupported_expression:Tuple",
+                    "unsupported_expression:UnaryOp",
+                    "unsupported_statement:Assert",
+                    "unsupported_statement:AugAssign",
+                    "unsupported_statement:ClassDef",
+                    "unsupported_statement:Raise"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "secretstorage:secretstorage/item.py:115:14",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "expression",
+                  "unresolved_reasons": [
+                    "explicit_attribute_mutation"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "source_only": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "object_field",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unresolved_attribute",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_expression:List",
+                    "unsupported_statement:ClassDef"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            },
+            "graph_context": {
+              "outcome": "abstained",
+              "claims": [
+                {
+                  "status": "abstained",
+                  "origins": [],
+                  "origin_set_complete": false,
+                  "modality": "unknown",
+                  "immediate_boundary": "object_field",
+                  "unresolved_reasons": [
+                    "unmodeled_call_effect",
+                    "unresolved_attribute",
+                    "unsupported_attribute_effect",
+                    "unsupported_composition",
+                    "unsupported_expression:List",
+                    "unsupported_statement:ClassDef"
+                  ],
+                  "graph_features_used": [],
+                  "structural_errors": []
+                }
+              ]
+            }
+          }
+        },
+        {
+          "case_id": "ansible:lib/ansible/parsing/vault/__init__.py:1165:26",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "missing",
+              "claims": []
+            },
+            "source_only": {
+              "outcome": "missing",
+              "claims": []
+            },
+            "graph_context": {
+              "outcome": "missing",
+              "claims": []
+            }
+          }
+        },
+        {
+          "case_id": "ansible:lib/ansible/parsing/vault/__init__.py:1223:26",
+          "conditions": {
+            "direct_expression": {
+              "outcome": "missing",
+              "claims": []
+            },
+            "source_only": {
+              "outcome": "missing",
+              "claims": []
+            },
+            "graph_context": {
+              "outcome": "missing",
+              "claims": []
+            }
+          }
+        }
+      ]
+    }
+  },
+  "native_inventory": {
+    "status": "completed",
+    "image": "ghcr.io/cbomkit/cbomkit-action@sha256:7dfc905c614549fdb630d41a33b34a039af7f60c982501c6d74dfc63ef700512",
+    "image_id": "sha256:7dfc905c614549fdb630d41a33b34a039af7f60c982501c6d74dfc63ef700512",
+    "declared_source_revision": "847c980e33b166603b39578472c9a04bbea238e2",
+    "parameters": {
+      "languages": "python",
+      "exclude": "(?!)",
+      "generate_module_cboms": false,
+      "java_max_heap": "2g",
+      "network": "none"
+    },
+    "scope": "Native inventory observations on development source slices; no key-origin score or reviewed detection accuracy.",
+    "manifest_sha256": "7c87b0cb9e40ff96b53d065555a6e546577d93d8b25d89316dd71420ad1aab9f",
+    "adapter_sha256": "12a513ffa28e129129ce5f4aa265b53aa91000408ec3bb4f15729ec6ea06cac7",
+    "verified_resources": [
+      {
+        "project": "matrix_nio",
+        "path": "matrix_nio/LICENSE.md",
+        "sha256": "87ada86080b62c06a3cae886c5058972688a61cc080d26acfbc46327dcbbc30a",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "matrix_nio",
+        "path": "matrix_nio/apache_license.txt",
+        "sha256": "a8ad31b1c3f40dca5a84119351b8fa8ddc868edd77fad8a8ebf6d8f2d16fa4ae",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "matrix_nio",
+        "path": "matrix_nio/src/nio/crypto/attachments.py",
+        "sha256": "bf2a44c39dc1dc036418e70294dc5c5cb7bb9a9ed389b65f359c9ef389af7d0e",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "matrix_nio",
+        "path": "matrix_nio/src/nio/crypto/key_export.py",
+        "sha256": "284813134f2c3b5bc8dbb06a1e3713bfbf86f761c4d243df542e6c4122dde630",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "matrix_nio",
+        "path": "matrix_nio/src/nio/crypto/__init__.py",
+        "sha256": "e4b5c55b98f785257a609d09799ef57fae8a9f76d10a2315b492242d8e0d7671",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "pyaescrypt",
+        "path": "pyaescrypt/LICENSE",
+        "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "pyaescrypt",
+        "path": "pyaescrypt/pyAesCrypt/crypto.py",
+        "sha256": "a6e0140577c4163e7db480188d55d600563c6ac86a55ed665a6447bf64eaf0c6",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "pyaescrypt",
+        "path": "pyaescrypt/pyAesCrypt/__init__.py",
+        "sha256": "dedad9725886f3b9e389a0a0cce5c5a92407cdcc9245fe1892f3fc9200d41822",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "secretstorage",
+        "path": "secretstorage/LICENSE",
+        "sha256": "e700357592bb93704cb040ce4a6663a85292716a4041b6a267f598f21658466f",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "secretstorage",
+        "path": "secretstorage/secretstorage/util.py",
+        "sha256": "27fb5961725356fef911216ebca62396d89d36bb7b7db4418703340b4f2a6cb8",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "secretstorage",
+        "path": "secretstorage/secretstorage/item.py",
+        "sha256": "6fb16519c5849830b5cdf10288ce79ac9d707b687af3836c55991652657fcc37",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "secretstorage",
+        "path": "secretstorage/secretstorage/dhcrypto.py",
+        "sha256": "55d4dbfabc7025c3a5b16153e1ad2fac5b9d0cc76181ab13483e2a4ebddb1e7f",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "secretstorage",
+        "path": "secretstorage/secretstorage/__init__.py",
+        "sha256": "fd8df8728da2f46fb49637c351913609d2cc61ad4757c8d045ce97b6b7fe7444",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "ansible",
+        "path": "ansible/COPYING",
+        "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+        "origin": "verified_cache"
+      },
+      {
+        "project": "ansible",
+        "path": "ansible/lib/ansible/parsing/vault/__init__.py",
+        "sha256": "22f1f7597eaa617b250c8717f679734b801b29ef25033f4225620f32797bf849",
+        "origin": "verified_cache"
+      }
+    ],
+    "key_origin_score": null,
+    "projects": {
+      "matrix_nio": {
+        "returncode": 0,
+        "scanned_files": 3,
+        "scanned_lines": 336,
+        "status": "native_scan_completed",
+        "native_sha256": "dba853185cc01f598679c54cff34fffb0ce417c87df0cb5c34a47de126f79ba4",
+        "bom_format": "CycloneDX",
+        "spec_version": "1.6",
+        "cryptographic_assets": 0,
+        "asset_names": [],
+        "native_occurrences": [],
+        "expected_source_files": 3,
+        "complete_file_coverage": true
+      },
+      "pyaescrypt": {
+        "returncode": 0,
+        "scanned_files": 2,
+        "scanned_lines": 437,
+        "status": "native_scan_completed",
+        "native_sha256": "ee502134bb025db06c8cba0b99dc083449a0b9472d4c2e2ba4c65e8338980e81",
+        "bom_format": "CycloneDX",
+        "spec_version": "1.6",
+        "cryptographic_assets": 0,
+        "asset_names": [],
+        "native_occurrences": [],
+        "expected_source_files": 2,
+        "complete_file_coverage": true
+      },
+      "secretstorage": {
+        "returncode": 0,
+        "scanned_files": 4,
+        "scanned_lines": 543,
+        "status": "native_scan_completed",
+        "native_sha256": "efa6c8590fa44ce6222c5b8a8271711895c44f3dd80007a134591c95091c0c49",
+        "bom_format": "CycloneDX",
+        "spec_version": "1.6",
+        "cryptographic_assets": 0,
+        "asset_names": [],
+        "native_occurrences": [],
+        "expected_source_files": 4,
+        "complete_file_coverage": true
+      },
+      "ansible": {
+        "returncode": 0,
+        "scanned_files": 1,
+        "scanned_lines": 1534,
+        "status": "native_scan_completed",
+        "native_sha256": "6d81825410e8939b906a98dc9aded39ef6d09af48d6866572f1e22d27c7a21ac",
+        "bom_format": "CycloneDX",
+        "spec_version": "1.6",
+        "cryptographic_assets": 0,
+        "asset_names": [],
+        "native_occurrences": [],
+        "expected_source_files": 1,
+        "complete_file_coverage": true
+      }
+    },
+    "positive_control": {
+      "returncode": 0,
+      "scanned_files": 1,
+      "scanned_lines": 4,
+      "status": "native_scan_completed",
+      "native_sha256": "f9a3e4a537afe9f61c7098505f7893e1316e8b63f3d9da79022099752424f33f",
+      "bom_format": "CycloneDX",
+      "spec_version": "1.6",
+      "cryptographic_assets": 1,
+      "asset_names": [
+        "AES-CBC"
+      ],
+      "native_occurrences": [
+        {
+          "asset_name": "AES-CBC",
+          "occurrence": {
+            "location": "workspace/__init__.py",
+            "line": 3,
+            "offset": 11,
+            "additionalContext": "Cipher"
+          }
+        }
+      ],
+      "source_sha256": "02ba3530f2efdb38b956b1b020d9cee3587b9bfdb3725ddf1b4082b7da248193"
+    },
+    "exploratory_calibration_controls": {
+      "assigned_literal": {
+        "returncode": 0,
+        "scanned_files": 1,
+        "scanned_lines": 5,
+        "status": "native_scan_completed",
+        "native_sha256": "1a29203e304e356618c8d2e5e28817575523d52f73c85b5dc1e6e136966378dd",
+        "bom_format": "CycloneDX",
+        "spec_version": "1.6",
+        "cryptographic_assets": 1,
+        "asset_names": [
+          "AES-CBC"
+        ],
+        "native_occurrences": [
+          {
+            "asset_name": "AES-CBC",
+            "occurrence": {
+              "location": "workspace/__init__.py",
+              "line": 3,
+              "offset": 13,
+              "additionalContext": "Cipher"
+            }
+          }
+        ],
+        "source_sha256": "f7fc02e7c867eea07271fbc08d0be2170dad8f7a47603201f58431be046331d7"
+      },
+      "backend_keyword": {
+        "returncode": 0,
+        "scanned_files": 1,
+        "scanned_lines": 6,
+        "status": "native_scan_completed",
+        "native_sha256": "b0681546529616174527277e010039d11b09d1d7338bdd39daf9c8b0cae25126",
+        "bom_format": "CycloneDX",
+        "spec_version": "1.6",
+        "cryptographic_assets": 0,
+        "asset_names": [],
+        "native_occurrences": [],
+        "source_sha256": "35ec8179acefc3a8255edb6da9ee7d7d467bea6da0b396630b0dc055bfd8cd3a"
+      },
+      "backend_positional": {
+        "returncode": 0,
+        "scanned_files": 1,
+        "scanned_lines": 6,
+        "status": "native_scan_completed",
+        "native_sha256": "8b827ecf2c7164a00887af7d53e1c2daa5ba8f1f344057f263637b839bacd353",
+        "bom_format": "CycloneDX",
+        "spec_version": "1.6",
+        "cryptographic_assets": 0,
+        "asset_names": [],
+        "native_occurrences": [],
+        "source_sha256": "8fbf6c1467a39196fa3f46c5defee3cb892e10aac24c5440bba53515c8890810"
+      },
+      "parameter_key": {
+        "returncode": 0,
+        "scanned_files": 1,
+        "scanned_lines": 5,
+        "status": "native_scan_completed",
+        "native_sha256": "5f1987225b27de3f12027d7c0d4327dd992ea0f426864d126217d51c3fd1424c",
+        "bom_format": "CycloneDX",
+        "spec_version": "1.6",
+        "cryptographic_assets": 1,
+        "asset_names": [
+          "AES-CBC"
+        ],
+        "native_occurrences": [
+          {
+            "asset_name": "AES-CBC",
+            "occurrence": {
+              "location": "workspace/__init__.py",
+              "line": 3,
+              "offset": 13,
+              "additionalContext": "Cipher"
+            }
+          }
+        ],
+        "source_sha256": "c39dcbf9a2d95840c60bf5ee8168d6b86ca83e1622bc3f35d2216edc14084136"
+      },
+      "random_key": {
+        "returncode": 0,
+        "scanned_files": 1,
+        "scanned_lines": 8,
+        "status": "native_scan_completed",
+        "native_sha256": "52b690a735f612a69baea1bd09ed10f1e30b12454c9cbea27de5e7c193a62055",
+        "bom_format": "CycloneDX",
+        "spec_version": "1.6",
+        "cryptographic_assets": 1,
+        "asset_names": [
+          "AES-CBC"
+        ],
+        "native_occurrences": [
+          {
+            "asset_name": "AES-CBC",
+            "occurrence": {
+              "location": "workspace/__init__.py",
+              "line": 6,
+              "offset": 13,
+              "additionalContext": "Cipher"
+            }
+          }
+        ],
+        "source_sha256": "663b967daf69c492d276ac38d8775794a8f743fa193132b2ba85cb8de2f1fa09"
+      }
+    }
+  },
+  "raw_artifacts_sha256": {
+    "matrix": {
+      "ast_calls/cbom.json": "2fdfdd813ed29cc033e243009eac4e97c4dd5aa95588b803639d15d7f19ae15e",
+      "ast_calls/graph.json": "6b8bc85a299134b08dd29e1470eba171523ce9402abfa7bc81f55a78973d3a23",
+      "ast_calls/key-origin-claims.json": "ebaafa2cc15491c44702b610445513386a4abf791bcc32000c39fb7c1adc507a",
+      "ast_calls/observations.json": "374f1c673eb8d6e537a4b1562292c318a1cdb941e0aa50d9d79eb3945c3e3420",
+      "ast_calls/provisional-agreement.json": "36434ae17bc69a175955a42def5b3855bededf834c922248c3c22c04960a2ccb",
+      "ast_calls/run.json": "428858278b7b8072d11fc1ded17e993ec5716275d41a0e4045dfc4d8a6dea215",
+      "ast_calls-provisional.log": "adcf5afc50065759ee6e8c0309f7f7848152e7d8e0e86fcec5dc03ac76818786",
+      "ast_calls.log": "1f028a553b45085ac10bf9471875cced30e40f91978afd4389abd863bb5107fa",
+      "cpg_calls/cbom.json": "172c3457a6c8974189eb7bde2a0cb6b614e8df31cacb4b780fa580bdf3f65f5c",
+      "cpg_calls/dfg-probes.json": "fc4f9e9621673ae70e6b151e0e20bf4f580d5ea1c9830af98dc27a1c45b59e02",
+      "cpg_calls/graph.json": "262e72954774e5638737e961efc32319e8485ba3dc42d0110d0878b49af2d4b5",
+      "cpg_calls/key-origin-claims.json": "278a3457faea1e7eacadefce926677f52628af4ab64c9955de2fe714f165d785",
+      "cpg_calls/observations.json": "797902ce77418b63db672d97da0693a9f3a5c834a5c7d3b2720063f47b6ecf9f",
+      "cpg_calls/provisional-agreement.json": "3ab4d7e42de5a97aa012f513baf3397edff72d6c33a488ba29f87da04f55b089",
+      "cpg_calls/run.json": "70d7348cbfe63cd70531840bba9e9865ea936fcd6e4f0d1e1d071caac77da0da",
+      "cpg_calls-provisional.log": "b998a983580793e8cb161ae3022aebb2e384fd691a1d0adc5c2394fef589050b",
+      "cpg_calls.log": "dced1d0f50f4d7dcfb8804fdbabfd592cd1d73e8d99f2c7024b9d9211d32099d",
+      "direct_expression/cbom.json": "5e9d3a77545a863e0db62f9b657a9671d12f32dcaa4788f3ce5754efdc5e37a5",
+      "direct_expression/graph.json": "6b8bc85a299134b08dd29e1470eba171523ce9402abfa7bc81f55a78973d3a23",
+      "direct_expression/key-origin-claims.json": "15eb032eacdeee880c476f7c0cf5310a4d82981be9a2cf137f9e4059b3bc2dae",
+      "direct_expression/observations.json": "1ac9dd64ea78aeb76115049f1d7cb4e434e315ae198551f17f90d6dfd4840e4a",
+      "direct_expression/provisional-agreement.json": "e36f123dcf604b15fedfcee2f8130386b764877d292a4039e8f5e134729d4432",
+      "direct_expression/run.json": "9f877600a0bd6330190184b8476551323de29902fdfc62acc6975d13636949bf",
+      "direct_expression-provisional.log": "4c960f83e6f6953ace3fc5bb3a069ecce2aeff019661f509068aa0670a955aec",
+      "direct_expression.log": "ef1d539618c7abb2cfe49647ade4e7504fde65d4d4f3374883b23cbee9d34e74",
+      "matrix.json": "83a6a23184cc19913146de5b8e23b3b1e9159a5c4506c4db38a253b41f87dd09",
+      "source_only/cbom.json": "51a58df624e0c80d0db2f18ee13873f9c0af0fb8b455a95caaa5471603f9ea41",
+      "source_only/graph.json": "6b8bc85a299134b08dd29e1470eba171523ce9402abfa7bc81f55a78973d3a23",
+      "source_only/key-origin-claims.json": "40ca4ce5c3ea3dd0efbc551d28a097b8cbd66c372ed2062e29d605e84caeca77",
+      "source_only/observations.json": "7ee8e130e24a5e99aa3e8727707eea33dcc1704cadd5cb28f536ed1d78763553",
+      "source_only/provisional-agreement.json": "b7d2b1bc65b3f814d657f282a28e8d767b756d8008db29905a9643f97489ba1d",
+      "source_only/run.json": "3a50be4837aba869900ea648a8d3facb5de922552db41210f48f4a4317974b5e",
+      "source_only-provisional.log": "20f1ca55604df96a976e3905b1f4e2f5c74ca54f5d0c789fa1acc4db813ecc58",
+      "source_only.log": "005e5b462b3066634bfa38e45883fe75d21e524c63b659f08833e65c6d967926"
+    },
+    "project_ast": {
+      "ansible/attribution/COPYING": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "ansible/attribution/source-notices/lib/ansible/parsing/vault/__init__.py.txt": "06da75d88bd4937a1215b4e42b3e03e023436b3e8bd2f64f947767b81ba3cdce",
+      "ansible/graph.json": "1fd3baf07d9d375360b6229e16ca11292726c459a9dbc5c5c0de94c848f24fe2",
+      "ansible/provenance.json": "c429c9f448d9b4d990c104c5b9d48e6892ba7c13e41bc66e5710e7d69ebafd89",
+      "ansible/sites.json": "81de788ba98750d3f97892365b25adc3d93bfe7e14b9652ee5f03428c0395ed4",
+      "conditions/direct_expression/observations.json": "f402893bb20eade403d568bf0276fbc963610f91ef17e40ed001185ca0629d85",
+      "conditions/graph_context/graph-index.json": "da9e9a0ed80eaf746a6accbe2813c82de70e3e9cce4205f3a11d0def61f77f94",
+      "conditions/graph_context/observations.json": "cb5e6d5b53178c356aa302614f1d9c9b4d82760eb308bbb2475086297c2d57e8",
+      "conditions/source_only/observations.json": "9bedae183614dbe72db25585ae8ee126396614de041ad92c7b46684740091a27",
+      "matrix_nio/attribution/apache_license.txt": "a8ad31b1c3f40dca5a84119351b8fa8ddc868edd77fad8a8ebf6d8f2d16fa4ae",
+      "matrix_nio/attribution/LICENSE.md": "87ada86080b62c06a3cae886c5058972688a61cc080d26acfbc46327dcbbc30a",
+      "matrix_nio/attribution/source-notices/src/nio/crypto/__init__.py.txt": "038365c672d2480b73117313e0d623728dcc103288e169e7324fa87ae50ccec2",
+      "matrix_nio/attribution/source-notices/src/nio/crypto/attachments.py.txt": "40c21a63094730e9330c96049418c6e81c0c4f182f9432cbaf7db2b1ad89a442",
+      "matrix_nio/attribution/source-notices/src/nio/crypto/key_export.py.txt": "51cfb177117f27b93a2febe7f8f9926270757854fbedc2d8120cd25b98a71db0",
+      "matrix_nio/graph.json": "db7c90b24fed3e24e3b18784ecfcd4ad6e9f82f17a87784d4817285e340fbc9e",
+      "matrix_nio/provenance.json": "1a765abb92d52d82232fd171146bb34b5d334c4ffce61cfa89fb392b2c3b66b0",
+      "matrix_nio/sites.json": "c75ca82e040a40f39581a9c5f682eefc1f7092db002da70ddf7edda17d01557c",
+      "pyaescrypt/attribution/LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "pyaescrypt/attribution/source-notices/pyAesCrypt/__init__.py.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pyaescrypt/attribution/source-notices/pyAesCrypt/crypto.py.txt": "984f5b94f2be3ecb3414f55ec5c73f906b31ce73e4b7683876eb7b70b189971d",
+      "pyaescrypt/graph.json": "0bac8ab8b9fb20ab874e32551714d39cb41d6706a78e11eb819532bf02084339",
+      "pyaescrypt/provenance.json": "c1bd25e95d1bb92e89c3082331246dc9e420e4488c6324ba9e33550bd3d24a40",
+      "pyaescrypt/sites.json": "764b52ccbae56cf2cde086778f204a4bea1b23c806911ef52122625e9aea9135",
+      "run.json": "8800809453e2279f6f04c2b0242d8f517f10184f4c335c7e1b1a1f61936f0118",
+      "secretstorage/attribution/LICENSE": "e700357592bb93704cb040ce4a6663a85292716a4041b6a267f598f21658466f",
+      "secretstorage/attribution/source-notices/secretstorage/__init__.py.txt": "82a978b380d67f03f49444a71471da4f7faed03336521689b0f79ca2cdd4621b",
+      "secretstorage/attribution/source-notices/secretstorage/dhcrypto.py.txt": "110416b748661adb260617dea0a5cd31f4ab75ba508f30ba601ae7b65fffe5ca",
+      "secretstorage/attribution/source-notices/secretstorage/item.py.txt": "fb7c4a3ce8527302ea390da7405ac708e5fba53faf27b795c681a8b10300283e",
+      "secretstorage/attribution/source-notices/secretstorage/util.py.txt": "0689a6b8eb9e46b846b5203890e8015ea8ad72f4f007ed819ca137734923a717",
+      "secretstorage/graph.json": "67f8d2d4793509e3febac781de8eaaa6ad652fb6e93940a4b32e3ba1bf5cf889",
+      "secretstorage/provenance.json": "9ddc1e0d9f51802b7aa34e873974d042a646f8d7e1d1a357b0a6c625aea756a1",
+      "secretstorage/sites.json": "6db18f12c09051b75952ecbca464fcdf926f49fd8160d20e15145615c858f843"
+    },
+    "project_cpg": {
+      "ansible/attribution/COPYING": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "ansible/attribution/source-notices/lib/ansible/parsing/vault/__init__.py.txt": "06da75d88bd4937a1215b4e42b3e03e023436b3e8bd2f64f947767b81ba3cdce",
+      "ansible/dfg-probes.json": "9b3a9efeb8f6caffd22447c5c8bbf1d24520802f627f6061a3a58ca79d126021",
+      "ansible/graph.json": "5b913ccc57d1b75e25a4ab50ed1cde23a1ae2cec8d3ce9583211e54f496c07fb",
+      "ansible/provenance.json": "ece138b46b3cae1f8e3e564b8a16d4903cedf2749f903c6d2824a2bf821109a7",
+      "ansible/sites.json": "3ed1eb56cd26ed9f545f71271e17226630251870a6eacd24c7abea6d0a6668d8",
+      "conditions/direct_expression/observations.json": "1dd042198aea7e27ccf92fdd223d2f6ca3b7510832a0f956cad6659ca6dadda5",
+      "conditions/graph_context/graph-index.json": "3d75f1377c4a8403b3dcaad5aa5afb587d3d3c0bf37c6641ecf48fd28f025f06",
+      "conditions/graph_context/observations.json": "dbe10a096b83945f94ba2554d590207d5f16ad494af0766206ad709f7982e85e",
+      "conditions/source_only/observations.json": "44b8aa95247d0306d2b00053778b3ac9f5835683c40b8d2680c2da7a01b47f68",
+      "matrix_nio/attribution/apache_license.txt": "a8ad31b1c3f40dca5a84119351b8fa8ddc868edd77fad8a8ebf6d8f2d16fa4ae",
+      "matrix_nio/attribution/LICENSE.md": "87ada86080b62c06a3cae886c5058972688a61cc080d26acfbc46327dcbbc30a",
+      "matrix_nio/attribution/source-notices/src/nio/crypto/__init__.py.txt": "038365c672d2480b73117313e0d623728dcc103288e169e7324fa87ae50ccec2",
+      "matrix_nio/attribution/source-notices/src/nio/crypto/attachments.py.txt": "40c21a63094730e9330c96049418c6e81c0c4f182f9432cbaf7db2b1ad89a442",
+      "matrix_nio/attribution/source-notices/src/nio/crypto/key_export.py.txt": "51cfb177117f27b93a2febe7f8f9926270757854fbedc2d8120cd25b98a71db0",
+      "matrix_nio/dfg-probes.json": "b34836e05257e06477ad6a029bfebbbbe5b1e147ce98e2af296e94d83882c038",
+      "matrix_nio/graph.json": "21e7f06873ae3aff85383fb508d51b94cd21e2721cfd8322035c0d11e7418589",
+      "matrix_nio/provenance.json": "006798dbba7c9013f1c30d1db1a0eb873e038752d28879eaf58e9b79915f642a",
+      "matrix_nio/sites.json": "c9399792fc8c9d3b7f34c9cc3ce536a61618288f4cd5516a836f039f9cb04a88",
+      "pyaescrypt/attribution/LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "pyaescrypt/attribution/source-notices/pyAesCrypt/__init__.py.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pyaescrypt/attribution/source-notices/pyAesCrypt/crypto.py.txt": "984f5b94f2be3ecb3414f55ec5c73f906b31ce73e4b7683876eb7b70b189971d",
+      "pyaescrypt/dfg-probes.json": "890eecfbf55a513e574603c736e06c732b1f9264d6edcbdf58023224b57954c6",
+      "pyaescrypt/graph.json": "df43b93a01e6699b32c358e2ecb62d09137a3132709ef981f5ffc66ba8040409",
+      "pyaescrypt/provenance.json": "3997efb4d50f4a579c6cfa1ae1c43bba0be7111992c53f03b4daa008bc963dff",
+      "pyaescrypt/sites.json": "d61187555a8e0805a4ffe51684700e3955c127fcf51512c9a5a4d9efb8016b81",
+      "run.json": "f55e2e97f404b43457e148d9bf4f7aff88d6aed01f66acb5d081c9f37ab5ebfa",
+      "secretstorage/attribution/LICENSE": "e700357592bb93704cb040ce4a6663a85292716a4041b6a267f598f21658466f",
+      "secretstorage/attribution/source-notices/secretstorage/__init__.py.txt": "82a978b380d67f03f49444a71471da4f7faed03336521689b0f79ca2cdd4621b",
+      "secretstorage/attribution/source-notices/secretstorage/dhcrypto.py.txt": "110416b748661adb260617dea0a5cd31f4ab75ba508f30ba601ae7b65fffe5ca",
+      "secretstorage/attribution/source-notices/secretstorage/item.py.txt": "fb7c4a3ce8527302ea390da7405ac708e5fba53faf27b795c681a8b10300283e",
+      "secretstorage/attribution/source-notices/secretstorage/util.py.txt": "0689a6b8eb9e46b846b5203890e8015ea8ad72f4f007ed819ca137734923a717",
+      "secretstorage/dfg-probes.json": "fca0fb0c55a015aec6a907d50a34551706f1573ca8efa066e6fa28471236cc39",
+      "secretstorage/graph.json": "03f2182d50b23c9854d5ca63a47a7900042fbef92c5f636a688bd2cc7f9161d1",
+      "secretstorage/provenance.json": "ae0c8307c0c42a2b49ca7a6115338204a9be9e70b728fcaac3aab66823ab4896",
+      "secretstorage/sites.json": "5db47d1350e267d31b9c3b7eeb44cc02258d0475167b9ab03025a9f679195b91"
+    },
+    "cbomkit": {
+      "ansible/cbom/cbom.json": "6d81825410e8939b906a98dc9aded39ef6d09af48d6866572f1e22d27c7a21ac",
+      "ansible/github-output.txt": "f2b959f4b67bc5ae86afb9d33082d56deebda888459744221d3513aebc08b986",
+      "ansible/tool.log": "42437f4e9be362c11ba3288330096880eace9119766569df78cfe0456f29da01",
+      "calibration-results/assigned_literal/cbom/cbom.json": "1a29203e304e356618c8d2e5e28817575523d52f73c85b5dc1e6e136966378dd",
+      "calibration-results/assigned_literal/github-output.txt": "f2b959f4b67bc5ae86afb9d33082d56deebda888459744221d3513aebc08b986",
+      "calibration-results/assigned_literal/tool.log": "ce6331941d0d73e775f8e498f6a8da7823d83fff9aa5457117c9ce2ff11e581a",
+      "calibration-results/backend_keyword/cbom/cbom.json": "b0681546529616174527277e010039d11b09d1d7338bdd39daf9c8b0cae25126",
+      "calibration-results/backend_keyword/github-output.txt": "f2b959f4b67bc5ae86afb9d33082d56deebda888459744221d3513aebc08b986",
+      "calibration-results/backend_keyword/tool.log": "0da09d15600ea9e2cf7231f0338359e6aaf94f6596470197324e3dca694f35fe",
+      "calibration-results/backend_positional/cbom/cbom.json": "8b827ecf2c7164a00887af7d53e1c2daa5ba8f1f344057f263637b839bacd353",
+      "calibration-results/backend_positional/github-output.txt": "f2b959f4b67bc5ae86afb9d33082d56deebda888459744221d3513aebc08b986",
+      "calibration-results/backend_positional/tool.log": "e543521ab10df6a82270f12776fe5a71a56d9fac1ecdb111c6456259dab54875",
+      "calibration-results/parameter_key/cbom/cbom.json": "5f1987225b27de3f12027d7c0d4327dd992ea0f426864d126217d51c3fd1424c",
+      "calibration-results/parameter_key/github-output.txt": "f2b959f4b67bc5ae86afb9d33082d56deebda888459744221d3513aebc08b986",
+      "calibration-results/parameter_key/tool.log": "d9f6b344e5150fc0d5c6c43aa01ab283e2eee0402697c28da09008213a2160ff",
+      "calibration-results/random_key/cbom/cbom.json": "52b690a735f612a69baea1bd09ed10f1e30b12454c9cbea27de5e7c193a62055",
+      "calibration-results/random_key/github-output.txt": "f2b959f4b67bc5ae86afb9d33082d56deebda888459744221d3513aebc08b986",
+      "calibration-results/random_key/tool.log": "2c705f80fd0314da35db32d4d40814dadf02915897dd6c8383b2987cc40a65f4",
+      "calibration-sources/assigned_literal/__init__.py": "f7fc02e7c867eea07271fbc08d0be2170dad8f7a47603201f58431be046331d7",
+      "calibration-sources/backend_keyword/__init__.py": "35ec8179acefc3a8255edb6da9ee7d7d467bea6da0b396630b0dc055bfd8cd3a",
+      "calibration-sources/backend_positional/__init__.py": "8fbf6c1467a39196fa3f46c5defee3cb892e10aac24c5440bba53515c8890810",
+      "calibration-sources/parameter_key/__init__.py": "c39dcbf9a2d95840c60bf5ee8168d6b86ca83e1622bc3f35d2216edc14084136",
+      "calibration-sources/random_key/__init__.py": "663b967daf69c492d276ac38d8775794a8f743fa193132b2ba85cb8de2f1fa09",
+      "control-result/cbom/cbom.json": "f9a3e4a537afe9f61c7098505f7893e1316e8b63f3d9da79022099752424f33f",
+      "control-result/github-output.txt": "f2b959f4b67bc5ae86afb9d33082d56deebda888459744221d3513aebc08b986",
+      "control-result/tool.log": "167afc9495bc891b798873c071151b203411786ecd4096ec5329fb4a0a8fbef5",
+      "control-source/__init__.py": "02ba3530f2efdb38b956b1b020d9cee3587b9bfdb3725ddf1b4082b7da248193",
+      "matrix_nio/cbom/cbom.json": "dba853185cc01f598679c54cff34fffb0ce417c87df0cb5c34a47de126f79ba4",
+      "matrix_nio/github-output.txt": "f2b959f4b67bc5ae86afb9d33082d56deebda888459744221d3513aebc08b986",
+      "matrix_nio/tool.log": "597d5b83bbd6fdd4d9ca41816c70b2c4794126f3d92a782b16f5510326f50e61",
+      "pyaescrypt/cbom/cbom.json": "ee502134bb025db06c8cba0b99dc083449a0b9472d4c2e2ba4c65e8338980e81",
+      "pyaescrypt/github-output.txt": "f2b959f4b67bc5ae86afb9d33082d56deebda888459744221d3513aebc08b986",
+      "pyaescrypt/tool.log": "48caa78c1d7b1c436c9b42bdbe1bfb6e6dbf8de2f2812c841ba4c71c39efc72e",
+      "run.json": "008c53706ffd1a523c8d7c9e7878e91345b0f6ea4dd3af1790505fd67d4f5d9a",
+      "secretstorage/cbom/cbom.json": "efa6c8590fa44ce6222c5b8a8271711895c44f3dd80007a134591c95091c0c49",
+      "secretstorage/github-output.txt": "f2b959f4b67bc5ae86afb9d33082d56deebda888459744221d3513aebc08b986",
+      "secretstorage/tool.log": "1beea19f0c15dd1d9bcd220fb0ccd5cd10cad93c37fdedb177106be11341de9c"
+    }
+  }
+}

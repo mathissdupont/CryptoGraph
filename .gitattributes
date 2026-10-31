@@ -1,0 +1,4 @@
+# Keep review-source fingerprints identical on Windows and Linux checkouts.
+research/python-key-origin/cases/*.py text eol=lf
+research/python-key-origin/*.json text eol=lf
+research/python-key-origin/**/*.json text eol=lf

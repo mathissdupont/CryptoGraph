@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](../README.md).
+
 # CryptoGraph Islem Hatti
 
 CryptoGraph, Python kaynak kodunu grafik destekli ozel CBOM ciktisina donusturur. Akis alti ana adimdan olusur.

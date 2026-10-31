@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](../README.md).
+
 # Mimari
 
 CryptoGraph, grafik oluşturmayı kriptografik analizden ayırarak, CPG oluşturmaya adanmış izole backend bileşenleriyle katmanlı bir işlem hattı kullanır.

@@ -1,0 +1,10 @@
+include CONTRIBUTING.md requirements.txt Dockerfile docker-compose.yml
+include test-runner.ps1 test-runner.sh output/.gitkeep
+recursive-include samples *.py
+recursive-include docs *.md
+recursive-include scripts *.py *.sh
+recursive-include research *.py *.json *.md
+recursive-include viewer *.py Dockerfile
+include tools/fraunhofer-exporter/build.gradle.kts
+include tools/fraunhofer-exporter/settings.gradle.kts
+recursive-include tools/fraunhofer-exporter/src *.kt

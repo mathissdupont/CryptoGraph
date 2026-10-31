@@ -1,0 +1,1887 @@
+{
+  "scope": "Convenience development/reserved populations; older project slices and newly selected whole source roots are distinguished by provenance.",
+  "projects": [
+    {
+      "id": "matrix_nio",
+      "repository": "https://github.com/matrix-nio/matrix-nio",
+      "revision": "331c93ed3e9ca86e7444b4dfdf05086654842ace",
+      "split": "development",
+      "license_expression": "ISC AND Apache-2.0",
+      "resources": [
+        {
+          "path": "LICENSE.md",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/matrix-nio/matrix-nio/331c93ed3e9ca86e7444b4dfdf05086654842ace/LICENSE.md",
+          "sha256": "87ada86080b62c06a3cae886c5058972688a61cc080d26acfbc46327dcbbc30a",
+          "bytes": 832
+        },
+        {
+          "path": "apache_license.txt",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/matrix-nio/matrix-nio/331c93ed3e9ca86e7444b4dfdf05086654842ace/apache_license.txt",
+          "sha256": "a8ad31b1c3f40dca5a84119351b8fa8ddc868edd77fad8a8ebf6d8f2d16fa4ae",
+          "bytes": 11324
+        },
+        {
+          "path": "src/nio/crypto/attachments.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/matrix-nio/matrix-nio/331c93ed3e9ca86e7444b4dfdf05086654842ace/src/nio/crypto/attachments.py",
+          "sha256": "bf2a44c39dc1dc036418e70294dc5c5cb7bb9a9ed389b65f359c9ef389af7d0e",
+          "bytes": 4946
+        },
+        {
+          "path": "src/nio/crypto/key_export.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/matrix-nio/matrix-nio/331c93ed3e9ca86e7444b4dfdf05086654842ace/src/nio/crypto/key_export.py",
+          "sha256": "284813134f2c3b5bc8dbb06a1e3713bfbf86f761c4d243df542e6c4122dde630",
+          "bytes": 4507
+        },
+        {
+          "path": "src/nio/crypto/__init__.py",
+          "kind": "source",
+          "role": "upstream_package_context",
+          "url": "https://raw.githubusercontent.com/matrix-nio/matrix-nio/331c93ed3e9ca86e7444b4dfdf05086654842ace/src/nio/crypto/__init__.py",
+          "sha256": "e4b5c55b98f785257a609d09799ef57fae8a9f76d10a2315b492242d8e0d7671",
+          "bytes": 1226
+        }
+      ],
+      "license_notes": "Repository license documents contain ISC and Apache text; selected Python files carry Apache-2.0 headers.",
+      "selection_unit": "historically_selected_complete_files"
+    },
+    {
+      "id": "pyaescrypt",
+      "repository": "https://github.com/marcobellaccini/pyAesCrypt",
+      "revision": "13a188f8799306ad9034167bf0bc0489319db274",
+      "split": "development",
+      "license_expression": "Apache-2.0",
+      "resources": [
+        {
+          "path": "LICENSE",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/marcobellaccini/pyAesCrypt/13a188f8799306ad9034167bf0bc0489319db274/LICENSE",
+          "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+          "bytes": 11357
+        },
+        {
+          "path": "pyAesCrypt/crypto.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/marcobellaccini/pyAesCrypt/13a188f8799306ad9034167bf0bc0489319db274/pyAesCrypt/crypto.py",
+          "sha256": "a6e0140577c4163e7db480188d55d600563c6ac86a55ed665a6447bf64eaf0c6",
+          "bytes": 14361
+        },
+        {
+          "path": "pyAesCrypt/__init__.py",
+          "kind": "source",
+          "role": "upstream_package_context",
+          "url": "https://raw.githubusercontent.com/marcobellaccini/pyAesCrypt/13a188f8799306ad9034167bf0bc0489319db274/pyAesCrypt/__init__.py",
+          "sha256": "dedad9725886f3b9e389a0a0cce5c5a92407cdcc9245fe1892f3fc9200d41822",
+          "bytes": 75
+        }
+      ],
+      "selection_unit": "historically_selected_complete_files"
+    },
+    {
+      "id": "secretstorage",
+      "repository": "https://github.com/mitya57/secretstorage",
+      "revision": "ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca",
+      "split": "development",
+      "license_expression": "BSD-3-Clause",
+      "resources": [
+        {
+          "path": "LICENSE",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/mitya57/secretstorage/ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca/LICENSE",
+          "sha256": "e700357592bb93704cb040ce4a6663a85292716a4041b6a267f598f21658466f",
+          "bytes": 1504
+        },
+        {
+          "path": "secretstorage/util.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/mitya57/secretstorage/ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca/secretstorage/util.py",
+          "sha256": "27fb5961725356fef911216ebca62396d89d36bb7b7db4418703340b4f2a6cb8",
+          "bytes": 7487
+        },
+        {
+          "path": "secretstorage/item.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/mitya57/secretstorage/ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca/secretstorage/item.py",
+          "sha256": "6fb16519c5849830b5cdf10288ce79ac9d707b687af3836c55991652657fcc37",
+          "bytes": 6150
+        },
+        {
+          "path": "secretstorage/dhcrypto.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/mitya57/secretstorage/ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca/secretstorage/dhcrypto.py",
+          "sha256": "55d4dbfabc7025c3a5b16153e1ad2fac5b9d0cc76181ab13483e2a4ebddb1e7f",
+          "bytes": 2274
+        },
+        {
+          "path": "secretstorage/__init__.py",
+          "kind": "source",
+          "role": "upstream_package_context",
+          "url": "https://raw.githubusercontent.com/mitya57/secretstorage/ac7bd14bb8a95cb1eb9185dfee056ec850ff50ca/secretstorage/__init__.py",
+          "sha256": "fd8df8728da2f46fb49637c351913609d2cc61ad4757c8d045ce97b6b7fe7444",
+          "bytes": 3402
+        }
+      ],
+      "selection_unit": "historically_selected_complete_files"
+    },
+    {
+      "id": "ansible",
+      "repository": "https://github.com/ansible/ansible",
+      "revision": "5186cff137018276877e2e6c24e669ec46098d2a",
+      "split": "development",
+      "license_expression": "GPL-3.0-or-later",
+      "resources": [
+        {
+          "path": "COPYING",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/ansible/ansible/5186cff137018276877e2e6c24e669ec46098d2a/COPYING",
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "bytes": 35149
+        },
+        {
+          "path": "lib/ansible/parsing/vault/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/ansible/ansible/5186cff137018276877e2e6c24e669ec46098d2a/lib/ansible/parsing/vault/__init__.py",
+          "sha256": "22f1f7597eaa617b250c8717f679734b801b29ef25033f4225620f32797bf849",
+          "bytes": 60193
+        }
+      ],
+      "selection_unit": "historically_selected_complete_files"
+    },
+    {
+      "id": "paramiko",
+      "repository": "https://github.com/paramiko/paramiko",
+      "revision": "0e9ccb91e0f9a68f2587233d523ad7fe46e730fe",
+      "source_roots": [
+        "paramiko/"
+      ],
+      "split": "development",
+      "reason": "SSH implementation; API indirection may expose selector and origin-analysis limits.",
+      "resources": [
+        {
+          "path": "LICENSE",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/LICENSE",
+          "sha256": "5fa25bf5f395fd26e701c2e1de4ca7d162816986dc791c22f8f4226857ad1bb2",
+          "bytes": 26436
+        },
+        {
+          "path": "paramiko/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/__init__.py",
+          "sha256": "770f0edde7d9cf058fea079f536e081892ad4533563e46353a2fdedc7584324e",
+          "bytes": 3450
+        },
+        {
+          "path": "paramiko/_winapi.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/_winapi.py",
+          "sha256": "7b83f20e61e6c8b700919a385805fb6a1fc8e9fab87b1ec0f0587138f600a00f",
+          "bytes": 11204
+        },
+        {
+          "path": "paramiko/agent.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/agent.py",
+          "sha256": "561e9dbb3f596598f8529853c358ff32c50ebebc6f28293fe0d672ad5a3afbdf",
+          "bytes": 15978
+        },
+        {
+          "path": "paramiko/auth_handler.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/auth_handler.py",
+          "sha256": "f06e69ce7e86f911d13d2e5f087371bbb8e7ce1b3814ab68c10e9ea8b66bd7fe",
+          "bytes": 29593
+        },
+        {
+          "path": "paramiko/auth_strategy.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/auth_strategy.py",
+          "sha256": "061bfe0d510b750383670795d7e8cfc7b35af132be6c713d030868341b1a13d6",
+          "bytes": 11491
+        },
+        {
+          "path": "paramiko/ber.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/ber.py",
+          "sha256": "b856fe628914e118367ca8f25fc54c02ed39493564dfb61182086534799da18a",
+          "bytes": 4369
+        },
+        {
+          "path": "paramiko/buffered_pipe.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/buffered_pipe.py",
+          "sha256": "0259132c76166e3e16f990fb391419163105bfb902ed04af118ca97e21e9c31c",
+          "bytes": 7225
+        },
+        {
+          "path": "paramiko/channel.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/channel.py",
+          "sha256": "3173be0b9762a72f10d12861f5c791f823cf88107eb2c4fff68220c3306143fa",
+          "bytes": 49222
+        },
+        {
+          "path": "paramiko/client.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/client.py",
+          "sha256": "d2ec094ad635ad2c8d0274afa02c3e913ef199d60fef3dab1eb2187b3c034cc7",
+          "bytes": 33314
+        },
+        {
+          "path": "paramiko/common.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/common.py",
+          "sha256": "b01256f0a273fc413c4ec4fbc0b5933ee5222f69cdb0b6bf71fad309ef45ca2a",
+          "bytes": 7756
+        },
+        {
+          "path": "paramiko/compress.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/compress.py",
+          "sha256": "4421d38a7a34707cf5772d692db3a11617567c6978bb9d1598171b4fba8158d7",
+          "bytes": 1282
+        },
+        {
+          "path": "paramiko/config.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/config.py",
+          "sha256": "f6e215032a5e0b91338a656bd518ac9a5533bbcb2d8991382128199e882bf975",
+          "bytes": 27442
+        },
+        {
+          "path": "paramiko/ecdsakey.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/ecdsakey.py",
+          "sha256": "f0b0dca3cf1db9b52cd89670c6ab1ed3811c35684aac9cde3864ec9bc1f465ba",
+          "bytes": 11340
+        },
+        {
+          "path": "paramiko/ed25519key.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/ed25519key.py",
+          "sha256": "1e82c1438bbdb0fae287f8d1483bf3300d03f5ff607136ef202c28a84a438c95",
+          "bytes": 7695
+        },
+        {
+          "path": "paramiko/file.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/file.py",
+          "sha256": "3606e1523620acb87e1d0b6c75894f6770b2bd2d23857a9e3e4e391a11cf312a",
+          "bytes": 19063
+        },
+        {
+          "path": "paramiko/hostkeys.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/hostkeys.py",
+          "sha256": "fbba647086a7a77af3621b5f9e0f3804deb670fc6ce2f14cc15b4f03f0072cc7",
+          "bytes": 13173
+        },
+        {
+          "path": "paramiko/kex_curve25519.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/kex_curve25519.py",
+          "sha256": "be81050ecff392011d58ea836a453ee432d83b7aa8b56717622a8e0943f8183a",
+          "bytes": 4436
+        },
+        {
+          "path": "paramiko/kex_ecdh_nist.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/kex_ecdh_nist.py",
+          "sha256": "45b1cfc2ff06bb9891f4bc0c7fe374c948d711081128a04b6804f775a72fe384",
+          "bytes": 5012
+        },
+        {
+          "path": "paramiko/kex_gex.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/kex_gex.py",
+          "sha256": "03a0ab3317067e1afa56552e5af1500c11be101218fbdf0c41115478d720d2db",
+          "bytes": 10139
+        },
+        {
+          "path": "paramiko/kex_group14.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/kex_group14.py",
+          "sha256": "7a23866ba5abc2f7cdf59e6cc79702e23e41834249ebca134d84513255eaea56",
+          "bytes": 6079
+        },
+        {
+          "path": "paramiko/kex_group16.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/kex_group16.py",
+          "sha256": "c218c846cdd423d9d99c7602e23128a6e2cc870f0ec59c2ab63ccc1ec43d83b0",
+          "bytes": 2304
+        },
+        {
+          "path": "paramiko/kex_mlkem.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/kex_mlkem.py",
+          "sha256": "bcd7ecb7ed992074b0926c54cb51d96b0c7b8ab0ee40ea764ed4cb47a3390414",
+          "bytes": 7384
+        },
+        {
+          "path": "paramiko/message.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/message.py",
+          "sha256": "7a22c7bcd328967c29fb92725907be0ed75b1a07583ab21f65bdbe115d83aa6a",
+          "bytes": 9400
+        },
+        {
+          "path": "paramiko/packet.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/packet.py",
+          "sha256": "0a87189d9d956f3ed5468fba0463219515aba3b14b2084a9c538987a812cc9a3",
+          "bytes": 24314
+        },
+        {
+          "path": "paramiko/pipe.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/pipe.py",
+          "sha256": "7265b03b231dcaceb62062c2f650f39f04eed75c4b83ac01f6657eeb496bf3a0",
+          "bytes": 3902
+        },
+        {
+          "path": "paramiko/pkey.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/pkey.py",
+          "sha256": "e4fab624de858065ce25a8f85337c44cd84a8af3c2149775b11159eda7736df7",
+          "bytes": 38342
+        },
+        {
+          "path": "paramiko/primes.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/primes.py",
+          "sha256": "e94bf47c5b1398827122732a78d86bcb0f63af3be0364b0a6c0ede7012348391",
+          "bytes": 5107
+        },
+        {
+          "path": "paramiko/proxy.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/proxy.py",
+          "sha256": "2395f1375683ade9f7170d5fdd23a840b3f83bd3bb8dec9ecbd99e1ba3a0d2ae",
+          "bytes": 4648
+        },
+        {
+          "path": "paramiko/rsakey.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/rsakey.py",
+          "sha256": "08cda84e3d26a4219644fbdfbfbe1a81baad4747e51e93746b30b05fb6aa982b",
+          "bytes": 7794
+        },
+        {
+          "path": "paramiko/server.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/server.py",
+          "sha256": "9c9036788729ec5e56346d927be5fb2317abd5312fdd82d0f43cd81135e62314",
+          "bytes": 27018
+        },
+        {
+          "path": "paramiko/sftp.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/sftp.py",
+          "sha256": "a7264f9d1d1fbfde18a297cf0e9b259684e261e96ee46b8cef471750639a2873",
+          "bytes": 6471
+        },
+        {
+          "path": "paramiko/sftp_attr.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/sftp_attr.py",
+          "sha256": "017f9c1bf1623e29dfb5042af0d768d4c73f6d9cfe0215c5410a5a73ea15d308",
+          "bytes": 8258
+        },
+        {
+          "path": "paramiko/sftp_client.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/sftp_client.py",
+          "sha256": "7bfce2e95db7ded8f1dc31fd4c7eeb4432913be4c267fcf23a4070e2c491223a",
+          "bytes": 35855
+        },
+        {
+          "path": "paramiko/sftp_file.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/sftp_file.py",
+          "sha256": "36055f0e1c71511845ac4aa788825080a43ac258024e0395bb91b041ccd6fe19",
+          "bytes": 21820
+        },
+        {
+          "path": "paramiko/sftp_handle.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/sftp_handle.py",
+          "sha256": "868f9eca212f8581edfbf572b739cdccd78692d7da22c417e65e1b7aca566409",
+          "bytes": 7424
+        },
+        {
+          "path": "paramiko/sftp_server.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/sftp_server.py",
+          "sha256": "06c8624d29c3f0f5deafc55e244cfb77c69e446609ac404466202515a9305654",
+          "bytes": 19704
+        },
+        {
+          "path": "paramiko/sftp_si.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/sftp_si.py",
+          "sha256": "51ff746c599ee89cbaca5ee4e23276f0825ba2ae8a8b23d62e35e03fd0d1ea09",
+          "bytes": 12544
+        },
+        {
+          "path": "paramiko/ssh_exception.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/ssh_exception.py",
+          "sha256": "0246352ab0e7c142109bef70f29622eb7423f63b95285e6db1ba21a09571eab0",
+          "bytes": 7597
+        },
+        {
+          "path": "paramiko/transport.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/transport.py",
+          "sha256": "41f13042dfb01e8705849aad17042d4fedc64002ae082260f979a05e350ef4a1",
+          "bytes": 129617
+        },
+        {
+          "path": "paramiko/util.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/util.py",
+          "sha256": "6a940ee306d748cf2ef08119871867af0604e1ac69a0118dbe767120a1a14c89",
+          "bytes": 9556
+        },
+        {
+          "path": "paramiko/win_openssh.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/win_openssh.py",
+          "sha256": "0db5894f486213a5089806cca9e85c1ae54b0d6225fb6ace6def8085a1ae5a99",
+          "bytes": 1918
+        },
+        {
+          "path": "paramiko/win_pageant.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/paramiko/paramiko/0e9ccb91e0f9a68f2587233d523ad7fe46e730fe/paramiko/win_pageant.py",
+          "sha256": "8b94c6e3bd95cc92959cad3ca3133884afea6fd2332ff168f7a07ca2e6b15c7a",
+          "bytes": 4177
+        }
+      ],
+      "selection_unit": "all_non_test_python_under_predeclared_roots"
+    },
+    {
+      "id": "pycryptodome",
+      "repository": "https://github.com/legrandin/pycryptodome",
+      "revision": "185a000ee0ba845383460e93448375cba03e1be8",
+      "source_roots": [
+        "lib/Crypto/"
+      ],
+      "split": "development",
+      "reason": "Library implementation calibration; kept separate from application generalization.",
+      "resources": [
+        {
+          "path": "AUTHORS.rst",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/AUTHORS.rst",
+          "sha256": "1cb670b6cc5bc3a1c38d7e12cdf944442ca790425cf2a628ffbe3012445fe1e4",
+          "bytes": 764
+        },
+        {
+          "path": "LICENSE.rst",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/LICENSE.rst",
+          "sha256": "a260ad1a6f7137cfc79d371529818ec279a27a97bd86e02ebbf1900a23087955",
+          "bytes": 3690
+        },
+        {
+          "path": "lib/Crypto/Cipher/AES.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/AES.py",
+          "sha256": "ca98601f61376cdea2307d007516ada3fb8232209511b94a90889c34ad038004",
+          "bytes": 12737
+        },
+        {
+          "path": "lib/Crypto/Cipher/ARC2.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/ARC2.py",
+          "sha256": "b0eee9568e46205fcfb9ec5a447b9f7e40d3bf3e1eb48a57295339c7c8bd7065",
+          "bytes": 8037
+        },
+        {
+          "path": "lib/Crypto/Cipher/ARC4.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/ARC4.py",
+          "sha256": "4c76a87011e488179ebc15f8c21c0ad5d69a3d1ab9e2743dd883a63e9ef81e8c",
+          "bytes": 5214
+        },
+        {
+          "path": "lib/Crypto/Cipher/Blowfish.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/Blowfish.py",
+          "sha256": "71b99190a9605640ff072405308bb4e4ea35b69cabd130b7fc89578d7322edff",
+          "bytes": 7112
+        },
+        {
+          "path": "lib/Crypto/Cipher/CAST.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/CAST.py",
+          "sha256": "4567f70e55b6d72a60be09ba72bcffec3e7a473a0c6959cc2cac6c9b9b67ad86",
+          "bytes": 7122
+        },
+        {
+          "path": "lib/Crypto/Cipher/ChaCha20.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/ChaCha20.py",
+          "sha256": "e9e11197254ac794805b248e32c245cd3e848db2ce5a130e1b54079d331f8233",
+          "bytes": 14043
+        },
+        {
+          "path": "lib/Crypto/Cipher/ChaCha20_Poly1305.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/ChaCha20_Poly1305.py",
+          "sha256": "6ff23385a9e95f05606ce1d2b20ac0b87dac50430429dcef2d1208033d62c755",
+          "bytes": 10935
+        },
+        {
+          "path": "lib/Crypto/Cipher/DES.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/DES.py",
+          "sha256": "460f071bb3a7646e6c15f967ea8ab0b6783e8b3b22bc6418faa7ea41a4139d36",
+          "bytes": 6950
+        },
+        {
+          "path": "lib/Crypto/Cipher/DES3.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/DES3.py",
+          "sha256": "c39f0feee4bad5a1c72a7250a85ddc42410cd5daf0ef9701d38073c90f349c0c",
+          "bytes": 7913
+        },
+        {
+          "path": "lib/Crypto/Cipher/PKCS1_OAEP.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/PKCS1_OAEP.py",
+          "sha256": "65080332cc8182bf9bcb1a4fd75f791f115d87267a435fd874b95832a89e5f3a",
+          "bytes": 3804
+        },
+        {
+          "path": "lib/Crypto/Cipher/PKCS1_v1_5.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/PKCS1_v1_5.py",
+          "sha256": "acf1e598a7a4005f9ebb47d04ce062a146f4c50605b4296207cf2d3707bee907",
+          "bytes": 7396
+        },
+        {
+          "path": "lib/Crypto/Cipher/Salsa20.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/Salsa20.py",
+          "sha256": "209e179b09fabb60333ccf14f5af7d7764241817a48278e5f8e43794f4f0d58e",
+          "bytes": 9576
+        },
+        {
+          "path": "lib/Crypto/Cipher/_EKSBlowfish.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_EKSBlowfish.py",
+          "sha256": "50080d3eb4d65a81d5f8009264536a32947a7112281d5c128d08a7fb751819fc",
+          "bytes": 4653
+        },
+        {
+          "path": "lib/Crypto/Cipher/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/__init__.py",
+          "sha256": "150d837296ff2d07acd120b1c881f061215601c6065533cf254ebbfa19762275",
+          "bytes": 4206
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_cbc.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_cbc.py",
+          "sha256": "d483f69d87f4e865e6d850d61a352a93e02422660221bb15d6f79e740c34e739",
+          "bytes": 10346
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_ccm.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_ccm.py",
+          "sha256": "2af80c36c40790c4380a8accebd2456a620710bd41f5d121f5beb5203be7dd23",
+          "bytes": 25136
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_cfb.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_cfb.py",
+          "sha256": "8acc07c853daa220c77d272a29484cbdfa1d90d4d0389378d45297c6f164529f",
+          "bytes": 11554
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_ctr.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_ctr.py",
+          "sha256": "5d633452d27996162b25fa90951a91c887bfe5da517c5d3412021fac81788d9a",
+          "bytes": 18935
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_eax.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_eax.py",
+          "sha256": "851288de8fe8929403829649f016e16b4e23ab90e2ec13b8415a0b011afedd03",
+          "bytes": 14414
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_ecb.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_ecb.py",
+          "sha256": "5216ecaab9f4f634a59ffaf59f646d2eaafe302536d14cb3b0a77852ebe219f2",
+          "bytes": 9086
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_gcm.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_gcm.py",
+          "sha256": "69524944b276db13d287f693d726d63fb12832d774f14611a61d6099335a70a8",
+          "bytes": 24744
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_kw.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_kw.py",
+          "sha256": "4197a124d254dbcb48916fbe8109d03264b13c7aab23b0d84a24bec3bb1ffbfd",
+          "bytes": 4396
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_kwp.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_kwp.py",
+          "sha256": "5eb802f88b4f2bc9f39da0e3d55507a9c3646e004bb396bf6a7cd82f8361997d",
+          "bytes": 3916
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_ocb.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_ocb.py",
+          "sha256": "c51e4f586e07fd467187cf2a5aadbc6d3167b43c9649a11cef12c384505728e3",
+          "bytes": 21837
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_ofb.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_ofb.py",
+          "sha256": "340a2e91f10d7166ff54d6fb8ef7026db90d8a41cc9ec48e5fcfdc79a9bf83ba",
+          "bytes": 11037
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_openpgp.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_openpgp.py",
+          "sha256": "57138436f7d0db9329c29a1655c26fc9a36ceb07da341a293c6078d26c2362fd",
+          "bytes": 5841
+        },
+        {
+          "path": "lib/Crypto/Cipher/_mode_siv.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_mode_siv.py",
+          "sha256": "ca104690cc87b0384c3833b960d7667c8799e485056094e38bf13dfe8429e535",
+          "bytes": 13015
+        },
+        {
+          "path": "lib/Crypto/Cipher/_pkcs1_oaep_decode.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_pkcs1_oaep_decode.py",
+          "sha256": "21cc9f0d0fde182f64c0517275e58b03a524fa1d1ad91284f1c3d671f42582a2",
+          "bytes": 1678
+        },
+        {
+          "path": "lib/Crypto/Cipher/_state_machine.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/_state_machine.py",
+          "sha256": "5afe640ce35da40cfa653dd4c8a24fcf6cec6adc60bdbb1471ab4c07651455b7",
+          "bytes": 602
+        },
+        {
+          "path": "lib/Crypto/Cipher/oaep.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Cipher/oaep.py",
+          "sha256": "62f9c00a464976e40f4d105572306ce27be2fc3da980cef3677b0483e28d98a5",
+          "bytes": 8409
+        },
+        {
+          "path": "lib/Crypto/Hash/BLAKE2b.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/BLAKE2b.py",
+          "sha256": "735d75d9360ca6beae5b6d4a47d2aa44fe2494018a44bfa60e321a441dcd94f1",
+          "bytes": 8261
+        },
+        {
+          "path": "lib/Crypto/Hash/BLAKE2s.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/BLAKE2s.py",
+          "sha256": "b5540f2d61035eaa0b285cb385ef73b673c281147db7864dbdc127869334f618",
+          "bytes": 8267
+        },
+        {
+          "path": "lib/Crypto/Hash/CMAC.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/CMAC.py",
+          "sha256": "e1b51786414c23baa47e82a5e36be9e6626f2173fc8a184775ff8a49882a8665",
+          "bytes": 10466
+        },
+        {
+          "path": "lib/Crypto/Hash/HMAC.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/HMAC.py",
+          "sha256": "047723a2d2d8a6eec5daf80345e73b1e72167d7614985fcd35073065d80dc912",
+          "bytes": 8806
+        },
+        {
+          "path": "lib/Crypto/Hash/KMAC128.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/KMAC128.py",
+          "sha256": "13402924871e165d9cad01af8c0360464e24f3e07c489587efc2209b025c870a",
+          "bytes": 5188
+        },
+        {
+          "path": "lib/Crypto/Hash/KMAC256.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/KMAC256.py",
+          "sha256": "291ef8be847846c900f7e438e47fc5824eb1a8b04371f2e1de4237231a7d4720",
+          "bytes": 1478
+        },
+        {
+          "path": "lib/Crypto/Hash/KangarooTwelve.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/KangarooTwelve.py",
+          "sha256": "e038c744dcb66a967dce3ca8c8ff30ccb1d315ebb7b9bcd099b923507e863ae6",
+          "bytes": 13233
+        },
+        {
+          "path": "lib/Crypto/Hash/MD2.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/MD2.py",
+          "sha256": "3c387d0e8eb64b33afa9388ccc17b3f0a79f451aa89c21049a47261ab4c09090",
+          "bytes": 4518
+        },
+        {
+          "path": "lib/Crypto/Hash/MD4.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/MD4.py",
+          "sha256": "696efdf8eeac2ea57bdac24efa83f5624072155ab7be8ce6c6929d8b25abd040",
+          "bytes": 4590
+        },
+        {
+          "path": "lib/Crypto/Hash/MD5.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/MD5.py",
+          "sha256": "88a64ca030837ba6360989f29c19bdc9b5c02f02f8a664da3594e8e59f7593d0",
+          "bytes": 7512
+        },
+        {
+          "path": "lib/Crypto/Hash/Poly1305.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/Poly1305.py",
+          "sha256": "8bc811dfab25cc053b27a607f062fe9a10468554720d1bf08125065caf598de9",
+          "bytes": 7464
+        },
+        {
+          "path": "lib/Crypto/Hash/RIPEMD.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/RIPEMD.py",
+          "sha256": "09a83fe062f6d6ed124cb137f7fdb7cf64be3988999202551402f74953e2a1c5",
+          "bytes": 1175
+        },
+        {
+          "path": "lib/Crypto/Hash/RIPEMD160.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/RIPEMD160.py",
+          "sha256": "3c5b916dc613764df6a42591b2c35d5f5f641564cbc04980fc532beac9cb41e3",
+          "bytes": 4776
+        },
+        {
+          "path": "lib/Crypto/Hash/SHA.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHA.py",
+          "sha256": "eab53a80ea16f648213e2ae4214406b6ad090c01c4f7094b771af48f8922cb10",
+          "bytes": 1124
+        },
+        {
+          "path": "lib/Crypto/Hash/SHA1.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHA1.py",
+          "sha256": "c1b12328c24a9f59f4eabedf11e792134628db8058ea88191cb816e179f845a9",
+          "bytes": 7588
+        },
+        {
+          "path": "lib/Crypto/Hash/SHA224.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHA224.py",
+          "sha256": "0c1af9c6d788d25fcddadc7afd38487a26ad1be440a87961c7dd9a968944ce52",
+          "bytes": 7943
+        },
+        {
+          "path": "lib/Crypto/Hash/SHA256.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHA256.py",
+          "sha256": "45b3192f9ddf8d7a62ff87b1c32efdf60ec552f6369af824d82d4da601460368",
+          "bytes": 8460
+        },
+        {
+          "path": "lib/Crypto/Hash/SHA384.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHA384.py",
+          "sha256": "36209eba1c190b40d1f6b0ac1a6d101371a33d3c138e5b1d5dcbfcf97a43a59f",
+          "bytes": 7603
+        },
+        {
+          "path": "lib/Crypto/Hash/SHA3_224.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHA3_224.py",
+          "sha256": "d13211fc24ceb3b22c3ccd7e0ee154a2a2bb23ce6470c5b718a4c1195ccd7fcd",
+          "bytes": 6305
+        },
+        {
+          "path": "lib/Crypto/Hash/SHA3_256.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHA3_256.py",
+          "sha256": "b0079f9f349bb80737497b8309dcb78a19b6945fa83bb2f3c7024b23471bc7df",
+          "bytes": 6305
+        },
+        {
+          "path": "lib/Crypto/Hash/SHA3_384.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHA3_384.py",
+          "sha256": "34eb2b748ef9f3d4d85dcb77a3af0470d742a1c4bfcf1f072e80e2558f80b460",
+          "bytes": 6305
+        },
+        {
+          "path": "lib/Crypto/Hash/SHA3_512.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHA3_512.py",
+          "sha256": "b1f842a19855f2d33cf2fa76d496d4bcfea9d72ba49ac4142e60d3b4eed10ed8",
+          "bytes": 6305
+        },
+        {
+          "path": "lib/Crypto/Hash/SHA512.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHA512.py",
+          "sha256": "5aa9ff70b6fabdcce824c8434fe10798a309be798b60a6987fda8981274a60bc",
+          "bytes": 8886
+        },
+        {
+          "path": "lib/Crypto/Hash/SHAKE128.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHAKE128.py",
+          "sha256": "dd014b2103892bfd8b5267c7b47b6de61e49737b6aed3acd6381821f87a91570",
+          "bytes": 3824
+        },
+        {
+          "path": "lib/Crypto/Hash/SHAKE256.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/SHAKE256.py",
+          "sha256": "a7a8befcf99dcb9f97ff78924bd3482fdb26867d8d226f87b733b3d4b625cfc3",
+          "bytes": 3825
+        },
+        {
+          "path": "lib/Crypto/Hash/TupleHash128.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/TupleHash128.py",
+          "sha256": "5e30ddea8e9d57de035a8e955a39bf6a9e12aad2602180939fb3906ecddddf29",
+          "bytes": 3859
+        },
+        {
+          "path": "lib/Crypto/Hash/TupleHash256.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/TupleHash256.py",
+          "sha256": "2e303bfd37b101cf9f7cffe9d999122753915ad03c87fbaa21a224463e59d90e",
+          "bytes": 1452
+        },
+        {
+          "path": "lib/Crypto/Hash/TurboSHAKE128.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/TurboSHAKE128.py",
+          "sha256": "d647788f7e23a3f00f93f8680a985fb15b27c9d021c1805f052882bd137710d4",
+          "bytes": 3826
+        },
+        {
+          "path": "lib/Crypto/Hash/TurboSHAKE256.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/TurboSHAKE256.py",
+          "sha256": "2d91255fbfa475cf9d653462dd16688912ab0fd0b0a910f1eedbd695b3714947",
+          "bytes": 859
+        },
+        {
+          "path": "lib/Crypto/Hash/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/__init__.py",
+          "sha256": "d0ee9f503b904f78b5378a1682da5fa800608a4301849576bfeb6e885913c62d",
+          "bytes": 5505
+        },
+        {
+          "path": "lib/Crypto/Hash/cSHAKE128.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/cSHAKE128.py",
+          "sha256": "df647dedb69c46ee839d639cf7923c878ca38a5fa9065ba6be69dc8316b3954c",
+          "bytes": 6386
+        },
+        {
+          "path": "lib/Crypto/Hash/cSHAKE256.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/cSHAKE256.py",
+          "sha256": "c2e07535d927840eeffcfda39331e3a8c302c3c9e525a70c19f565b69b4ecfaa",
+          "bytes": 2332
+        },
+        {
+          "path": "lib/Crypto/Hash/keccak.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Hash/keccak.py",
+          "sha256": "50ad83e2b7936c37f50b02a48ef5c304c3f2225ee9467cbe7baa229ec3bada78",
+          "bytes": 8257
+        },
+        {
+          "path": "lib/Crypto/IO/PEM.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/IO/PEM.py",
+          "sha256": "dfed992b76ddfa5868a83cedf54b5b4a4a8b6d5be79544275aeb2fbef8fbeaad",
+          "bytes": 6787
+        },
+        {
+          "path": "lib/Crypto/IO/PKCS8.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/IO/PKCS8.py",
+          "sha256": "c01bb70eb284656bf4d6ddb4252f001abf738a1d68daf9125c88700554a57cb3",
+          "bytes": 14448
+        },
+        {
+          "path": "lib/Crypto/IO/_PBES.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/IO/_PBES.py",
+          "sha256": "794ff09c0251d26e66ad0b9e8d441cb6c76e645422b96809432120e75bbc23e3",
+          "bytes": 26750
+        },
+        {
+          "path": "lib/Crypto/IO/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/IO/__init__.py",
+          "sha256": "deb6490f76fa91eddb4085d69e4704072ed8c646ae5d7bad59b5a7df57f5986d",
+          "bytes": 131
+        },
+        {
+          "path": "lib/Crypto/Math/Numbers.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Math/Numbers.py",
+          "sha256": "760f38fc74b508d0039c9244b488a7f2e5e710bc9a77429d76f542a04751e771",
+          "bytes": 1393
+        },
+        {
+          "path": "lib/Crypto/Math/Primality.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Math/Primality.py",
+          "sha256": "05d4f913149cb62b38f7e9fcc3496f347e88203a953328010dc3aee20f67ddd1",
+          "bytes": 8883
+        },
+        {
+          "path": "lib/Crypto/Math/_IntegerBase.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Math/_IntegerBase.py",
+          "sha256": "c06a0d1dd57af945fa0b07c264a9735577eacd60ca4189ff2a0ce7807d507168",
+          "bytes": 15368
+        },
+        {
+          "path": "lib/Crypto/Math/_IntegerNat.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Math/_IntegerNat.py",
+          "sha256": "cf2607e1a6b77ca0d7dd1cf3baa835f05452cf38671405fca7294cbe3d497bc3",
+          "bytes": 22318
+        },
+        {
+          "path": "lib/Crypto/Math/_IntegerNative.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Math/_IntegerNative.py",
+          "sha256": "10b28f5ab5e69cc5d930ac826200ee192afb99ca0e5cb31023dcae35bb2615e3",
+          "bytes": 10553
+        },
+        {
+          "path": "lib/Crypto/Math/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Math/__init__.py",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "lib/Crypto/Protocol/DH.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Protocol/DH.py",
+          "sha256": "eef6d7617e8e34e03c7c1671cecdd0fa415fb1595eb3c3380a6d6067a3fecc10",
+          "bytes": 5687
+        },
+        {
+          "path": "lib/Crypto/Protocol/HPKE.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Protocol/HPKE.py",
+          "sha256": "5e94dd27c809d9da17b5663e2df8a8f0e4e4689935d5131d68295847d090dcf9",
+          "bytes": 19872
+        },
+        {
+          "path": "lib/Crypto/Protocol/KDF.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Protocol/KDF.py",
+          "sha256": "c4d1a8dc0f21ef8b0e6c446c8551b9c8cb3fab4654a012df87a862b327e383d7",
+          "bytes": 32496
+        },
+        {
+          "path": "lib/Crypto/Protocol/SecretSharing.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Protocol/SecretSharing.py",
+          "sha256": "1f36483e6bb7b5534301e9a96b068c20e4759672230d4b9faec22a1a38148764",
+          "bytes": 8122
+        },
+        {
+          "path": "lib/Crypto/Protocol/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Protocol/__init__.py",
+          "sha256": "41cc730e17cbb3319608b004eb31391d158f636fa73fbedcc74f957a55dd6462",
+          "bytes": 1554
+        },
+        {
+          "path": "lib/Crypto/PublicKey/DSA.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/DSA.py",
+          "sha256": "b66b391f2daa079d8aa3ebe9601ba9df90b235f38dbf106f4146c9b7ac8f4d3a",
+          "bytes": 25760
+        },
+        {
+          "path": "lib/Crypto/PublicKey/ECC.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/ECC.py",
+          "sha256": "cebd3c40c4f3873c68cd6bf996ebb0c0e6e0821ce620edf4e25d2dbe09da2da3",
+          "bytes": 52654
+        },
+        {
+          "path": "lib/Crypto/PublicKey/ElGamal.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/ElGamal.py",
+          "sha256": "b0af248b80d18fee3752bbb0126294727daac9b656c7b839bfc045cc3653700b",
+          "bytes": 9284
+        },
+        {
+          "path": "lib/Crypto/PublicKey/Hybrid.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/Hybrid.py",
+          "sha256": "2a1418ec44d8ff0035106e0d41d215f9e07efe6e284d26a0ab45f84ce3b63998",
+          "bytes": 10496
+        },
+        {
+          "path": "lib/Crypto/PublicKey/MLDSA.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/MLDSA.py",
+          "sha256": "3c11d0f9c8f0a750eba2866fabc1072472c47c0a2d66939829f137be0d9a47bb",
+          "bytes": 30280
+        },
+        {
+          "path": "lib/Crypto/PublicKey/MLKEM.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/MLKEM.py",
+          "sha256": "3da1b479e295c7d0552c5b9c4bc17e26837dd0f27ab14d2b947008ff52c14391",
+          "bytes": 30955
+        },
+        {
+          "path": "lib/Crypto/PublicKey/RSA.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/RSA.py",
+          "sha256": "03fbf13cc89844045bf0990eaf082e9aba6bea5927e2192e3770023e66610db7",
+          "bytes": 36940
+        },
+        {
+          "path": "lib/Crypto/PublicKey/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/__init__.py",
+          "sha256": "97891c80b523e194bb0b4eb6df1a2a13ae167be96cadc390c0e5cd0f28c9aa8e",
+          "bytes": 3005
+        },
+        {
+          "path": "lib/Crypto/PublicKey/_curve.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/_curve.py",
+          "sha256": "45bf514da6bae56578bf0f3573a82bae88860eb52943914e6c2bdc24c4775abf",
+          "bytes": 1801
+        },
+        {
+          "path": "lib/Crypto/PublicKey/_ec_lib.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/_ec_lib.py",
+          "sha256": "6796e657d8bce90958c5f382538690f0a6ed307e3bc37319247d6e478c75b7cf",
+          "bytes": 1398
+        },
+        {
+          "path": "lib/Crypto/PublicKey/_edwards.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/_edwards.py",
+          "sha256": "d1f88e85d824448755b1c282c99c98a5c2128f7002c0067c2d721bafd2dd4440",
+          "bytes": 5287
+        },
+        {
+          "path": "lib/Crypto/PublicKey/_montgomery.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/_montgomery.py",
+          "sha256": "94dcc0cdbdadc67ee7e7c745da435d53fb64c7c6bbd406b8973e622a2e0d3a82",
+          "bytes": 4665
+        },
+        {
+          "path": "lib/Crypto/PublicKey/_nist_ecc.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/_nist_ecc.py",
+          "sha256": "32a5a614d3a9076fa7215a03724a2fc8c6b5896508a3f74214d79d89cb7e052c",
+          "bytes": 6009
+        },
+        {
+          "path": "lib/Crypto/PublicKey/_openssh.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/_openssh.py",
+          "sha256": "15875a99dcf79f4cefb9e1ab6679ccafef0903f0c14b3b71ffec36552822cbe3",
+          "bytes": 5065
+        },
+        {
+          "path": "lib/Crypto/PublicKey/_point.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/PublicKey/_point.py",
+          "sha256": "76a12e498a44bbcb50da0cd3bfd3996ca314b5cfca3ef67d44ea414ec1dfef26",
+          "bytes": 19272
+        },
+        {
+          "path": "lib/Crypto/Random/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Random/__init__.py",
+          "sha256": "adbe9aa8f051114319df13d634f938da80e3756f7304df15fa57dbfe350bedca",
+          "bytes": 1860
+        },
+        {
+          "path": "lib/Crypto/Random/random.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Random/random.py",
+          "sha256": "c4c17d9c0c4c0f68710ded57f11611998dea05ed3a0b0861dc25c6eca5ea47df",
+          "bytes": 5462
+        },
+        {
+          "path": "lib/Crypto/Signature/DSS.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Signature/DSS.py",
+          "sha256": "430d948fbb88084c8db020231d4baa0a209b5c97098631c7bc526400d6473b6d",
+          "bytes": 14283
+        },
+        {
+          "path": "lib/Crypto/Signature/PKCS1_PSS.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Signature/PKCS1_PSS.py",
+          "sha256": "3ffc1ba614d43d069a82b0b569a108748cfb9cd3a0acfb19a277e55ebbd52a12",
+          "bytes": 1290
+        },
+        {
+          "path": "lib/Crypto/Signature/PKCS1_v1_5.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Signature/PKCS1_v1_5.py",
+          "sha256": "11b3f3f2450c698c8f6be14bfee63c8aa034d8d78d891c690dd64103bdcf27bc",
+          "bytes": 1090
+        },
+        {
+          "path": "lib/Crypto/Signature/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Signature/__init__.py",
+          "sha256": "58971e468f64bc46cbf50ca7feeca442878ab808cd45c04a4c577f475579856e",
+          "bytes": 295
+        },
+        {
+          "path": "lib/Crypto/Signature/eddsa.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Signature/eddsa.py",
+          "sha256": "ee48044cb8f3a104a9267276b620419695a7ec72ed7bcf6fb139b35722f1e990",
+          "bytes": 11978
+        },
+        {
+          "path": "lib/Crypto/Signature/mldsa.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Signature/mldsa.py",
+          "sha256": "9f12a3fcd69fbbdbc8e8df27f4bb2c7866893875be50e65a847d7759f100a35d",
+          "bytes": 11730
+        },
+        {
+          "path": "lib/Crypto/Signature/pkcs1_15.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Signature/pkcs1_15.py",
+          "sha256": "2c62a37d51b355ebadc95d15aa89f0a534788e9579df24400378b30d37deb8d7",
+          "bytes": 7735
+        },
+        {
+          "path": "lib/Crypto/Signature/pss.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Signature/pss.py",
+          "sha256": "ba86e653ef2f4ca8700ba1c23792c57ae12323fbd728db6bc41af78d3b702b67",
+          "bytes": 12937
+        },
+        {
+          "path": "lib/Crypto/Util/Counter.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/Counter.py",
+          "sha256": "f19eef4a7b85cffbf6d5566cfb82c4358588436dfd71fd24b9faff2505474170",
+          "bytes": 3517
+        },
+        {
+          "path": "lib/Crypto/Util/Padding.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/Padding.py",
+          "sha256": "a4451493bba929a7d3bfc1cff34ccdecc3147bd457152963b9800eccb5e1225b",
+          "bytes": 3080
+        },
+        {
+          "path": "lib/Crypto/Util/RFC1751.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/RFC1751.py",
+          "sha256": "538345978da6eede8200a05b308b630f674ccd50c2bf284198fc050252001411",
+          "bytes": 21228
+        },
+        {
+          "path": "lib/Crypto/Util/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/__init__.py",
+          "sha256": "337a6a0fdf3dd78aa32ad29d8f768992c9fb22d2a435f359f24f99436f5d7980",
+          "bytes": 1899
+        },
+        {
+          "path": "lib/Crypto/Util/_bytes.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/_bytes.py",
+          "sha256": "9f320bffb9e8aa1d8c1bb00137958f484f2fbf19c286fd4378ea5a517e2f3afa",
+          "bytes": 752
+        },
+        {
+          "path": "lib/Crypto/Util/_cpu_features.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/_cpu_features.py",
+          "sha256": "9d7cb3dd10db85f44b1a3c272667067519456b453b126d936362bf031c7d953a",
+          "bytes": 2321
+        },
+        {
+          "path": "lib/Crypto/Util/_file_system.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/_file_system.py",
+          "sha256": "df98979ac23ae07dd3b3e354a0f81dcf73efd0b382127e0d437869bfb3648b5b",
+          "bytes": 820
+        },
+        {
+          "path": "lib/Crypto/Util/_raw_api.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/_raw_api.py",
+          "sha256": "4fa43236cb16bc473a7b012906ee86ed9297256df2f3c52241b3354d78bed6be",
+          "bytes": 18776
+        },
+        {
+          "path": "lib/Crypto/Util/_threads.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/_threads.py",
+          "sha256": "6721d6d41c426a177c615a57d68a77782be1332bacc15fc9caa5269290d3ab9d",
+          "bytes": 3940
+        },
+        {
+          "path": "lib/Crypto/Util/asn1.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/asn1.py",
+          "sha256": "a7d1c647f4804d4f8a8075a22a8d936eea6ea9ad871b29c707788f5643cd77e2",
+          "bytes": 38565
+        },
+        {
+          "path": "lib/Crypto/Util/number.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/number.py",
+          "sha256": "af389d621b9bb78cc26debe41be540c3249addc0263c4bf3d1f24a5a76a41920",
+          "bytes": 93904
+        },
+        {
+          "path": "lib/Crypto/Util/strxor.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/Util/strxor.py",
+          "sha256": "876c9e55352781c3230c8c92175aedf0d7a9af368bf97f355f47374cd6bec826",
+          "bytes": 5129
+        },
+        {
+          "path": "lib/Crypto/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/legrandin/pycryptodome/185a000ee0ba845383460e93448375cba03e1be8/lib/Crypto/__init__.py",
+          "sha256": "fea82ac9438eb1b50a1e3e0eaa1c675269a4cdc1216048e8c6b5e9fc56e6808e",
+          "bytes": 2191
+        }
+      ],
+      "selection_unit": "all_non_test_python_under_predeclared_roots"
+    },
+    {
+      "id": "cryptography",
+      "repository": "https://github.com/pyca/cryptography",
+      "revision": "2b904daeec4c080fe021e963aa7203b91ea4c8c0",
+      "source_roots": [
+        "src/cryptography/"
+      ],
+      "split": "development",
+      "reason": "Library implementation calibration, including wrapper construction; not an independent external detector.",
+      "resources": [
+        {
+          "path": "LICENSE",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/LICENSE",
+          "sha256": "3e0c7c091a948b82533ba98fd7cbb40432d6f1a9acbf85f5922d2f99a93ae6bb",
+          "bytes": 197
+        },
+        {
+          "path": "LICENSE.APACHE",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/LICENSE.APACHE",
+          "sha256": "aac73b3148f6d1d7111dbca32099f68d26c644c6813ae1e4f05f6579aa2663fe",
+          "bytes": 11360
+        },
+        {
+          "path": "LICENSE.BSD",
+          "kind": "license",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/LICENSE.BSD",
+          "sha256": "602c4c7482de6479dd2e9793cda275e5e63d773dacd1eca689232ab7008fb4fb",
+          "bytes": 1532
+        },
+        {
+          "path": "src/cryptography/__about__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/__about__.py",
+          "sha256": "fff092aafa172427524e9c3e7d4aa6e93ba0bf9c57bad69f6d05b057e5d5bc69",
+          "bytes": 450
+        },
+        {
+          "path": "src/cryptography/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/__init__.py",
+          "sha256": "9ad86e52b4dde0544e0a9518ad322a863cfab3a4fd763019ad5ee7675a0c9b6a",
+          "bytes": 364
+        },
+        {
+          "path": "src/cryptography/cobblestone.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/cobblestone.py",
+          "sha256": "4fff85d3cf8051fde58daca965e92535357585639b1f9ee8a38e66552ce4f707",
+          "bytes": 693
+        },
+        {
+          "path": "src/cryptography/exceptions.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/exceptions.py",
+          "sha256": "f37e445882dcd9fc31c3e83214cae27220b64aa8558844c1d742c14b2b670c87",
+          "bytes": 1087
+        },
+        {
+          "path": "src/cryptography/fernet.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/fernet.py",
+          "sha256": "177eea5e9733b0476492fcb6222453858b5bdeacc32cc74a9abb5db42a64943f",
+          "bytes": 396
+        },
+        {
+          "path": "src/cryptography/hazmat/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/__init__.py",
+          "sha256": "e48c2b2d6ad5a7402312bff815d586fd5d39ecd489198fd6e1e80d36cb9cb748",
+          "bytes": 455
+        },
+        {
+          "path": "src/cryptography/hazmat/_oid.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/_oid.py",
+          "sha256": "c23e7825aecf5ae083d77be8dafa92665c09e4b676915bc5709ebd064fc29f1b",
+          "bytes": 18404
+        },
+        {
+          "path": "src/cryptography/hazmat/asn1/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/asn1/__init__.py",
+          "sha256": "62a613a071858cb38a8a0442d341c68fa86b8c4c1bbb548fa408aeebebbe7daa",
+          "bytes": 812
+        },
+        {
+          "path": "src/cryptography/hazmat/asn1/asn1.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/asn1/asn1.py",
+          "sha256": "dfea8c4d3a31cf0ec5f81266045c70e8a9df6555dba4e591b37513af86fdffaf",
+          "bytes": 20195
+        },
+        {
+          "path": "src/cryptography/hazmat/backends/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/backends/__init__.py",
+          "sha256": "3b98ef28541d6675e129ea89f87b6e95a10bf4d8bb9abd660f3658e641e56212",
+          "bytes": 361
+        },
+        {
+          "path": "src/cryptography/hazmat/backends/openssl/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/backends/openssl/__init__.py",
+          "sha256": "a778e625f9c26a0f62139b1d32b37a56f544bb9e6ee3ac5a4bf223a08d12ae60",
+          "bytes": 305
+        },
+        {
+          "path": "src/cryptography/hazmat/backends/openssl/backend.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/backends/openssl/backend.py",
+          "sha256": "d0d73315b8b01b17eaf6a8b6f281d8af4f2bfebed5420e005c78dbd2814fc2a0",
+          "bytes": 10475
+        },
+        {
+          "path": "src/cryptography/hazmat/bindings/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/bindings/__init__.py",
+          "sha256": "c0709b59f69e7daf9f93a4c74b0f6d87d7c952c4ad268ef6e39c1f141aa676e0",
+          "bytes": 216
+        },
+        {
+          "path": "src/cryptography/hazmat/bindings/openssl/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/bindings/openssl/__init__.py",
+          "sha256": "c0709b59f69e7daf9f93a4c74b0f6d87d7c952c4ad268ef6e39c1f141aa676e0",
+          "bytes": 216
+        },
+        {
+          "path": "src/cryptography/hazmat/bindings/openssl/_conditional.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/bindings/openssl/_conditional.py",
+          "sha256": "bdfce2fb11dd4ad01c2508cbaaa3a54a8b3de0bf03feda85b417bb3afc3e2ad6",
+          "bytes": 5611
+        },
+        {
+          "path": "src/cryptography/hazmat/bindings/openssl/binding.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/bindings/openssl/binding.py",
+          "sha256": "16cb8bc5b4e7aea5bad3e7405ad6a482e7deabb4e7a9a41a8b53dcec3a30ae3a",
+          "bytes": 3706
+        },
+        {
+          "path": "src/cryptography/hazmat/decrepit/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/decrepit/__init__.py",
+          "sha256": "c0709b59f69e7daf9f93a4c74b0f6d87d7c952c4ad268ef6e39c1f141aa676e0",
+          "bytes": 216
+        },
+        {
+          "path": "src/cryptography/hazmat/decrepit/ciphers/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/decrepit/ciphers/__init__.py",
+          "sha256": "c0709b59f69e7daf9f93a4c74b0f6d87d7c952c4ad268ef6e39c1f141aa676e0",
+          "bytes": 216
+        },
+        {
+          "path": "src/cryptography/hazmat/decrepit/ciphers/algorithms.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/decrepit/ciphers/algorithms.py",
+          "sha256": "5923e3336b177eb2c35ebb4de51ecdeab0355c5edbf772357bf96f0f8cb1da80",
+          "bytes": 3752
+        },
+        {
+          "path": "src/cryptography/hazmat/decrepit/ciphers/modes.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/decrepit/ciphers/modes.py",
+          "sha256": "3aafcf1300a47b938b73339faffbf300e27ac0fc7eae5b2f1c05cf06e8796fda",
+          "bytes": 1649
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/__init__.py",
+          "sha256": "c0709b59f69e7daf9f93a4c74b0f6d87d7c952c4ad268ef6e39c1f141aa676e0",
+          "bytes": 216
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/_asymmetric.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/_asymmetric.py",
+          "sha256": "46181ca2e501e874e214306b4752f1aa4323a54c4888dbd0d6bff3263446eaa4",
+          "bytes": 532
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/_cipheralgorithm.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/_cipheralgorithm.py",
+          "sha256": "121de2ee5c1e7477e2d1e2d2b07f773d9c502b363d23a9642baeef2f8579b4e7",
+          "bytes": 1522
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/_modes.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/_modes.py",
+          "sha256": "fc4880383f096fa5a915796ec247144f7102cff4c7f318c6bdb4251a4366e7d4",
+          "bytes": 3075
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/_serialization.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/_serialization.py",
+          "sha256": "862d3125b941019f29999c769566be96bba9871befbc6de0f4334ad06f0e75fb",
+          "bytes": 4440
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/__init__.py",
+          "sha256": "c0709b59f69e7daf9f93a4c74b0f6d87d7c952c4ad268ef6e39c1f141aa676e0",
+          "bytes": 216
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/dh.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/dh.py",
+          "sha256": "467b767cb683a501234125fc7cdb659935ce2478e5b7f0ca419d5595f85d8dae",
+          "bytes": 5793
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/dsa.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/dsa.py",
+          "sha256": "c33692a45b820fb2975931ac5adf8c96ab90cf94172f4b7eef6f0b86dd454451",
+          "bytes": 6824
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/ec.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/ec.py",
+          "sha256": "2e495508b2f16db433aa213a1d16984d16ae2cca61614c37b44e9cf28048c584",
+          "bytes": 10183
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/ed25519.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/ed25519.py",
+          "sha256": "99b7df2efb3edcf8020de835ad05d55e1ec62e7b6554be004e390811ce29b793",
+          "bytes": 2998
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/ed448.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/ed448.py",
+          "sha256": "9f474aeb2f952f1bb0fb3beb0f1b8f4f8e7df21ca6817fb5472fe3abd6944211",
+          "bytes": 4002
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/mldsa.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/mldsa.py",
+          "sha256": "2c731a694d26eba12c4ab4a87567f87b691d99d0d14c41910b5cbe7c22b118ad",
+          "bytes": 13803
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/mlkem.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/mlkem.py",
+          "sha256": "c2f5647854fee287fe55c500111dbecc8ff98574faaf04c93cc090f2017d1930",
+          "bytes": 7901
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/padding.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/padding.py",
+          "sha256": "8db81a8ef18763090f8cc0e58c7bb99713019437e60b15947b6005d92e8a135d",
+          "bytes": 3678
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/rsa.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/rsa.py",
+          "sha256": "94813b9467b8e3d5b95112d3282a6f1467ab213a2e2a8655f46c2e4f349cb12a",
+          "bytes": 8492
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/types.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/types.py",
+          "sha256": "26dd8f0dbb380cea20aa2942c63a36684c56ba71dbd5084b86bbf857496a0dab",
+          "bytes": 2609
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/utils.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/utils.py",
+          "sha256": "42cf117bd1853e35bfb4da7fef721e2448cf09fd2c94e22c58ec68eaaca64fa9",
+          "bytes": 821
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/x25519.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/x25519.py",
+          "sha256": "950720524f8f8ae6e3f329c535641e6267b7b5864c80742a9112a42033872f3a",
+          "bytes": 3888
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/asymmetric/x448.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/asymmetric/x448.py",
+          "sha256": "6f7ee283b93ba681ba4890ebcb8da3f849428f9ab8790d17e421663744a7f33f",
+          "bytes": 3913
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/ciphers/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/ciphers/__init__.py",
+          "sha256": "7b21179a393afc265768e3d80ebeef018197af6f50bf38162f6fb8092a252c5b",
+          "bytes": 680
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/ciphers/aead.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/ciphers/aead.py",
+          "sha256": "173972c7bc3c29841a9330e9d735a026722beb6ce066b815875bb68787b1079e",
+          "bytes": 634
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/ciphers/algorithms.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/ciphers/algorithms.py",
+          "sha256": "2067c2c9c6093a1d53be8237e2b7f0f0a7c9ff19add69fc3a4186dd8582171ea",
+          "bytes": 3496
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/ciphers/base.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/ciphers/base.py",
+          "sha256": "6810bb1c7041a22c5e6e6a5aad5af4525383b37543d00ec1ea8cff01a4630eff",
+          "bytes": 4253
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/ciphers/modes.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/ciphers/modes.py",
+          "sha256": "1fb0194a02624930428b482b2fdecdc5a912f79d09c852982ecadaf2d8c73f14",
+          "bytes": 6003
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/cmac.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/cmac.py",
+          "sha256": "b33fece87fdc6273afc7e54d59d20a85185edd89a9f33f09d03dc206a397de08",
+          "bytes": 338
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/constant_time.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/constant_time.py",
+          "sha256": "c5dba7593d277fc3af29d72a52186514a6b21a9e3f3e0549454d96d702d2aff0",
+          "bytes": 422
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/hashes.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/hashes.py",
+          "sha256": "4abb7081cdffa45bd97c88518fd7b5a7859d8be17f3e995e18796a240460b4e8",
+          "bytes": 7916
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/hmac.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/hmac.py",
+          "sha256": "469077cfdcf9b248ab090ae6ef341bb67a7da4b327023ae54d4bcaa85e5a0c37",
+          "bytes": 423
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/hpke.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/hpke.py",
+          "sha256": "46c1e2b2c0b997e7533e7d69d896dcac8ac09c306b2ea339ba0045486a662aee",
+          "bytes": 865
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/kdf/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/kdf/__init__.py",
+          "sha256": "bf7ca2601194dbbd84a233576f07d865d6db7c8f5c54e0821b79d78530dd6b79",
+          "bytes": 1037
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/kdf/argon2.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/kdf/argon2.py",
+          "sha256": "649c7e7a7525000e28edbe3a0b5c25cc6fd7010416d3022416050a92b33fc00f",
+          "bytes": 632
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/kdf/concatkdf.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/kdf/concatkdf.py",
+          "sha256": "0459ce292ef6b71285d3242f012af435aeee873bcb1e95027242b988d002fda4",
+          "bytes": 591
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/kdf/hkdf.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/kdf/hkdf.py",
+          "sha256": "33494011f468738929a78fa7c038fdc81faf359ba420e60442b5255ac04d9fda",
+          "bytes": 543
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/kdf/kbkdf.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/kdf/kbkdf.py",
+          "sha256": "0b7c3df6f8c5aa1ab3031cc5387e33cef5681e46f9002e8bcfa00440657b77f8",
+          "bytes": 737
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/kdf/pbkdf2.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/kdf/pbkdf2.py",
+          "sha256": "5dc86493df6cf8c93a6fa2920a8baa764f0557288d54e48521e9e69d6ded2e04",
+          "bytes": 468
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/kdf/scrypt.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/kdf/scrypt.py",
+          "sha256": "5f259475452686e23d57a4ea00f3afba3092306bf55d0760d1adb52160a63be5",
+          "bytes": 590
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/kdf/x963kdf.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/kdf/x963kdf.py",
+          "sha256": "40a8e145e86e4ec02cb4bdfce1b29fbe3bafd727dd6a6007561b014567a7d95c",
+          "bytes": 456
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/keywrap.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/keywrap.py",
+          "sha256": "b7db7c299bb367852cdf4012521236ecc64f3cf2b2e041114439002be94ced34",
+          "bytes": 735
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/padding.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/padding.py",
+          "sha256": "413f94f8dbd5d9e4063b5c153db0e234635273d91e4434be8a0e5c40eacbcf41",
+          "bytes": 1865
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/poly1305.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/poly1305.py",
+          "sha256": "3f910f415f9107f1493da869834d6ed13b384bf3e7026b2ba312065db19e451a",
+          "bytes": 355
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/serialization/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/serialization/__init__.py",
+          "sha256": "7d772ee3dba02fdaf1869465ff06639cca84f430a484231cb11c5f8ffa93bde8",
+          "bytes": 2217
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/serialization/base.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/serialization/base.py",
+          "sha256": "48006bbe8d12f3a41ca01963ec3a6378b5b2da5cd032bca28a827a0eb1184150",
+          "bytes": 651
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/serialization/pkcs12.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/serialization/pkcs12.py",
+          "sha256": "e4e4fcf58f3ec98065ccce2d76bf66aff52f5dd1c2851c64d471db11d422dc05",
+          "bytes": 5107
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/serialization/pkcs7.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/serialization/pkcs7.py",
+          "sha256": "98533b385b99f1c0b1506528a380a87fa06708773f21bc750108e37f19cf971a",
+          "bytes": 13998
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/serialization/ssh.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/serialization/ssh.py",
+          "sha256": "5a5e7166b828ccbefef31a45cd798992e453e6eda50f40fe428b1cfb2aba3ebc",
+          "bytes": 54613
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/twofactor/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/twofactor/__init__.py",
+          "sha256": "b66319181fa0e08535afb94816a012534d7dcebd2e3e9ff010161cc1d0c22820",
+          "bytes": 258
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/twofactor/hotp.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/twofactor/hotp.py",
+          "sha256": "8af668e41adc08658bb2aaa5e27655d175c28f218f8bf8877c3165b4694e2709",
+          "bytes": 3256
+        },
+        {
+          "path": "src/cryptography/hazmat/primitives/twofactor/totp.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/hazmat/primitives/twofactor/totp.py",
+          "sha256": "9b92cfa512f4d24a78cd8f204e3af9e477f3f5a3253d2e7790799591240299d6",
+          "bytes": 1652
+        },
+        {
+          "path": "src/cryptography/utils.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/utils.py",
+          "sha256": "c003f09f20788ba449d5d36de903c40a7628be283fe89936994256153886e4fb",
+          "bytes": 4683
+        },
+        {
+          "path": "src/cryptography/x509/__init__.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/x509/__init__.py",
+          "sha256": "d0a54d4e646d758357fe2fdec2c4cdcdb4e6d9ed6ac9fa0e85ce1e9a883984be",
+          "bytes": 8253
+        },
+        {
+          "path": "src/cryptography/x509/base.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/x509/base.py",
+          "sha256": "573d9858eba5e68a2833821f0ba36e45850d681e699346f772ddb219cf7ec6e9",
+          "bytes": 28312
+        },
+        {
+          "path": "src/cryptography/x509/certificate_transparency.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/x509/certificate_transparency.py",
+          "sha256": "26aa0e203865c089eb60c156e88167efb589d2f885f8f07fae5655defb3d3187",
+          "bytes": 797
+        },
+        {
+          "path": "src/cryptography/x509/extensions.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/x509/extensions.py",
+          "sha256": "fa25dcc169c82f5ce5e4c977055245904a3fef59dc5def387a1beacd6d6c2b83",
+          "bytes": 77975
+        },
+        {
+          "path": "src/cryptography/x509/general_name.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/x509/general_name.py",
+          "sha256": "b0ffeb575d50969b24e31dd75c6258fccbf443fb3d76d8de2dc907b23a4b4284",
+          "bytes": 7836
+        },
+        {
+          "path": "src/cryptography/x509/name.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/x509/name.py",
+          "sha256": "a08db0e95758f33830eeaa4d865c44c79d765b40215835d0ac361fe44b0cd8f6",
+          "bytes": 15566
+        },
+        {
+          "path": "src/cryptography/x509/ocsp.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/x509/ocsp.py",
+          "sha256": "61ecba35d155d4c3e3a29db8323fd57a78c4a60de451a328a5258e2b401b781b",
+          "bytes": 12699
+        },
+        {
+          "path": "src/cryptography/x509/oid.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/x509/oid.py",
+          "sha256": "054ce05d71955a296406474a3d39bd478a84944f600061e07583cc640a7b3c9a",
+          "bytes": 931
+        },
+        {
+          "path": "src/cryptography/x509/verification.py",
+          "kind": "source",
+          "url": "https://raw.githubusercontent.com/pyca/cryptography/2b904daeec4c080fe021e963aa7203b91ea4c8c0/src/cryptography/x509/verification.py",
+          "sha256": "811d82d9cf97650b5b959853e53e6f8d228eb426fbe1e7f66a53d59847301653",
+          "bytes": 958
+        }
+      ],
+      "selection_unit": "all_non_test_python_under_predeclared_roots"
+    }
+  ]
+}

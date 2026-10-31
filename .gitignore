@@ -17,3 +17,11 @@ tools/fraunhofer-exporter/build/
 *.iml
 hs_err_pid*.log
 core.*
+results/
+/result.json
+tools/fraunhofer-exporter/bin/
+tools/fraunhofer-exporter/.kotlin/
+.env
+.env.*
+!.env.example
+.vscode/

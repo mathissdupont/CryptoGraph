@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](../README.md).
+
 # CryptoGraph'ı Büyük Depolara Ölçeklendirme
 
 CryptoGraph, çok satırlı depoları birkaç milyona ölçeklemekten oyuncak örneklerine kadar ölçeklemek için mimarisi sağlanmıştır. MVP, büyük yeniden yapılandırmalar olmadan büyümeyi etkinleştiren ölçeklenebilirlik ilk tasarım kararlarını içerir.

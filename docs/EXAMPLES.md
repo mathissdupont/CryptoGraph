@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # CBOM Refactoring - Before & After Examples
 
 This file shows concrete examples of how CBOM assets improved under the refactoring.

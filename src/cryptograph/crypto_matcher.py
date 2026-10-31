@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from cryptograph.api_mappings import normalize_mappings
 from cryptograph.models import CryptoFinding, GraphNode, NormalizedGraph
 from cryptograph.utils import load_json
 
@@ -15,7 +16,7 @@ def find_crypto_calls(
     mappings_path: Path,
     rules_path: Path,
 ) -> list[CryptoFinding]:
-    mappings = load_json(mappings_path)
+    mappings = normalize_mappings(load_json(mappings_path))
     rules_config = load_json(rules_path)
     findings: list[CryptoFinding] = []
     for node in graph.nodes:

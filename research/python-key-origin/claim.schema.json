@@ -1,0 +1,229 @@
+{
+  "$defs": {
+    "EvidenceStep": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        },
+        "span": {
+          "$ref": "#/$defs/Span"
+        },
+        "detail": {
+          "title": "Detail",
+          "type": "string"
+        },
+        "parents": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Parents",
+          "type": "array"
+        },
+        "graph_edge": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GraphEdge"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "span",
+        "detail"
+      ],
+      "title": "EvidenceStep",
+      "type": "object"
+    },
+    "GraphEdge": {
+      "properties": {
+        "source": {
+          "title": "Source",
+          "type": "string"
+        },
+        "target": {
+          "title": "Target",
+          "type": "string"
+        },
+        "kind": {
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "target",
+        "kind"
+      ],
+      "title": "GraphEdge",
+      "type": "object"
+    },
+    "Span": {
+      "additionalProperties": false,
+      "properties": {
+        "file": {
+          "title": "File",
+          "type": "string"
+        },
+        "line": {
+          "minimum": 1,
+          "title": "Line",
+          "type": "integer"
+        },
+        "column": {
+          "minimum": 0,
+          "title": "Column",
+          "type": "integer"
+        },
+        "end_line": {
+          "minimum": 1,
+          "title": "End Line",
+          "type": "integer"
+        },
+        "end_column": {
+          "minimum": 0,
+          "title": "End Column",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "file",
+        "line",
+        "column",
+        "end_line",
+        "end_column"
+      ],
+      "title": "Span",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.1",
+      "default": "0.1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "analysis_model": {
+      "const": "python-key-origin-subset-v0.2",
+      "default": "python-key-origin-subset-v0.2",
+      "title": "Analysis Model",
+      "type": "string"
+    },
+    "operation_id": {
+      "title": "Operation Id",
+      "type": "string"
+    },
+    "target_api": {
+      "title": "Target Api",
+      "type": "string"
+    },
+    "target": {
+      "$ref": "#/$defs/Span"
+    },
+    "source_sha256": {
+      "title": "Source Sha256",
+      "type": "string"
+    },
+    "context_backend": {
+      "title": "Context Backend",
+      "type": "string"
+    },
+    "graph_features_used": {
+      "items": {
+        "const": "CALLS",
+        "type": "string"
+      },
+      "title": "Graph Features Used",
+      "type": "array"
+    },
+    "immediate_boundary": {
+      "title": "Immediate Boundary",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "resolved",
+        "partial",
+        "abstained"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "origins": {
+      "items": {
+        "enum": [
+          "literal",
+          "csprng_api",
+          "external_configuration"
+        ],
+        "type": "string"
+      },
+      "title": "Origins",
+      "type": "array"
+    },
+    "origin_set_complete": {
+      "title": "Origin Set Complete",
+      "type": "boolean"
+    },
+    "modality": {
+      "enum": [
+        "must",
+        "may",
+        "unknown"
+      ],
+      "title": "Modality",
+      "type": "string"
+    },
+    "unresolved_reasons": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Reasons",
+      "type": "array"
+    },
+    "assumptions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Assumptions",
+      "type": "array"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/EvidenceStep"
+      },
+      "title": "Evidence",
+      "type": "array"
+    }
+  },
+  "required": [
+    "operation_id",
+    "target_api",
+    "target",
+    "source_sha256",
+    "context_backend",
+    "immediate_boundary",
+    "status",
+    "origins",
+    "origin_set_complete",
+    "modality",
+    "unresolved_reasons",
+    "assumptions",
+    "evidence"
+  ],
+  "title": "KeyOriginClaim",
+  "type": "object"
+}

@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # What's New in CryptoGraph (April 2026)
 
 ## 🎉 Major Updates

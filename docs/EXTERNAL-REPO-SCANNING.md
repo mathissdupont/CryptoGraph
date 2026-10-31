@@ -1,3 +1,5 @@
+> Historical implementation note. Commands and claims may be outdated; see [current documentation](README.md).
+
 # CryptoGraph: Scan External GitHub Repositories
 
 CryptoGraph can analyze **any** public or local GitHub repository for cryptographic API usage and security risks. Here's the complete workflow:

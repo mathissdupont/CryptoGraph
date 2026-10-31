@@ -1,0 +1,29 @@
+{
+  "analysis_model": "python-key-origin-subset-v0.2",
+  "status": "reserved_candidate_inventory_not_ground_truth",
+  "cases": [
+    {
+      "case_id": "tahoe_lafs:src/allmydata/crypto/aes.py:131:8",
+      "project": "tahoe_lafs",
+      "source": "tahoe_lafs/src/allmydata/crypto/aes.py",
+      "source_sha256": "ef280ae953e0af64ee693f3f4c3dd33279703b3683fc1e23eb5fdb39c538f86e",
+      "split": "evaluation_reserved",
+      "scenario_family": "tahoe_lafs",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "aes.py",
+        "line": 131,
+        "column": 8,
+        "end_line": 131,
+        "end_column": 27
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    }
+  ]
+}

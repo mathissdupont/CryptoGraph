@@ -25,6 +25,7 @@ COPY requirements.txt pyproject.toml README.md ./
 COPY src ./src
 COPY config ./config
 COPY samples ./samples
+COPY research ./research
 COPY docs ./docs
 COPY tools ./tools
 COPY tests ./tests

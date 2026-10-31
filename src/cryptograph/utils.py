@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from datetime import UTC, datetime
+from importlib.resources import files
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
@@ -20,11 +21,13 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
 
 
 def project_path(*parts: str) -> Path:
+    if parts and parts[0] == "config":
+        return Path(str(files("cryptograph.config"))).joinpath(*parts[1:])
     return Path(__file__).resolve().parents[2].joinpath(*parts)
 
 
 def new_run_dir(base: Path | None = None) -> Path:
-    base_dir = base or project_path("output")
+    base_dir = base if base is not None else Path.cwd() / "output"
     stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
     run_dir = base_dir / f"run-{stamp}-{uuid4().hex[:8]}"
     run_dir.mkdir(parents=True, exist_ok=False)

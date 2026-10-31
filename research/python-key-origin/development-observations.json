@@ -1,0 +1,1309 @@
+{
+  "kind": "provisional_development_checkpoint_not_independent_ground_truth",
+  "analysis_model": "python-key-origin-subset-v0.1",
+  "scope": "Designed development examples; no accuracy, novelty, generalization or full DFG conclusion.",
+  "runtime_image_id": "sha256:bcf7ad5c84f0de90ae26f95fe666c84893229f7dc80812c46a900e03a839e748",
+  "matrix": {
+    "status": "completed",
+    "scope": "Development observations only; no independent accuracy or CPG superiority claim.",
+    "provisional_reference_checks": true,
+    "cells": {
+      "source_only": {
+        "requested_backend": "ast-lite",
+        "actual_backend": "ast-lite",
+        "context_evidence": "none",
+        "eligible_sites": 24,
+        "resolved": 13,
+        "partial": 1,
+        "abstained": 10,
+        "claims_using_calls": 0,
+        "legacy_sites_with_exactly_one_match": 23,
+        "legacy_sites_without_match": 1,
+        "legacy_sites_with_multiple_matches": 0,
+        "provisional_agreement": {
+          "eligible_sites": 24,
+          "resolved": 13,
+          "partial": 1,
+          "abstained": 10,
+          "missing_or_ambiguous": 0,
+          "invalid_contracts": 0,
+          "resolved_coverage": 0.5416666666666666,
+          "claims_with_structural_errors": 0,
+          "proposed_reference_disagreements_among_resolved": 0,
+          "proposed_reference_disagreement_rate_among_resolved": 0.0,
+          "proposed_boundary_disagreements": 1
+        },
+        "provisional_inputs_sha256": {
+          "annotations": "65b9a6360ed80caea8f5f9b57aeae6f59fcbeddf1bacddd1e95e87cccd7567a2",
+          "observations": "8ebb29528027e6f4c7b73d2f132a348c04d7b07948778e872b3e46a1e10d7d8e",
+          "graph": "03d328cb1b90494b27757db776b43af820d60c2f7fe5bc5dd9b5643e5b11a70c",
+          "provisional_proposals": "8ddd7700155fd7a76e10726f6e56762e9cd2a45a3e68971bdd63b82e396ce90f"
+        }
+      },
+      "ast_calls": {
+        "requested_backend": "ast-lite",
+        "actual_backend": "ast-lite",
+        "context_evidence": "graph",
+        "eligible_sites": 24,
+        "resolved": 17,
+        "partial": 1,
+        "abstained": 6,
+        "claims_using_calls": 4,
+        "legacy_sites_with_exactly_one_match": 23,
+        "legacy_sites_without_match": 1,
+        "legacy_sites_with_multiple_matches": 0,
+        "provisional_agreement": {
+          "eligible_sites": 24,
+          "resolved": 17,
+          "partial": 1,
+          "abstained": 6,
+          "missing_or_ambiguous": 0,
+          "invalid_contracts": 0,
+          "resolved_coverage": 0.7083333333333334,
+          "claims_with_structural_errors": 0,
+          "proposed_reference_disagreements_among_resolved": 0,
+          "proposed_reference_disagreement_rate_among_resolved": 0.0,
+          "proposed_boundary_disagreements": 1
+        },
+        "provisional_inputs_sha256": {
+          "annotations": "65b9a6360ed80caea8f5f9b57aeae6f59fcbeddf1bacddd1e95e87cccd7567a2",
+          "observations": "59d07f481f6c5788277694ecb4ce529b680e064d6f23dee48be8b3a82185855f",
+          "graph": "03d328cb1b90494b27757db776b43af820d60c2f7fe5bc5dd9b5643e5b11a70c",
+          "provisional_proposals": "8ddd7700155fd7a76e10726f6e56762e9cd2a45a3e68971bdd63b82e396ce90f"
+        }
+      },
+      "cpg_calls": {
+        "requested_backend": "fraunhofer-strict",
+        "actual_backend": "fraunhofer-cpg",
+        "context_evidence": "graph",
+        "eligible_sites": 24,
+        "resolved": 15,
+        "partial": 1,
+        "abstained": 8,
+        "claims_using_calls": 2,
+        "legacy_sites_with_exactly_one_match": 23,
+        "legacy_sites_without_match": 1,
+        "legacy_sites_with_multiple_matches": 0,
+        "provisional_agreement": {
+          "eligible_sites": 24,
+          "resolved": 15,
+          "partial": 1,
+          "abstained": 8,
+          "missing_or_ambiguous": 0,
+          "invalid_contracts": 0,
+          "resolved_coverage": 0.625,
+          "claims_with_structural_errors": 0,
+          "proposed_reference_disagreements_among_resolved": 0,
+          "proposed_reference_disagreement_rate_among_resolved": 0.0,
+          "proposed_boundary_disagreements": 1
+        },
+        "provisional_inputs_sha256": {
+          "annotations": "65b9a6360ed80caea8f5f9b57aeae6f59fcbeddf1bacddd1e95e87cccd7567a2",
+          "observations": "5eeb8f1193994a18d5675c6f8175c1938b070db8f9a4ae87f29cdf543da6d162",
+          "graph": "bbc9e849806817b9c40d25a1c8a5c3a354a93632a94446e105565ba32ecc2f10",
+          "provisional_proposals": "8ddd7700155fd7a76e10726f6e56762e9cd2a45a3e68971bdd63b82e396ce90f"
+        }
+      }
+    },
+    "matched_input_hashes": true,
+    "matched_candidate_sites": true,
+    "matched_provisional_reference_snapshots": true,
+    "matrix_script_sha256": "ee2e3a01223fd04cb677b7957e6fdef65e2c1f3be30cd8e151e6f44749dca70c",
+    "inputs_sha256": {
+      "config/api_mappings.json": "80f3ea5fc1a08f1689c9ef8b396393180c05ffcdb9a4e2d062ab3db5c07dda8c",
+      "config/rules_v2.json": "e9456ad2922a884e42f4d3b2e73b1ba44d8f882f242abe51b93b6e8dc740c1b1",
+      "config/source_sinks.json": "e1978e75c2310f2975c1d82c50426e95de1ab77d0fef5cf4b4cae6d967d92a01",
+      "pyproject.toml": "5045fe99610de9f242e3aa09a27b92619c6bcc337dc19918b02c67e8c77a6a7e",
+      "research/python-key-origin/cases/aliased_random.py": "9dc1b57d5a44ff376eea4122961477169def199ee117bf0f2d4e9b8b03014afe",
+      "research/python-key-origin/cases/assignment_after_sink.py": "482c76e6a89d83f548d8bc5d2e56c1a5196585d4d80b9390cf749e15882d8de8",
+      "research/python-key-origin/cases/conditional_sources.py": "b94b9f5efb8f6e84bb813dceef8f501a552321d88d8e7feced611aac133fa7b0",
+      "research/python-key-origin/cases/constructor_alias.py": "98028bdbdc2b3a5708649d8e29e06322f1425f76767a87cc8faaa672b6507371",
+      "research/python-key-origin/cases/direct_random.py": "38c86c382e933f7869f004f6954bf571510048ec93d949c3bcb293eff20cd6a5",
+      "research/python-key-origin/cases/dynamic_keywords.py": "e34601f7cd46805218164358c07c72e37d7f13684ebe09c7d5a9fb96ae17a9a0",
+      "research/python-key-origin/cases/environment_default.py": "bb33ec2c7b0f2db974fc66391cab319e0bc22f00101004a17d74473883b812df",
+      "research/python-key-origin/cases/external_factory.py": "e602feda2e62e5d0b216f3684a467adb38590cd1019fcc8c121e3a585961c079",
+      "research/python-key-origin/cases/keyword_key.py": "6800bb819fc265da8d7ec251cecacdb58aed6d87bbd6253d3c8a5ad59b5bfb82",
+      "research/python-key-origin/cases/literal_final_assignment.py": "af7cd29ce5ab6a6171196901e51eb613d0167eb0816dc1a63b06eb428d574267",
+      "research/python-key-origin/cases/misleading_helper.py": "2281e3eb973a9b2141dd360eddd2a73ac18f8f7ed972632cad78e0d84e7e3fb1",
+      "research/python-key-origin/cases/mixed_branch.py": "a22ca7afb07e3c178e6130e6326d0e128dc9b38a2d73844d1fcfdd6ab8b7c52c",
+      "research/python-key-origin/cases/parameter_boundary.py": "0e93f87b951e44041b171414b7f5c66c1a06706eb070c44e608eaf833426ee88",
+      "research/python-key-origin/cases/partial_parameter.py": "a0086d689d5730cd8956557bffa2975c5052540f80393ffe2f0035a2d568cc8e",
+      "research/python-key-origin/cases/pyca_environment.py": "158aff433794b2eaa88b9c88b967b388c1d6356dc2d7f541085b500abf18932c",
+      "research/python-key-origin/cases/pyca_literal.py": "2a9d69c9a509c397bb0b3ad70b478c5051e0b86888a0037da4a489de29d4d904",
+      "research/python-key-origin/cases/pyca_parameter.py": "f632b3e6703c2e20563c7c8c9179d7da29d6516db8bee65affaa4ae8f6a72f94",
+      "research/python-key-origin/cases/pyca_secrets.py": "04d3d39d9d24bc1f1342293d8515eeb86ab884644ba7be129a9e476094539c3d",
+      "research/python-key-origin/cases/rng_function_alias.py": "21d4a5d39d8dbc04ef78675cbbb036fb43309d48fd8adddcf13ff38428a1fa5a",
+      "research/python-key-origin/cases/shadowed_rng_module.py": "c57647ec577f977ebc1c7949de2955b59831db5a988e064e6214d0b61071b1f4",
+      "research/python-key-origin/cases/unsupported_loop.py": "d742258be43d0b9b3f508ead08eadeb2040eabb012c371a386732d119ed84d12",
+      "research/python-key-origin/cases/wrapper_actual_parameter.py": "0aff507cdfbc664027b59158173d9a1c78de652366187adebc03753997a3380c",
+      "research/python-key-origin/cases/wrapper_early_return.py": "cd14f8627afd8925df195e3cb8f1e6be10425ba22056fe4734133f8613ca297a",
+      "research/python-key-origin/cases/wrapper_random.py": "691e02b440b1c7fcb2d60d800083cf352cbdb91611e102ea3eed60dc42da181b",
+      "research/python-key-origin/cases.json": "b8d95b81061753aa9c991912932b57c548faea8c4a4b07d48ef17b2fa4a46868",
+      "research/python-key-origin/review-template.json": "65b9a6360ed80caea8f5f9b57aeae6f59fcbeddf1bacddd1e95e87cccd7567a2",
+      "scripts/research-pilot.py": "548891b65f928893b5fdabba741c4a5f64de173f75561f415989eba4bffd8097",
+      "scripts/run-key-origin-matrix.py": "ee2e3a01223fd04cb677b7957e6fdef65e2c1f3be30cd8e151e6f44749dca70c",
+      "scripts/score-key-origin.py": "4d9e0ebec643d078c4c2bb5a6103dd7598cdcff18054cba12a9e0f12081383f7",
+      "src/cryptograph/__init__.py": "539b171a2a43d894cb18f5a4913113419e097d5efe55be4b7ee01893b3b507e6",
+      "src/cryptograph/algorithm_normalizer.py": "429727e1e1a16209ce2b7d8e3923a8bc197856d62b7b6e2cc7cd1ad5cae25efd",
+      "src/cryptograph/api_mappings.py": "f31e49cebd49cccf532be09ca0abb30591d24c6ce3e21f71bfa55fe3ae76af03",
+      "src/cryptograph/asset_classifier.py": "2b167095fcd9e186d4e6904f65d914b8727db05447a972e825bcf57a4e409c3b",
+      "src/cryptograph/ast_lite.py": "17f08660feb91a28cb389826bc03a8279c108acb665e2133418a757a43142a47",
+      "src/cryptograph/c_cpp_lite.py": "5162f93d6c302768f189a1acedd3a79fdc700f55356ca8b493832903a7f4f621",
+      "src/cryptograph/cbom.py": "f8280785f6b8e86ea6b011a83be44ed059332a8d9ffe8af6e1b895fae3ebda61",
+      "src/cryptograph/cbom_builder.py": "933d9417a4f1283f36bc28c57657792b95c890ef2751649f05b441293e0da40b",
+      "src/cryptograph/cbom_builder_v2.py": "85255f386888cd46ebaa57ef9f662dbb679de7e621a1e636c89c40cf158eaadf",
+      "src/cryptograph/context_extractor.py": "477c47635f7743cd979d1cf9bd0a4f007e24ed0a12156dc1af28ce030dceb1d8",
+      "src/cryptograph/cpg_loader.py": "ce74133a235e68db9a1558606379fc535927648737e3ed8e5b98fa86ce818a09",
+      "src/cryptograph/cpg_visualizer.py": "0988bc95cf22bd702b61d69e99599b06149fe97bb31a73db8a9abe9d631752c8",
+      "src/cryptograph/crypto_matcher.py": "8ae20e11acedde525f9de12b07858d3b44b39a30bb9e62322606e37d87bba540",
+      "src/cryptograph/crypto_matcher_v2.py": "c18a9fbb71f70a0aecd585e8d96ab18768a88d411f91e8741ace8b207f1db1dd",
+      "src/cryptograph/cyclonedx_cbom.py": "57bc0f08763775962b3adf5612324f34fa6fe5834747c0df11f2354d5b30ff9e",
+      "src/cryptograph/flow_analyzer.py": "bfbcbef5d8a728d52c079e0cc31e5641ec076568f36e3264a2eec180a445ffce",
+      "src/cryptograph/inference_explainer.py": "9a4a44ce81462d1446d859063c24cc13a5d8615e72c5ce3141bf967036d9fc3b",
+      "src/cryptograph/key_origin.py": "b9279ae28bdcc1fa254cd397953bf2de609499daafdbb5e75894456db17ded24",
+      "src/cryptograph/langdetect.py": "59b3086f057e603a23c45f8dff995ec055bec113717a37bd2cd85a7534b3b7a1",
+      "src/cryptograph/llm_labeling.py": "56b25642505dcd358bc7cf96f4ea005b63e359b562d63a11037660609910d64e",
+      "src/cryptograph/main.py": "d682479e64d61a136655f6195b36cff3a4349950c92bc7379c74aa0c158dcd39",
+      "src/cryptograph/manifest.py": "1dbb29bb30587bb73989d533f54461ada148ba0452a5edce256437a37e29a4e1",
+      "src/cryptograph/models.py": "0d2eca1468fc4f07088e6a74db69479b76bc9aebb06701ff0ca48932f30a0feb",
+      "src/cryptograph/orchestrator.py": "191788fef5eae3845f80832e02522670ea2bd877a4c95099dcd50d74c970859a",
+      "src/cryptograph/report_builder.py": "80d83155cb8af0b9e9c6e119904a01f3040e1bd5933c0d5c71505456c7b5d4e6",
+      "src/cryptograph/research_eval.py": "c497bd0ea64d24cab255dba0035b88b85d15109e8182932668836916be51d80e",
+      "src/cryptograph/risk_engine.py": "a7ebb3fc5464078ece4c96d3edf1a35f1b5534a78d42a25db7f7e0b5585aba89",
+      "src/cryptograph/ruby_lite.py": "c2979c6c37ca3a3f03699c168b1b1c43ea4a3b7fce7f50085a06401cae89038e",
+      "src/cryptograph/rule_engine.py": "ffd1539923f22160e7a1b11a6bbc2bfe16bdd283573c68988c2bbd5e3f778f96",
+      "src/cryptograph/utils.py": "212cce4031fe61e81e178867c42195f0c274ee205a3a256ee1500b00a2764d47"
+    }
+  },
+  "environments": {
+    "source_only": {
+      "generated_at": "2026-10-27T16:29:15.873484+00:00",
+      "revision": "d6157654aa6197136322a252e522c94732aae632",
+      "working_tree_dirty": true,
+      "python": "3.12.16 (main, Oct 26 2026, 22:52:58) [GCC 12.2.0]",
+      "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+      "dependencies": {
+        "cryptograph": "0.1.0",
+        "networkx": "3.7",
+        "pydantic": "2.14.1"
+      }
+    },
+    "ast_calls": {
+      "generated_at": "2026-10-27T16:29:26.996164+00:00",
+      "revision": "d6157654aa6197136322a252e522c94732aae632",
+      "working_tree_dirty": true,
+      "python": "3.12.16 (main, Oct 26 2026, 22:52:58) [GCC 12.2.0]",
+      "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+      "dependencies": {
+        "cryptograph": "0.1.0",
+        "networkx": "3.7",
+        "pydantic": "2.14.1"
+      }
+    },
+    "cpg_calls": {
+      "generated_at": "2026-10-27T16:29:33.013279+00:00",
+      "revision": "d6157654aa6197136322a252e522c94732aae632",
+      "working_tree_dirty": true,
+      "python": "3.12.16 (main, Oct 26 2026, 22:52:58) [GCC 12.2.0]",
+      "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+      "dependencies": {
+        "cryptograph": "0.1.0",
+        "networkx": "3.7",
+        "pydantic": "2.14.1"
+      }
+    }
+  },
+  "observations": {
+    "source_only": [
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "direct_random",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unexpanded_call_effect",
+          "wrapper_binding_or_call_edge_unavailable"
+        ],
+        "case_id": "misleading_helper",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "assignment_after_sink",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "mixed_branch",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "parameter",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "parameter_boundary"
+        ],
+        "case_id": "parameter_boundary",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "aliased_random",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "literal_final_assignment",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unexpanded_call_effect",
+          "wrapper_binding_or_call_edge_unavailable"
+        ],
+        "case_id": "wrapper_random",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "pyca_literal",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "pyca_secrets",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "external_configuration"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "pyca_environment",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "external_configuration",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "environment_default",
+        "structural_errors": []
+      },
+      {
+        "status": "partial",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "may",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "parameter_boundary"
+        ],
+        "case_id": "partial_parameter",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "conditional_sources",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "return_value",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "keyword_key",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "return_value",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "constructor_alias",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "rng_function_alias",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "expression",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unsupported_statement:While",
+          "unsupported_write"
+        ],
+        "case_id": "unsupported_loop",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unmodeled_call_effect",
+          "unresolved_call"
+        ],
+        "case_id": "external_factory",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unmodeled_call_effect",
+          "unresolved_call",
+          "unsupported_attribute_effect"
+        ],
+        "case_id": "shadowed_rng_module",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unexpanded_call_effect",
+          "wrapper_binding_or_call_edge_unavailable"
+        ],
+        "case_id": "wrapper_actual_parameter",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unexpanded_call_effect",
+          "wrapper_binding_or_call_edge_unavailable"
+        ],
+        "case_id": "wrapper_early_return",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "expression",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "dynamic_argument_binding"
+        ],
+        "case_id": "dynamic_keywords",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "parameter",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "parameter_boundary"
+        ],
+        "case_id": "pyca_parameter",
+        "structural_errors": []
+      }
+    ],
+    "ast_calls": [
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "direct_random",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [
+          "CALLS"
+        ],
+        "unresolved_reasons": [],
+        "case_id": "misleading_helper",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "assignment_after_sink",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "mixed_branch",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "parameter",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "parameter_boundary"
+        ],
+        "case_id": "parameter_boundary",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "aliased_random",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "literal_final_assignment",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [
+          "CALLS"
+        ],
+        "unresolved_reasons": [],
+        "case_id": "wrapper_random",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "pyca_literal",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "pyca_secrets",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "external_configuration"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "pyca_environment",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "external_configuration",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "environment_default",
+        "structural_errors": []
+      },
+      {
+        "status": "partial",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "may",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "parameter_boundary"
+        ],
+        "case_id": "partial_parameter",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "conditional_sources",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "return_value",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "keyword_key",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "return_value",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "constructor_alias",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "rng_function_alias",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "expression",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unsupported_statement:While",
+          "unsupported_write"
+        ],
+        "case_id": "unsupported_loop",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unmodeled_call_effect",
+          "unresolved_call"
+        ],
+        "case_id": "external_factory",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unmodeled_call_effect",
+          "unresolved_call",
+          "unsupported_attribute_effect"
+        ],
+        "case_id": "shadowed_rng_module",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [
+          "CALLS"
+        ],
+        "unresolved_reasons": [],
+        "case_id": "wrapper_actual_parameter",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [
+          "CALLS"
+        ],
+        "unresolved_reasons": [],
+        "case_id": "wrapper_early_return",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "expression",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "dynamic_argument_binding"
+        ],
+        "case_id": "dynamic_keywords",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "parameter",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "parameter_boundary"
+        ],
+        "case_id": "pyca_parameter",
+        "structural_errors": []
+      }
+    ],
+    "cpg_calls": [
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "direct_random",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unexpanded_call_effect",
+          "wrapper_binding_or_call_edge_unavailable"
+        ],
+        "case_id": "misleading_helper",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "assignment_after_sink",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "mixed_branch",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "parameter",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "parameter_boundary"
+        ],
+        "case_id": "parameter_boundary",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "aliased_random",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "literal_final_assignment",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [
+          "CALLS"
+        ],
+        "unresolved_reasons": [],
+        "case_id": "wrapper_random",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "literal"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "pyca_literal",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "pyca_secrets",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "external_configuration"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "pyca_environment",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "external_configuration",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "environment_default",
+        "structural_errors": []
+      },
+      {
+        "status": "partial",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "may",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "parameter_boundary"
+        ],
+        "case_id": "partial_parameter",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "conditional_sources",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "return_value",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "keyword_key",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "return_value",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "constructor_alias",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api"
+        ],
+        "modality": "must",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [],
+        "case_id": "rng_function_alias",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "expression",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unsupported_statement:While",
+          "unsupported_write"
+        ],
+        "case_id": "unsupported_loop",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unmodeled_call_effect",
+          "unresolved_call"
+        ],
+        "case_id": "external_factory",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unmodeled_call_effect",
+          "unresolved_call",
+          "unsupported_attribute_effect"
+        ],
+        "case_id": "shadowed_rng_module",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "unexpanded_call_effect",
+          "wrapper_binding_or_call_edge_unavailable"
+        ],
+        "case_id": "wrapper_actual_parameter",
+        "structural_errors": []
+      },
+      {
+        "status": "resolved",
+        "origins": [
+          "csprng_api",
+          "literal"
+        ],
+        "modality": "may",
+        "origin_set_complete": true,
+        "immediate_boundary": "local_assignment",
+        "graph_features_used": [
+          "CALLS"
+        ],
+        "unresolved_reasons": [],
+        "case_id": "wrapper_early_return",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "expression",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "dynamic_argument_binding"
+        ],
+        "case_id": "dynamic_keywords",
+        "structural_errors": []
+      },
+      {
+        "status": "abstained",
+        "origins": [],
+        "modality": "unknown",
+        "origin_set_complete": false,
+        "immediate_boundary": "parameter",
+        "graph_features_used": [],
+        "unresolved_reasons": [
+          "parameter_boundary"
+        ],
+        "case_id": "pyca_parameter",
+        "structural_errors": []
+      }
+    ]
+  },
+  "raw_artifact_sha256": {
+    "source_only/run.json": "1a5c1c32fe615c2335a949dad8b628eb0ace87cab4f39d24ce7ccab3a5e94bf9",
+    "source_only/observations.json": "8ebb29528027e6f4c7b73d2f132a348c04d7b07948778e872b3e46a1e10d7d8e",
+    "source_only/graph.json": "03d328cb1b90494b27757db776b43af820d60c2f7fe5bc5dd9b5643e5b11a70c",
+    "source_only/key-origin-claims.json": "8f1ca0b0b2d608a012d38e529680669ed4409f2cf0576b4f117cf3745a3032a8",
+    "source_only/provisional-agreement.json": "8bef87df6141e9461fed829d4ef55f816e40a9fae93f12b6a7ddd748cfdd1d8f",
+    "ast_calls/run.json": "08b5de05026818856f2e303f71b38d4a73c0604e97db4ae01899a4fc47a485d4",
+    "ast_calls/observations.json": "59d07f481f6c5788277694ecb4ce529b680e064d6f23dee48be8b3a82185855f",
+    "ast_calls/graph.json": "03d328cb1b90494b27757db776b43af820d60c2f7fe5bc5dd9b5643e5b11a70c",
+    "ast_calls/key-origin-claims.json": "6279c7d98ce546c3cb51a9dbf7255d8e66bacd539c24cec8aa6870247a9bb17d",
+    "ast_calls/provisional-agreement.json": "aea5cc6c776b3be301161ca8cbf2646dfb1e8c5371c72a9b8e63dbf2279276ac",
+    "cpg_calls/run.json": "11288e47268d27e0632ef0a86b2d8f78c9805cc5af0a517f6b61819079e72af1",
+    "cpg_calls/observations.json": "5eeb8f1193994a18d5675c6f8175c1938b070db8f9a4ae87f29cdf543da6d162",
+    "cpg_calls/graph.json": "bbc9e849806817b9c40d25a1c8a5c3a354a93632a94446e105565ba32ecc2f10",
+    "cpg_calls/key-origin-claims.json": "941e7b0b0203814a6060c9da5ea07986d8de18fb4fba5c2ec941b4b80d1855ba",
+    "cpg_calls/provisional-agreement.json": "53a4f15b26fb2149172491b2030d585679c6f497402d49d6e5c34dffbafd587c"
+  },
+  "external_tool_feasibility": {
+    "run": {
+      "status": "completed",
+      "tool": "PQCensus",
+      "repository": "https://github.com/XiantingWu/PQCensus",
+      "revision": "535d56f15fa9fa83ce3ea46faf0c2ad19291fcd8",
+      "license": "Apache-2.0",
+      "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+      "scope": "Shared-site detection observation only; purpose evidence is not ultimate key-origin evidence.",
+      "source_sha256": {
+        "aliased_random.py": "9dc1b57d5a44ff376eea4122961477169def199ee117bf0f2d4e9b8b03014afe",
+        "assignment_after_sink.py": "482c76e6a89d83f548d8bc5d2e56c1a5196585d4d80b9390cf749e15882d8de8",
+        "conditional_sources.py": "b94b9f5efb8f6e84bb813dceef8f501a552321d88d8e7feced611aac133fa7b0",
+        "constructor_alias.py": "98028bdbdc2b3a5708649d8e29e06322f1425f76767a87cc8faaa672b6507371",
+        "direct_random.py": "38c86c382e933f7869f004f6954bf571510048ec93d949c3bcb293eff20cd6a5",
+        "dynamic_keywords.py": "e34601f7cd46805218164358c07c72e37d7f13684ebe09c7d5a9fb96ae17a9a0",
+        "environment_default.py": "bb33ec2c7b0f2db974fc66391cab319e0bc22f00101004a17d74473883b812df",
+        "external_factory.py": "e602feda2e62e5d0b216f3684a467adb38590cd1019fcc8c121e3a585961c079",
+        "keyword_key.py": "6800bb819fc265da8d7ec251cecacdb58aed6d87bbd6253d3c8a5ad59b5bfb82",
+        "literal_final_assignment.py": "af7cd29ce5ab6a6171196901e51eb613d0167eb0816dc1a63b06eb428d574267",
+        "misleading_helper.py": "2281e3eb973a9b2141dd360eddd2a73ac18f8f7ed972632cad78e0d84e7e3fb1",
+        "mixed_branch.py": "a22ca7afb07e3c178e6130e6326d0e128dc9b38a2d73844d1fcfdd6ab8b7c52c",
+        "parameter_boundary.py": "0e93f87b951e44041b171414b7f5c66c1a06706eb070c44e608eaf833426ee88",
+        "partial_parameter.py": "a0086d689d5730cd8956557bffa2975c5052540f80393ffe2f0035a2d568cc8e",
+        "pyca_environment.py": "158aff433794b2eaa88b9c88b967b388c1d6356dc2d7f541085b500abf18932c",
+        "pyca_literal.py": "2a9d69c9a509c397bb0b3ad70b478c5051e0b86888a0037da4a489de29d4d904",
+        "pyca_parameter.py": "f632b3e6703c2e20563c7c8c9179d7da29d6516db8bee65affaa4ae8f6a72f94",
+        "pyca_secrets.py": "04d3d39d9d24bc1f1342293d8515eeb86ab884644ba7be129a9e476094539c3d",
+        "rng_function_alias.py": "21d4a5d39d8dbc04ef78675cbbb036fb43309d48fd8adddcf13ff38428a1fa5a",
+        "shadowed_rng_module.py": "c57647ec577f977ebc1c7949de2955b59831db5a988e064e6214d0b61071b1f4",
+        "unsupported_loop.py": "d742258be43d0b9b3f508ead08eadeb2040eabb012c371a386732d119ed84d12",
+        "wrapper_actual_parameter.py": "0aff507cdfbc664027b59158173d9a1c78de652366187adebc03753997a3380c",
+        "wrapper_early_return.py": "cd14f8627afd8925df195e3cb8f1e6be10425ba22056fe4734133f8613ca297a",
+        "wrapper_random.py": "691e02b440b1c7fcb2d60d800083cf352cbdb91611e102ea3eed60dc42da181b"
+      },
+      "adapter_sha256": "3ed9d1d1b426622362efae5f84849c291bf8c0af933e23c6a1d507712800ace1",
+      "license_sha256": "bf4afe07eccfb2184a44d30a8e2c79ab015117c0c52c8bf0517b49c41d4d6729",
+      "positive_control": {
+        "source_sha256": "286d607cac15f9c73be179d5638d2a7a2a5706c5106475e2fc4edc066aba7bf1",
+        "expected_call_lines": [
+          3,
+          4
+        ],
+        "observed_call_lines": [
+          3,
+          4
+        ]
+      }
+    },
+    "observation": {
+      "status": "development_detection_observation",
+      "eligible_sites": 24,
+      "sites_with_findings": 0,
+      "raw_finding_count": 0,
+      "unmatched_findings": 0,
+      "parser_errors": [],
+      "scan_summary": {
+        "files_analyzed": 24,
+        "bytes_analyzed": 3687,
+        "findings": 0,
+        "active_findings": 0,
+        "suppressed_findings": 0,
+        "crypto_assets": 0,
+        "dependencies": 0
+      },
+      "limits": {
+        "max_files": 10000,
+        "max_file_bytes": 2097152,
+        "max_total_bytes": 104857600,
+        "skipped": {
+          "symlink": 0,
+          "too_large": 0,
+          "binary": 0,
+          "permission": 0,
+          "file_limit": 0,
+          "byte_limit": 0,
+          "walk_error": 0
+        }
+      },
+      "key_origin_score": null,
+      "scope": "Unmatched findings may be other valid crypto sites; this inventory does not label detection false positives."
+    },
+    "native_audit_sha256": "3d9a01b7c6178a678eb94556b165c01eb07705ec976d79bd92ccbf3d0e223a28",
+    "native_control_sha256": "bec3335ad9025ea14161b18f0dfdb1d2e1eb0100a40e8c37a9caa2382d2736cb"
+  }
+}

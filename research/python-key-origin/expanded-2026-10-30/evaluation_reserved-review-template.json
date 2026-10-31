@@ -1,0 +1,922 @@
+{
+  "analysis_model": "python-key-origin-subset-v0.2",
+  "status": "candidate_inventory_not_ground_truth",
+  "cases": [
+    {
+      "case_id": "tahoe_lafs:src/allmydata/crypto/aes.py:131:8",
+      "project": "tahoe_lafs",
+      "source": "tahoe_lafs/src/allmydata/crypto/aes.py",
+      "source_sha256": "ef280ae953e0af64ee693f3f4c3dd33279703b3683fc1e23eb5fdb39c538f86e",
+      "split": "evaluation_reserved",
+      "scenario_family": "tahoe_lafs",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "aes.py",
+        "line": 131,
+        "column": 8,
+        "end_line": 131,
+        "end_column": 27
+      },
+      "candidate_status": "nominal_import_candidate_needs_review",
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_cryptography.py:101:19",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_cryptography.py",
+      "source_sha256": "12cee92afac0a1ecc1ecb7036a26365af4b3920d310dadb05f66651485f6cd16",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "_cryptography.py",
+        "line": 101,
+        "column": 19,
+        "end_line": 101,
+        "end_column": 27
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_cryptography.py:163:23",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_cryptography.py",
+      "source_sha256": "12cee92afac0a1ecc1ecb7036a26365af4b3920d310dadb05f66651485f6cd16",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "_cryptography.py",
+        "line": 163,
+        "column": 23,
+        "end_line": 163,
+        "end_column": 31
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_cryptography.py:168:23",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_cryptography.py",
+      "source_sha256": "12cee92afac0a1ecc1ecb7036a26365af4b3920d310dadb05f66651485f6cd16",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "_cryptography.py",
+        "line": 168,
+        "column": 23,
+        "end_line": 168,
+        "end_column": 31
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_cryptography.py:173:23",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_cryptography.py",
+      "source_sha256": "12cee92afac0a1ecc1ecb7036a26365af4b3920d310dadb05f66651485f6cd16",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "_cryptography.py",
+        "line": 173,
+        "column": 23,
+        "end_line": 173,
+        "end_column": 31
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_cryptography.py:178:23",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_cryptography.py",
+      "source_sha256": "12cee92afac0a1ecc1ecb7036a26365af4b3920d310dadb05f66651485f6cd16",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "_cryptography.py",
+        "line": 178,
+        "column": 23,
+        "end_line": 178,
+        "end_column": 31
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_pycryptodome.py:59:14",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_pycryptodome.py",
+      "source_sha256": "bd9102129a13f4ebe9a46ebb74aec456de51e5aa491bd5fce588a3479ed2a6f6",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "_pycryptodome.py",
+        "line": 59,
+        "column": 14,
+        "end_line": 59,
+        "end_column": 49
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_pycryptodome.py:73:14",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_pycryptodome.py",
+      "source_sha256": "bd9102129a13f4ebe9a46ebb74aec456de51e5aa491bd5fce588a3479ed2a6f6",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "_pycryptodome.py",
+        "line": 73,
+        "column": 14,
+        "end_line": 73,
+        "end_column": 49
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_pycryptodome.py:98:11",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_pycryptodome.py",
+      "source_sha256": "bd9102129a13f4ebe9a46ebb74aec456de51e5aa491bd5fce588a3479ed2a6f6",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "_pycryptodome.py",
+        "line": 98,
+        "column": 11,
+        "end_line": 98,
+        "end_column": 37
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_pycryptodome.py:102:11",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_pycryptodome.py",
+      "source_sha256": "bd9102129a13f4ebe9a46ebb74aec456de51e5aa491bd5fce588a3479ed2a6f6",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "_pycryptodome.py",
+        "line": 102,
+        "column": 11,
+        "end_line": 102,
+        "end_column": 37
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_pycryptodome.py:106:11",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_pycryptodome.py",
+      "source_sha256": "bd9102129a13f4ebe9a46ebb74aec456de51e5aa491bd5fce588a3479ed2a6f6",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "_pycryptodome.py",
+        "line": 106,
+        "column": 11,
+        "end_line": 106,
+        "end_column": 41
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pypdf:pypdf/_crypt_providers/_pycryptodome.py:110:11",
+      "project": "pypdf",
+      "source": "pypdf/pypdf/_crypt_providers/_pycryptodome.py",
+      "source_sha256": "bd9102129a13f4ebe9a46ebb74aec456de51e5aa491bd5fce588a3479ed2a6f6",
+      "split": "evaluation_reserved",
+      "scenario_family": "pypdf",
+      "target_api": "Crypto.Cipher.AES.new",
+      "target": {
+        "file": "_pycryptodome.py",
+        "line": 110,
+        "column": 11,
+        "end_line": 110,
+        "end_column": 41
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/containers/DLC.py:47:12",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/containers/DLC.py",
+      "source_sha256": "5e5782841951d1da021c5a1eab501824740f5719a198dd96d295928a1746933c",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "DLC.py",
+        "line": 47,
+        "column": 12,
+        "end_line": 47,
+        "end_column": 36
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/containers/DLC.py:53:12",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/containers/DLC.py",
+      "source_sha256": "5e5782841951d1da021c5a1eab501824740f5719a198dd96d295928a1746933c",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "DLC.py",
+        "line": 53,
+        "column": 12,
+        "end_line": 53,
+        "end_column": 31
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/containers/RSDF.py:48:21",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/containers/RSDF.py",
+      "source_sha256": "199ce8d572fd94da19f463444588d5b75d48d101e5da43b1a0a8185bf3efe819",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "RSDF.py",
+        "line": 48,
+        "column": 21,
+        "end_line": 48,
+        "end_column": 40
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/containers/RSDF.py:51:24",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/containers/RSDF.py",
+      "source_sha256": "199ce8d572fd94da19f463444588d5b75d48d101e5da43b1a0a8185bf3efe819",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "RSDF.py",
+        "line": 51,
+        "column": 24,
+        "end_line": 51,
+        "end_column": 43
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/containers/RSDF.py:76:32",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/containers/RSDF.py",
+      "source_sha256": "199ce8d572fd94da19f463444588d5b75d48d101e5da43b1a0a8185bf3efe819",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "RSDF.py",
+        "line": 76,
+        "column": 32,
+        "end_line": 76,
+        "end_column": 51
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "If",
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/decrypters/CriptTo.py:177:20",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/decrypters/CriptTo.py",
+      "source_sha256": "9aa4afe655783c47a3364d06225e03e42a1b1e9982d8feb46d92ee97b77791ab",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "CriptTo.py",
+        "line": 177,
+        "column": 20,
+        "end_line": 177,
+        "end_column": 39
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "If",
+        "If",
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/decrypters/FilecryptCc.py:327:24",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/decrypters/FilecryptCc.py",
+      "source_sha256": "74eae204ea66d5cf484584755192b49876de5457b374d75d172ceef7776197b0",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "FilecryptCc.py",
+        "line": 327,
+        "column": 24,
+        "end_line": 327,
+        "end_column": 43
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/downloaders/MegaCoNz.py:98:12",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/downloaders/MegaCoNz.py",
+      "source_sha256": "2c180ce44ff9846131508c4a14bc46017a28c20117e7fdc49238ad84f4bc9040",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "MegaCoNz.py",
+        "line": 98,
+        "column": 12,
+        "end_line": 98,
+        "end_column": 56
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/downloaders/MegaCoNz.py:108:12",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/downloaders/MegaCoNz.py",
+      "source_sha256": "2c180ce44ff9846131508c4a14bc46017a28c20117e7fdc49238ad84f4bc9040",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "MegaCoNz.py",
+        "line": 108,
+        "column": 12,
+        "end_line": 108,
+        "end_column": 56
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/downloaders/MegaCoNz.py:118:12",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/downloaders/MegaCoNz.py",
+      "source_sha256": "2c180ce44ff9846131508c4a14bc46017a28c20117e7fdc49238ad84f4bc9040",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "MegaCoNz.py",
+        "line": 118,
+        "column": 12,
+        "end_line": 118,
+        "end_column": 56
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/downloaders/MegaCoNz.py:128:12",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/downloaders/MegaCoNz.py",
+      "source_sha256": "2c180ce44ff9846131508c4a14bc46017a28c20117e7fdc49238ad84f4bc9040",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "MegaCoNz.py",
+        "line": 128,
+        "column": 12,
+        "end_line": 128,
+        "end_column": 56
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/downloaders/MegaCoNz.py:240:16",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/downloaders/MegaCoNz.py",
+      "source_sha256": "2c180ce44ff9846131508c4a14bc46017a28c20117e7fdc49238ad84f4bc9040",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "MegaCoNz.py",
+        "line": 240,
+        "column": 16,
+        "end_line": 240,
+        "end_column": 40
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/downloaders/MegaCoNz.py:248:16",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/downloaders/MegaCoNz.py",
+      "source_sha256": "2c180ce44ff9846131508c4a14bc46017a28c20117e7fdc49238ad84f4bc9040",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "MegaCoNz.py",
+        "line": 248,
+        "column": 16,
+        "end_line": 248,
+        "end_column": 40
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/plugins/downloaders/MegaCoNz.py:783:12",
+      "project": "pyload",
+      "source": "pyload/src/pyload/plugins/downloaders/MegaCoNz.py",
+      "source_sha256": "2c180ce44ff9846131508c4a14bc46017a28c20117e7fdc49238ad84f4bc9040",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "MegaCoNz.py",
+        "line": 783,
+        "column": 12,
+        "end_line": 783,
+        "end_column": 54
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "pyload:src/pyload/webui/app/blueprints/cnl_blueprint.py:142:12",
+      "project": "pyload",
+      "source": "pyload/src/pyload/webui/app/blueprints/cnl_blueprint.py",
+      "source_sha256": "da94f18c552ccb295db96e34837ca310e52b50c45ebafb0d5df66c98309db618",
+      "split": "evaluation_reserved",
+      "scenario_family": "pyload",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "cnl_blueprint.py",
+        "line": 142,
+        "column": 12,
+        "end_line": 142,
+        "end_column": 31
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "FunctionDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "jwcrypto:jwcrypto/jwa.py:577:24",
+      "project": "jwcrypto",
+      "source": "jwcrypto/jwcrypto/jwa.py",
+      "source_sha256": "04329d0cb7b5ae42f8a02e3a94eace0621aa84c9b44b5c139f8f789a4cc7d214",
+      "split": "evaluation_reserved",
+      "scenario_family": "jwcrypto",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "jwa.py",
+        "line": 577,
+        "column": 24,
+        "end_line": 577,
+        "end_column": 42
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "jwcrypto:jwcrypto/jwa.py:597:24",
+      "project": "jwcrypto",
+      "source": "jwcrypto/jwcrypto/jwa.py",
+      "source_sha256": "04329d0cb7b5ae42f8a02e3a94eace0621aa84c9b44b5c139f8f789a4cc7d214",
+      "split": "evaluation_reserved",
+      "scenario_family": "jwcrypto",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "jwa.py",
+        "line": 597,
+        "column": 24,
+        "end_line": 597,
+        "end_column": 42
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "jwcrypto:jwcrypto/jwa.py:1082:24",
+      "project": "jwcrypto",
+      "source": "jwcrypto/jwcrypto/jwa.py",
+      "source_sha256": "04329d0cb7b5ae42f8a02e3a94eace0621aa84c9b44b5c139f8f789a4cc7d214",
+      "split": "evaluation_reserved",
+      "scenario_family": "jwcrypto",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "jwa.py",
+        "line": 1082,
+        "column": 24,
+        "end_line": 1082,
+        "end_column": 44
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "jwcrypto:jwcrypto/jwa.py:1116:24",
+      "project": "jwcrypto",
+      "source": "jwcrypto/jwcrypto/jwa.py",
+      "source_sha256": "04329d0cb7b5ae42f8a02e3a94eace0621aa84c9b44b5c139f8f789a4cc7d214",
+      "split": "evaluation_reserved",
+      "scenario_family": "jwcrypto",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "jwa.py",
+        "line": 1116,
+        "column": 24,
+        "end_line": 1116,
+        "end_column": 44
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "jwcrypto:jwcrypto/jwa.py:1180:24",
+      "project": "jwcrypto",
+      "source": "jwcrypto/jwcrypto/jwa.py",
+      "source_sha256": "04329d0cb7b5ae42f8a02e3a94eace0621aa84c9b44b5c139f8f789a4cc7d214",
+      "split": "evaluation_reserved",
+      "scenario_family": "jwcrypto",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "jwa.py",
+        "line": 1180,
+        "column": 24,
+        "end_line": 1180,
+        "end_column": 41
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    },
+    {
+      "case_id": "jwcrypto:jwcrypto/jwa.py:1199:24",
+      "project": "jwcrypto",
+      "source": "jwcrypto/jwcrypto/jwa.py",
+      "source_sha256": "04329d0cb7b5ae42f8a02e3a94eace0621aa84c9b44b5c139f8f789a4cc7d214",
+      "split": "evaluation_reserved",
+      "scenario_family": "jwcrypto",
+      "target_api": "cryptography.hazmat.primitives.ciphers.algorithms.AES",
+      "target": {
+        "file": "jwa.py",
+        "line": 1199,
+        "column": 24,
+        "end_line": 1199,
+        "end_column": 41
+      },
+      "candidate_status": "syntactic_import_candidate_not_verified_binding",
+      "selector_limits": "Imports are collected across scopes; rebinding, guards and key-role eligibility require human review. Indirect dispatch is not resolved.",
+      "enclosing_constructs": [
+        "FunctionDef",
+        "ClassDef"
+      ],
+      "independent_review": {
+        "status": "pending",
+        "reviewer": null,
+        "reviewed_reference": null,
+        "notes": null
+      }
+    }
+  ]
+}

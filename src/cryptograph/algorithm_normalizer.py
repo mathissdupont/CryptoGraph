@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import re
 from dataclasses import dataclass
 from typing import Any
@@ -47,6 +48,25 @@ def normalize_finding(finding: CryptoFinding) -> NormalizedCrypto:
     else:
         mode = _mode_from_text(arg_text) or _mode_from_api(api, algorithm)
 
+    # Java transformation strings encode algorithm/mode/padding in one literal.
+    # Do not resolve dynamic variable names as if they were literal values.
+    java_padding = None
+    if api == "Cipher.getInstance" and args:
+        try:
+            transformation = ast.literal_eval(args[0])
+        except (ValueError, SyntaxError):
+            transformation = None
+        if isinstance(transformation, str):
+            parts = transformation.split("/")
+            algorithm = {"DESede": "3DES"}.get(parts[0], parts[0])
+            if algorithm == "RSA":
+                primitive = "asymmetric_encryption"
+            mode = parts[1] if len(parts) > 1 and parts[1] in {
+                "ECB", "CBC", "GCM", "CTR", "CFB", "OFB", "CCM",
+            } else None
+            java_padding = parts[2] if len(parts) > 2 else None
+            evidence.append(f"Read Java cipher transformation literal: {transformation}")
+
     if api == "PKCS1_OAEP.new":
         algorithm = "RSA-OAEP"
         primitive = "asymmetric_encryption"
@@ -74,7 +94,7 @@ def normalize_finding(finding: CryptoFinding) -> NormalizedCrypto:
         primitive = "certificate_management"
         evidence.append("Mapped CertificateBuilder to certificate management")
 
-    padding = _padding_from_text(arg_text)
+    padding = java_padding or _padding_from_text(arg_text)
     key_size = _key_size(finding, algorithm, primitive)
     operation = _operation_for(api, primitive)
 

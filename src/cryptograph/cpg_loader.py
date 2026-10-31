@@ -28,6 +28,7 @@ Backend Isolation:
 from __future__ import annotations
 
 import json
+import math
 import os
 import subprocess
 import sys
@@ -64,7 +65,9 @@ def load_graph(input_path: Path, backend: str = "fraunhofer") -> NormalizedGraph
     - ast-lite: Direct Python AST parsing, no JVM dependency.
     """
     input_path = input_path.resolve()
-    if _looks_like_ruby(input_path):
+    if backend not in {"fraunhofer", "fraunhofer-strict", "ast-lite"}:
+        raise CpgLoadError(f"Unsupported backend: {backend}")
+    if backend != "fraunhofer-strict" and _looks_like_ruby(input_path):
         graph = build_ruby_lite_graph(input_path)
         graph.backend = "ruby-lite"
         return graph
@@ -120,15 +123,30 @@ def _load_with_fraunhofer(input_path: Path, allow_fallback: bool) -> NormalizedG
     """
     exporter = os.environ.get("CRYPTOGRAPH_FRAUNHOFER_EXPORTER")
     if exporter and Path(exporter).exists():
+        try:
+            timeout = float(os.environ.get('CRYPTOGRAPH_EXPORTER_TIMEOUT_SECONDS', '180'))
+            if not math.isfinite(timeout) or not 0 < timeout <= 3600:
+                raise ValueError
+        except ValueError as exc:
+            raise CpgLoadError('CRYPTOGRAPH_EXPORTER_TIMEOUT_SECONDS must be a finite number in (0, 3600].') from exc
         with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as handle:
             output_path = Path(handle.name)
         log_path = output_path.with_suffix(".exporter.log")
+        if os.environ.get('CRYPTOGRAPH_EXPORTER_LOG_DIR'):
+            log_directory=Path(os.environ['CRYPTOGRAPH_EXPORTER_LOG_DIR'])
+            try:
+                log_directory.mkdir(parents=True,exist_ok=True)
+            except OSError as exc:
+                output_path.unlink(missing_ok=True)
+                raise CpgLoadError(f'Cannot create exporter log directory: {log_directory}') from exc
+            log_path=log_directory/log_path.name
         try:
             proc = subprocess.run(
                 ["java", "-jar", exporter, "--input", str(input_path), "--output", str(output_path)],
                 check=False,
                 text=True,
                 capture_output=True,
+                timeout=timeout,
             )
             # save exporter stdout/stderr for diagnostics
             try:
@@ -143,12 +161,18 @@ def _load_with_fraunhofer(input_path: Path, allow_fallback: bool) -> NormalizedG
                 raise subprocess.CalledProcessError(proc.returncode, proc.args, output=proc.stdout, stderr=proc.stderr)
             with output_path.open("r", encoding="utf-8") as graph_file:
                 graph = NormalizedGraph.model_validate(json.load(graph_file))
+            if not allow_fallback and graph.backend == "fraunhofer-cpg-boundary":
+                raise CpgLoadError("Fraunhofer exporter returned a source boundary fallback in strict mode.")
+            if not allow_fallback and graph.backend not in {'fraunhofer','fraunhofer-cpg'}:
+                raise CpgLoadError(f'Fraunhofer strict mode rejected exporter backend: {graph.backend}')
             # run diagnostics to ensure exporter produced expected CPG elements
             try:
                 _diagnostic_graph_report(graph, input_path, log_path)
             except Exception:
                 pass
             if looks_like_c_cpp(input_path) and _graph_has_no_usable_calls(graph):
+                if not allow_fallback:
+                    raise CpgLoadError("Fraunhofer exporter produced no usable C/C++ calls in strict mode.")
                 print(
                     "[cryptograph][warning] Fraunhofer exporter produced no usable C/C++ call graph; "
                     "using c-cpp-lite source scanner for OpenSSL/TLS API detection.",
@@ -156,9 +180,13 @@ def _load_with_fraunhofer(input_path: Path, allow_fallback: bool) -> NormalizedG
                 )
                 return build_c_cpp_lite_graph(input_path)
             return graph
-        except (subprocess.CalledProcessError, OSError, json.JSONDecodeError) as exc:
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired, OSError, json.JSONDecodeError) as exc:
             # ensure exporter logs are saved if we captured a proc
             proc = locals().get("proc")
+            if isinstance(exc, subprocess.TimeoutExpired):
+                def decoded(value):
+                    return value.decode('utf-8',errors='replace') if isinstance(value,bytes) else value or ''
+                log_path.write_text(f'Timed out after {exc.timeout} seconds\nSTDOUT:\n{decoded(exc.stdout)}\nSTDERR:\n{decoded(exc.stderr)}\n',encoding='utf-8')
             if proc is not None:
                 try:
                     with log_path.open("w", encoding="utf-8") as f:
@@ -170,7 +198,7 @@ def _load_with_fraunhofer(input_path: Path, allow_fallback: bool) -> NormalizedG
                     pass
             if not allow_fallback:
                 detail = _format_exporter_error(exc)
-                raise CpgLoadError(f"Fraunhofer CPG exporter failed in strict mode. {detail}") from exc
+                raise CpgLoadError(f"Fraunhofer CPG exporter failed in strict mode. {detail} Exporter log: {log_path}") from exc
             print(
                 f"[cryptograph] Fraunhofer exporter failed, falling back to ast-lite: {exc}",
                 file=sys.stderr,
